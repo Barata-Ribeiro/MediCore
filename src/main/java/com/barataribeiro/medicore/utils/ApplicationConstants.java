@@ -21,6 +21,8 @@ public class ApplicationConstants {
             "/",
             "/favicon.ico",
             "/resources/**",
+            "/static/**",
+            "/templates/**",
             "/css/**",
             "/js/**",
             "/assets/**",
