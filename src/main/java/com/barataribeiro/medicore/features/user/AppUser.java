@@ -54,6 +54,9 @@ public class AppUser implements UserDetails, Serializable {
     @Column(name = "display_name")
     private String displayName;
 
+    @Column(name = "avatar_url")
+    private String avatarUrl;
+
     @Column(name = "full_name")
     private String fullName;
 
