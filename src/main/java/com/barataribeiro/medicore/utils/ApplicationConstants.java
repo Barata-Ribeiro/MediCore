@@ -1,7 +1,8 @@
 package com.barataribeiro.medicore.utils;
 
 public class ApplicationConstants {
-
+    public static final String PAGE_TITLE = "pageTitle";
+    public static final String REGISTRATION_DTO = "registrationDto";
     private static final String[] AUTH_WHITELIST = {
             // -- Swagger UI v2
             "/v2/api-docs",
@@ -11,27 +12,33 @@ public class ApplicationConstants {
             "/configuration/security",
             "/swagger-ui.html",
             "/webjars/**",
+
             // -- Swagger UI v3 (OpenAPI)
             "/api-docs",
             "/api-docs/**",
             "/v3/api-docs",
             "/v3/api-docs/**",
             "/swagger-ui/**",
-            // -- Application
-            "/",
+
+            // -- Application Resources
+            "/actuator/**",
+            "/assets/**",
+            "/css/**",
             "/favicon.ico",
+            "/h2-console/**",
+            "/js/**",
             "/resources/**",
             "/static/**",
             "/templates/**",
-            "/css/**",
-            "/js/**",
-            "/assets/**",
-            "/h2-console/**",
-            "/actuator/**",
-            "/register",
+
+            // -- Application Routes
+            "/",
+            "/about",
+            "/error",
             "/login",
             "/logout",
-            };
+            "/register"
+    };
 
     private ApplicationConstants() {
         throw new UnsupportedOperationException("This class cannot be instantiated.");
