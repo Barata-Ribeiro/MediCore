@@ -5,48 +5,84 @@
         <title th:text="${pageTitle + ' - MediCore'}">MediCore</title>
         <style>
             .form-signup {
-                max-width: 400px;
+                max-width: 440px;
                 padding: 1rem;
-            }
-
-            .form-signup .form-floating:focus-within {
-                z-index: 2;
             }
         </style>
     </head>
+
     <body>
         <main class="form-signup w-100 m-auto" layout:fragment="content">
             <form th:action="@{/register}" th:method="post" th:object="${registrationDto}">
                 <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden" />
 
                 <div class="mb-3 has-validation">
-                    <label class="form-label" for="username">Username</label>
-                    <input aria-describedby="usernameValidation" class="form-control is-invalid"
-                           id="username" th:field="${registrationDto.username}" type="text" />
-                    <div class="invalid-feedback" id="usernameValidation" th:if="${#fields.hasErrors('username')}">
-                        Please choose a username.
-                    </div>
+                    <label class="form-label" for="username">Username <span class="text-danger">*</span></label>
+                    <input aria-describedby="usernameValidation" aria-required="true"
+                           class="form-control" id="username"
+                           required th:classappend="${#fields.hasErrors('username')} ? ' is-invalid'"
+                           th:field="${registrationDto.username}" type="text" />
+                    <p class="invalid-feedback" id="usernameValidation" th:errors="${registrationDto.username}"
+                       th:if="${#fields.hasErrors('username')}">
+                    </p>
                 </div>
+
                 <div class="mb-3">
                     <label class="form-label" for="displayName">Display Name</label>
-                    <input class="form-control" id="displayName" type="text" />
+                    <input aria-describedby="displayNameValidation" class="form-control" id="displayName"
+                           th:classappend="${#fields.hasErrors('displayName')} ? ' is-invalid'"
+                           th:field="${registrationDto.displayName}" type="text" />
+                    <p class="invalid-feedback" id="displayNameValidation" th:errors="${registrationDto.displayName}"
+                       th:if="${#fields.hasErrors('displayName')}">
+                    </p>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label" for="exampleInputEmail1">Email address</label>
-                    <input aria-describedby="emailHelp" class="form-control"
-                           id="exampleInputEmail1" type="email" />
-                    <div class="form-text" id="emailHelp">
+
+                <div class="mb-3 has-validation">
+                    <label class="form-label" for="email">Email address <span class="text-danger">*</span></label>
+                    <input aria-describedby="emailHelp emailValidation" aria-required="true"
+                           class="form-control" id="email" placeholder="contact@example.com" required
+                           th:classappend="${#fields.hasErrors('email')} ? ' is-invalid'"
+                           th:field="${registrationDto.email}" type="email" />
+                    <p class="form-text" id="emailHelp">
                         We'll never share your email with anyone else.
-                    </div>
+                    </p>
+                    <p class="invalid-feedback" id="emailValidation" th:errors="${registrationDto.email}"
+                       th:if="${#fields.hasErrors('email')}">
+                    </p>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label" for="password">Password</label>
-                    <input aria-describedby="passwordHelp" class="form-control" id="password" type="password" />
-                    <div class="form-text" id="passwordHelp">
+
+                <div class="mb-3 has-validation">
+                    <label class="form-label" for="password">Password <span class="text-danger">*</span></label>
+                    <input aria-autocomplete="list" aria-describedby="passwordHelp" aria-required="true"
+                           autocomplete="new-password" class="form-control" id="password" placeholder="********"
+                           required th:classappend="${#fields.hasErrors('password')} ? ' is-invalid'"
+                           th:field="${registrationDto.password}" type="password" />
+                    <p class="form-text" id="passwordHelp"
+                       th:classappend="${#fields.hasErrors('password')} ? ' invalid-feedback'">
                         Password must contain at least one digit, one lowercase letter, one uppercase letter, one
                         special character and no whitespace.
-                    </div>
+                        Password must be between 8 and 100 characters.
+                    </p>
                 </div>
+
+                <div class="mb-3 has-validation">
+                    <label class="form-label" for="passwordConfirmation">Confirm Password
+                        <span class="text-danger">*</span></label>
+                    <input aria-describedby="passwordConfirmationValidation" aria-required="true"
+                           class="form-control" id="passwordConfirmation" required
+                           th:classappend="${#fields.hasErrors('passwordConfirmation')} ? ' is-invalid'"
+                           th:field="${registrationDto.passwordConfirmation}" type="password" />
+                    <p class="invalid-feedback" id="passwordConfirmationValidation"
+                       th:errors="${registrationDto.passwordConfirmation}"
+                       th:if="${#fields.hasErrors('passwordConfirmation')}">
+                    </p>
+                </div>
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success}">
+                    <strong>Registration successful!</strong> Go to <a href="/login">login</a> page.
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+                </div>
+
                 <button class="btn btn-primary w-100 py-2" type="submit">
                     Register
                 </button>

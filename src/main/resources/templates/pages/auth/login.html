@@ -33,11 +33,14 @@
                 <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
                 <div class="form-floating">
-                    <input class="form-control" id="username" placeholder="john/janedoe" type="text" />
+                    <input aria-autocomplete="list" autocomplete="username" autofocus class="form-control"
+                           id="username"
+                           name="username" placeholder="john/janedoe" type="text" />
                     <label for="username">Username</label>
                 </div>
                 <div class="form-floating">
-                    <input class="form-control" id="password" placeholder="Password" type="password" />
+                    <input aria-autocomplete="list" autocomplete="current-password" class="form-control" id="password"
+                           name="password" placeholder="Password" type="password" />
                     <label for="password">Password</label>
                 </div>
 
@@ -46,7 +49,7 @@
                     <label class="form-check-label" for="rememberMe"> Remember me </label>
                 </div>
                 <div class="alert alert-danger" role="alert" th:if="${param.failed}">
-                    Login failed; Invalid username or password.
+                    [[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]
                 </div>
                 <button class="btn btn-primary w-100 py-2" type="submit">
                     Sign in
