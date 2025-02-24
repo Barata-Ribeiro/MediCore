@@ -57,7 +57,7 @@
         <th:block th:replace="~{fragments/theme-switcher :: theme-switcher}"></th:block>
 
         <th:block
-            th:replace="~{fragments/header :: ${#authentication.isAuthenticated()} ? '#main-header' : '#auth-header'}">
+            th:replace="~{fragments/header :: '#main-header'}">
         </th:block>
 
         <th:block layout:fragment="content"></th:block>
