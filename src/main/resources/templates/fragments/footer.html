@@ -8,12 +8,8 @@
                 </li>
             </ul>
             <p class="text-center text-body-secondary">
-                &copy; <span id="currentYear"></span> MediCore. All rights reserved.
+                &copy; [[${#dates.format(#dates.createNow(), 'yyyy')}]] MediCore. All rights reserved.
             </p>
         </footer>
-        <script type="text/javascript">
-            const currentYear = new Date().getFullYear()
-            $('#currentYear').text(currentYear)
-        </script>
     </th:block>
 </html>
