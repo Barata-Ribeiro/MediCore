@@ -19,8 +19,7 @@
                 <div class="mb-3 has-validation">
                     <label class="form-label" for="username">Username <span class="text-danger">*</span></label>
                     <input aria-describedby="usernameValidation" aria-required="true"
-                           class="form-control" id="username"
-                           required th:classappend="${#fields.hasErrors('username')} ? ' is-invalid'"
+                           class="form-control" id="username" required th:errorclass="is-invalid"
                            th:field="${registrationDto.username}" type="text" />
                     <p class="invalid-feedback" id="usernameValidation" th:errors="${registrationDto.username}"
                        th:if="${#fields.hasErrors('username')}">
@@ -30,8 +29,7 @@
                 <div class="mb-3">
                     <label class="form-label" for="displayName">Display Name</label>
                     <input aria-describedby="displayNameValidation" class="form-control" id="displayName"
-                           th:classappend="${#fields.hasErrors('displayName')} ? ' is-invalid'"
-                           th:field="${registrationDto.displayName}" type="text" />
+                           th:errorclass="is-invalid" th:field="${registrationDto.displayName}" type="text" />
                     <p class="invalid-feedback" id="displayNameValidation" th:errors="${registrationDto.displayName}"
                        th:if="${#fields.hasErrors('displayName')}">
                     </p>
@@ -41,9 +39,8 @@
                     <label class="form-label" for="email">Email address <span class="text-danger">*</span></label>
                     <input aria-describedby="emailHelp emailValidation" aria-required="true"
                            class="form-control" id="email" placeholder="contact@example.com" required
-                           th:classappend="${#fields.hasErrors('email')} ? ' is-invalid'"
-                           th:field="${registrationDto.email}" type="email" />
-                    <p class="form-text" id="emailHelp">
+                           th:errorclass="is-invalid" th:field="${registrationDto.email}" type="email" />
+                    <p class="form-text" id="emailHelp" th:if="not ${#fields.hasErrors('email')}">
                         We'll never share your email with anyone else.
                     </p>
                     <p class="invalid-feedback" id="emailValidation" th:errors="${registrationDto.email}"
@@ -55,8 +52,7 @@
                     <label class="form-label" for="password">Password <span class="text-danger">*</span></label>
                     <input aria-autocomplete="list" aria-describedby="passwordHelp" aria-required="true"
                            autocomplete="new-password" class="form-control" id="password" placeholder="********"
-                           required th:classappend="${#fields.hasErrors('password')} ? ' is-invalid'"
-                           th:field="${registrationDto.password}" type="password" />
+                           required th:errorclass="is-invalid" th:field="${registrationDto.password}" type="password" />
                     <p class="form-text" id="passwordHelp"
                        th:classappend="${#fields.hasErrors('password')} ? ' invalid-feedback'">
                         Password must contain at least one digit, one lowercase letter, one uppercase letter, one
@@ -69,8 +65,7 @@
                     <label class="form-label" for="passwordConfirmation">Confirm Password
                         <span class="text-danger">*</span></label>
                     <input aria-describedby="passwordConfirmationValidation" aria-required="true"
-                           class="form-control" id="passwordConfirmation" required
-                           th:classappend="${#fields.hasErrors('passwordConfirmation')} ? ' is-invalid'"
+                           class="form-control" id="passwordConfirmation" required th:errorclass="is-invalid"
                            th:field="${registrationDto.passwordConfirmation}" type="password" />
                     <p class="invalid-feedback" id="passwordConfirmationValidation"
                        th:errors="${registrationDto.passwordConfirmation}"
