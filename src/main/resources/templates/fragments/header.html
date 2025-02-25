@@ -5,12 +5,10 @@
     <body>
         <header
             class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
-            id="main-header" th:fragment="header">
+            th:fragment="main-header">
             <div class="col-md-3 mb-2 mb-md-0">
                 <a class="d-inline-flex link-body-emphasis text-decoration-none" href="/">
-                    <svg aria-label="Bootstrap" class="bi" height="32" role="img" width="40">
-                        <use xlink:href="#bootstrap" />
-                    </svg>
+                    <h1 class="display-3">MediCore</h1>
                 </a>
             </div>
 
@@ -30,8 +28,11 @@
                     Guest
                 </button>
                 <ul class="dropdown-menu text-small">
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><a class="dropdown-item"
+                           th:href="'/'+${#authentication.principal.username} + '/settings'">Settings
+                    </a></li>
+                    <li><a class="dropdown-item"
+                           th:href="'/'+${#authentication.principal.username}+'/profile'">Profile</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
