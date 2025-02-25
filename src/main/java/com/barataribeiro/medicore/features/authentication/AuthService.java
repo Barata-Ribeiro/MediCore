@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -32,7 +33,7 @@ public class AuthService implements UserDetailsService {
                                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
-
+    @Transactional
     public @Nullable String registerUser(Model model, @NotNull RegistrationDto registrationDto,
                                          BindingResult bindingResult) {
         if (!registrationDto.getPassword().equals(registrationDto.getPasswordConfirmation())) {
@@ -55,18 +56,14 @@ public class AuthService implements UserDetailsService {
             return "pages/auth/register";
         }
 
-        try {
-            AppUser newUser = AppUser.builder()
-                                     .username(registrationDto.getUsername())
-                                     .email(registrationDto.getEmail())
-                                     .displayName(registrationDto.getDisplayName())
-                                     .password(passwordEncoder.encode(registrationDto.getPassword()))
-                                     .build();
+        AppUser newUser = AppUser.builder()
+                                 .username(registrationDto.getUsername())
+                                 .email(registrationDto.getEmail())
+                                 .displayName(registrationDto.getDisplayName())
+                                 .password(passwordEncoder.encode(registrationDto.getPassword()))
+                                 .build();
 
-            appUserRepository.save(newUser);
-        } catch (Exception e) {
-            bindingResult.addError(new FieldError(REGISTRATION_DTO, "username", e.getMessage()));
-        }
+        appUserRepository.save(newUser);
 
         return null;
     }

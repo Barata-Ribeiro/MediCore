@@ -54,9 +54,6 @@ public class AppUser implements UserDetails, Serializable {
     @Column(name = "display_name")
     private String displayName;
 
-    @Column(name = "avatar_url")
-    private String avatarUrl;
-
     @Column(name = "full_name")
     private String fullName;
 
@@ -64,6 +61,16 @@ public class AppUser implements UserDetails, Serializable {
     @Temporal(TemporalType.DATE)
     @Column(name = "birth_date")
     private Date birthDate;
+
+    @Column(name = "avatar_url")
+    private String avatarUrl;
+
+    private String sex;
+
+    private String title;
+
+    @Column(length = 600)
+    private String biography;
 
     @Builder.Default
     @Enumerated(EnumType.STRING)

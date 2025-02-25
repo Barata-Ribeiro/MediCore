@@ -57,7 +57,9 @@ public class SecurityConfig {
                     .tokenValiditySeconds((int) Duration.ofDays(180).getSeconds())
                     .rememberMeParameter("rememberMe")
                     .key(rememberMeKey))
-            .logout(logout -> logout.logoutSuccessUrl("/"));
+            .logout(logout -> logout.logoutSuccessUrl("/")
+                                    .invalidateHttpSession(true)
+                                    .deleteCookies("JSESSIONID"));
 
         return http.build();
     }
