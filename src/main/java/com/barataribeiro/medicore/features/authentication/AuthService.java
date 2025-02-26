@@ -54,7 +54,7 @@ public class AuthService implements UserDetailsService {
                     .addError(new FieldError(REGISTRATION_DTO, "email", "Email already in use."));
         }
 
-        if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors() || bindingResult.hasFieldErrors()) {
             model.addAttribute(PAGE_TITLE, "Register");
             return "pages/auth/register";
         }

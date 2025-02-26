@@ -3,6 +3,7 @@ package com.barataribeiro.medicore.utils;
 public class ApplicationConstants {
     public static final String PAGE_TITLE = "pageTitle";
     public static final String REGISTRATION_DTO = "registrationDto";
+    public static final String UPDATE_APP_USER_DTO = "updateAppUserDto";
     private static final String[] AUTH_WHITELIST = {
             // -- Swagger UI v2
             "/v2/api-docs",

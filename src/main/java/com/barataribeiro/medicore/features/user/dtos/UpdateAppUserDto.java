@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -36,12 +37,13 @@ public class UpdateAppUserDto implements Serializable {
 
     private String passwordConfirmation;
 
-    @Pattern(regexp = "^[a-zA-Z ]*$", message = "First Name must contain only letters, and spaces.")
+    @Pattern(regexp = "^[\\p{L} ]*$", message = "First Name must contain only letters, and spaces.")
     private String firstName;
 
-    @Pattern(regexp = "^[a-zA-Z ]*$", message = "Last Name must contain only letters, and spaces.")
+    @Pattern(regexp = "^[\\p{L} ]*$", message = "Last Name must contain only letters, and spaces.")
     private String lastName;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthDate;
 
@@ -52,7 +54,7 @@ public class UpdateAppUserDto implements Serializable {
     @Pattern(regexp = "^(MALE|FEMALE)$", message = "Sex must be either MALE or FEMALE")
     private String sex;
 
-    @Pattern(regexp = "^[a-zA-Z ]*$", message = "Full name must contain only letters, and spaces.")
+    @Pattern(regexp = "^[\\p{L} ]*$", message = "Full name must contain only letters, and spaces.")
     private String title;
 
     @Size(max = 600, message = "Biography must be at most 600 characters.")
