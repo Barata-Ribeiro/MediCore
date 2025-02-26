@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html data-bs-theme="auto" lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
+        <meta content="Barata Ribeiro" name="author" />
+        <meta
+            content="MediCore is a personal health and fitness center that holds your most personal and important health data."
+            name="description" />
+        <meta content="MediCore, health, fitness, personal, data" name="keywords" />
+        <title>MediCore</title>
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css" />
+        <link rel="stylesheet" th:href="@{/css/bootstrap-icons.min.css}" type="text/css" />
+        <link rel="stylesheet" th:href="@{/css/styles.css}" type="text/css" />
+        <style>
+            #wrapper {
+                overflow-x: hidden;
+            }
+
+            #sidebar-wrapper {
+                min-height: 100vh;
+                margin-left: -15rem;
+                transition: margin 0.25s ease-out;
+            }
+
+            #sidebar-wrapper .list-group {
+                width: 15rem;
+            }
+
+            #page-content-wrapper {
+                min-width: 100vw;
+            }
+
+            body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
+                margin-left: 0;
+            }
+
+            @media (min-width: 768px) {
+                #sidebar-wrapper {
+                    margin-left: 0;
+                }
+
+                #page-content-wrapper {
+                    min-width: 0;
+                    width: 100%;
+                }
+
+                body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
+                    margin-left: -15rem;
+                }
+            }
+        </style>
+
+        <script th:src="@{/js/jquery.min.js}" type="text/javascript"></script>
+        <script th:src="@{/js/popper.min.js}" type="text/javascript"></script>
+        <script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+    </head>
+
+    <body>
+        <th:block th:replace="~{fragments/theme-switcher :: theme-switcher}"></th:block>
+
+        <div class="d-flex" id="wrapper">
+            <!-- SIDEBAR -->
+            <th:block th:replace="~{fragments/sidebar :: sidebar}"></th:block>
+
+            <!-- PAGE WRAPPER -->
+            <div id="page-content-wrapper">
+                <!-- TOP NAVBAR -->
+                <th:block th:replace="~{fragments/top-navbar :: top-navbar}"></th:block>
+
+
+                <!-- CONTENT -->
+                <th:block class="container-fluid" layout:fragment="content"></th:block>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            $(function() {
+                $('#wrapper').toggleClass('toggled')
+                const sidebarToggle = $('#sidebarToggle')
+                const body = $(document).find('body')
+                if (sidebarToggle) {
+                    if (localStorage.getItem('sb|sidebar-toggle') === 'true') body.addClass('sb-sidenav-toggled')
+                    sidebarToggle.on('click', function(event) {
+                        event.preventDefault()
+                        body.toggleClass('sb-sidenav-toggled')
+                        localStorage.setItem('sb|sidebar-toggle', body.hasClass('sb-sidenav-toggled').toString())
+                    })
+                }
+            })
+        </script>
+    </body>
+</html>
