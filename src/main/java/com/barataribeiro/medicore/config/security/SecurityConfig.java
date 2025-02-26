@@ -47,12 +47,14 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorize -> authorize
                     .requestMatchers(ApplicationConstants.getAuthWhitelist()).permitAll()
                     .anyRequest().authenticated())
-            .formLogin(form -> form.defaultSuccessUrl("/", true)
-                                   .usernameParameter("username")
-                                   .passwordParameter("password")
-                                   .loginPage("/login")
-                                   .failureUrl("/login?failed")
-                                   .permitAll())
+            .formLogin(form -> form
+                    .successHandler((request, response, authentication) -> response
+                            .sendRedirect("/" + authentication.getName()))
+                    .usernameParameter("username")
+                    .passwordParameter("password")
+                    .loginPage("/login")
+                    .failureUrl("/login?failed")
+                    .permitAll())
             .rememberMe(rememberMe -> rememberMe
                     .tokenValiditySeconds((int) Duration.ofDays(180).getSeconds())
                     .rememberMeParameter("rememberMe")
