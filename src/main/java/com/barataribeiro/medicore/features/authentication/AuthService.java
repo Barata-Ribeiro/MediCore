@@ -2,6 +2,8 @@ package com.barataribeiro.medicore.features.authentication;
 
 import com.barataribeiro.medicore.features.user.AppUser;
 import com.barataribeiro.medicore.features.user.AppUserRepository;
+import com.barataribeiro.medicore.features.user.Profile;
+import com.barataribeiro.medicore.features.user.ProfileRepository;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +28,7 @@ import static com.barataribeiro.medicore.utils.ApplicationConstants.REGISTRATION
 public class AuthService implements UserDetailsService {
     private final AppUserRepository appUserRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ProfileRepository profileRepository;
 
     @Override
     public UserDetails loadUserByUsername(@NotNull String username) throws UsernameNotFoundException {
@@ -63,6 +66,13 @@ public class AuthService implements UserDetailsService {
                                  .password(passwordEncoder.encode(registrationDto.getPassword()))
                                  .build();
 
+        Profile profile = Profile.builder()
+                                 .user(newUser)
+                                 .build();
+
+        newUser.setProfile(profile);
+
+        profileRepository.save(profile);
         appUserRepository.save(newUser);
 
         return null;
