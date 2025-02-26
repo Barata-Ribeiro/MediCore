@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/auth_layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="${pageTitle + ' - MediCore'}">MediCore</title>
+    </head>
+
+    <body>
+        <main class="p-1" layout:fragment="content">
+            <div class="row gutters-sm">
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img class="rounded-circle img-thumbnail" height="150"
+                                     style="aspect-ratio: 1/1; object-fit: cover;"
+                                     th:alt-title="'Avatar of ' + ${profile.user.username}"
+                                     th:src="${profile.user.avatarUrl != null ? profile.user.avatarUrl : '/assets/images/default-avatar.svg'}"
+                                     width="150" />
+                                <div class="mt-3">
+                                    <h4
+                                        th:text="${profile.user.displayName != null ? profile.user.displayName : '@' + profile.user.username}">
+                                        John Doe
+                                    </h4>
+                                    <p class="text-secondary mb-1"
+                                       th:text="${profile.title != null ? profile.title : 'N/A'}">
+                                        Title
+                                    </p>
+                                    <p class="text-muted font-size-sm d-flex">
+                                        <i aria-hidden="true" class="bi bi-envelope me-1"></i>
+                                        <span class="text-break" th:text="${profile.user.email}">mail</span>
+                                    </p>
+                                </div>
+
+                                <form class="card mt-3 text-start"
+                                      th:action="@{'/' + ${profile.user.username} + '/profile'}"
+                                      th:method="post" th:object="${updateAppUserDto}">
+                                    <h5 class="card-header">Avatar</h5>
+                                    <div class="card-body">
+                                        <div class="mb-3 has-validation">
+                                            <label class="form-label" for="currentPassword">
+                                                Current Password<span class="text-danger">*</span>
+                                            </label>
+                                            <input aria-autocomplete="list" aria-describedby="currentPasswordValidation"
+                                                   aria-required="true" autocomplete="current-password"
+                                                   class="form-control form-control-sm" id="currentPassword" required
+                                                   th:errorclass="is-invalid"
+                                                   th:field="${updateAppUserDto.currentPassword}" type="password" />
+                                            <p class="invalid-feedback" id="currentPasswordValidation"
+                                               th:errors="${updateAppUserDto.currentPassword}"
+                                               th:if="${#fields.hasErrors('currentPassword')}">
+                                            </p>
+                                        </div>
+                                        <label class="form-label" for="avatarUrl">Avatar Url</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-dark-subtle text-body-secondary"
+                                                  id="basic-addon3">https://</span>
+                                            <input aria-describedby="avatarUrlValidation" aria-label="Avatar Url"
+                                                   class="form-control" id="avatarUrl" name="avatarUrl"
+                                                   placeholder="http://example.com/photo.jpg" th:errorclass="is-invalid"
+                                                   th:field="${updateAppUserDto.avatarUrl}" type="text">
+                                            <button class="btn btn-primary" type="submit">
+                                                Update
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer text-body-secondary">
+                                        <small class="text-muted font-size-sm"
+                                               th:if="not ${#fields.hasErrors('avatarUrl')}">
+                                            <i aria-hidden="true" class="bi bi-info-circle"></i>
+                                            <span>Update your avatar by providing the URL of an image.</span>
+                                        </small>
+                                        <small class="invalid-feedback" id="avatarUrlValidation"
+                                               th:errors="${updateAppUserDto.avatarUrl}"
+                                               th:if="${#fields.hasErrors('avatarUrl')}">
+                                        </small>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Profile</h5>
+                            <ul class="nav nav-tabs card-header-tabs" data-bs-tabs="tabs">
+                                <li class="nav-item">
+                                    <a aria-current="true" class="nav-link active" data-bs-toggle="tab" href="#account">
+                                        Account
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#profile">Profile</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <th:block th:replace="~{fragments/forms/update-profile-form :: update-profile-form}"></th:block>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

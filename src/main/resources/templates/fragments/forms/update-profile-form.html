@@ -1,0 +1,192 @@
+<!-- src/main/resources/templates/fragments/forms/update-profile-form.html -->
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <form class="card-body tab-content" th:action="@{'/' + ${profile.user.username} + '/profile'}"
+              th:fragment="update-profile-form" th:method="post" th:object="${updateAppUserDto}">
+            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden" />
+
+            <!--CURRENT PASSWORD-->
+            <div class="mb-3 has-validation">
+                <label class="form-label" for="currentPassword">
+                    Current Password<span class="text-danger">*</span>
+                </label>
+                <input aria-autocomplete="list" aria-describedby="currentPasswordValidation"
+                       aria-required="true" autocomplete="current-password" class="form-control"
+                       id="currentPassword" required th:errorclass="is-invalid"
+                       th:field="${updateAppUserDto.currentPassword}" type="password" />
+                <p class="invalid-feedback" id="currentPasswordValidation"
+                   th:errors="${updateAppUserDto.currentPassword}" th:if="${#fields.hasErrors('currentPassword')}">
+                </p>
+            </div>
+
+            <!--ACCOUNT TAB-->
+            <div class="tab-pane active" id="account">
+                <div class="mb-3">
+                    <label class="form-label" for="staticUsername">Username</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="inputGroupPrepend">@</span>
+                        <input class="form-control" disabled id="staticUsername" readonly
+                               th:value="${profile.user.username}" type="text"></div>
+                </div>
+
+                <div class="mb-3 has-validation">
+                    <label class="form-label" for="displayName">
+                        Display Name
+                    </label>
+                    <input aria-autocomplete="list" aria-describedby="displayNameValidation displayNameValidation"
+                           aria-labelledby="currentDisplayName" class="form-control" id="displayName"
+                           th:errorclass="is-invalid" th:field="${updateAppUserDto.displayName}" type="text" />
+                    <div class="form-text" id="currentDisplayName"
+                         th:if="${profile.user.displayName != null}">
+                        Current: [[${profile.user.displayName}]]
+                    </div>
+                    <p class="invalid-feedback" id="displayNameValidation"
+                       th:errors="${updateAppUserDto.displayName}" th:if="${#fields.hasErrors('displayName')}">
+                    </p>
+                </div>
+
+                <div class="mb-3 has-validation">
+                    <label class="form-label" for="email">
+                        Email
+                    </label>
+                    <input aria-autocomplete="list" aria-describedby="emailValidation" aria-labelledby="currentEmail"
+                           class="form-control" id="email" placeholder="contact@example.com" th:errorclass="is-invalid"
+                           th:field="${updateAppUserDto.email}" type="email" />
+                    <div class="form-text" id="currentEmail" th:if="not ${#fields.hasErrors('email')}">
+                        Current: [[${profile.user.email}]]
+                    </div>
+                    <p class="invalid-feedback" id="emailValidation"
+                       th:errors="${updateAppUserDto.email}" th:if="${#fields.hasErrors('email')}">
+                    </p>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm has-validation">
+                        <label class="form-label" for="newPassword">New Password</label>
+                        <input aria-autocomplete="list" aria-describedby="passwordHelp passwordConfirmation"
+                               aria-labelledby="passwordHelp" autocomplete="new-password" class="form-control"
+                               id="newPassword" name="newPassword" placeholder="********" th:errorclass="is-invalid"
+                               th:field="${updateAppUserDto.newPassword}" type="password" />
+                    </div>
+                    <div class="col-sm has-validation">
+                        <label class="form-label" for="confirmNewPassword">Confirm Password</label>
+                        <input aria-autocomplete="list" autocomplete="new-password" class="form-control"
+                               id="confirmNewPassword" name="confirmNewPassword" th:errorclass="is-invalid"
+                               th:field="${updateAppUserDto.passwordConfirmation}" type="password">
+                    </div>
+                    <p class="form-text" id="passwordHelp"
+                       th:classappend="${#fields.hasErrors('newPassword')} ? ' invalid-feedback'"
+                       th:if="not ${#fields.hasErrors('passwordConfirmation')}">
+                        Password must contain at least one digit, one lowercase letter, one
+                        uppercase letter, one special character and no whitespace. Password must be
+                        between 8 and 100 characters.
+                    </p>
+                    <p class="invalid-feedback d-block" id="passwordConfirmation"
+                       th:errors="${updateAppUserDto.passwordConfirmation}"
+                       th:if="${#fields.hasErrors('passwordConfirmation')}">
+                    </p>
+                </div>
+            </div>
+
+            <!--PROFILE TAB-->
+            <div class="tab-pane" id="profile">
+                <div class="row g-4 mb-3 has-validation">
+                    <div class="col-sm">
+                        <label class="form-label" for="firstName">First Name</label>
+                        <input aria-labelledby="currentFirstName firstNameValidation" class="form-control"
+                               id="firstName" name="firstName" th:errorclass="is-invalid"
+                               th:field="${updateAppUserDto.firstName}" type="text">
+                        <div class="form-text" id="currentFirstName"
+                             th:if="not ${#fields.hasErrors('firstName') and profile.firstName != null}">
+                            Current: [[${profile.firstName}]]
+                        </div>
+                        <p class="invalid-feedback" id="firstNameValidation"
+                           th:errors="${updateAppUserDto.firstName}" th:if="${#fields.hasErrors('firstName')}">
+                        </p>
+                    </div>
+                    <div class="col-sm">
+                        <label class="form-label" for="lastName">First Name</label>
+                        <input aria-labelledby="currentLastName lastNameValidation" class="form-control" id="lastName"
+                               name="lastName" th:errorclass="is-invalid" th:field="${updateAppUserDto.lastName}"
+                               type="text">
+                        <div class="form-text" id="currentLastName"
+                             th:if="not ${#fields.hasErrors('lastName') and profile.lastName != null}">
+                            Current: [[${profile.lastName}]]
+                        </div>
+                        <p class="invalid-feedback" id="lastNameValidation" th:errors="${updateAppUserDto.lastName}"
+                           th:if="${#fields.hasErrors('lastName')}">
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mb-3 has-validation">
+                    <h6 class="form-label">Sex</h6>
+                    <div class="form-check form-check-inline">
+                        <input aria-describedby="currentSex sexValidation" class="form-check-input" id="sexMale"
+                               th:field="${updateAppUserDto.sex}" type="radio" value="MALE">
+                        <label class="form-check-label" for="sexMale">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input aria-describedby="currentSex sexValidation" class="form-check-input" id="sexFemale"
+                               th:field="${updateAppUserDto.sex}" type="radio" value="FEMALE">
+                        <label class="form-check-label" for="sexFemale">Female</label>
+                    </div>
+                    <p class="form-text text-capitalize" id="currentSex"
+                       th:if="${not #fields.hasErrors('sex') and profile.sex != null}">
+                        Current: [[${profile.sex.toLowerCase()}]]
+                    </p>
+                    <p class="invalid-feedback" id="sexValidation" th:errors="${updateAppUserDto.sex}"
+                       th:if="${#fields.hasErrors('sex')}">
+                    </p>
+                </div>
+
+                <div class="row g-4 mb-3 has-validation">
+                    <div class="col-sm">
+                        <label class="form-label" for="birthDate">Birth Date</label>
+                        <input aria-describedby="currentBirthDate birthDateValidation" aria-label="Birth Date"
+                               class="form-control" id="birthDate" th:errorclass="is-invalid"
+                               th:field="${updateAppUserDto.birthDate}"
+                               type="date">
+                        <p class="form-text text-capitalize" id="currentBirthDate"
+                           th:if="${not #fields.hasErrors('birthDate') and profile.birthDate != null}">
+                            Current: [[${#dates.format(profile.birthDate, 'MMMM dd, yyyy')}]]
+                        </p>
+                        <p class="invalid-feedback" id="birthDateValidation" th:errors="${updateAppUserDto.birthDate}"
+                           th:if="${#fields.hasErrors('birthDate')}"></p>
+                    </div>
+                    <div class="col-sm">
+                        <label class="form-label" for="title">Title</label>
+                        <input aria-label="Title" class="form-control" id="title" placeholder="e.g. Software Engineer"
+                               th:errorclass="is-invalid" th:field="${updateAppUserDto.title}" type="text">
+                        <p class="form-text" id="currentTitle"
+                           th:if="${not #fields.hasErrors('title') and profile.title != null}">
+                            Current: [[${profile.title}]]
+                        </p>
+                        <p class="invalid-feedback" id="titleValidation" th:errors="${updateAppUserDto.title}"
+                           th:if="${#fields.hasErrors('title')}"></p>
+                    </div>
+                </div>
+
+                <div class="mb-3 has-validation">
+                    <label class="form-label" for="biography">Biography</label>
+                    <textarea aria-describedby="currentBiography biographyValidation" aria-label="Biography"
+                              class="form-control" id="biography" maxlength="600" placeholder="Write about you..."
+                              rows="6" th:errorclass="is-invalid" th:field="${updateAppUserDto.biography}"></textarea>
+                    <p class="form-text" id="currentBiography"
+                       th:if="${not #fields.hasErrors('biography') and profile.biography != null}">
+                        Current: [[${profile.biography}]]
+                    </p>
+                    <p class="invalid-feedback" id="biographyValidation" th:errors="${updateAppUserDto.biography}"
+                       th:if="${#fields.hasErrors('biography')}"></p>
+                </div>
+            </div>
+
+            <div class="d-flex gap-4 mt-2">
+                <button class="btn btn-primary w-50" type="submit">Update</button>
+                <button class="btn btn-outline-secondary w-50" type="reset">Reset</button>
+            </div>
+        </form>
+    </body>
+</html>
