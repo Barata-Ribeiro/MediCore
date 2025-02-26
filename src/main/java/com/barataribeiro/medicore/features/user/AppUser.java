@@ -1,6 +1,6 @@
 package com.barataribeiro.medicore.features.user;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.barataribeiro.medicore.features.medicalfile.MedicalFile;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,7 +15,6 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -48,29 +47,14 @@ public class AppUser implements UserDetails, Serializable {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true, length = 100)
     private String email;
 
     @Column(name = "display_name")
     private String displayName;
 
-    @Column(name = "full_name")
-    private String fullName;
-
-    @JsonFormat(pattern = "dd/mm/yyyy")
-    @Temporal(TemporalType.DATE)
-    @Column(name = "birth_date")
-    private Date birthDate;
-
     @Column(name = "avatar_url")
     private String avatarUrl;
-
-    private String sex;
-
-    private String title;
-
-    @Column(length = 600)
-    private String biography;
 
     @Builder.Default
     @Enumerated(EnumType.STRING)
@@ -83,6 +67,17 @@ public class AppUser implements UserDetails, Serializable {
 
     @UpdateTimestamp
     private Instant updatedAt;
+
+    // Associations
+    @ToString.Exclude
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "profile_id")
+    private Profile profile;
+
+    @ToString.Exclude
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "medical_file_id")
+    private MedicalFile medicalFile;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

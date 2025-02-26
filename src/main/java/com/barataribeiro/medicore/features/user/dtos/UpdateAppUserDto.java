@@ -20,8 +20,9 @@ public class UpdateAppUserDto implements Serializable {
     @NotBlank(message = "Current Password is required")
     private String currentPassword;
 
-    @Pattern(regexp = "^[a-z]*$", message = "Username must contain only lowercase letters.")
-    private String username;
+    @Size(min = 3, max = 50, message = "Display name must be between 3 and 50 characters.")
+    @Pattern(regexp = "^[a-zA-Z ]*$", message = "Display name must contain only letters, and spaces.")
+    private String displayName;
 
     @Email(regexp = "[A-Za-z0-9._%-+]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}",
            message = "You must provide a valid email address.")
@@ -33,12 +34,13 @@ public class UpdateAppUserDto implements Serializable {
              regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%¨^&*()\\-_=+])(?=\\S+$).{8,}$")
     private String newPassword;
 
-    @Size(min = 3, max = 50, message = "Display name must be between 3 and 50 characters.")
-    @Pattern(regexp = "^[a-zA-Z ]*$", message = "Display name must contain only letters, and spaces.")
-    private String displayName;
+    private String passwordConfirmation;
 
-    @Pattern(regexp = "^[a-zA-Z ]*$", message = "Full name must contain only letters, and spaces.")
-    private String fullName;
+    @Pattern(regexp = "^[a-zA-Z ]*$", message = "First Name must contain only letters, and spaces.")
+    private String firstName;
+
+    @Pattern(regexp = "^[a-zA-Z ]*$", message = "Last Name must contain only letters, and spaces.")
+    private String lastName;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthDate;
@@ -53,5 +55,6 @@ public class UpdateAppUserDto implements Serializable {
     @Pattern(regexp = "^[a-zA-Z ]*$", message = "Full name must contain only letters, and spaces.")
     private String title;
 
-    private String bio;
+    @Size(max = 600, message = "Biography must be at most 600 characters.")
+    private String biography;
 }
