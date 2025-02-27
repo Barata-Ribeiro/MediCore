@@ -35,16 +35,18 @@
                                 <form class="card mt-3 text-start"
                                       th:action="@{'/' + ${profile.user.username} + '/profile'}"
                                       th:method="post" th:object="${updateAppUserDto}">
+                                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden" />
+                                    
                                     <h5 class="card-header">Avatar</h5>
                                     <div class="card-body">
                                         <div class="mb-3 has-validation">
-                                            <label class="form-label" for="currentPassword">
+                                            <label class="form-label" for="currentPasswordAvatar">
                                                 Current Password<span class="text-danger">*</span>
                                             </label>
                                             <input aria-autocomplete="list" aria-describedby="currentPasswordValidation"
                                                    aria-required="true" autocomplete="current-password"
-                                                   class="form-control form-control-sm" id="currentPassword" required
-                                                   th:errorclass="is-invalid"
+                                                   class="form-control form-control-sm" id="currentPasswordAvatar"
+                                                   required th:errorclass="is-invalid"
                                                    th:field="${updateAppUserDto.currentPassword}" type="password" />
                                             <p class="invalid-feedback" id="currentPasswordValidation"
                                                th:errors="${updateAppUserDto.currentPassword}"

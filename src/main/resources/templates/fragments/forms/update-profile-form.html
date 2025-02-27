@@ -99,7 +99,7 @@
                                id="firstName" name="firstName" th:errorclass="is-invalid"
                                th:field="${updateAppUserDto.firstName}" type="text">
                         <div class="form-text" id="currentFirstName"
-                             th:if="not ${#fields.hasErrors('firstName') and profile.firstName != null}">
+                             th:if="${not #fields.hasErrors('firstName') and profile.firstName != null}">
                             Current: [[${profile.firstName}]]
                         </div>
                         <p class="invalid-feedback" id="firstNameValidation"
@@ -112,7 +112,7 @@
                                name="lastName" th:errorclass="is-invalid" th:field="${updateAppUserDto.lastName}"
                                type="text">
                         <div class="form-text" id="currentLastName"
-                             th:if="not ${#fields.hasErrors('lastName') and profile.lastName != null}">
+                             th:if="${not #fields.hasErrors('lastName') and profile.lastName != null}">
                             Current: [[${profile.lastName}]]
                         </div>
                         <p class="invalid-feedback" id="lastNameValidation" th:errors="${updateAppUserDto.lastName}"
