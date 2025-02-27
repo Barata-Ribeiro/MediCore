@@ -20,6 +20,7 @@ public class CustomErrorController implements ErrorController {
         if (status != null) {
             statusCode = Integer.parseInt(status.toString());
             errorMessage = switch (statusCode) {
+                case 403 -> "Access denied";
                 case 404 -> "Page not found";
                 case 500 -> "Internal server error";
                 default -> "Unknown error";
