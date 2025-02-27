@@ -6,13 +6,18 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.session.FindByIndexNameSessionRepository;
+import org.springframework.session.Session;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
+import java.security.Principal;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 import static com.barataribeiro.medicore.utils.ApplicationConstants.PAGE_TITLE;
 import static com.barataribeiro.medicore.utils.ApplicationConstants.UPDATE_APP_USER_DTO;
@@ -24,6 +29,16 @@ public class AppUserService {
     private final PasswordEncoder passwordEncoder;
     private final AppUserRepository appUserRepository;
     private final UserMapper userMapper;
+    private final FindByIndexNameSessionRepository<? extends Session> sessions;
+
+    public Collection<? extends Session> getSessions(@NotNull Principal principal) {
+        return sessions.findByPrincipalName(principal.getName()).values();
+    }
+
+    public void removeSession(@NotNull Principal principal, String sessionIdToDelete) {
+        Set<String> usersSessionIds = sessions.findByPrincipalName(principal.getName()).keySet();
+        if (usersSessionIds.contains(sessionIdToDelete)) sessions.deleteById(sessionIdToDelete);
+    }
 
     @Transactional
     public @Nullable String updateAppUser(String username, Model model, @NotNull UpdateAppUserDto body,
