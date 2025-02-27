@@ -1,5 +1,7 @@
 package com.barataribeiro.medicore.features.authentication;
 
+import com.barataribeiro.medicore.features.medicalfile.MedicalFile;
+import com.barataribeiro.medicore.features.medicalfile.MedicalFileRepository;
 import com.barataribeiro.medicore.features.user.AppUser;
 import com.barataribeiro.medicore.features.user.AppUserRepository;
 import com.barataribeiro.medicore.features.user.Profile;
@@ -29,6 +31,7 @@ public class AuthService implements UserDetailsService {
     private final AppUserRepository appUserRepository;
     private final PasswordEncoder passwordEncoder;
     private final ProfileRepository profileRepository;
+    private final MedicalFileRepository medicalFileRepository;
 
     @Override
     public UserDetails loadUserByUsername(@NotNull String username) throws UsernameNotFoundException {
@@ -66,13 +69,14 @@ public class AuthService implements UserDetailsService {
                                  .password(passwordEncoder.encode(registrationDto.getPassword()))
                                  .build();
 
-        Profile profile = Profile.builder()
-                                 .user(newUser)
-                                 .build();
+        Profile profile = Profile.builder().user(newUser).build();
+        MedicalFile medicalFile = MedicalFile.builder().user(newUser).build();
 
         newUser.setProfile(profile);
+        newUser.setMedicalFile(medicalFile);
 
         profileRepository.save(profile);
+        medicalFileRepository.save(medicalFile);
         appUserRepository.save(newUser);
 
         return null;
