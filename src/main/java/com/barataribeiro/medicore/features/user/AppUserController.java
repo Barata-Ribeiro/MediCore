@@ -1,18 +1,30 @@
 package com.barataribeiro.medicore.features.user;
 
 import com.barataribeiro.medicore.features.user.dtos.UpdateAppUserDto;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.session.Session;
+import org.springframework.session.data.redis.RedisIndexedSessionRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 import static com.barataribeiro.medicore.utils.ApplicationConstants.PAGE_TITLE;
 import static com.barataribeiro.medicore.utils.ApplicationConstants.UPDATE_APP_USER_DTO;
 
+@Slf4j
 @Controller
 @RequestMapping("/{username}")
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
@@ -20,6 +32,7 @@ public class AppUserController {
     private final UserMapper userMapper;
     private final ProfileRepository profileRepository;
     private final AppUserService appUserService;
+    private final RedisIndexedSessionRepository sessionRepository;
 
     @GetMapping
     @PreAuthorize("#username == authentication.name")
@@ -57,8 +70,35 @@ public class AppUserController {
 
     @GetMapping("/settings")
     @PreAuthorize("#username == authentication.name")
-    public String settings(@PathVariable String username, Model model) {
+    public String settings(@PathVariable String username, Model model, Principal principal, HttpSession httpSession) {
+        Collection<? extends Session> redisSessions = appUserService.getSessions(principal);
+        RedisIndexedSessionRepository.RedisSession actualRedisSession =
+                sessionRepository.findById(httpSession.getId());
+
+        List<Map<String, Object>> sessions = redisSessions.stream().map(session -> {
+            Map<String, Object> sessionMap = new LinkedHashMap<>();
+            populateSessionDetails(sessionMap, (RedisIndexedSessionRepository.RedisSession) session);
+            return sessionMap;
+        }).toList();
+
+        LinkedHashMap<String, Object> actualSession = new LinkedHashMap<>();
+        populateSessionDetails(actualSession, actualRedisSession);
+
         model.addAttribute(PAGE_TITLE, "Settings");
+        model.addAttribute("sessions", sessions);
+        model.addAttribute("actualSession", actualSession);
         return "pages/dashboard/profile/settings";
+    }
+
+    private void populateSessionDetails(@NotNull Map<String, Object> map,
+                                        RedisIndexedSessionRepository.@NotNull RedisSession session) {
+        map.put("id", session.getId());
+        map.put("security_context", session.getAttribute("SPRING_SECURITY_CONTEXT"));
+        map.put("session_metadata", session.getAttribute("SESSION_METADATA"));
+        map.put("creationTime", session.getCreationTime());
+        map.put("lastAccessedTime", session.getLastAccessedTime());
+        map.put("isExpired", session.isExpired());
+        map.put("maxInactiveInterval",
+                String.valueOf(session.getMaxInactiveInterval().getSeconds()));
     }
 }

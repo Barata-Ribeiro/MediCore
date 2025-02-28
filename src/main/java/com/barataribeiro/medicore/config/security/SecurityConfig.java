@@ -24,7 +24,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
-@EnableRedisIndexedHttpSession
+@EnableRedisIndexedHttpSession()
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
     @Value("${api.security.rememberMeKey}")
@@ -42,7 +42,8 @@ public class SecurityConfig {
     private int iterations;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                                   LoginSuccessHandler successHandler) throws Exception {
         http.cors(withDefaults())
             .csrf(csrf -> csrf
                     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
@@ -56,6 +57,7 @@ public class SecurityConfig {
                     .permissionsPolicyHeader(policy -> policy.policy("geolocation=(), microphone=(), camera=()")))
             .requestCache(RequestCacheConfigurer::disable)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                                                 .invalidSessionUrl("/login?invalid_session")
                                                  .sessionFixation(SessionManagementConfigurer
                                                                           .SessionFixationConfigurer::changeSessionId)
                                                  .maximumSessions(1)
@@ -68,17 +70,17 @@ public class SecurityConfig {
                     .loginPage("/login")
                     .usernameParameter("username")
                     .passwordParameter("password")
-                    .successHandler((request, response, authentication) -> response
-                            .sendRedirect("/" + authentication.getName()))
+                    .successHandler(successHandler)
                     .failureUrl("/login?failed"))
             .rememberMe(rememberMe -> rememberMe
-                    .tokenValiditySeconds((int) Duration.ofDays(180).getSeconds())
                     .rememberMeParameter("rememberMe")
+                    .useSecureCookie(true)
+                    .tokenValiditySeconds((int) Duration.ofDays(180).getSeconds())
                     .key(rememberMeKey))
             .logout(logout -> logout.logoutSuccessUrl("/")
                                     .invalidateHttpSession(true)
                                     .clearAuthentication(true)
-                                    .deleteCookies("SESSION"));
+                                    .deleteCookies("SESSION", "remember-me", "XSRF-TOKEN"));
 
         return http.build();
     }

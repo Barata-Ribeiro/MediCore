@@ -1,6 +1,5 @@
-package com.barataribeiro.medicore.config.security;
+package com.barataribeiro.medicore.config;
 
-import com.barataribeiro.medicore.config.ApplicationAuditAware;
 import lombok.RequiredArgsConstructor;
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.springframework.beans.factory.annotation.Autowired;
