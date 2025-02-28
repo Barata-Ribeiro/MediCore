@@ -14,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.header.writers.XXssProtectionHeaderWriter;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisIndexedHttpSession;
@@ -24,7 +25,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
-@EnableRedisIndexedHttpSession()
+@EnableRedisIndexedHttpSession
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
     @Value("${api.security.rememberMeKey}")
@@ -43,7 +44,8 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
-                                                   LoginSuccessHandler successHandler) throws Exception {
+                                                   LoginSuccessHandler successHandler,
+                                                   SessionMetadataFilter sessionMetadataFilter) throws Exception {
         http.cors(withDefaults())
             .csrf(csrf -> csrf
                     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
@@ -80,7 +82,8 @@ public class SecurityConfig {
             .logout(logout -> logout.logoutSuccessUrl("/")
                                     .invalidateHttpSession(true)
                                     .clearAuthentication(true)
-                                    .deleteCookies("SESSION", "remember-me", "XSRF-TOKEN"));
+                                    .deleteCookies("SESSION", "remember-me", "XSRF-TOKEN"))
+            .addFilterAfter(sessionMetadataFilter, RememberMeAuthenticationFilter.class);
 
         return http.build();
     }

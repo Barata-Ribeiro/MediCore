@@ -94,11 +94,21 @@ public class AppUserController {
                                         RedisIndexedSessionRepository.@NotNull RedisSession session) {
         map.put("id", session.getId());
         map.put("security_context", session.getAttribute("SPRING_SECURITY_CONTEXT"));
-        map.put("session_metadata", session.getAttribute("SESSION_METADATA"));
+
+        Object sessionMetadata = session.getAttribute("SESSION_METADATA");
+        if (sessionMetadata == null) {
+            Map<String, Object> defaultMetadata = new LinkedHashMap<>();
+            defaultMetadata.put("userAgent", "Unknown");
+            defaultMetadata.put("ipAddress", "Unknown");
+            defaultMetadata.put("loginTime", System.currentTimeMillis());
+            defaultMetadata.put("authenticationType", "Remember-Me (Restored)");
+            sessionMetadata = defaultMetadata;
+        }
+
+        map.put("session_metadata", sessionMetadata);
         map.put("creationTime", session.getCreationTime());
         map.put("lastAccessedTime", session.getLastAccessedTime());
         map.put("isExpired", session.isExpired());
-        map.put("maxInactiveInterval",
-                String.valueOf(session.getMaxInactiveInterval().getSeconds()));
+        map.put("maxInactiveInterval", session.getMaxInactiveInterval().getSeconds());
     }
 }

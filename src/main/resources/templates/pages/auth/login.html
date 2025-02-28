@@ -53,7 +53,8 @@
                     <p class="alert alert-danger" role="alert" th:if="${param.failed}">
                         [[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]
                     </p>
-                    <p class="alert alert-danger" role="alert" th:if="${param.invalid_session or param.expired}">
+                    <p class="alert alert-danger" role="alert"
+                       th:if="${param.invalid_session != null or param.expired != null}">
                         Your session was invalidated or expired. Please sign in again.
                     </p>
                     <button class="btn btn-primary w-100 py-2" type="submit">

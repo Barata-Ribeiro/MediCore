@@ -30,6 +30,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         sessionMetadata.put("userAgent", request.getHeader("User-Agent"));
         sessionMetadata.put("ipAddress", request.getRemoteAddr());
         sessionMetadata.put("loginTime", System.currentTimeMillis());
+        sessionMetadata.put("authenticationType", "Login");
 
         HttpSession httpSession = request.getSession(false);
 
