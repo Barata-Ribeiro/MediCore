@@ -1,12 +1,60 @@
 <!DOCTYPE html>
-<html lang="en" layout:decorate="~{layouts/auth_layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" layout:decorate="~{layouts/auth_layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
     <head>
         <title th:text="${pageTitle + ' - MediCore'}">MediCore</title>
     </head>
 
     <body>
-        <main class="px-1" layout:fragment="content">
-            TEXT
+        <main class="card m-1" layout:fragment="content">
+            <div class="card-header">
+                <h4 class="card-title">Settings</h4>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <h5 class="mb-0 text-danger">Danger Zone</h5>
+                    <p>Account deletion is irreversible. All your data will be lost. Are you sure you want to
+                       delete.</p>
+                </div>
+
+                <div>
+                    <h5 class="mb-0">Recent Activity</h5>
+                    <p>Activities registered in your account.</p>
+                    <table class="table border bg-white">
+                        <thead>
+                            <tr>
+                                <th>Device</th>
+                                <th>User</th>
+                                <th>IP</th>
+                                <th>Login Time</th>
+                                <th>Last Access</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                th:class="${currentSession.id == actualSession.id ? 'table-active' : ''}"
+                                th:classappend="${currentSession.isExpired ? 'table-danger' : ''}"
+                                th:each="currentSession : ${sessions}">
+                                <th scope="col" th:text="${(ua?.contains('Edg/') ? 'Edge' : (ua?.contains('Chrome/') && !ua?.contains('Edg/')) ? 'Chrome' :
+                                         ua?.contains('Firefox/') ? 'Firefox' : (ua?.contains('Safari/') && !ua?.contains('Chrome/')) ? 'Safari' : 'Unknown Browser') + ' - ' + (ua?.contains('Windows NT 10.0') ? 'Windows 10/11' :
+                                         ua?.contains('Windows NT 6.3') ? 'Windows 8.1' :
+                                         ua?.contains('Windows NT 6.2') ? 'Windows 8' :
+                                         ua?.contains('Windows NT 6.1') ? 'Windows 7' :
+                                         ua?.contains('Mac OS X') ? 'Mac OS' :
+                                         ua?.contains('iPhone') ? 'iOS' :
+                                         ua?.contains('Android') ? 'Android' : 'Unknown OS')}"
+                                    th:with="ua=${currentSession.session_metadata.userAgent}"></th>
+                                <td th:text="${currentSession.security_context.authentication.principal.username}"></td>
+                                <td
+                                    th:text="${currentSession.session_metadata.ipAddress == '0:0:0:0:0:0:0:1' ? 'localhost (127.0.0.1)' : currentSession.session_metadata.ipAddress}"></td>
+                                <td
+                                    th:text="${#dates.format(currentSession.session_metadata.loginTime, 'MMMM dd, yyyy HH:mm:ss')}"></td>
+                                <td th:text="${#dates.format(currentSession.lastAccessedTime, 'MMMM dd, yyyy HH:mm:ss')}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </main>
     </body>
 </html>

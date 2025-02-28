@@ -37,25 +37,25 @@
 
                     <div class="form-floating">
                         <input aria-autocomplete="list" autocomplete="username" autofocus class="form-control"
-                               id="username"
-                               name="username" placeholder="john/janedoe" type="text" />
+                               id="username" name="username" placeholder="john/janedoe" type="text" />
                         <label for="username">Username</label>
                     </div>
                     <div class="form-floating">
                         <input aria-autocomplete="list" autocomplete="current-password" class="form-control"
-                               id="password"
-                               name="password" placeholder="Password" type="password" />
+                               id="password" name="password" placeholder="Password" type="password" />
                         <label for="password">Password</label>
                     </div>
 
                     <div class="form-check text-start my-3">
-                        <input class="form-check-input" id="rememberMe" name="rememberMe" type="checkbox"
-                               value="remember-me" />
+                        <input class="form-check-input" id="rememberMe" name="rememberMe" type="checkbox" />
                         <label class="form-check-label" for="rememberMe"> Remember me </label>
                     </div>
-                    <div class="alert alert-danger" role="alert" th:if="${param.failed}">
+                    <p class="alert alert-danger" role="alert" th:if="${param.failed}">
                         [[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]
-                    </div>
+                    </p>
+                    <p class="alert alert-danger" role="alert" th:if="${param.invalid_session or param.expired}">
+                        Your session was invalidated or expired. Please sign in again.
+                    </p>
                     <button class="btn btn-primary w-100 py-2" type="submit">
                         Sign in
                     </button>
