@@ -23,11 +23,19 @@
             </div>
 
             <div class="dropdown text-end" sec:authorize="isAuthenticated()">
-                <button aria-expanded="false" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown"
-                        sec:authentication="name" type="button">
-                    Guest
+                <button aria-expanded="false"
+                        class="btn btn-outline-secondary dropdown-toggle d-flex flex-row align-items-center gap-1"
+                        data-bs-toggle="dropdown"
+                        type="button">
+                    <img alt="profile" class="rounded-circle" height="32" style="aspect-ratio: 1/1; object-fit: cover;"
+                         th:src="${#authentication.principal.avatarUrl != null} ? ${#authentication.principal.avatarUrl} : '/assets/images/default-avatar.svg'"
+                         width="32">
+                    <span sec:authentication="name">Guest</span>
                 </button>
                 <ul class="dropdown-menu text-small">
+                    <li><a class="dropdown-item"
+                           th:href="'/'+${#authentication.principal.username}">Dashboard
+                    </a></li>
                     <li><a class="dropdown-item"
                            th:href="'/'+${#authentication.principal.username} + '/settings'">Settings
                     </a></li>
