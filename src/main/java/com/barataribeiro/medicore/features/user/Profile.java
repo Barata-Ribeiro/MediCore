@@ -6,6 +6,8 @@ import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Date;
 import java.util.UUID;
 
@@ -44,6 +46,9 @@ public class Profile implements Serializable {
     @Column(name = "birth_date")
     private Date birthDate;
 
+    @Transient
+    private int age;
+
     private String sex;
     private String title;
 
@@ -52,5 +57,12 @@ public class Profile implements Serializable {
 
     public String getFullName() {
         return firstName + " " + lastName;
+    }
+
+    public int getAge() {
+        if (birthDate == null) return 0;
+
+        LocalDate birthLocalDate = new java.sql.Date(birthDate.getTime()).toLocalDate();
+        return Period.between(birthLocalDate, LocalDate.now()).getYears();
     }
 }

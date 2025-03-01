@@ -22,7 +22,9 @@ public class ProfileDto implements Serializable {
     private AppUserDto user;
     private String firstName;
     private String lastName;
+    private String fullName;
     private Date birthDate;
+    private int age;
     private String sex;
     private String title;
     private String biography;
