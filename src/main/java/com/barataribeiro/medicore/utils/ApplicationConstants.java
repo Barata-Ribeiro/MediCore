@@ -2,8 +2,12 @@ package com.barataribeiro.medicore.utils;
 
 public class ApplicationConstants {
     public static final String PAGE_TITLE = "pageTitle";
+    public static final String PAGE_DESCRIPTION = "pageDescription";
+
     public static final String REGISTRATION_DTO = "registrationDto";
     public static final String UPDATE_APP_USER_DTO = "updateAppUserDto";
+
+    public static final String CREATED_AT = "createdAt";
     public static final String SESSION_METADATA = "SESSION_METADATA";
     private static final String[] AUTH_WHITELIST = {
             // -- Swagger UI v2

@@ -6,10 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import software.xdev.chartjs.model.charts.LineChart;
 
 import static com.barataribeiro.medicore.utils.ApplicationConstants.PAGE_DESCRIPTION;
@@ -45,8 +42,17 @@ public class MedicalFileController {
 
         model.addAttribute(PAGE_TITLE, "Lipid Profile");
         model.addAttribute(PAGE_DESCRIPTION, "Check your lipid profile");
-        model.addAttribute("lipidProfiles", response);
+        model.addAttribute("lipidProfiles", response.getContent());
+        model.addAttribute("currentPage", response.getNumber());
+        model.addAttribute("totalPages", response.getTotalPages());
+        model.addAttribute("totalItems", response.getTotalElements());
         model.addAttribute("lipidChart", chart.toJson());
         return "pages/dashboard/medical_file/lipid-profile";
+    }
+
+    @PostMapping("/lipid-profile")
+    public String postLipidProfile(Authentication authentication, @PathVariable String username) {
+        if (!username.equals(authentication.getName())) return "redirect:/";
+        return "redirect:/" + username + "/medical-history/lipid-profile";
     }
 }
