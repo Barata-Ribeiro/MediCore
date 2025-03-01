@@ -1,5 +1,6 @@
 package com.barataribeiro.medicore.features.exams.lipid_profile;
 
+import com.barataribeiro.medicore.features.exams.lipid_profile.dtos.LipidProfileDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.barataribeiro.medicore.features.medicalfile;
 
-import com.barataribeiro.medicore.features.exams.lipid_profile.LipidProfileDto;
 import com.barataribeiro.medicore.features.exams.lipid_profile.LipidProfileService;
+import com.barataribeiro.medicore.features.exams.lipid_profile.dtos.LipidProfileDto;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;

@@ -1,5 +1,6 @@
-package com.barataribeiro.medicore.features.exams.lipid_profile;
+package com.barataribeiro.medicore.features.exams.lipid_profile.dtos;
 
+import com.barataribeiro.medicore.features.exams.lipid_profile.LipidProfile;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
