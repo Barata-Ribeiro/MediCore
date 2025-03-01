@@ -3,6 +3,7 @@ package com.barataribeiro.medicore.features.authentication;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,7 +20,8 @@ public class AuthController {
     private final AuthService authService;
 
     @GetMapping("/login")
-    public String login(Model model) {
+    public String login(Model model, Authentication authentication) {
+        if (authentication != null) return "redirect:/";
         model.addAttribute(PAGE_TITLE, "Login");
         return "pages/auth/login";
     }
