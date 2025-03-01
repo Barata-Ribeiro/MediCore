@@ -38,6 +38,11 @@
                 margin-left: 0;
             }
 
+            .bg-gradient-primary-to-secondary {
+                background-color: #0061f2 !important;
+                background-image: linear-gradient(135deg, rgba(0, 97, 242, 0.95) 0%, rgba(0, 173, 242, 0.95) 100%) !important;
+            }
+
             @media (min-width: 768px) {
                 #sidebar-wrapper {
                     margin-left: 0;
@@ -71,9 +76,8 @@
                 <!-- TOP NAVBAR -->
                 <th:block th:replace="~{fragments/top-navbar :: top-navbar}"></th:block>
 
-
                 <!-- CONTENT -->
-                <th:block class="container-fluid" layout:fragment="content"></th:block>
+                <th:block layout:fragment="content"></th:block>
             </div>
         </div>
 

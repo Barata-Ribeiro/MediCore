@@ -6,36 +6,84 @@
     </head>
 
     <body>
-        <main class="card m-1" layout:fragment="content">
-            <div class="card-header">
-                <h4 class="card-title">Settings</h4>
-            </div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <h5 class="mb-0 text-danger">Danger Zone</h5>
-                    <p>Account deletion is irreversible. All your data will be lost. Are you sure you want to
-                       delete.</p>
-                </div>
+        <main class="m-1" layout:fragment="content">
+            <nav aria-label="breadcrumb" class="bg-dark-subtle rounded p-2 mt-1 mb-2"
+                 style="--bs-breadcrumb-divider:'>';">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item">
+                        <a aria-label="Go to dashboard" th:href="${userBaseUrl}">Dashboard</a>
+                    </li>
+                    <li aria-current="page" class="breadcrumb-item active">Settings</li>
+                </ol>
+            </nav>
 
-                <div>
-                    <h5 class="mb-0">Recent Activity</h5>
-                    <p>Activities registered in your account.</p>
-                    <table class="table border bg-white">
-                        <thead>
-                            <tr>
-                                <th>Device</th>
-                                <th>User</th>
-                                <th>IP</th>
-                                <th>Login Time</th>
-                                <th>Last Access</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr
-                                th:class="${currentSession.id == actualSession.id ? 'table-active' : ''}"
-                                th:classappend="${currentSession.isExpired ? 'table-danger' : ''}"
-                                th:each="currentSession : ${sessions}">
-                                <th scope="col" th:text="${(ua?.contains('Edg/') ? 'Edge' : (ua?.contains('Chrome/') && !ua?.contains('Edg/')) ? 'Chrome' :
+            <section class="card">
+                <header class="card-header">
+                    <h1 class="h2">Settings</h1>
+                    <p>Here you will handle some sensitive data regarding your account.</p>
+                </header>
+
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h5 class="mb-0 text-danger">Danger Zone</h5>
+                        <p>Account deletion is irreversible. All your data will be lost. Are you sure you want to
+                           delete?</p>
+                        <button class="btn btn-danger" data-bs-target="#deleteAccountModal" data-bs-toggle="modal"
+                                type="button">
+                            Delete Account
+                        </button>
+
+                        <div aria-hidden="true" aria-labelledby="deleteAccountModalLabel" class="modal fade"
+                             id="deleteAccountModal" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <form class="modal-content" th:action="@{'/' + ${#authentication.name} + '/profile'}"
+                                      th:method="delete">
+                                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden" />
+
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="deleteAccountModalLabel">
+                                            Delete Account
+                                        </h1>
+                                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
+                                                type="button"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you absolutely sure you want to delete your account?</p>
+                                        <p class="text-danger">This action is irreversible. All your data will be lost.
+                                                               No
+                                                               way to recover it. </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close
+                                        </button>
+                                        <button class="btn btn-danger" type="submit">Yes, I'm sure</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div class="overflow-x-auto">
+                        <h5 class="mb-0">Recent Activity</h5>
+                        <p>Activities registered in your account.</p>
+                        <table class="table border bg-white">
+                            <thead>
+                                <tr>
+                                    <th>Device</th>
+                                    <th>User</th>
+                                    <th>IP</th>
+                                    <th>Login Time</th>
+                                    <th>Last Access</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    th:class="${currentSession.id == actualSession.id ? 'table-active' : ''}"
+                                    th:classappend="${currentSession.isExpired ? 'table-danger' : ''}"
+                                    th:each="currentSession : ${sessions}">
+                                    <th scope="col" th:text="${(ua?.contains('Edg/') ? 'Edge' : (ua?.contains('Chrome/') && !ua?.contains('Edg/')) ? 'Chrome' :
                                          ua?.contains('Firefox/') ? 'Firefox' : (ua?.contains('Safari/') && !ua?.contains('Chrome/')) ? 'Safari' : 'Unknown Browser') + ' - ' + (ua?.contains('Windows NT 10.0') ? 'Windows 10/11' :
                                          ua?.contains('Windows NT 6.3') ? 'Windows 8.1' :
                                          ua?.contains('Windows NT 6.2') ? 'Windows 8' :
@@ -43,18 +91,19 @@
                                          ua?.contains('Mac OS X') ? 'Mac OS' :
                                          ua?.contains('iPhone') ? 'iOS' :
                                          ua?.contains('Android') ? 'Android' : 'Unknown OS')}"
-                                    th:with="ua=${currentSession.session_metadata.userAgent}"></th>
-                                <td th:text="${currentSession.security_context.authentication.principal.username}"></td>
-                                <td
-                                    th:text="${currentSession.session_metadata.ipAddress == '0:0:0:0:0:0:0:1' ? 'localhost (127.0.0.1)' : currentSession.session_metadata.ipAddress}"></td>
-                                <td
-                                    th:text="${#dates.format(currentSession.session_metadata.loginTime, 'MMMM dd, yyyy HH:mm:ss')}"></td>
-                                <td th:text="${#dates.format(currentSession.lastAccessedTime, 'MMMM dd, yyyy HH:mm:ss')}"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                        th:with="ua=${currentSession.session_metadata.userAgent}"></th>
+                                    <td th:text="${currentSession.security_context.authentication.principal.username}"></td>
+                                    <td
+                                        th:text="${currentSession.session_metadata.ipAddress == '0:0:0:0:0:0:0:1' ? 'localhost (127.0.0.1)' : currentSession.session_metadata.ipAddress}"></td>
+                                    <td
+                                        th:text="${#dates.format(currentSession.session_metadata.loginTime, 'MMMM dd, yyyy HH:mm:ss')}"></td>
+                                    <td th:text="${#dates.format(currentSession.lastAccessedTime, 'MMMM dd, yyyy HH:mm:ss')}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            </section>
         </main>
     </body>
 </html>
