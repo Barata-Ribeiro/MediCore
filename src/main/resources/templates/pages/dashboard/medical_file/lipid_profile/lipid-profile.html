@@ -5,7 +5,7 @@
         <title th:text="${pageTitle + ' - MediCore'}">MediCore</title>
         <meta name="description" th:content="${pageDescription}" />
         <script th:src="${@urlProvider.getVersionedUrl('/js/chart.umd.min.js')}" type="text/javascript"></script>
-        <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js" type="text/javascript"></script>
+        <script th:src="${@urlProvider.getVersionedUrl('/js/jspdf.umd.min.js')}" type="text/javascript"></script>
         <script type="text/javascript">window.jsPDF = window.jspdf.jsPDF</script>
     </head>
     <body layout:fragment="content">
@@ -34,11 +34,11 @@
                 <div class="card-header d-sm-flex justify-content-between align-items-center">
                     <h2 class="card-title">Lipid Profile Table</h2>
                     <div class="d-flex align-items-center gap-2">
-                        <button aria-label="Add new Lipid Profile" class="btn btn-primary text-light"
-                                data-bs-target="#newLipidProfileModal" data-bs-toggle="modal"
-                                title="Add new Lipid Profile" type="button">
+                        <a aria-label="Add new Lipid Profile" class="btn btn-primary text-light"
+                           th:href="@{${userBaseUrl + '/medical-history/lipid-profile/add'}}"
+                           title="Add new Lipid Profile">
                             <i aria-hidden="true" class="bi bi-plus-lg"></i>
-                        </button>
+                        </a>
 
                         <button aria-label="Print Table" class="btn btn-success text-light"
                                 th:disabled="${lipidProfiles.isEmpty()}" title="Print Table" type="button">
@@ -57,16 +57,27 @@
                                 <th scope="col">HDL</th>
                                 <th scope="col">LDL</th>
                                 <th scope="col">VLDL</th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="lipidProfile : ${lipidProfiles}">
-                                <td th:text="${#temporals.format(lipidProfile.reportDate, 'MMMM dd, YYYY')}"></td>
+                                <td th:text="${#dates.format(lipidProfile.reportDate, 'MMMM dd, YYYY')}"></td>
                                 <td th:text="${lipidProfile.totalCholesterol}"></td>
                                 <td th:text="${lipidProfile.triglycerides}"></td>
-                                <td th:text="${lipidProfile.hdl}"></td>
-                                <td th:text="${lipidProfile.ldl}"></td>
-                                <td th:text="${lipidProfile.vldl}"></td>
+                                <td th:text="${lipidProfile.hdlCholesterol}"></td>
+                                <td th:text="${lipidProfile.ldlCholesterol}"></td>
+                                <td th:text="${lipidProfile.vldlCholesterol}"></td>
+                                <td class="d-flex align-items-center gap-1">
+                                    <form
+                                        th:action="@{${userBaseUrl} + '/medical-history/lipid-profile/' + ${lipidProfile.id} + '/delete'}"
+                                        th:method="delete">
+                                        <button aria-label="Delete Lipid Profile" class="btn text-danger"
+                                                title="Delete Lipid Profile" type="submit">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -104,29 +115,6 @@
                 </div>
             </section>
         </main>
-
-        <div aria-hidden="true" aria-labelledby="newLipidProfileModalLabel" class="modal fade" id="newLipidProfileModal"
-             tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <form class="modal-content" th:action="@{${userBaseUrl} + '/lipid-profile'}" th:method="post">
-                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden" />
-
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="newLipidProfileModalLabel">
-                            Add New Lipid Profile
-                        </h1>
-                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
-                    </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
-                        <button class="btn btn-primary" type="button">Save changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
 
         <script th:inline="javascript" type="text/javascript">
             $(function() {
