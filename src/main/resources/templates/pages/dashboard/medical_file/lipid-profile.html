@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/auth_layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="${pageTitle + ' - MediCore'}">MediCore</title>
+        <meta name="description" th:content="${pageDescription}" />
+        <script th:src="${@urlProvider.getVersionedUrl('/js/chart.umd.min.js')}" type="text/javascript"></script>
+        <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js" type="text/javascript"></script>
+        <script type="text/javascript">window.jsPDF = window.jspdf.jsPDF</script>
+    </head>
+    <body layout:fragment="content">
+        <th:block th:replace="~{fragments/medical-file-header :: medical-file-header}"></th:block>
+
+        <main class="container-xl mt-n1">
+            <section aria-labelledby="lipid-profile-chart-title" class="card w-100 h-100 m-1">
+                <div class="card-header"
+                     id="lipid-profile-chart-title">
+                    <h2 class="card-title">Chart</h2>
+                    <!--                    <button aria-label="Print Chart Image" class="btn btn-success text-light" id="printChartBtn"-->
+                    <!--                            type="button">-->
+                    <!--                        <i aria-hidden="true" class="bi bi-image-fill"></i>-->
+                    <!--                    </button>-->
+                </div>
+                <div class="card-body bg-dark-subtle m-0 chart-card">
+                    <div class="chart-container">
+                        <canvas aria-label="Lipid Profile Canvas" class="bg-light-subtle rounded shadow-sm"
+                                id="lipidChart" role="img">Your browser does not support the canvas element.
+                        </canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card w-100 h-100 m-1" id="lipid-profile-table-title">
+                <div class="card-header d-sm-flex justify-content-between align-items-center">
+                    <h2 class="card-title">Lipid Profile Table</h2>
+                    <div class="d-flex align-items-center gap-2">
+                        <button aria-label="Add new Lipid Profile" class="btn btn-primary text-light"
+                                data-bs-target="#newLipidProfileModal" data-bs-toggle="modal"
+                                title="Add new Lipid Profile" type="button">
+                            <i aria-hidden="true" class="bi bi-plus-lg"></i>
+                        </button>
+
+                        <button aria-label="Print Table" class="btn btn-success text-light"
+                                th:disabled="${lipidProfiles.isEmpty()}" title="Print Table" type="button">
+                            <i aria-hidden="true" class="bi bi-printer-fill"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-body overflow-x-auto">
+                    <table class="table table-striped table-hover table-responsive">
+                        <thead>
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Total Cholesterol</th>
+                                <th scope="col">Triglycerides</th>
+                                <th scope="col">HDL</th>
+                                <th scope="col">LDL</th>
+                                <th scope="col">VLDL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="lipidProfile : ${lipidProfiles}">
+                                <td th:text="${#temporals.format(lipidProfile.reportDate, 'MMMM dd, YYYY')}"></td>
+                                <td th:text="${lipidProfile.totalCholesterol}"></td>
+                                <td th:text="${lipidProfile.triglycerides}"></td>
+                                <td th:text="${lipidProfile.hdl}"></td>
+                                <td th:text="${lipidProfile.ldl}"></td>
+                                <td th:text="${lipidProfile.vldl}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <nav aria-label="Page navigation" class="d-md-flex align-items-center justify-content-between">
+                        <span class="m-0 d-block text-center"
+                              th:attr="aria-label=${'Total Items ' + totalItems + ' : Page ' + currentPage + ' of ' + totalPages}">
+                            Total Items [[${totalItems}]] : Page [[${currentPage}]] of [[${totalPages}]]
+                        </span>
+
+                        <ul class="pagination m-0 justify-content-center flex-grow-1">
+                            <li class="page-item" id="prev-button">
+                                <a class="page-link"
+                                   th:attr="aria-disabled=${currentPage < 1 ? 'true' : null}, tabindex=${currentPage < 1 ? '-1' : null}"
+                                   th:classappend="${currentPage < 1 ? 'disabled' : null}"
+                                   th:href="@{${servletPath} + (${servletPath.contains('?')} ? '&' : '?') + 'page=' + ${currentPage - 1}}">
+                                    Previous
+                                </a>
+                            </li>
+                            <li th:each="i: ${#numbers.sequence(0, totalPages)}">
+                                <a class="page-link" th:attr="aria-current=${currentPage == i ? 'page' : null}"
+                                   th:classappend="${currentPage == i ? 'disabled' : null}"
+                                   th:href="@{${servletPath} + (${servletPath.contains('?')} ? '&' : '?') + 'page=' + ${i}}">[[${i}]]</a>
+                            </li>
+                            <li class="page-item" id="next-button">
+                                <a class="page-link"
+                                   th:attr="aria-disabled=${currentPage >= totalPages - 1 ? 'true' : null}, tabindex=${currentPage >= totalPages - 1 ? '-1' : null}"
+                                   th:classappend="${currentPage >= totalPages - 1 ? 'disabled' : null}"
+                                   th:href="@{${servletPath} + (${servletPath.contains('?')} ? '&' : '?') + 'page=' + ${currentPage + 1}}">
+                                    Next
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </section>
+        </main>
+
+        <div aria-hidden="true" aria-labelledby="newLipidProfileModalLabel" class="modal fade" id="newLipidProfileModal"
+             tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <form class="modal-content" th:action="@{${userBaseUrl} + '/lipid-profile'}" th:method="post">
+                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden" />
+
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="newLipidProfileModalLabel">
+                            Add New Lipid Profile
+                        </h1>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                        <button class="btn btn-primary" type="button">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script th:inline="javascript" type="text/javascript">
+            $(function() {
+                // CHART
+                const chartData = JSON.parse(/*[[${lipidChart}]]*/ {})
+                const canvas = $('#lipidChart')
+                console.log(chartData)
+
+                const backGroundPlugin = {
+                    id: 'customCanvasBackgroundColor',
+                    beforeDraw: (chart, args, options) => {
+                        const {ctx} = chart
+                        ctx.save()
+                        ctx.globalCompositeOperation = 'destination-over'
+                        ctx.fillStyle = options.color ?? '#ffffff'
+                        ctx.fillRect(0, 0, chart.width, chart.height)
+                        ctx.restore()
+                    }
+                }
+
+                if (!chartData.options.plugins) chartData.options.plugins = {}
+                chartData.options.plugins.customCanvasBackgroundColor = {
+                    color: '#ffffff'
+                }
+
+                if (!chartData.plugins) chartData.plugins = []
+                chartData.plugins.push(backGroundPlugin)
+
+                const chart = new Chart(canvas, chartData)
+
+                $('#printChartBtn').on('click', function() {
+                    // const tempCanvas = document.createElement('canvas')
+                    // tempCanvas.width = canvas.width()
+                    // tempCanvas.height = canvas.height()
+                    //
+                    // const tempCtx = tempCanvas.getContext('2d')
+                    // tempCtx.fillStyle = '#ffffff'
+                    // tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height)
+                    // tempCtx.drawImage(canvas[0], 0, 0, tempCanvas.width, tempCanvas.height)
+                    //
+                    // const imgData = tempCanvas.toDataURL('image/jpg', 1.0)
+
+                    const doc = new jsPDF()
+                    const docWidth = doc.internal.pageSize.getWidth()
+                    const docHeight = doc.internal.pageSize.getHeight()
+                    doc.setFontSize(18)
+                    doc.text('Lipid Profile', docWidth / 2, 10, {align: 'center'})
+                    // doc.addImage(imgData, 'JPG', (docWidth / docHeight) / 2, 20, canvas.width() / 5,
+                    //              canvas.height() / 5, 'NONE')
+                    doc.save('lipid-profile-chart.pdf')
+                })
+            })
+        </script>
+    </body>
+</html>
