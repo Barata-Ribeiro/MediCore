@@ -26,6 +26,7 @@ public class MedicalFileDto implements Serializable {
     private String medications;
     private Double weight;
     private Double height;
+    private Double bmi;
     private String emergencyContact;
     private Instant createdAt;
     private Instant updatedAt;
