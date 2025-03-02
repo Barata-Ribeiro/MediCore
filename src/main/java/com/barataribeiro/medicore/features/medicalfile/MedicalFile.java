@@ -3,7 +3,10 @@ package com.barataribeiro.medicore.features.medicalfile;
 import com.barataribeiro.medicore.features.exams.complete_blood_count.CompleteBloodCount;
 import com.barataribeiro.medicore.features.exams.glucose.Glucose;
 import com.barataribeiro.medicore.features.exams.lipid_profile.LipidProfile;
+import com.barataribeiro.medicore.features.exams.urea_and_creatinine.UreaAndCreatinine;
+import com.barataribeiro.medicore.features.exams.uric_acid.UricAcid;
 import com.barataribeiro.medicore.features.exams.vitamin_d3.VitaminD;
+import com.barataribeiro.medicore.features.exams.vitamind_b12.VitaminB12;
 import com.barataribeiro.medicore.features.user.AppUser;
 import jakarta.persistence.*;
 import lombok.*;
@@ -79,6 +82,21 @@ public class MedicalFile implements Serializable {
     @ToString.Exclude
     @OneToMany(mappedBy = "medicalFile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<VitaminD> vitaminDs = new LinkedHashSet<>();
+
+    @Builder.Default
+    @ToString.Exclude
+    @OneToMany(mappedBy = "medicalFile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<VitaminB12> vitaminB12s = new LinkedHashSet<>();
+
+    @Builder.Default
+    @ToString.Exclude
+    @OneToMany(mappedBy = "medicalFile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<UreaAndCreatinine> ureaAndCreatinines = new LinkedHashSet<>();
+
+    @Builder.Default
+    @ToString.Exclude
+    @OneToMany(mappedBy = "medicalFile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<UricAcid> uricAcids = new LinkedHashSet<>();
 
     public Double getBmi() {
         return weight / (height * height);
