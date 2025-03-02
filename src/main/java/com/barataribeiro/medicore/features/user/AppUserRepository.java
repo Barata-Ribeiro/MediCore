@@ -1,5 +1,6 @@
 package com.barataribeiro.medicore.features.user;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
@@ -13,4 +14,7 @@ public interface AppUserRepository extends JpaRepository<AppUser, UUID> {
     Optional<AppUser> findByEmail(String email);
 
     boolean existsByEmail(String email);
+
+    @EntityGraph(attributePaths = {"profile"})
+    Optional<AppUser> findByProfile_FirstNameOrProfile_LastNameAllIgnoreCase(String firstName, String lastName);
 }
