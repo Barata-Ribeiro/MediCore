@@ -18,7 +18,9 @@ import java.util.UUID;
 @ToString
 @Builder
 @Entity
-@Table(name = "tb_profiles")
+@Table(name = "tb_profiles", indexes = {
+        @Index(name = "idx_profile_first_name_unq", columnList = "first_name, last_name", unique = true)
+})
 public class Profile implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;

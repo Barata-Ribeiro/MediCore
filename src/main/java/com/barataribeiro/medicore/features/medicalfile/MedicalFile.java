@@ -27,7 +27,9 @@ import java.util.UUID;
 @ToString
 @Builder
 @Entity
-@Table(name = "tb_medical_files")
+@Table(name = "tb_medical_files", indexes = {
+        @Index(name = "idx_medicalfile_unq", columnList = "emergency_contact", unique = true)
+})
 public class MedicalFile implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
