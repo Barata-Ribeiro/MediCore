@@ -97,10 +97,10 @@
                                     Previous
                                 </a>
                             </li>
-                            <li th:each="i: ${#numbers.sequence(0, totalPages)}">
-                                <a class="page-link" th:attr="aria-current=${currentPage == i ? 'page' : null}"
-                                   th:classappend="${currentPage == i ? 'disabled' : null}"
-                                   th:href="@{${servletPath} + (${servletPath.contains('?')} ? '&' : '?') + 'page=' + ${i}}">[[${i}]]</a>
+                            <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}">
+                                <a class="page-link" th:attr="aria-current=${currentPage == i - 1 ? 'page' : null}"
+                                   th:classappend="${currentPage == i - 1 ? 'disabled' : null}"
+                                   th:href="@{${servletPath} + (${servletPath.contains('?')} ? '&' : '?') + 'page=' + ${i - 1}}">[[${i}]]</a>
                             </li>
                             <li class="page-item" id="next-button">
                                 <a class="page-link"
