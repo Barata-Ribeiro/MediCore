@@ -1,4 +1,4 @@
-package com.barataribeiro.medicore.features.medicalfile;
+package com.barataribeiro.medicore.features.medical_file;
 
 import com.barataribeiro.medicore.features.exams.complete_blood_count.CompleteBloodCount;
 import com.barataribeiro.medicore.features.exams.glucose.Glucose;

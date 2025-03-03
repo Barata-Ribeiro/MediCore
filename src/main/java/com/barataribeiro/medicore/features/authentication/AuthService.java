@@ -1,7 +1,7 @@
 package com.barataribeiro.medicore.features.authentication;
 
-import com.barataribeiro.medicore.features.medicalfile.MedicalFile;
-import com.barataribeiro.medicore.features.medicalfile.MedicalFileRepository;
+import com.barataribeiro.medicore.features.medical_file.MedicalFile;
+import com.barataribeiro.medicore.features.medical_file.MedicalFileRepository;
 import com.barataribeiro.medicore.features.user.AppUser;
 import com.barataribeiro.medicore.features.user.AppUserRepository;
 import com.barataribeiro.medicore.features.user.Profile;

@@ -1,6 +1,6 @@
 package com.barataribeiro.medicore.features.exams.uric_acid;
 
-import com.barataribeiro.medicore.features.medicalfile.MedicalFile;
+import com.barataribeiro.medicore.features.medical_file.MedicalFile;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;

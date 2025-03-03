@@ -1,5 +1,6 @@
-package com.barataribeiro.medicore.features.medicalfile;
+package com.barataribeiro.medicore.features.medical_file.dtos;
 
+import com.barataribeiro.medicore.features.medical_file.MedicalFile;
 import com.barataribeiro.medicore.features.user.dtos.AppUserDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;

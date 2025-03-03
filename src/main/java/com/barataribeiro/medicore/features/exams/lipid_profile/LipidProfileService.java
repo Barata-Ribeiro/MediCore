@@ -2,8 +2,8 @@ package com.barataribeiro.medicore.features.exams.lipid_profile;
 
 import com.barataribeiro.medicore.features.exams.lipid_profile.dtos.LipidProfileDto;
 import com.barataribeiro.medicore.features.exams.lipid_profile.dtos.NewLipidProfileDto;
-import com.barataribeiro.medicore.features.medicalfile.MedicalFile;
-import com.barataribeiro.medicore.features.medicalfile.MedicalFileRepository;
+import com.barataribeiro.medicore.features.medical_file.MedicalFile;
+import com.barataribeiro.medicore.features.medical_file.MedicalFileRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;

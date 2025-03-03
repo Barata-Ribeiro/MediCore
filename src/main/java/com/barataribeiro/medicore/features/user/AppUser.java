@@ -1,6 +1,6 @@
 package com.barataribeiro.medicore.features.user;
 
-import com.barataribeiro.medicore.features.medicalfile.MedicalFile;
+import com.barataribeiro.medicore.features.medical_file.MedicalFile;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,4 +1,4 @@
-package com.barataribeiro.medicore.features.medicalfile;
+package com.barataribeiro.medicore.features.medical_file;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
