@@ -11,8 +11,14 @@
     <body layout:fragment="content">
         <th:block th:replace="~{fragments/medical-file-header :: medical-file-header}"></th:block>
 
-        <main class="container-xl mt-n1">
-            <section aria-labelledby="lipid-profile-chart-title" class="card w-100 h-100 m-1">
+        <main class="container mx-auto my-2 row g-2">
+            <th:block
+                th:with="breadcrumbs=${breadcrumbHelper.buildBreadcrumbs(userBaseUrl, 'medical-history', 'Medical History', 'lipid-profile', 'Lipid Profile')}">
+                <th:block
+                    th:replace="~{fragments/breadcrumb-navigation :: breadcrumb-navigation(breadcrumbItems=${breadcrumbs})}"></th:block>
+            </th:block>
+
+            <section aria-labelledby="lipid-profile-chart-title" class="card w-100 h-100">
                 <div class="card-header"
                      id="lipid-profile-chart-title">
                     <h2 class="card-title">Chart</h2>
@@ -30,7 +36,7 @@
                 </div>
             </section>
 
-            <section class="card w-100 h-100 m-1" id="lipid-profile-table-title">
+            <section class="card w-100 h-100" id="lipid-profile-table-title">
                 <div class="card-header d-sm-flex justify-content-between align-items-center">
                     <h2 class="card-title">Lipid Profile Table</h2>
                     <div class="d-flex align-items-center gap-2">
@@ -48,7 +54,7 @@
                 </div>
 
                 <div class="card-body overflow-x-auto">
-                    <table class="table table-striped table-hover table-responsive">
+                    <table class="table table-striped table-hover table-responsive-md">
                         <thead>
                             <tr>
                                 <th scope="col">Date</th>
@@ -62,7 +68,12 @@
                         </thead>
                         <tbody>
                             <tr th:each="lipidProfile : ${lipidProfiles}">
-                                <td th:text="${#dates.format(lipidProfile.reportDate, 'MMMM dd, YYYY')}"></td>
+                                <td>
+                                    <time class="d-md-block d-none" th:datetime="${lipidProfile.reportDate}"
+                                          th:text="${#dates.format(lipidProfile.reportDate, 'MMMM dd, YYYY')}"></time>
+                                    <time class="d-md-none d-block" th:datetime="${lipidProfile.reportDate}"
+                                          th:text="${#dates.format(lipidProfile.reportDate, 'MM/YY')}"></time>
+                                </td>
                                 <td th:text="${lipidProfile.totalCholesterol}"></td>
                                 <td th:text="${lipidProfile.triglycerides}"></td>
                                 <td th:text="${lipidProfile.hdlCholesterol}"></td>
@@ -82,36 +93,8 @@
                         </tbody>
                     </table>
 
-                    <nav aria-label="Page navigation" class="d-md-flex align-items-center justify-content-between">
-                        <span class="m-0 d-block text-center"
-                              th:attr="aria-label=${'Total Items ' + totalItems + ' : Page ' + currentPage + ' of ' + totalPages}">
-                            Total Items [[${totalItems}]] : Page [[${currentPage}]] of [[${totalPages}]]
-                        </span>
-
-                        <ul class="pagination m-0 justify-content-center flex-grow-1">
-                            <li class="page-item" id="prev-button">
-                                <a class="page-link"
-                                   th:attr="aria-disabled=${currentPage < 1 ? 'true' : null}, tabindex=${currentPage < 1 ? '-1' : null}"
-                                   th:classappend="${currentPage < 1 ? 'disabled' : null}"
-                                   th:href="@{${servletPath} + (${servletPath.contains('?')} ? '&' : '?') + 'page=' + ${currentPage - 1}}">
-                                    Previous
-                                </a>
-                            </li>
-                            <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}">
-                                <a class="page-link" th:attr="aria-current=${currentPage == i - 1 ? 'page' : null}"
-                                   th:classappend="${currentPage == i - 1 ? 'disabled' : null}"
-                                   th:href="@{${servletPath} + (${servletPath.contains('?')} ? '&' : '?') + 'page=' + ${i - 1}}">[[${i}]]</a>
-                            </li>
-                            <li class="page-item" id="next-button">
-                                <a class="page-link"
-                                   th:attr="aria-disabled=${currentPage >= totalPages - 1 ? 'true' : null}, tabindex=${currentPage >= totalPages - 1 ? '-1' : null}"
-                                   th:classappend="${currentPage >= totalPages - 1 ? 'disabled' : null}"
-                                   th:href="@{${servletPath} + (${servletPath.contains('?')} ? '&' : '?') + 'page=' + ${currentPage + 1}}">
-                                    Next
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <th:block
+                        th:replace="~{fragments/pagination-navigation :: pagination-navigation}"></th:block>
                 </div>
             </section>
         </main>

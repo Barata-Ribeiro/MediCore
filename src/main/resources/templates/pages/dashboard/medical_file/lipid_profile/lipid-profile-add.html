@@ -7,7 +7,13 @@
     </head>
     <body layout:fragment="content">
         <th:block th:replace="~{fragments/medical-file-header :: medical-file-header}"></th:block>
-        <main class="container-xl mt-3">
+        <main class="container mx-auto my-2 row g-2">
+            <th:block
+                th:with="breadcrumbs=${breadcrumbHelper.buildBreadcrumbs(userBaseUrl, 'medical-history', 'Medical History', 'lipid-profile', 'Lipid Profile', 'lipid-profile-add', 'Add New Lipid Profile')}">
+                <th:block
+                    th:replace="~{fragments/breadcrumb-navigation :: breadcrumb-navigation(breadcrumbItems=${breadcrumbs})}"></th:block>
+            </th:block>
+
             <div class="card w-md-50 w-100 mx-auto">
                 <div class="card-header">
                     <h1 class="display-6">Add new Profile</h1>

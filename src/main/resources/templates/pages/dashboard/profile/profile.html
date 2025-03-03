@@ -6,8 +6,14 @@
     </head>
 
     <body>
-        <main class="p-1" layout:fragment="content">
-            <div class="row gutters-sm">
+        <main class="mx-1 my-2" layout:fragment="content">
+            <th:block
+                th:with="breadcrumbs=${breadcrumbHelper.buildBreadcrumbs(userBaseUrl, 'profile/profile', 'Profile')}">
+                <th:block
+                    th:replace="~{fragments/breadcrumb-navigation :: breadcrumb-navigation(breadcrumbItems=${breadcrumbs})}"></th:block>
+            </th:block>
+
+            <div class="row gutters-sm mt-2">
                 <div class="col-md-4 mb-3">
                     <div class="card">
                         <div class="card-body">
@@ -36,7 +42,7 @@
                                       th:action="@{'/' + ${profile.user.username} + '/profile'}"
                                       th:method="post" th:object="${updateAppUserDto}">
                                     <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden" />
-                                    
+
                                     <h5 class="card-header">Avatar</h5>
                                     <div class="card-body">
                                         <div class="mb-3 has-validation">

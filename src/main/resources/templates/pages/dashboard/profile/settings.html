@@ -6,16 +6,12 @@
     </head>
 
     <body>
-        <main class="m-1" layout:fragment="content">
-            <nav aria-label="breadcrumb" class="bg-dark-subtle rounded p-2 mt-1 mb-2"
-                 style="--bs-breadcrumb-divider:'>';">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item">
-                        <a aria-label="Go to dashboard" th:href="${userBaseUrl}">Dashboard</a>
-                    </li>
-                    <li aria-current="page" class="breadcrumb-item active">Settings</li>
-                </ol>
-            </nav>
+        <main class="mx-1 my-2 row g-2" layout:fragment="content">
+            <th:block
+                th:with="breadcrumbs=${breadcrumbHelper.buildBreadcrumbs(userBaseUrl, 'profile/settings', 'Settings')}">
+                <th:block
+                    th:replace="~{fragments/breadcrumb-navigation :: breadcrumb-navigation(breadcrumbItems=${breadcrumbs})}"></th:block>
+            </th:block>
 
             <section class="card">
                 <header class="card-header">
