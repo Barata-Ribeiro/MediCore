@@ -70,26 +70,26 @@ public class LipidProfileService {
 
 
     public LineChart getLipidProfileChartInfo(@NotNull List<LipidProfileDto> data) {
-        String[] dateLabels = data.parallelStream()
-                                  .sorted(Comparator.comparing(LipidProfileDto::getReportDate))
-                                  .map(profile -> profile.getReportDate().toString())
-                                  .toArray(String[]::new);
+        List<LipidProfileDto> sortedData = data.parallelStream()
+                                               .sorted(Comparator.comparing(LipidProfileDto::getReportDate))
+                                               .toList();
+
+        String[] dateLabels = sortedData.parallelStream().map(profile -> profile.getReportDate().toString())
+                                        .toArray(String[]::new);
 
         final LineData lineData = new LineData();
         lineData.addLabels(dateLabels);
-        lineData.addDataset(new LineDataset().setLabel("Total Cholesterol").setData(getTotalCholesterol(data)));
-        lineData.addDataset(new LineDataset().setLabel("HDL Cholesterol").setData(getHdlCholesterol(data)));
-        lineData.addDataset(new LineDataset().setLabel("LDL Cholesterol").setData(getLdlCholesterol(data)));
-        lineData.addDataset(new LineDataset().setLabel("VLDL Cholesterol").setData(getVldlCholesterol(data)));
-        lineData.addDataset(new LineDataset().setLabel("Triglycerides").setData(getTriglycerides(data)));
+        lineData.addDataset(new LineDataset().setLabel("Total Cholesterol").setData(getTotalCholesterol(sortedData)));
+        lineData.addDataset(new LineDataset().setLabel("HDL Cholesterol").setData(getHdlCholesterol(sortedData)));
+        lineData.addDataset(new LineDataset().setLabel("LDL Cholesterol").setData(getLdlCholesterol(sortedData)));
+        lineData.addDataset(new LineDataset().setLabel("VLDL Cholesterol").setData(getVldlCholesterol(sortedData)));
+        lineData.addDataset(new LineDataset().setLabel("Triglycerides").setData(getTriglycerides(sortedData)));
 
         final Plugins legendPlugin = new Plugins().setLegend(new LegendOptions().setPosition("bottom"));
 
-        return new LineChart().setData(lineData)
-                              .setOptions(new LineOptions()
-                                                  .setPlugins(legendPlugin)
-                                                  .setResponsive(true)
-                                                  .setMaintainAspectRatio(false));
+        return new LineChart().setData(lineData).setOptions(new LineOptions().setPlugins(legendPlugin)
+                                                                             .setResponsive(true)
+                                                                             .setMaintainAspectRatio(false));
     }
 
     private Double @NotNull [] getTriglycerides(@NotNull List<LipidProfileDto> data) {
