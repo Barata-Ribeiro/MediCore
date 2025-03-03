@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+    <body>
+        <nav aria-label="Page navigation"
+             class="d-flex flex-column gap-2 justify-content-center align-items-center"
+             th:fragment="pagination-navigation">
+             <span class="text-center m-0"
+                   th:attr="aria-label=${'Total Items ' + totalItems + ' : Page ' + ((currentPage ?: 0) + 1) + ' of ' + (totalPages ?: 1)}">
+                 Total Items: [[${totalItems}]] - Page [[${(currentPage ?: 0) + 1}]] of [[${totalPages ?: 1}]]
+             </span>
+
+            <ul class="pagination">
+                <li class="page-item" id="first-button">
+                    <a class="page-link"
+                       th:attr="aria-disabled=${(currentPage ?: 0) < 1 ? 'true' : null}, tabindex=${(currentPage ?: 0) < 1 ? '-1' : null}"
+                       th:classappend="${(currentPage ?: 0) < 1 ? 'disabled' : null}"
+                       th:href="@{${servletPath}(page=0)}">
+                        First
+                    </a>
+                </li>
+                <li class="page-item" id="prev-button">
+                    <a class="page-link"
+                       th:attr="aria-disabled=${(currentPage ?: 0) < 1 ? 'true' : null}, tabindex=${(currentPage ?: 0) < 1 ? '-1' : null}"
+                       th:classappend="${(currentPage ?: 0) < 1 ? 'disabled' : null}"
+                       th:href="@{${servletPath}(page=${(currentPage ?: 0) > 0 ? (currentPage ?: 0) - 1 : 0})}">
+                        Previous
+                    </a>
+                </li>
+
+                <th:block th:if="${(totalPages ?: 1) <= 10}">
+                    <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages ?: 1)}">
+                        <a class="page-link" th:attr="aria-current=${(currentPage ?: 0) == i - 1 ? 'page' : null}"
+                           th:classappend="${(currentPage ?: 0) == i - 1 ? 'disabled' : null}"
+                           th:href="@{${servletPath}(page=${i - 1})}">[[${i}]]</a>
+                    </li>
+                </th:block>
+
+                <th:block th:if="${(totalPages ?: 1) > 10}">
+                    <th:block th:if="${(currentPage ?: 0) <= 5 || (currentPage ?: 0) > (totalPages ?: 1) - 4}">
+                        <li class="page-item" th:each="i: ${#numbers.sequence(1, 5)}">
+                            <a class="page-link" th:attr="aria-current=${(currentPage ?: 0) == i - 1 ? 'page' : null}"
+                               th:classappend="${(currentPage ?: 0) == i - 1 ? 'disabled' : null}"
+                               th:href="@{${servletPath}(page=${i - 1})}">[[${i}]]</a>
+                        </li>
+                        <li class="page-item disabled">
+                            <a class="page-link">...</a>
+                        </li>
+                        <li class="page-item" th:each="i: ${#numbers.sequence((totalPages ?: 1) - 4, totalPages ?: 1)}">
+                            <a class="page-link" th:attr="aria-current=${(currentPage ?: 0) == i - 1 ? 'page' : null}"
+                               th:classappend="${(currentPage ?: 0) == i - 1 ? 'disabled' : null}"
+                               th:href="@{${servletPath}(page=${i - 1})}">[[${i}]]</a>
+                        </li>
+                    </th:block>
+
+                    <th:block th:if="${(currentPage ?: 0) > 5 && (currentPage ?: 0) < (totalPages ?: 1) - 4}">
+                        <li class="page-item" th:each="i: ${#numbers.sequence(1, 2)}">
+                            <a class="page-link" th:attr="aria-current=${(currentPage ?: 0) == i - 1 ? 'page' : null}"
+                               th:classappend="${(currentPage ?: 0) == i - 1 ? 'disabled' : null}"
+                               th:href="@{${servletPath}(page=${i - 1})}">[[${i}]]</a>
+                        </li>
+                        <li class="page-item disabled">
+                            <a class="page-link">...</a>
+                        </li>
+                        <li class="page-item"
+                            th:each="i: ${#numbers.sequence((currentPage ?: 0) - 2, (currentPage ?: 0) + 2)}">
+                            <a class="page-link" th:attr="aria-current=${(currentPage ?: 0) == i - 1 ? 'page' : null}"
+                               th:classappend="${(currentPage ?: 0) == i - 1 ? 'disabled' : null}"
+                               th:href="@{${servletPath}(page=${i - 1})}">[[${i}]]</a>
+                        </li>
+                        <li class="page-item disabled">
+                            <a class="page-link">...</a>
+                        </li>
+                        <li class="page-item" th:each="i: ${#numbers.sequence((totalPages ?: 1) - 1, totalPages ?: 1)}">
+                            <a class="page-link" th:attr="aria-current=${(currentPage ?: 0) == i - 1 ? 'page' : null}"
+                               th:classappend="${(currentPage ?: 0) == i - 1 ? 'disabled' : null}"
+                               th:href="@{${servletPath}(page=${i - 1})}">[[${i}]]</a>
+                        </li>
+                    </th:block>
+                </th:block>
+
+                <li class="page-item" id="next-button">
+                    <a class="page-link"
+                       th:attr="aria-disabled=${(currentPage ?: 0) >= (totalPages ?: 1) - 1 ? 'true' : null}, tabindex=${(currentPage ?: 0) >= (totalPages ?: 1) - 1 ? '-1' : null}"
+                       th:classappend="${(currentPage ?: 0) >= (totalPages ?: 1) - 1 ? 'disabled' : null}"
+                       th:href="@{${servletPath}(page=${(currentPage ?: 0) < (totalPages ?: 1) - 1 ? (currentPage ?: 0) + 1 : (totalPages ?: 1) - 1})}">
+                        Next
+                    </a>
+                </li>
+                <li class="page-item" id="last-button">
+                    <a class="page-link"
+                       th:attr="aria-disabled=${(currentPage ?: 0) >= (totalPages ?: 1) - 1 ? 'true' : null}, tabindex=${(currentPage ?: 0) >= (totalPages ?: 1) - 1 ? '-1' : null}"
+                       th:classappend="${(currentPage ?: 0) >= (totalPages ?: 1) - 1 ? 'disabled' : null}"
+                       th:href="@{${servletPath}(page=${(totalPages ?: 1) - 1})}">
+                        Last
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </body>
+</html>
