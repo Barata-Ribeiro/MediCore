@@ -101,6 +101,7 @@ public class MedicalFile implements Serializable {
     private Set<UricAcid> uricAcids = new LinkedHashSet<>();
 
     public Double getBmi() {
+        if (weight == null || (height == null || height == 0)) return null;
         return weight / (height * height);
     }
 }

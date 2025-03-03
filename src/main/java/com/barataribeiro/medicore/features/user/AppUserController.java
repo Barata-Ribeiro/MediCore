@@ -1,5 +1,6 @@
 package com.barataribeiro.medicore.features.user;
 
+import com.barataribeiro.medicore.features.user.dtos.DashboardDto;
 import com.barataribeiro.medicore.features.user.dtos.UpdateAppUserDto;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -21,8 +22,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.barataribeiro.medicore.utils.ApplicationConstants.PAGE_TITLE;
-import static com.barataribeiro.medicore.utils.ApplicationConstants.UPDATE_APP_USER_DTO;
+import static com.barataribeiro.medicore.utils.ApplicationConstants.*;
 
 @Slf4j
 @Controller
@@ -37,7 +37,12 @@ public class AppUserController {
     @GetMapping
     @PreAuthorize("#username == authentication.name")
     public String dashboard(@PathVariable String username, Model model) {
+        DashboardDto dashboardInformation = appUserService.getDashboardInformation(username);
         model.addAttribute(PAGE_TITLE, username);
+        model.addAttribute(PAGE_DESCRIPTION,
+                           "Welcome to your dashboard, %s! Here you can manage your profile, settings, and more."
+                                   .formatted(username));
+        model.addAttribute("dashboard", dashboardInformation);
         return "pages/dashboard/index";
     }
 

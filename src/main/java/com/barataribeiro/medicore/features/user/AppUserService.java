@@ -1,5 +1,8 @@
 package com.barataribeiro.medicore.features.user;
 
+import com.barataribeiro.medicore.features.medical_file.MedicalFileMapper;
+import com.barataribeiro.medicore.features.medical_file.MedicalFileRepository;
+import com.barataribeiro.medicore.features.user.dtos.DashboardDto;
 import com.barataribeiro.medicore.features.user.dtos.UpdateAppUserDto;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +33,8 @@ public class AppUserService {
     private final AppUserRepository appUserRepository;
     private final UserMapper userMapper;
     private final FindByIndexNameSessionRepository<? extends Session> sessions;
+    private final MedicalFileRepository medicalFileRepository;
+    private final MedicalFileMapper medicalFileMapper;
 
     public Collection<? extends Session> getSessions(@NotNull Principal principal) {
         return sessions.findByPrincipalName(principal.getName()).values();
@@ -138,5 +143,12 @@ public class AppUserService {
 
     private void updateBiography(String biography, BindingResult bindingResult, Profile profile) {
         if (biography != null && !bindingResult.hasErrors()) profile.setBiography(biography);
+    }
+
+    @Transactional(readOnly = true)
+    public DashboardDto getDashboardInformation(String username) {
+        return userMapper.toDashboardDto(profileRepository
+                                                 .getProfileWithMedicalFile(username)
+                                                 .orElseThrow(() -> new RuntimeException("Profile not found")));
     }
 }
