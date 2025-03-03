@@ -1,5 +1,6 @@
 package com.barataribeiro.medicore.features.global;
 
+import com.barataribeiro.medicore.helpers.BreadcrumbHelper;
 import jakarta.servlet.http.HttpServletRequest;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -25,5 +26,10 @@ public class GlobalController {
     @ModelAttribute("userBaseUrl")
     String getBaseAuthUrl(Authentication authentication) {
         return authentication != null ? ("/" + authentication.getName()) : "";
+    }
+
+    @ModelAttribute("breadcrumbHelper")
+    public BreadcrumbHelper getBreadcrumbHelper() {
+        return new BreadcrumbHelper();
     }
 }
