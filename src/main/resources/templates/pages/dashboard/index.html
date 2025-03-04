@@ -1,12 +1,166 @@
 <!DOCTYPE html>
-<html lang="en" layout:decorate="~{layouts/auth_layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" layout:decorate="~{layouts/auth_layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
     <head>
         <title th:text="${pageTitle + ' - MediCore'}">MediCore</title>
+        <meta name="description" th:content="${pageDescription}" />
+        <script th:src="${@urlProvider.getVersionedUrl('/js/chart.umd.min.js')}" type="text/javascript"></script>
     </head>
 
-    <body>
-        <main class="px-1" layout:fragment="content">
-            TEXT
+    <body layout:fragment="content">
+        <main class="px-1 my-2 container-fluid">
+            <div class="card">
+                <header class="card-header">
+                    <h1 class="h2">Welcome, <span th:text="${dashboard.profile.user.username}">User</span>!</h1>
+                    <p class="text-muted">Here's a quick overview of your account.</p>
+                </header>
+
+                <section class="card-body row g-2">
+                    <!--PROFILE SUMMARY-->
+                    <article class="col-md-6">
+                        <div class="card">
+                            <header class="card-header d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h2 class="h3">Profile Summary</h2>
+                                    <p class="text-muted m-0">Your personal information</p>
+                                </div>
+
+                                <img
+                                    class="italic rounded-circle img-thumbnail"
+                                    height="64"
+                                    style="aspect-ratio: 1/1; object-fit: cover;"
+                                    th:alt="${'Avatar of ' + #authentication.principal.username}"
+                                    th:src="${#authentication.principal.avatarUrl ?: '/assets/images/default-avatar.svg'}"
+                                    th:title="${'Avatar of ' + #authentication.principal.username}"
+                                    width="64">
+                            </header>
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <dl class="col-sm-6">
+                                        <dt>Full Name</dt>
+                                        <dd th:text="${dashboard.profile.fullName ?: 'Not Informed'}"></dd>
+
+                                        <dt>Sex</dt>
+                                        <dd class="text-capitalize"
+                                            th:text="${dashboard.profile.sex.toLowerCase() ?: 'Not Informed'}"></dd>
+
+                                        <dt>Title</dt>
+                                        <dd th:text="${dashboard.profile.title ?: 'Not Informed'}"></dd>
+                                    </dl>
+
+                                    <dl class="col-sm-6">
+                                        <dt>Age</dt>
+                                        <dd th:text="${dashboard.profile.age + ' years' ?: 'Not Informed'}"></dd>
+
+                                        <dt>Birth Date</dt>
+                                        <dd class="text-capitalize"
+                                            th:text="${#dates.format(dashboard.profile.birthDate, 'dd/MM/yyyy') ?: 'Not Informed'}"></dd>
+
+                                        <dt>Email</dt>
+                                        <dd th:text="${dashboard.profile.user.email}">contact@example.com</dd>
+                                    </dl>
+                                </div>
+
+                                <div class="d-flex justify-content-end gap-2">
+                                    <a class="btn btn-primary" th:href="@{${userBaseUrl} + '/profile'}">
+                                        Edit Profile
+                                    </a>
+                                    <a class="btn btn-secondary"
+                                       th:href="@{${userBaseUrl} + '/settings'}">Settings</a>
+                                </div>
+                            </div>
+                            <footer class="card-footer">
+                                <time class="text-muted"
+                                      th:datetime="${dashboard.profile.user.updatedAt}">Last updated: <span
+                                    th:text="${#dates.format(dashboard.profile.user.updatedAt, 'dd/MM/yyyy')}">
+                                        2021-01-01</span>
+                                </time>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <!--BMI-->
+                    <article class="col-md-3 col-sm-6">
+                        <div class="card">
+                            <header class="card-header">
+                                <h2 class="h3">BMI</h2>
+                                <p class="text-muted m-0">Body Mass Index</p>
+                            </header>
+                            <div class="card-body text-center" th:with="bmi=${dashboard.medicalFile.bmi ?: 0}">
+                                <h3 class="display-3" th:text="${bmi}"></h3>
+
+                                <div class="d-block">
+                                    <span
+                                        th:class="${bmi <= 18.4 ? 'badge text-bg-secondary' : (bmi >= 18.5 && bmi <= 24.9 ? 'badge text-bg-success' : (bmi >= 25 && bmi <= 39.9 ? 'badge text-bg-warning' : 'badge text-bg-danger'))}"
+                                        th:text="${bmi <= 18.4 ? 'Underweight' : (bmi >= 18.5 && bmi <= 24.9 ? 'Normal' : (bmi >= 25 && bmi <= 39.9 ? 'Overweight' : 'Obese'))}"></span>
+
+                                    <div aria-label="Bmi progress bar" aria-valuemax="40" aria-valuemin="16"
+                                         class="progress mt-2" role="progressbar" th:attr="aria-valuenow=${bmi}">
+                                        <span class="progress-bar"
+                                              th:style="'width: ' + ${width} + '%'"
+                                              th:with="width=${
+                                              bmi <= 16 ? 0
+                                              : (bmi <= 18.5 ? ((bmi - 16.0) / 2.5) * 25
+                                              : (bmi <= 25 ? 25 + ((bmi - 18.5) / 6.5) * 25
+                                              : (bmi <= 30 ? 50 + ((bmi - 25.0) / 5) * 25
+                                              : (bmi <= 40 ? 75 + ((bmi - 30.0) / 10) * 25 : 100))))}"></span>
+                                    </div>
+
+                                    <small class="text-muted d-flex align-items-center justify-content-between">
+                                        <span>16</span><span>18.5</span><span>25</span><span>30</span><span>40</span>
+                                    </small>
+                                </div>
+
+                                <div class="d-flex justify-content-between mt-3">
+                                    <p class="m-0">
+                                        Height: <span th:text="${dashboard.medicalFile.height ?: '0'}"></span> cm
+                                    </p>
+                                    <p class="m-0">
+                                        Weight: <span th:text="${dashboard.medicalFile.weight ?: '0'}"></span> kg
+                                    </p>
+                                </div>
+                            </div>
+                            <footer class="card-footer d-grid">
+                                <a class="btn btn-secondary btn-sm" th:href="@{${userBaseUrl} + '/medical-history'}">
+                                    View Details
+                                </a>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <!--MEDICAL INFO-->
+                    <article class="col-md-3 col-sm-6">
+                        <div class="card">
+                            <header class="card-header">
+                                <h2 class="h3">Medical Info</h2>
+                                <p class="text-muted m-0">Key health information</p>
+                            </header>
+                            <dl class="card-body m-0">
+                                <dt>Blood Type</dt>
+                                <dd th:text="${dashboard.medicalFile.bloodType ?: 'Not Informed'}"></dd>
+
+                                <dt>Allergies</dt>
+                                <dd class="d-inline-block text-truncate" style="max-width: 300px;"
+                                    th:text="${dashboard.medicalFile.allergies ?: 'Not Informed'}"></dd>
+
+                                <dt>Diseases</dt>
+                                <dd class="d-inline-block text-truncate" style="max-width: 300px;"
+                                    th:text="${dashboard.medicalFile.diseases ?: 'Not Informed'}"></dd>
+
+                                <dt>Medications</dt>
+                                <dd class="d-inline-block text-truncate" style="max-width: 300px;"
+                                    th:text="${dashboard.medicalFile.medications ?: 'Not Informed'}"></dd>
+                            </dl>
+                            <footer class="card-footer d-grid">
+                                <a class="btn btn-secondary btn-sm" th:href="@{${userBaseUrl} + '/medical-history'}">
+                                    View Details
+                                </a>
+                            </footer>
+                        </div>
+                    </article>
+                </section>
+            </div>
         </main>
     </body>
 </html>
