@@ -1,6 +1,7 @@
 package com.barataribeiro.medicore.features.medical_file.dtos;
 
 import com.barataribeiro.medicore.features.medical_file.MedicalFile;
+import com.barataribeiro.medicore.features.user.dtos.AppUserDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,8 +18,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MedicalFileDto implements Serializable {
+public class MedicalFileWithUserDto implements Serializable {
     private UUID id;
+    private AppUserDto user;
     private String bloodType;
     private String allergies;
     private String diseases;
