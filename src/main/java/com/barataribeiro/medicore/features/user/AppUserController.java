@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import software.xdev.chartjs.model.charts.PieChart;
 
 import java.security.Principal;
 import java.util.Collection;
@@ -38,11 +39,14 @@ public class AppUserController {
     @PreAuthorize("#username == authentication.name")
     public String dashboard(@PathVariable String username, Model model) {
         DashboardDto dashboardInformation = appUserService.getDashboardInformation(username);
+        PieChart dashboardChart = appUserService.getDashboardPieChart(dashboardInformation);
+
         model.addAttribute(PAGE_TITLE, username);
         model.addAttribute(PAGE_DESCRIPTION,
                            "Welcome to your dashboard, %s! Here you can manage your profile, settings, and more."
                                    .formatted(username));
         model.addAttribute("dashboard", dashboardInformation);
+        model.addAttribute("dashboardChart", dashboardChart);
         return "pages/dashboard/index";
     }
 

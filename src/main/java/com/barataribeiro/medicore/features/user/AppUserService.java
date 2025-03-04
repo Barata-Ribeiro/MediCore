@@ -18,6 +18,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import software.xdev.chartjs.model.charts.PieChart;
+import software.xdev.chartjs.model.data.PieData;
+import software.xdev.chartjs.model.dataset.PieDataset;
+import software.xdev.chartjs.model.options.LegendOptions;
+import software.xdev.chartjs.model.options.PieOptions;
+import software.xdev.chartjs.model.options.Plugins;
+import software.xdev.chartjs.model.options.Title;
 
 import java.security.Principal;
 import java.util.Collection;
@@ -103,6 +110,40 @@ public class AppUserService {
                            .totalMedicalExams(sumOfExams)
                            .build();
     }
+
+    public PieChart getDashboardPieChart(@NotNull DashboardDto dashboardDto) {
+        String[] labels = {"Lipid Profile", "Complete Blood Count", "Glucose", "Vitamin D", "Vitamin B12",
+                           "Urea and Creatinine", "Uric Acid"};
+
+        final PieData pieData = new PieData();
+        final PieDataset medicalExamsDataset = new PieDataset().setLabel("Medical Exams Count")
+                                                               .addData(dashboardDto.getTotalLipidProfiles())
+                                                               .addData(dashboardDto.getTotalCompleteBloodCounts())
+                                                               .addData(dashboardDto.getTotalGlucoses())
+                                                               .addData(dashboardDto.getTotalVitaminDs())
+                                                               .addData(dashboardDto.getTotalVitaminB12s())
+                                                               .addData(dashboardDto.getTotalUreaAndCreatinines())
+                                                               .addData(dashboardDto.getTotalUricAcids());
+        pieData.addLabels(labels);
+        pieData.addDataset(medicalExamsDataset.addBackgroundColors("rgba(255, 99, 132, 0.2)",
+                                                                   "rgba(54, 162, 235, 0.2)",
+                                                                   "rgba(255, 206, 86, 0.2)",
+                                                                   "rgba(75, 192, 192, 0.2)",
+                                                                   "rgba(153, 102, 255, 0.2)",
+                                                                   "rgba(255, 159, 64, 0.2)",
+                                                                   "rgba(255, 99, 132, 0.2)"));
+
+        final Plugins charTitle = new Plugins().setTitle(new Title().setDisplay(true)
+                                                                    .setText("Medical Exams").setPosition("top"));
+        final Plugins legendPosition = new Plugins().setLegend(new LegendOptions().setPosition("top"));
+
+        return new PieChart().setData(pieData).setOptions(new PieOptions()
+                                                                  .setPlugins(charTitle)
+                                                                  .setPlugins(legendPosition)
+                                                                  .setMaintainAspectRatio(false)
+                                                                  .setResponsive(true));
+    }
+
 
     private void verifyIfBodyExistsThenUpdateProperties(@NotNull UpdateAppUserDto body, BindingResult bindingResult,
                                                         @NotNull AppUser user, @NotNull Profile profile) {
