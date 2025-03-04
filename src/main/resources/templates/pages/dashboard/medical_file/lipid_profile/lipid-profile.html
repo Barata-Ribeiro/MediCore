@@ -20,11 +20,7 @@
                     th:replace="~{fragments/breadcrumb-navigation :: breadcrumb-navigation(breadcrumbItems=${breadcrumbs})}"></th:block>
             </th:block>
 
-            <section aria-labelledby="lipid-profile-chart-title" class="card w-100 h-100">
-                <div class="card-header"
-                     id="lipid-profile-chart-title">
-                    <h2 class="card-title">Chart</h2>
-                </div>
+            <section aria-labelledby="lipid-profile-chart-title" class="card p-0 w-100 h-100">
                 <div class="card-body bg-dark-subtle m-0 chart-card">
                     <div class="chart-container">
                         <canvas aria-label="Lipid Profile Canvas" class="bg-light-subtle rounded shadow-sm"
@@ -34,7 +30,7 @@
                 </div>
             </section>
 
-            <section class="card w-100 h-100" id="lipid-profile-table-title">
+            <section class="card p-0 w-100 h-100" id="lipid-profile-table-title">
                 <div class="card-header d-sm-flex justify-content-between align-items-center">
                     <h2 class="card-title">Lipid Profile Table</h2>
                     <div class="d-flex align-items-center gap-2">
@@ -115,9 +111,10 @@
                 }
 
                 if (!chartData.options.plugins) chartData.options.plugins = {}
-                chartData.options.plugins.customCanvasBackgroundColor = {
-                    color: '#ffffff'
-                }
+                chartData.options.plugins.customCanvasBackgroundColor = {color: '#ffffff'}
+                chartData.options.plugins.tooltip = {mode: 'index', intersect: false}
+                chartData.options.plugins.title = {display: true, text: 'Lipid Profile Chart'}
+                chartData.options.plugins.hover = {mode: 'index', intersect: false}
 
                 if (!chartData.plugins) chartData.plugins = []
                 chartData.plugins.push(backGroundPlugin)
@@ -127,7 +124,7 @@
                 $('#printTableBtn').on('click', function() {
                     const lipidProfiles = /*[[${lipidProfiles}]]*/ {}
                     const doc = new jsPDF()
-                    
+
                     // Define page size
                     const docWidth = doc.internal.pageSize.getWidth()
                     const docHeight = doc.internal.pageSize.getHeight()

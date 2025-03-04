@@ -15,7 +15,7 @@
 
             <div class="row gutters-sm mt-2">
                 <div class="col-md-4 mb-3">
-                    <div class="card">
+                    <div class="card p-0">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
                                 <img class="rounded-circle img-thumbnail" height="150"
@@ -38,7 +38,7 @@
                                     </p>
                                 </div>
 
-                                <form class="card mt-3 text-start"
+                                <form class="card p-0 mt-3 text-start"
                                       th:action="@{'/' + ${profile.user.username} + '/profile'}"
                                       th:method="post" th:object="${updateAppUserDto}">
                                     <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden" />
@@ -90,7 +90,7 @@
                 </div>
 
                 <div class="col-md-8">
-                    <div class="card">
+                    <div class="card p-0">
                         <div class="card-header">
                             <h5 class="card-title">Profile</h5>
                             <ul class="nav nav-tabs card-header-tabs" data-bs-tabs="tabs">
