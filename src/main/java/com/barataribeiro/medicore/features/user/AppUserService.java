@@ -2,10 +2,12 @@ package com.barataribeiro.medicore.features.user;
 
 import com.barataribeiro.medicore.features.medical_file.MedicalFileMapper;
 import com.barataribeiro.medicore.features.medical_file.MedicalFileRepository;
+import com.barataribeiro.medicore.features.user.dtos.DashboardDao;
 import com.barataribeiro.medicore.features.user.dtos.DashboardDto;
 import com.barataribeiro.medicore.features.user.dtos.UpdateAppUserDto;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,10 +23,12 @@ import java.security.Principal;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import static com.barataribeiro.medicore.utils.ApplicationConstants.PAGE_TITLE;
 import static com.barataribeiro.medicore.utils.ApplicationConstants.UPDATE_APP_USER_DTO;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class AppUserService {
@@ -71,6 +75,33 @@ public class AppUserService {
         model.addAttribute("profile", userMapper.toUserProfileDto(profileRepository.saveAndFlush(profile)));
 
         return null;
+    }
+
+    @Transactional(readOnly = true)
+    public DashboardDto getDashboardInformation(String username) {
+        DashboardDao dashboardData = profileRepository
+                .getDashboardDataRaw(username)
+                .orElseThrow(() -> new RuntimeException("Dashboard data not found"));
+
+        final long sumOfExams = Stream.of(dashboardData.getTotalLipidProfiles(),
+                                          dashboardData.getTotalCompleteBloodCounts(),
+                                          dashboardData.getTotalGlucoses(),
+                                          dashboardData.getTotalVitaminDs(),
+                                          dashboardData.getTotalVitaminB12s(),
+                                          dashboardData.getTotalUreaAndCreatinines(),
+                                          dashboardData.getTotalUricAcids()).parallel().reduce(0L, Long::sum);
+
+        return DashboardDto.builder().profile(userMapper.toUserProfileDto(dashboardData.getProfile()))
+                           .medicalFile(medicalFileMapper.toMedicalFileDto(dashboardData.getMedicalFile()))
+                           .totalLipidProfiles(dashboardData.getTotalLipidProfiles())
+                           .totalCompleteBloodCounts(dashboardData.getTotalCompleteBloodCounts())
+                           .totalGlucoses(dashboardData.getTotalGlucoses())
+                           .totalVitaminDs(dashboardData.getTotalVitaminDs())
+                           .totalVitaminB12s(dashboardData.getTotalVitaminB12s())
+                           .totalUreaAndCreatinines(dashboardData.getTotalUreaAndCreatinines())
+                           .totalUricAcids(dashboardData.getTotalUricAcids())
+                           .totalMedicalExams(sumOfExams)
+                           .build();
     }
 
     private void verifyIfBodyExistsThenUpdateProperties(@NotNull UpdateAppUserDto body, BindingResult bindingResult,
@@ -143,12 +174,5 @@ public class AppUserService {
 
     private void updateBiography(String biography, BindingResult bindingResult, Profile profile) {
         if (biography != null && !bindingResult.hasErrors()) profile.setBiography(biography);
-    }
-
-    @Transactional(readOnly = true)
-    public DashboardDto getDashboardInformation(String username) {
-        return userMapper.toDashboardDto(profileRepository
-                                                 .getProfileWithMedicalFile(username)
-                                                 .orElseThrow(() -> new RuntimeException("Profile not found")));
     }
 }
