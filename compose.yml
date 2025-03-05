@@ -2,7 +2,7 @@ name: mediCore
 
 services:
   #  mediCore-database:
-  #    image: postgres:latest
+  #    image: postgres:alpine
   #    container_name: mediCore-database
   #    restart: always
   #    environment:
@@ -16,7 +16,7 @@ services:
   #      - pgdata:/var/lib/postgresql/data
 
   mediCore-session:
-    image: redis:latest
+    image: redis:alpine
     container_name: mediCore_redis
     restart: always
     command: redis-server --requirepass admin
