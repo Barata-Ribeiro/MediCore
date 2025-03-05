@@ -116,7 +116,7 @@ public class AppUserService {
                            "Urea and Creatinine", "Uric Acid"};
 
         final PieData pieData = new PieData();
-        final PieDataset medicalExamsDataset = new PieDataset().setLabel("Medical Exams Count")
+        final PieDataset medicalExamsDataset = new PieDataset().setLabel("Total")
                                                                .addData(dashboardDto.getTotalLipidProfiles())
                                                                .addData(dashboardDto.getTotalCompleteBloodCounts())
                                                                .addData(dashboardDto.getTotalGlucoses())
@@ -125,13 +125,13 @@ public class AppUserService {
                                                                .addData(dashboardDto.getTotalUreaAndCreatinines())
                                                                .addData(dashboardDto.getTotalUricAcids());
         pieData.addLabels(labels);
-        pieData.addDataset(medicalExamsDataset.addBackgroundColors("rgba(255, 99, 132, 0.2)",
-                                                                   "rgba(54, 162, 235, 0.2)",
-                                                                   "rgba(255, 206, 86, 0.2)",
-                                                                   "rgba(75, 192, 192, 0.2)",
-                                                                   "rgba(153, 102, 255, 0.2)",
-                                                                   "rgba(255, 159, 64, 0.2)",
-                                                                   "rgba(255, 99, 132, 0.2)"));
+        pieData.addDataset(medicalExamsDataset.addBackgroundColors("rgba(229, 221, 200, 1)",
+                                                                   "rgba(1, 148, 154, 1)",
+                                                                   "rgba(0, 67, 105, 1)",
+                                                                   "rgba(219, 31, 72, 1)",
+                                                                   "rgba(248, 210, 16, 1)",
+                                                                   "rgba(250, 38, 160, 1)",
+                                                                   "rgba(47, 243, 224, 1)"));
 
         final Plugins charTitle = new Plugins().setTitle(new Title().setDisplay(true)
                                                                     .setText("Medical Exams").setPosition("top"));

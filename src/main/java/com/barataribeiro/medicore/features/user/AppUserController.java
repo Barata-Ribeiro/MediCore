@@ -46,7 +46,7 @@ public class AppUserController {
                            "Welcome to your dashboard, %s! Here you can manage your profile, settings, and more."
                                    .formatted(username));
         model.addAttribute("dashboard", dashboardInformation);
-        model.addAttribute("dashboardChart", dashboardChart);
+        model.addAttribute("dashboardChart", dashboardChart.toJson());
         return "pages/dashboard/index";
     }
 
