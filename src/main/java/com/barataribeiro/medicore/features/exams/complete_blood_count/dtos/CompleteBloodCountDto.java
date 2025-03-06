@@ -1,5 +1,6 @@
-package com.barataribeiro.medicore.features.exams.complete_blood_count;
+package com.barataribeiro.medicore.features.exams.complete_blood_count.dtos;
 
+import com.barataribeiro.medicore.features.exams.complete_blood_count.CompleteBloodCount;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
