@@ -158,19 +158,22 @@
 
         <script th:inline="javascript" type="text/javascript">
             $(function() {
-                const tooltipTriggerList = $('[data-bs-toggle="tooltip"]')
-                const tooltipList = [ ...tooltipTriggerList ]
-                    .map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+                var tooltipTriggerList = $('[data-bs-toggle="tooltip"]')
+                var tooltipArray = []
 
-                const chartData = JSON.parse(/*[[${bloodCountChart}]]*/ {})
-                const canvas = $('#bloodCountChart')
-                const backGroundPlugin = {
+                tooltipTriggerList.each(function() {
+                    tooltipArray.push(new bootstrap.Tooltip(this))
+                })
+
+                var chartData = JSON.parse(/*[[${bloodCountChart}]]*/ {})
+                var canvas = $('#bloodCountChart')
+                var backGroundPlugin = {
                     id: 'customCanvasBackgroundColor',
-                    beforeDraw: (chart, args, options) => {
-                        const {ctx} = chart
+                    beforeDraw: function(chart, args, options) {
+                        var ctx = chart.ctx
                         ctx.save()
                         ctx.globalCompositeOperation = 'destination-over'
-                        ctx.fillStyle = options.color ?? '#ffffff'
+                        ctx.fillStyle = options.color || '#ffffff'
                         ctx.fillRect(0, 0, chart.width, chart.height)
                         ctx.restore()
                     }
@@ -185,7 +188,7 @@
                 if (!chartData.plugins) chartData.plugins = []
                 chartData.plugins.push(backGroundPlugin)
 
-                const chart = new Chart(canvas, chartData)
+                new Chart(canvas, chartData)
             })
         </script>
     </body>

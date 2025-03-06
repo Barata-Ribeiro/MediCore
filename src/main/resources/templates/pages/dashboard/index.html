@@ -258,22 +258,22 @@
         <script th:inline="javascript" type="text/javascript">
             $(function() {
                 // CHART
-                const chartData = JSON.parse(/*[[${dashboardChart}]]*/ {})
-                const canvas = $('#examsChart')
-                const backGroundPlugin = {
+                var chartData = JSON.parse(/*[[${dashboardChart}]]*/ {})
+                var canvas = $('#examsChart')
+                var backGroundPlugin = {
                     id: 'customCanvasBackgroundColor',
-                    beforeDraw: (chart, args, options) => {
-                        const {ctx} = chart
+                    beforeDraw: function(chart, args, options) {
+                        var ctx = chart.ctx
                         ctx.save()
                         ctx.globalCompositeOperation = 'destination-over'
-                        ctx.fillStyle = options.color ?? '#ffffff'
+                        ctx.fillStyle = options.color || '#ffffff'
                         ctx.fillRect(0, 0, chart.width, chart.height)
                         ctx.restore()
                     }
                 }
                 if (!chartData.options.plugins) chartData.options.plugins = {}
                 chartData.options.plugins.customCanvasBackgroundColor = {color: '#ffffff'}
-                const chart = new Chart(canvas, chartData)
+                new Chart(canvas, chartData)
 
                 // TIME
                 function formatDate(date) {
@@ -295,12 +295,12 @@
                     })
                 }
 
-                const currentTime = $('#currentTime')
-                const currentDate = $('#currentDate').text(`${ formatDate(new Date()) }`)
-                                                     .attr('datetime', new Date().toISOString())
-                setInterval(() => {
-                    const date = new Date()
-                    currentTime.text(`${ formatTime(date) }`).attr('datetime', date.toISOString())
+                var currentTime = $('#currentTime')
+                var currentDate = $('#currentDate').text(formatDate(new Date()))
+                                                   .attr('datetime', new Date().toISOString())
+                setInterval(function() {
+                    var date = new Date()
+                    currentTime.text(formatTime(date)).attr('datetime', date.toISOString())
                 }, 1000)
             })
         </script>

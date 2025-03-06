@@ -115,15 +115,15 @@
         <script th:inline="javascript" type="text/javascript">
             $(function() {
                 // CHART
-                const chartData = JSON.parse(/*[[${lipidChart}]]*/ {})
-                const canvas = $('#lipidChart')
-                const backGroundPlugin = {
+                var chartData = JSON.parse(/*[[${lipidChart}]]*/ {})
+                var canvas = $('#lipidChart')
+                var backGroundPlugin = {
                     id: 'customCanvasBackgroundColor',
-                    beforeDraw: (chart, args, options) => {
-                        const {ctx} = chart
+                    beforeDraw: function(chart, args, options) {
+                        var ctx = chart.ctx
                         ctx.save()
                         ctx.globalCompositeOperation = 'destination-over'
-                        ctx.fillStyle = options.color ?? '#ffffff'
+                        ctx.fillStyle = options.color || '#ffffff'
                         ctx.fillRect(0, 0, chart.width, chart.height)
                         ctx.restore()
                     }
@@ -138,15 +138,15 @@
                 if (!chartData.plugins) chartData.plugins = []
                 chartData.plugins.push(backGroundPlugin)
 
-                const chart = new Chart(canvas, chartData)
+                new Chart(canvas, chartData)
 
                 $('#printTableBtn').on('click', function() {
-                    const lipidProfiles = /*[[${lipidProfiles}]]*/ {}
-                    const doc = new jsPDF()
+                    var lipidProfiles = /*[[${lipidProfiles}]]*/ {}
+                    var doc = new jsPDF()
 
                     // Define page size
-                    const docWidth = doc.internal.pageSize.getWidth()
-                    const docHeight = doc.internal.pageSize.getHeight()
+                    var docWidth = doc.internal.pageSize.getWidth()
+                    var docHeight = doc.internal.pageSize.getHeight()
                     doc.setFontSize(18)
 
                     // Title
@@ -158,18 +158,20 @@
                         head: [ [ 'Date', 'Total Cholesterol', 'HDL Cholesterol', 'LDL Cholesterol',
                                   'VLDL Cholesterol',
                                   'Triglycerides' ] ],
-                        body: lipidProfiles.map(profile => [
-                            new Date(profile.reportDate).toLocaleDateString('en-US', {
-                                month: 'short',
-                                day: 'numeric',
-                                year: 'numeric'
-                            }),
-                            profile.totalCholesterol,
-                            profile.hdlCholesterol,
-                            profile.ldlCholesterol,
-                            profile.vldlCholesterol,
-                            profile.triglycerides
-                        ])
+                        body: lipidProfiles.map(function(lipidProfile) {
+                            return [
+                                new Date(profile.reportDate).toLocaleDateString('en-US', {
+                                    month: 'short',
+                                    day: 'numeric',
+                                    year: 'numeric'
+                                }),
+                                profile.totalCholesterol,
+                                profile.hdlCholesterol,
+                                profile.ldlCholesterol,
+                                profile.vldlCholesterol,
+                                profile.triglycerides
+                            ]
+                        })
                     })
 
                     doc.save('lipid-profile-chart.pdf')

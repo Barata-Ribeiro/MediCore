@@ -75,16 +75,16 @@
             </div>
             <script type="text/javascript">
                 $(function() {
-                    const getStoredTheme = function() {
+                    var getStoredTheme = function() {
                         return localStorage.getItem('theme')
                     }
 
-                    const setStoredTheme = function(theme) {
+                    var setStoredTheme = function(theme) {
                         localStorage.setItem('theme', theme)
                     }
 
-                    const getPreferredTheme = function() {
-                        const storedTheme = getStoredTheme()
+                    var getPreferredTheme = function() {
+                        var storedTheme = getStoredTheme()
                         if (storedTheme) return storedTheme
 
                         return window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -92,24 +92,24 @@
                                : 'light'
                     }
 
-                    const setTheme = function(theme) {
+                    var setTheme = function(theme) {
                         if (theme === 'auto')
                             $('html').attr('data-bs-theme', getPreferredTheme())
                         else $('html').attr('data-bs-theme', theme)
                     }
 
-                    setTheme(getStoredTheme() ?? 'auto')
+                    setTheme(getStoredTheme() || 'auto')
 
-                    const showActiveTheme = function(theme, focus) {
-                        focus = focus ?? false
-                        const themeSwitcher = $('#bd-theme')
+                    var showActiveTheme = function(theme, focus) {
+                        focus = focus || false
+                        var themeSwitcher = $('#bd-theme')
 
                         if (!themeSwitcher.length) return
 
-                        const themeSwitcherText = $('#bd-theme-text')
-                        const activeThemeIcon = $('.theme-icon-active use')
-                        const btnToActive = $('[data-bs-theme-value="' + theme + '"]')
-                        const svgOfActiveBtn = btnToActive.find('svg use').attr('href')
+                        var themeSwitcherText = $('#bd-theme-text')
+                        var activeThemeIcon = $('.theme-icon-active use')
+                        var btnToActive = $('[data-bs-theme-value="' + theme + '"]')
+                        var svgOfActiveBtn = btnToActive.find('svg use').attr('href')
 
                         $('[data-bs-theme-value]').each(function() {
                             $(this).removeClass('active').attr('aria-pressed', 'false')
@@ -117,7 +117,7 @@
 
                         btnToActive.addClass('active').attr('aria-pressed', 'true')
                         activeThemeIcon.attr('href', svgOfActiveBtn)
-                        const themeSwitcherLabel =
+                        var themeSwitcherLabel =
                             themeSwitcherText.text() +
                             ' (' +
                             btnToActive.data('bsThemeValue') +
@@ -130,7 +130,7 @@
                     window
                         .matchMedia('(prefers-color-scheme: dark)')
                         .addEventListener('change', function() {
-                            const storedTheme = getStoredTheme()
+                            var storedTheme = getStoredTheme()
                             if (storedTheme !== 'light' && storedTheme !== 'dark') {
                                 setTheme(getPreferredTheme())
                             }
@@ -139,7 +139,7 @@
                     showActiveTheme(getPreferredTheme())
 
                     $('[data-bs-theme-value]').on('click', function() {
-                        const theme = $(this).attr('data-bs-theme-value')
+                        var theme = $(this).attr('data-bs-theme-value')
                         setStoredTheme(theme)
                         setTheme(theme)
                         showActiveTheme(theme, true)
