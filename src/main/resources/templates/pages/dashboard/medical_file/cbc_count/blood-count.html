@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/auth_layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="${pageTitle + ' - MediCore'}">MediCore</title>
+        <meta name="description" th:content="${pageDescription}" />
+        <script th:src="${@urlProvider.getVersionedUrl('/js/chart.umd.min.js')}" type="text/javascript"></script>
+        <script th:src="${@urlProvider.getVersionedUrl('/js/jspdf.umd.min.js')}" type="text/javascript"></script>
+        <script th:src="${@urlProvider.getVersionedUrl('/js/jspdf.plugin.autotable.min.js')}"
+                type="text/javascript"></script>
+        <script type="text/javascript">window.jsPDF = window.jspdf.jsPDF</script>
+    </head>
+    <body layout:fragment="content">
+        <th:block th:replace="~{fragments/medical-file-header :: medical-file-header}"></th:block>
+
+        <main class="container mx-auto my-2 row g-2">
+            <th:block
+                th:with="breadcrumbs=${breadcrumbHelper.buildBreadcrumbs(userBaseUrl, 'medical-history', 'Medical History', 'blood-count', 'Blood Count')}">
+                <th:block
+                    th:replace="~{fragments/breadcrumb-navigation :: breadcrumb-navigation(breadcrumbItems=${breadcrumbs})}"></th:block>
+            </th:block>
+
+            <section aria-labelledby="bloodCountChart" class="card p-0 w-100 h-100">
+                <div class="card-body bg-dark-subtle m-0 chart-card">
+                    <div class="chart-container">
+                        <canvas aria-label="CBC Tests Canvas" class="bg-light-subtle rounded shadow-sm"
+                                id="bloodCountChart" role="img">Your browser does not support the canvas element.
+                        </canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card p-0" id="cbc-tests-table-title">
+                <div class="card-header d-sm-flex justify-content-between align-items-center">
+                    <h2 class="card-title">Complete Blood Count</h2>
+                    <div class="d-flex align-items-center gap-2">
+                        <a aria-label="Add new Lipid Profile" class="btn btn-primary text-light"
+                           th:href="@{${userBaseUrl + '/medical-history/blood-count/add'}}"
+                           title="Add new Lipid Profile">
+                            <i aria-hidden="true" class="bi bi-plus-lg"></i>
+                        </a>
+
+                        <button aria-label="Print Table" class="btn btn-success text-light" id="printTableBtn"
+                                th:disabled="${bloodCount.isEmpty()}" title="Print Table" type="button">
+                            <i aria-hidden="true" class="bi bi-printer-fill"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-body overflow-x-auto">
+                    <table class="table table-hover table-responsive-md">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Hematocrit</th>
+                                <th scope="col">Hemoglobin</th>
+                                <th data-bs-title="Red Blood Cells" data-bs-toggle="tooltip" scope="col">RBC</th>
+                                <th data-bs-title="Mean Corpuscular Volume" data-bs-toggle="tooltip" scope="col">MCV
+                                </th>
+                                <th data-bs-title="Mean Corpuscular Hemoglobin" data-bs-toggle="tooltip" scope="col">MCH
+                                </th>
+                                <th data-bs-title="Mean Corpuscular Hemoglobin Concentration" data-bs-toggle="tooltip"
+                                    scope="col">MCHC
+                                </th>
+                                <th data-bs-title="Red Cell Distribution Width" data-bs-toggle="tooltip" scope="col">
+                                    RCDW
+                                </th>
+                                <th scope="col">Leukocytes</th>
+                                <th data-bs-title="Rod Neutrophils" data-bs-toggle="tooltip" scope="col">
+                                    RN
+                                </th>
+                                <th data-bs-title="Segmented Neutrophils" data-bs-toggle="tooltip" scope="col">
+                                    SN
+                                </th>
+                                <th scope="col">Lymphocytes</th>
+                                <th data-bs-title="Atypical Lymphocytes" data-bs-toggle="tooltip" scope="col">
+                                    AL
+                                </th>
+                                <th scope="col">Monocytes</th>
+                                <th scope="col">Eosinophils</th>
+                                <th scope="col">Basophils</th>
+                                <th scope="col">Metamyelocytes</th>
+                                <th scope="col">Myelocytes</th>
+                                <th scope="col">Promyelocytes</th>
+                                <th data-bs-title="Atypical Cells" data-bs-toggle="tooltip" scope="col">AC</th>
+                                <th scope="col">Platelets</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr th:each="cbc : ${bloodCount}">
+                                <td>
+                                    <div class="btn-group">
+                                        <a aria-expanded="false" class="text-secondary" data-bs-toggle="dropdown"
+                                           href="#" role="button" type="button">
+                                            <i class="bi bi-three-dots m-0"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li>
+                                                <form
+                                                    th:action="@{${userBaseUrl} + '/medical-history/blood-count/' + ${cbc.id} + '/delete'}"
+                                                    th:method="delete">
+                                                    <button aria-label="Delete Lipid Profile"
+                                                            class="btn text-danger dropdown-item"
+                                                            type="submit">
+                                                        Delete
+                                                    </button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <a aria-label="Edit Lipid Profile"
+                                                   class="dropdown-item btn text-primary"
+                                                   th:href="@{${userBaseUrl} + '/medical-history/blood-count/' + ${cbc.id} + '/edit'}">
+                                                    Edit
+                                                </a>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <time class="d-md-block d-none" th:datetime="${lipidProfile.reportDate}"
+                                          th:text="${#dates.format(lipidProfile.reportDate, 'MMMM dd, YYYY')}"></time>
+                                    <time class="d-md-none d-block" th:datetime="${lipidProfile.reportDate}"
+                                          th:text="${#dates.format(lipidProfile.reportDate, 'MM/YY')}"></time>
+                                </td>
+                                <td th:text="${cbc.hematocrit}"></td>
+                                <td th:text="${cbc.hemoglobin}"></td>
+                                <td th:text="${cbc.redBloodCells}"></td>
+                                <td th:text="${cbc.meanCorpuscularVolume}"></td>
+                                <td th:text="${cbc.meanCorpuscularHemoglobin}"></td>
+                                <td th:text="${cbc.meanCorpuscularHemoglobinConcentration}"></td>
+                                <td th:text="${cbc.redCellDistributionWidth}"></td>
+                                <td th:text="${cbc.leukocytes}"></td>
+                                <td th:text="${cbc.rodNeutrophils}"></td>
+                                <td th:text="${cbc.segmentedNeutrophils}"></td>
+                                <td th:text="${cbc.lymphocytes}"></td>
+                                <td th:text="${cbc.atypicalLymphocytes}"></td>
+                                <td th:text="${cbc.monocytes}"></td>
+                                <td th:text="${cbc.eosinophils}"></td>
+                                <td th:text="${cbc.basophils}"></td>
+                                <td th:text="${cbc.metamyelocytes}"></td>
+                                <td th:text="${cbc.myelocytes}"></td>
+                                <td th:text="${cbc.promyelocytes}"></td>
+                                <td th:text="${cbc.atypicalCells}"></td>
+                                <td th:text="${cbc.platelets}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    <th:block th:replace="~{fragments/pagination-navigation :: pagination-navigation}"></th:block>
+                </div>
+            </section>
+
+        </main>
+
+        <script th:inline="javascript" type="text/javascript">
+            $(function() {
+                const tooltipTriggerList = $('[data-bs-toggle="tooltip"]')
+                const tooltipList = [ ...tooltipTriggerList ]
+                    .map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+                const chartData = JSON.parse(/*[[${bloodCountChart}]]*/ {})
+                const canvas = $('#bloodCountChart')
+                const backGroundPlugin = {
+                    id: 'customCanvasBackgroundColor',
+                    beforeDraw: (chart, args, options) => {
+                        const {ctx} = chart
+                        ctx.save()
+                        ctx.globalCompositeOperation = 'destination-over'
+                        ctx.fillStyle = options.color ?? '#ffffff'
+                        ctx.fillRect(0, 0, chart.width, chart.height)
+                        ctx.restore()
+                    }
+                }
+
+                if (!chartData.options.plugins) chartData.options.plugins = {}
+                chartData.options.plugins.customCanvasBackgroundColor = {color: '#ffffff'}
+                chartData.options.plugins.tooltip = {mode: 'index', intersect: false}
+                chartData.options.plugins.title = {display: true, text: 'Blood Count Chart'}
+                chartData.options.plugins.hover = {mode: 'index', intersect: false}
+
+                if (!chartData.plugins) chartData.plugins = []
+                chartData.plugins.push(backGroundPlugin)
+
+                const chart = new Chart(canvas, chartData)
+            })
+        </script>
+    </body>
+</html>
