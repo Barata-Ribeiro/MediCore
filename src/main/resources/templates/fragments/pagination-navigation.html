@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
     <body>
-        <nav aria-label="Page navigation"
-             class="d-flex flex-column gap-2 justify-content-center align-items-center"
-             th:fragment="pagination-navigation">
+        <nav aria-label="Page navigation" class="d-flex flex-column gap-2 justify-content-center align-items-center"
+             th:fragment="pagination-navigation" th:if="${totalItems > 0}">
              <span class="text-center m-0"
                    th:attr="aria-label=${'Total Items ' + totalItems + ' : Page ' + ((currentPage ?: 0) + 1) + ' of ' + (totalPages ?: 1)}">
                  Total Items: [[${totalItems}]] - Page [[${(currentPage ?: 0) + 1}]] of [[${totalPages ?: 1}]]
