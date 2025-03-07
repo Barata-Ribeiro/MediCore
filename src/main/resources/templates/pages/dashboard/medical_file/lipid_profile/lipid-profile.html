@@ -30,9 +30,9 @@
                 </div>
             </section>
 
-            <section class="card p-0" id="lipid-profile-table-title">
+            <section aria-labelledby="lipid-profile-table-title" class="card p-0">
                 <div class="card-header d-sm-flex justify-content-between align-items-center">
-                    <h2 class="card-title">Lipid Profile Table</h2>
+                    <h2 class="card-title" id="lipid-profile-table-title">Lipid Profile Table</h2>
                     <div class="d-flex align-items-center gap-2">
                         <a aria-label="Add new Lipid Profile" class="btn btn-primary text-light"
                            th:href="@{${userBaseUrl + '/medical-history/lipid-profile/add'}}"
