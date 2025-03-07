@@ -9,10 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import software.xdev.chartjs.model.charts.LineChart;
 
 import static com.barataribeiro.medicore.utils.ApplicationConstants.PAGE_DESCRIPTION;
@@ -23,6 +20,7 @@ import static com.barataribeiro.medicore.utils.ApplicationConstants.PAGE_TITLE;
 @AllArgsConstructor(onConstructor_ = {@Autowired})
 public class CompleteBloodCountController {
     private final CompleteBloodCountService completeBloodCountService;
+    private final CompleteBloodCountRepository completeBloodCountRepository;
 
     @GetMapping("/blood-count")
     @PreAuthorize("#username == authentication.name")
@@ -53,5 +51,12 @@ public class CompleteBloodCountController {
         model.addAttribute(PAGE_DESCRIPTION, "Add a new complete blood count test to your medical history");
         model.addAttribute("newCBCDto", new NewCBCDto());
         return "pages/dashboard/medical_file/cbc_count/blood-count-add";
+    }
+
+    @DeleteMapping("/blood-count/{id}/delete")
+    @PreAuthorize("#username == authentication.name")
+    public String deleteLipidProfile(@PathVariable String username, @PathVariable Long id) {
+        completeBloodCountRepository.deleteByIdAndMedicalFile_User_Username(id, username);
+        return "redirect:/" + username + "/medical-history/blood-count";
     }
 }

@@ -7,10 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import software.xdev.chartjs.model.charts.BarChart;
 
 import static com.barataribeiro.medicore.utils.ApplicationConstants.PAGE_DESCRIPTION;
@@ -22,6 +19,7 @@ import static com.barataribeiro.medicore.utils.ApplicationConstants.PAGE_TITLE;
 class GlucoseController {
 
     private final GlucoseService glucoseService;
+    private final GlucoseRepository glucoseRepository;
 
     @GetMapping("/glucose-level")
     @PreAuthorize("#username == authentication.name")
@@ -42,5 +40,12 @@ class GlucoseController {
         model.addAttribute("totalItems", response.getTotalElements());
         model.addAttribute("glucoseChart", chart.toJson());
         return "pages/dashboard/medical_file/glucose/glucose-level";
+    }
+
+    @DeleteMapping("/glucose-level/{id}/delete")
+    @PreAuthorize("#username == authentication.name")
+    public String deleteLipidProfile(@PathVariable String username, @PathVariable Long id) {
+        glucoseRepository.deleteByIdAndMedicalFile_User_Username(id, username);
+        return "redirect:/" + username + "/medical-history/glucose-level";
     }
 }
