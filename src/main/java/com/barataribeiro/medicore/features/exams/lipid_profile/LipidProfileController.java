@@ -22,7 +22,7 @@ import static com.barataribeiro.medicore.utils.ApplicationConstants.*;
 public class LipidProfileController {
     private final LipidProfileService lipidProfileService;
     private final LipidProfileRepository lipidProfileRepository;
-    
+
     @GetMapping("/lipid-profile")
     @PreAuthorize("#username == authentication.name")
     public String getLipidProfile(Model model, @RequestParam(defaultValue = "0") int page,
@@ -59,7 +59,7 @@ public class LipidProfileController {
     public String newLipidProfile(Model model, @PathVariable String username,
                                   @Valid @ModelAttribute NewLipidProfileDto newLipidProfileDto,
                                   BindingResult bindingResult) {
-        lipidProfileService.addLipidProfile(newLipidProfileDto, username, model, bindingResult);
+        lipidProfileService.addLipidProfile(newLipidProfileDto, username);
         return "redirect:/" + username + "/medical-history/lipid-profile";
     }
 

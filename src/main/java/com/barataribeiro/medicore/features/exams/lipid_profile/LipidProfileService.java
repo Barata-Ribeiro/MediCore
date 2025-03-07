@@ -14,8 +14,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import software.xdev.chartjs.model.charts.LineChart;
 import software.xdev.chartjs.model.data.LineData;
 import software.xdev.chartjs.model.dataset.LineDataset;
@@ -37,8 +35,7 @@ public class LipidProfileService {
 
     @Transactional(readOnly = true)
     public Page<LipidProfileDto> getLipidProfilePaginated(int page, int perPage, @NotNull String direction,
-                                                          String orderBy,
-                                                          @NotNull Authentication authentication) {
+                                                          String orderBy, @NotNull Authentication authentication) {
         Sort.Direction sortDirection = direction.equalsIgnoreCase("DESC") ? Sort.Direction.DESC : Sort.Direction.ASC;
         orderBy = orderBy.equalsIgnoreCase("reportDate") ? "reportDate" : orderBy;
         PageRequest pageable = PageRequest.of(page, perPage, Sort.by(sortDirection, orderBy));
@@ -50,8 +47,7 @@ public class LipidProfileService {
     }
 
     @Transactional
-    public void addLipidProfile(@Valid @NotNull NewLipidProfileDto newLipidProfileDto, String username, Model model,
-                                @NotNull BindingResult bindingResult) {
+    public void addLipidProfile(@Valid @NotNull NewLipidProfileDto newLipidProfileDto, String username) {
         MedicalFile medicalFile = medicalFileRepository
                 .findByUser_Username(username).orElseThrow(() -> new RuntimeException("Medical file not found"));
 
