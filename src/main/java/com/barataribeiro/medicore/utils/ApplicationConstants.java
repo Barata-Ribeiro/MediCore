@@ -7,6 +7,8 @@ public class ApplicationConstants {
     public static final String REGISTRATION_DTO = "registrationDto";
     public static final String UPDATE_APP_USER_DTO = "updateAppUserDto";
     public static final String NEW_LIPID_PROFILE_DTO = "newLipidProfileDto";
+    public static final String NEW_CBC_DTO = "newCBCDto";
+    public static final String NEW_GLUCOSE_DTO = "newGlucoseDto";
 
     public static final String CREATED_AT = "createdAt";
     public static final String SESSION_METADATA = "SESSION_METADATA";

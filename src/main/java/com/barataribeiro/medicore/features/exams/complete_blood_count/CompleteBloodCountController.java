@@ -12,8 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import software.xdev.chartjs.model.charts.LineChart;
 
-import static com.barataribeiro.medicore.utils.ApplicationConstants.PAGE_DESCRIPTION;
-import static com.barataribeiro.medicore.utils.ApplicationConstants.PAGE_TITLE;
+import static com.barataribeiro.medicore.utils.ApplicationConstants.*;
 
 @Controller
 @RequestMapping("/{username}/medical-history")
@@ -49,7 +48,7 @@ public class CompleteBloodCountController {
     public String newCompleteBloodCount(Model model, @PathVariable String username) {
         model.addAttribute(PAGE_TITLE, "New CBC Test");
         model.addAttribute(PAGE_DESCRIPTION, "Add a new complete blood count test to your medical history");
-        model.addAttribute("newCBCDto", new NewCBCDto());
+        model.addAttribute(NEW_CBC_DTO, new NewCBCDto());
         return "pages/dashboard/medical_file/cbc_count/blood-count-add";
     }
 
