@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/auth_layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="${pageTitle + ' - MediCore'}">MediCore</title>
+        <meta name="description" th:content="${pageDescription}" />
+        <script th:src="${@urlProvider.getVersionedUrl('/js/chart.umd.min.js')}" type="text/javascript"></script>
+        <script th:src="${@urlProvider.getVersionedUrl('/js/jspdf.umd.min.js')}" type="text/javascript"></script>
+        <script th:src="${@urlProvider.getVersionedUrl('/js/jspdf.plugin.autotable.min.js')}"
+                type="text/javascript"></script>
+        <script type="text/javascript">window.jsPDF = window.jspdf.jsPDF</script>
+    </head>
+    <body layout:fragment="content">
+        <th:block th:replace="~{fragments/medical-file-header :: medical-file-header}"></th:block>
+
+        <main class="container mx-auto my-2 row g-2">
+            <th:block
+                th:with="breadcrumbs=${breadcrumbHelper.buildBreadcrumbs(userBaseUrl, 'medical-history', 'Medical History', 'glucose-level', 'Glucose Level')}">
+                <th:block
+                    th:replace="~{fragments/breadcrumb-navigation :: breadcrumb-navigation(breadcrumbItems=${breadcrumbs})}"></th:block>
+            </th:block>
+
+            <section aria-labelledby="glucoseLevelChart" class="card p-0">
+                <div class="card-body bg-dark-subtle m-0 chart-card">
+                    <div class="chart-container">
+                        <canvas aria-label="Glucose Level Canvas" class="bg-light-subtle rounded shadow-sm"
+                                id="glucoseLevelChart" role="img">Your browser does not support the canvas element.
+                        </canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section aria-labelledby="glucose-level-table-title" class="card p-0">
+                <div class="card-header d-sm-flex justify-content-between align-items-center">
+                    <h2 class="card-title" id="glucose-level-table-title">Glucose Levels Table</h2>
+                    <div class="d-flex align-items-center gap-2">
+                        <a aria-label="Add new Glucose profile" class="btn btn-primary text-light"
+                           th:href="@{${userBaseUrl + '/medical-history/glucose-level/add'}}"
+                           title="Add new Glucose profile">
+                            <i aria-hidden="true" class="bi bi-plus-lg"></i>
+                        </a>
+
+                        <button aria-label="Print Table" class="btn btn-success text-light" id="printTableBtn"
+                                th:disabled="${glucoses.isEmpty()}" title="Print Table" type="button">
+                            <i aria-hidden="true" class="bi bi-printer-fill"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-body overflow-x-auto">
+                    <table class="table table-hover table-responsive-md">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Glucose Level</th>
+                                <th scope="col">Glycated Hemoglobin</th>
+                                <th scope="col">
+                                    <span class="d-md-block d-none">Estimated Average Glucose</span>
+                                    <span class="d-md-none d-block" data-bs-title="Estimated Average Glucose"
+                                          data-bs-toggle="tooltip">EAG</span>
+                                </th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="glucoseLevel : ${glucoses}">
+                                <td>
+                                    <time class="d-md-block d-none" th:datetime="${glucoseLevel.reportDate}"
+                                          th:text="${#dates.format(glucoseLevel.reportDate, 'MMMM dd, YYYY')}"></time>
+                                    <time class="d-md-none d-block" th:datetime="${glucoseLevel.reportDate}"
+                                          th:text="${#dates.format(glucoseLevel.reportDate, 'MM/YY')}"></time>
+                                </td>
+                                <td th:text="${glucoseLevel.glucoseLevel}"></td>
+                                <td th:text="${glucoseLevel.glycatedHemoglobin}"></td>
+                                <td th:text="${glucoseLevel.estimatedAverageGlucose}"></td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a aria-expanded="false" class="text-secondary" data-bs-toggle="dropdown"
+                                           href="#"
+                                           role="button" type="button">
+                                            <i class="bi bi-three-dots m-0"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li>
+                                                <form
+                                                    th:action="@{${userBaseUrl} + '/medical-history/glucose-level/' + ${glucoseLevel.id} + '/delete'}"
+                                                    th:method="delete">
+                                                    <button aria-label="Delete Glucose Profile"
+                                                            class="btn text-danger dropdown-item" type="submit">
+                                                        Delete
+                                                    </button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <a aria-label="Edit Glucose Profile"
+                                                   class="dropdown-item btn text-primary"
+                                                   th:href="@{${userBaseUrl} + '/medical-history/glucose-level/' + ${glucoseLevel.id} + '/edit'}">
+                                                    Edit
+                                                </a>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <th:block th:replace="~{fragments/pagination-navigation :: pagination-navigation}"></th:block>
+                </div>
+            </section>
+        </main>
+
+        <script th:inline="javascript" type="text/javascript">
+            $(function() {
+                var tooltipTriggerList = $('[data-bs-toggle="tooltip"]')
+                var tooltipArray = []
+
+                tooltipTriggerList.each(function() {
+                    tooltipArray.push(new bootstrap.Tooltip(this))
+                })
+            })
+        </script>
+    </body>
+</html>
