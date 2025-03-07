@@ -6,8 +6,6 @@
         <form class="card-body" th:action="@{${userBaseUrl} + '/medical-history/lipid-profile/add'}"
               th:fragment="new-lipid-profile-form"
               th:method="post" th:object="${newLipidProfileDto}">
-            <input aria-required="true" required th:name="${_csrf.parameterName}" th:value="${_csrf.token}"
-                   type="hidden" />
 
             <div class="mb-3">
                 <label class="form-label" for="totalCholesterol">Total Cholesterol</label>

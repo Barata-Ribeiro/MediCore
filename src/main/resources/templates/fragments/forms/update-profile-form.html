@@ -5,7 +5,6 @@
     <body>
         <form class="card-body tab-content" th:action="@{'/' + ${profile.user.username} + '/profile'}"
               th:fragment="update-profile-form" th:method="post" th:object="${updateAppUserDto}">
-            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden" />
 
             <!--CURRENT PASSWORD-->
             <div class="mb-3 has-validation">
