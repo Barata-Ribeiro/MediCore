@@ -1,6 +1,7 @@
 package com.barataribeiro.medicore.features.exams.complete_blood_count;
 
 import com.barataribeiro.medicore.features.exams.complete_blood_count.dtos.CompleteBloodCountDto;
+import com.barataribeiro.medicore.features.exams.complete_blood_count.dtos.NewCBCDto;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +22,6 @@ import static com.barataribeiro.medicore.utils.ApplicationConstants.PAGE_TITLE;
 @RequestMapping("/{username}/medical-history")
 @AllArgsConstructor(onConstructor_ = {@Autowired})
 public class CompleteBloodCountController {
-
     private final CompleteBloodCountService completeBloodCountService;
 
     @GetMapping("/blood-count")
@@ -44,5 +44,14 @@ public class CompleteBloodCountController {
         model.addAttribute("totalItems", response.getTotalElements());
         model.addAttribute("bloodCountChart", chart.toJson());
         return "pages/dashboard/medical_file/cbc_count/blood-count";
+    }
+
+    @GetMapping("/blood-count/add")
+    @PreAuthorize("#username == authentication.name")
+    public String newCompleteBloodCount(Model model, @PathVariable String username) {
+        model.addAttribute(PAGE_TITLE, "New CBC Test");
+        model.addAttribute(PAGE_DESCRIPTION, "Add a new complete blood count test to your medical history");
+        model.addAttribute("newCBCDto", new NewCBCDto());
+        return "pages/dashboard/medical_file/cbc_count/blood-count-add";
     }
 }

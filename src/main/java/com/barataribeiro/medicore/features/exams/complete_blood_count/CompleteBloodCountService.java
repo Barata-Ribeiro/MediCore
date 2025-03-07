@@ -1,6 +1,10 @@
 package com.barataribeiro.medicore.features.exams.complete_blood_count;
 
 import com.barataribeiro.medicore.features.exams.complete_blood_count.dtos.CompleteBloodCountDto;
+import com.barataribeiro.medicore.features.exams.complete_blood_count.dtos.NewCBCDto;
+import com.barataribeiro.medicore.features.medical_file.MedicalFile;
+import com.barataribeiro.medicore.features.medical_file.MedicalFileRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +29,7 @@ import java.util.List;
 public class CompleteBloodCountService {
     private final CompleteBloodCountRepository completeBloodCountRepository;
     private final CompleteBloodCountMapper completeBloodCountMapper;
+    private final MedicalFileRepository medicalFileRepository;
 
     @Transactional(readOnly = true)
     public Page<CompleteBloodCountDto> getCompleteBloodCountPaginated(int page, int perPage, @NotNull String direction,
@@ -38,6 +43,42 @@ public class CompleteBloodCountService {
                 .findAllByMedicalFile_User_Username(authentication.getName(), pageable);
 
         return completeBloodCounts.map(completeBloodCountMapper::toCompleteBloodCountDto);
+    }
+
+    @Transactional
+    public void addCompleteBloodCount(@Valid @NotNull NewCBCDto newCBCDto, String username) {
+        MedicalFile medicalFile = medicalFileRepository
+                .findByUser_Username(username).orElseThrow(() -> new RuntimeException("Medical file not found"));
+
+        CompleteBloodCount newCBCTest = CompleteBloodCount.builder()
+                                                          .hematocrit(newCBCDto.getHematocrit())
+                                                          .hemoglobin(newCBCDto.getHemoglobin())
+                                                          .redBloodCells(newCBCDto.getRedBloodCells())
+                                                          .meanCorpuscularVolume(newCBCDto.getMeanCorpuscularVolume())
+                                                          .meanCorpuscularHemoglobin(
+                                                                  newCBCDto.getMeanCorpuscularHemoglobin())
+                                                          .meanCorpuscularHemoglobinConcentration(
+                                                                  newCBCDto.getMeanCorpuscularHemoglobinConcentration())
+                                                          .redCellDistributionWidth(
+                                                                  newCBCDto.getRedCellDistributionWidth())
+                                                          .leukocytes(newCBCDto.getLeukocytes())
+                                                          .rodNeutrophils(newCBCDto.getRodNeutrophils())
+                                                          .segmentedNeutrophils(newCBCDto.getSegmentedNeutrophils())
+                                                          .lymphocytes(newCBCDto.getLymphocytes())
+                                                          .atypicalLymphocytes(newCBCDto.getAtypicalLymphocytes())
+                                                          .monocytes(newCBCDto.getMonocytes())
+                                                          .eosinophils(newCBCDto.getEosinophils())
+                                                          .basophils(newCBCDto.getBasophils())
+                                                          .metamyelocytes(newCBCDto.getMetamyelocytes())
+                                                          .myelocytes(newCBCDto.getMyelocytes())
+                                                          .promyelocytes(newCBCDto.getPromyelocytes())
+                                                          .atypicalCells(newCBCDto.getAtypicalCells())
+                                                          .platelets(newCBCDto.getPlatelets())
+                                                          .reportDate(newCBCDto.getReportDate())
+                                                          .medicalFile(medicalFile)
+                                                          .build();
+
+        completeBloodCountRepository.save(newCBCTest);
     }
 
     public LineChart getCompleteBloodCountChart(@NotNull List<CompleteBloodCountDto> data) {
