@@ -1,5 +1,6 @@
 package com.barataribeiro.medicore.features.exams.glucose;
 
+import com.barataribeiro.medicore.features.exams.glucose.dtos.GlucoseDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,6 @@
-package com.barataribeiro.medicore.features.exams.glucose;
+package com.barataribeiro.medicore.features.exams.glucose.dtos;
 
+import com.barataribeiro.medicore.features.exams.glucose.Glucose;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
