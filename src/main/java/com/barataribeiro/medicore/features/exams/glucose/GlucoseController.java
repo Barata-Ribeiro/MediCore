@@ -1,5 +1,8 @@
 package com.barataribeiro.medicore.features.exams.glucose;
 
+import com.barataribeiro.medicore.features.exams.glucose.dtos.GlucoseDto;
+import com.barataribeiro.medicore.features.exams.glucose.dtos.NewGlucoseDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,8 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import software.xdev.chartjs.model.charts.BarChart;
 
-import static com.barataribeiro.medicore.utils.ApplicationConstants.PAGE_DESCRIPTION;
-import static com.barataribeiro.medicore.utils.ApplicationConstants.PAGE_TITLE;
+import static com.barataribeiro.medicore.utils.ApplicationConstants.*;
 
 @Controller
 @RequestMapping("/{username}/medical-history")
@@ -40,6 +42,23 @@ class GlucoseController {
         model.addAttribute("totalItems", response.getTotalElements());
         model.addAttribute("glucoseChart", chart.toJson());
         return "pages/dashboard/medical_file/glucose/glucose-level";
+    }
+
+    @GetMapping("/glucose-level/add")
+    @PreAuthorize("#username == authentication.name")
+    public String newLipidProfile(Model model, @PathVariable String username) {
+        model.addAttribute(PAGE_TITLE, "New Glucose Level Profile");
+        model.addAttribute(PAGE_DESCRIPTION, "Add a new glucose level profile");
+        model.addAttribute(NEW_GLUCOSE_DTO, new NewGlucoseDto());
+        return "pages/dashboard/medical_file/glucose/glucose-level-add";
+    }
+
+    @PostMapping("/glucose-level/add")
+    @PreAuthorize("#username == authentication.name")
+    public String newGlucoseLevel(Model model, @PathVariable String username,
+                                  @Valid @ModelAttribute NewGlucoseDto newGlucoseDto) {
+        glucoseService.addGlucoseProfile(newGlucoseDto, username);
+        return "redirect:/" + username + "/medical-history/glucose-level";
     }
 
     @DeleteMapping("/glucose-level/{id}/delete")

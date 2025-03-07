@@ -1,5 +1,10 @@
 package com.barataribeiro.medicore.features.exams.glucose;
 
+import com.barataribeiro.medicore.features.exams.glucose.dtos.GlucoseDto;
+import com.barataribeiro.medicore.features.exams.glucose.dtos.NewGlucoseDto;
+import com.barataribeiro.medicore.features.medical_file.MedicalFile;
+import com.barataribeiro.medicore.features.medical_file.MedicalFileRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +32,7 @@ public class GlucoseService {
 
     private final GlucoseRepository glucoseRepository;
     private final GlucoseMapper glucoseMapper;
+    private final MedicalFileRepository medicalFileRepository;
 
     @Transactional(readOnly = true)
     public Page<GlucoseDto> getGlucosePaginated(int page, int perPage, @NotNull String direction,
@@ -77,6 +83,22 @@ public class GlucoseService {
                                                  .setPlugins(legendPlugin)
                                                  .setResponsive(true)
                                                  .setMaintainAspectRatio(false));
+    }
+
+    @Transactional
+    public void addGlucoseProfile(@Valid @NotNull NewGlucoseDto newGlucoseDto, String username) {
+        MedicalFile medicalFile = medicalFileRepository
+                .findByUser_Username(username).orElseThrow(() -> new RuntimeException("Medical file not found"));
+
+        Glucose newGlucoseLevelProfile = Glucose.builder()
+                                                .glucoseLevel(newGlucoseDto.getGlucoseLevel())
+                                                .glycatedHemoglobin(newGlucoseDto.getGlycatedHemoglobin())
+                                                .estimatedAverageGlucose(newGlucoseDto.getEstimatedAverageGlucose())
+                                                .reportDate(newGlucoseDto.getReportDate())
+                                                .medicalFile(medicalFile)
+                                                .build();
+
+        glucoseRepository.save(newGlucoseLevelProfile);
     }
 
     private Double @NotNull [] getEstimatedAvgGlucose(@NotNull List<GlucoseDto> sortedData) {
