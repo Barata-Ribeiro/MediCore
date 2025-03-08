@@ -53,7 +53,8 @@ public class AppUserController {
     @GetMapping("/profile")
     @PreAuthorize("#username == authentication.name")
     public String profile(@PathVariable String username, Model model) {
-        Profile userProfile = profileRepository.findByUser_Username(username).orElseThrow();
+        Profile userProfile = profileRepository.findByUser_Username(username)
+                                               .orElseThrow(() -> new RuntimeException("User not found"));
 
         model.addAttribute(PAGE_TITLE, username);
         model.addAttribute("profile", userMapper.toUserProfileDto(userProfile));
