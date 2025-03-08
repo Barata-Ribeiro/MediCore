@@ -1,10 +1,9 @@
 <!-- src/main/resources/templates/fragments/forms/update-profile-form.html -->
 <!doctype html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <body>
         <form class="card-body tab-content" th:action="@{${userBaseUrl} + '/profile'}"
-              th:fragment="update-profile-form" th:method="post" th:object="${updateAppUserDto}">
+              th:fragment="update-profile-form" th:method="PUT" th:object="${updateAppUserDto}">
 
             <!--CURRENT PASSWORD-->
             <div class="mb-3 has-validation">
