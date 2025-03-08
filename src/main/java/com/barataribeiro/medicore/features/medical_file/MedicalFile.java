@@ -43,8 +43,9 @@ public class MedicalFile implements Serializable {
               orphanRemoval = true)
     private AppUser user;
 
-    @Column(name = "blood_type", length = 3)
-    private String bloodType;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "blood_type", unique = true, length = 12)
+    private BloodType bloodType;
 
     private String allergies;
     private String diseases;
