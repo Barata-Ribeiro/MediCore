@@ -6,6 +6,114 @@
         <meta name="description" th:content="${pageDescription}" />
     </head>
     <body layout:fragment="content">
-        
+        <main class="px-1 my-2 container-fluid">
+            <th:block
+                th:with="breadcrumbs=${breadcrumbHelper.buildBreadcrumbs(userBaseUrl, 'medical-history', 'Medical History')}">
+                <th:block
+                    th:replace="~{fragments/breadcrumb-navigation :: breadcrumb-navigation(breadcrumbItems=${breadcrumbs})}"></th:block>
+            </th:block>
+
+            <div class="card mt-3">
+                <header class="card-header">
+                    <h1 class="card-title">Medical History</h1>
+                    <p class="card-subtitle">View your medical history</p>
+                </header>
+
+                <div class="card-body">
+                    <div class="card">
+                        <header class="card-header">
+                            <h5 class="card-title">Your File</h5>
+                            <ul class="nav nav-tabs card-header-tabs" data-bs-tabs="tabs">
+                                <li class="nav-item">
+                                    <a aria-current="true" class="nav-link active" data-bs-toggle="tab"
+                                       href="#key-health-info">
+                                        Key Health Info
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#body-sizes">Body Sizes</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#emergency-contact">
+                                        Emergency Contact</a>
+                                </li>
+                            </ul>
+                        </header>
+
+                        <form class="card-body tab-content" th:action="@{${userBaseUrl} + '/medical-history'}"
+                              th:method="PUT" th:object="${updateMedicalFileDto}">
+
+                            <!--KEY HEALTH INFO-->
+                            <div class="tab-pane active show" id="key-health-info">
+
+                                <div class="mb-3 has-validation">
+                                    <label class="form-label" for="bloodType">Blood Type</label>
+                                    <select aria-label="Select Blood Type" class="form-select" id="bloodType"
+                                            name="bloodType" th:errorclass="is-invalid"
+                                            th:field="${updateMedicalFileDto.bloodType}">
+                                        <option disabled selected value="">Select Blood Type</option>
+                                        <option
+                                            th:each="bloodType : ${T(com.barataribeiro.medicore.features.medical_file.BloodType).values()}"
+                                            th:text="${bloodType.value}" th:value="${bloodType}"></option>
+                                    </select>
+                                    <p class="invalid-feedback" id="bloodTypeValidation"
+                                       th:errors="${updateMedicalFileDto.bloodType}"
+                                       th:if="${#fields.hasErrors('bloodType')}">
+                                    </p>
+                                </div>
+
+                                <div class="mb-3 has-validation">
+                                    <label class="form-label" for="allergies">Allergies</label>
+                                    <textarea aria-describedby="allergiesValidation" aria-label="Your Allergies"
+                                              class="form-control" id="allergies" maxlength="300"
+                                              placeholder="Write your allergies here..." rows="3"
+                                              th:errorclass="is-invalid" th:field="${updateMedicalFileDto.allergies}"
+                                              th:value="${medicalFile.allergies ?: null}"></textarea>
+                                    <p class="invalid-feedback" id="allergiesValidation"
+                                       th:errors="${updateMedicalFileDto.allergies}"
+                                       th:if="${#fields.hasErrors('allergies')}"></p>
+                                </div>
+
+                                <div class="mb-3 has-validation">
+                                    <label class="form-label" for="diseases">Diseases</label>
+                                    <textarea aria-describedby="diseasesValidation" aria-label="Your Current Diseases"
+                                              class="form-control" id="diseases" maxlength="300"
+                                              placeholder="Write your current diseases here..." rows="3"
+                                              th:errorclass="is-invalid" th:field="${updateMedicalFileDto.diseases}"
+                                              th:value="${medicalFile.diseases ?: null}"></textarea>
+                                    <p class="invalid-feedback" id="diseasesValidation"
+                                       th:errors="${updateMedicalFileDto.diseases}"
+                                       th:if="${#fields.hasErrors('diseases')}"></p>
+                                </div>
+
+                                <div class="mb-3 has-validation">
+                                    <label class="form-label" for="medications">Medications</label>
+                                    <textarea aria-describedby="medicationsValidation"
+                                              aria-label="Your Current Medications" class="form-control"
+                                              id="medications" maxlength="300"
+                                              placeholder="Write your current medicaions here..." rows="3"
+                                              th:errorclass="is-invalid" th:field="${updateMedicalFileDto.medications}"
+                                              th:value="${medicalFile.medications ?: null}"></textarea>
+                                    <p class="invalid-feedback" id="medicationsValidation"
+                                       th:errors="${updateMedicalFileDto.medications}"
+                                       th:if="${#fields.hasErrors('medications')}"></p>
+                                </div>
+                            </div>
+
+                            <!--BODY SIZES-->
+                            <div class="tab-pane" id="body-sizes"></div>
+
+                            <!--EMERGENCY CONTACT-->
+                            <div class="tab-pane" id="emergency-contact"></div>
+
+                            <div class="d-flex gap-4 mt-2">
+                                <button class="btn btn-primary w-50" type="submit">Update</button>
+                                <button class="btn btn-outline-secondary w-50" type="reset">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
     </body>
 </html>
