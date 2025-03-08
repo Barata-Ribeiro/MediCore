@@ -28,7 +28,8 @@ public class MedicalFileWithUserDto implements Serializable {
     private Double weight;
     private Double height;
     private Double bmi;
-    private String emergencyContact;
+    private String emergencyContactName;
+    private String emergencyContactPhone;
     private Instant createdAt;
     private Instant updatedAt;
 }

@@ -55,8 +55,11 @@ public class MedicalFile implements Serializable {
     @Transient
     private Double bmi;
 
-    @Column(name = "emergency_contact", length = 14)
-    private String emergencyContact;
+    @Column(name = "emergency_contact_name", length = 100)
+    private String emergencyContactName;
+
+    @Column(name = "emergency_contact_phone", length = 14)
+    private String emergencyContactPhone;
 
     @Column(updatable = false)
     @CreationTimestamp
