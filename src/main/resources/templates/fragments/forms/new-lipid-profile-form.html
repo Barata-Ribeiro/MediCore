@@ -9,7 +9,7 @@
 
             <div class="mb-3">
                 <label class="form-label" for="totalCholesterol">Total Cholesterol</label>
-                <div class="input-group">
+                <div class="input-group has-validation">
                     <span class="input-group-text">mg/dL</span>
                     <input aria-label="Total Cholesterol" aria-labelledby="totalCholesterolValidation"
                            aria-required="true" class="form-control" id="totalCholesterol" min="0"
@@ -26,7 +26,7 @@
             <div class="row g-3 mb-3">
                 <div class="col">
                     <label class="form-label" for="hdlCholesterol">HDL Cholesterol</label>
-                    <div class="input-group">
+                    <div class="input-group has-validation">
                         <span class="input-group-text">mg/dL</span>
                         <input aria-label="HDL Cholesterol" aria-labelledby="hdlCholesterolValidation"
                                aria-required="true" class="form-control" id="hdlCholesterol" min="0"
@@ -40,7 +40,7 @@
                 </div>
                 <div class="col">
                     <label class="form-label" for="ldlCholesterol">LDL Cholesterol</label>
-                    <div class="input-group">
+                    <div class="input-group has-validation">
                         <span class="input-group-text">mg/dL</span>
                         <input aria-label="LDL Cholesterol" aria-labelledby="ldlCholesterolValidation"
                                aria-required="true" class="form-control" id="ldlCholesterol" min="0"
@@ -57,7 +57,7 @@
             <div class="row g-3 mb-3">
                 <div class="col">
                     <label class="form-label" for="vldlCholesterol">VLDL Cholesterol</label>
-                    <div class="input-group">
+                    <div class="input-group has-validation">
                         <span class="input-group-text">mg/dL</span>
                         <input aria-label="VLDL Cholesterol" aria-labelledby="vldlCholesterolValidation"
                                aria-required="true" class="form-control" id="vldlCholesterol" min="0"
@@ -71,7 +71,7 @@
                 </div>
                 <div class="col">
                     <label class="form-label" for="triglycerides">Triglycerides</label>
-                    <div class="input-group">
+                    <div class="input-group has-validation">
                         <span class="input-group-text">mg/dL</span>
                         <input aria-label="Triglycerides" aria-labelledby="triglyceridesValidation"
                                aria-required="true" class="form-control" id="triglycerides" min="0"
@@ -85,7 +85,7 @@
                 </div>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3 has-validation">
                 <label class="form-label" for="reportDate">Report Date</label>
                 <input aria-labelledby="reportDateValidation" aria-required="true" class="form-control"
                        id="reportDate" required th:errorclass="is-invalid"

@@ -3,7 +3,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
     <body>
-        <form class="card-body tab-content" th:action="@{'/' + ${profile.user.username} + '/profile'}"
+        <form class="card-body tab-content" th:action="@{${userBaseUrl} + '/profile'}"
               th:fragment="update-profile-form" th:method="post" th:object="${updateAppUserDto}">
 
             <!--CURRENT PASSWORD-->
@@ -24,7 +24,7 @@
             <div class="tab-pane active" id="account">
                 <div class="mb-3">
                     <label class="form-label" for="staticUsername">Username</label>
-                    <div class="input-group">
+                    <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
                         <input class="form-control" disabled id="staticUsername" readonly
                                th:value="${profile.user.username}" type="text"></div>
@@ -91,8 +91,8 @@
 
             <!--PROFILE TAB-->
             <div class="tab-pane" id="profile">
-                <div class="row g-4 mb-3 has-validation">
-                    <div class="col-sm">
+                <div class="row g-4 mb-3">
+                    <div class="col-sm has-validation">
                         <label class="form-label" for="firstName">First Name</label>
                         <input aria-labelledby="currentFirstName firstNameValidation" class="form-control"
                                id="firstName" name="firstName" th:errorclass="is-invalid"
@@ -105,7 +105,7 @@
                            th:errors="${updateAppUserDto.firstName}" th:if="${#fields.hasErrors('firstName')}">
                         </p>
                     </div>
-                    <div class="col-sm">
+                    <div class="col-sm has-validation">
                         <label class="form-label" for="lastName">First Name</label>
                         <input aria-labelledby="currentLastName lastNameValidation" class="form-control" id="lastName"
                                name="lastName" th:errorclass="is-invalid" th:field="${updateAppUserDto.lastName}"
@@ -141,8 +141,8 @@
                     </p>
                 </div>
 
-                <div class="row g-4 mb-3 has-validation">
-                    <div class="col-sm">
+                <div class="row g-4 mb-3">
+                    <div class="col-sm has-validation">
                         <label class="form-label" for="birthDate">Birth Date</label>
                         <input aria-describedby="currentBirthDate birthDateValidation" aria-label="Birth Date"
                                class="form-control" id="birthDate" th:errorclass="is-invalid"
@@ -155,7 +155,7 @@
                         <p class="invalid-feedback" id="birthDateValidation" th:errors="${updateAppUserDto.birthDate}"
                            th:if="${#fields.hasErrors('birthDate')}"></p>
                     </div>
-                    <div class="col-sm">
+                    <div class="col-sm has-validation">
                         <label class="form-label" for="title">Title</label>
                         <input aria-label="Title" class="form-control" id="title" placeholder="e.g. Software Engineer"
                                th:errorclass="is-invalid" th:field="${updateAppUserDto.title}" type="text">

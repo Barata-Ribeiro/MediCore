@@ -8,7 +8,7 @@
 
             <div class="mb-3">
                 <label class="form-label" for="glucoseLevel">Total Cholesterol</label>
-                <div class="input-group">
+                <div class="input-group has-validation">
                     <span class="input-group-text">mg/dL</span>
                     <input aria-label="Glucose Level" aria-labelledby="glucoseLevelValidation"
                            aria-required="true" class="form-control" id="glucoseLevel" min="0"
@@ -25,7 +25,7 @@
             <div class="row g-3 mb-3">
                 <div class="col-sm-6">
                     <label class="form-label" for="glycatedHemoglobin">Glycated Hemoglobin</label>
-                    <div class="input-group">
+                    <div class="input-group has-validation">
                         <span class="input-group-text">%</span>
                         <input aria-label="Glycated Hemoglobin" aria-labelledby="glycatedHemoglobinValidation"
                                aria-required="true" class="form-control" id="glycatedHemoglobin" min="0"
@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-sm-6">
                     <label class="form-label" for="estimatedAverageGlucose">Estimated Average Glucose</label>
-                    <div class="input-group">
+                    <div class="input-group has-validation">
                         <span class="input-group-text">mg/dL</span>
                         <input aria-label="Estimated Average Glucose"
                                aria-labelledby="estimatedAverageGlucoseValidation" aria-required="true"
@@ -54,7 +54,7 @@
                 </div>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3 has-validation">
                 <label class="form-label" for="reportDate">Report Date</label>
                 <input aria-labelledby="reportDateValidation" aria-required="true" class="form-control" id="reportDate"
                        required th:errorclass="is-invalid" th:field="${newGlucoseDto.reportDate}" type="date">
