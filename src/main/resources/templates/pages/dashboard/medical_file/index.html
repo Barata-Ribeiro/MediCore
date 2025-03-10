@@ -35,7 +35,8 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" data-bs-toggle="tab" href="#emergency-contact">
-                                        Emergency Contact</a>
+                                        Emergency Contact
+                                    </a>
                                 </li>
                             </ul>
                         </header>
@@ -51,9 +52,12 @@
                                     <select aria-label="Select Blood Type" class="form-select" id="bloodType"
                                             name="bloodType" th:errorclass="is-invalid"
                                             th:field="${updateMedicalFileDto.bloodType}">
-                                        <option disabled selected value="">Select Blood Type</option>
+                                        <option th:selected="${medicalFile.bloodType == null}" value="">
+                                            Select Blood Type
+                                        </option>
                                         <option
                                             th:each="bloodType : ${T(com.barataribeiro.medicore.features.medical_file.BloodType).values()}"
+                                            th:selected="${bloodType == medicalFile.bloodType}"
                                             th:text="${bloodType.value}" th:value="${bloodType}"></option>
                                     </select>
                                     <p class="invalid-feedback" id="bloodTypeValidation"
@@ -67,8 +71,8 @@
                                     <textarea aria-describedby="allergiesValidation" aria-label="Your Allergies"
                                               class="form-control" id="allergies" maxlength="300"
                                               placeholder="Write your allergies here..." rows="3"
-                                              th:errorclass="is-invalid" th:field="${updateMedicalFileDto.allergies}"
-                                              th:value="${medicalFile.allergies ?: null}"></textarea>
+                                              th:errorclass="is-invalid" th:id="allergies" th:name="allergies"
+                                              th:value="${medicalFile.allergies ?: updateMedicalFileDto.allergies}"></textarea>
                                     <p class="invalid-feedback" id="allergiesValidation"
                                        th:errors="${updateMedicalFileDto.allergies}"
                                        th:if="${#fields.hasErrors('allergies')}"></p>
@@ -79,8 +83,8 @@
                                     <textarea aria-describedby="diseasesValidation" aria-label="Your Current Diseases"
                                               class="form-control" id="diseases" maxlength="300"
                                               placeholder="Write your current diseases here..." rows="3"
-                                              th:errorclass="is-invalid" th:field="${updateMedicalFileDto.diseases}"
-                                              th:value="${medicalFile.diseases ?: null}"></textarea>
+                                              th:errorclass="is-invalid" th:id="diseases" th:name="diseases"
+                                              th:value="${medicalFile.diseases ?: updateMedicalFileDto.diseases}"></textarea>
                                     <p class="invalid-feedback" id="diseasesValidation"
                                        th:errors="${updateMedicalFileDto.diseases}"
                                        th:if="${#fields.hasErrors('diseases')}"></p>
@@ -92,8 +96,8 @@
                                               aria-label="Your Current Medications" class="form-control"
                                               id="medications" maxlength="300"
                                               placeholder="Write your current medicaions here..." rows="3"
-                                              th:errorclass="is-invalid" th:field="${updateMedicalFileDto.medications}"
-                                              th:value="${medicalFile.medications ?: null}"></textarea>
+                                              th:errorclass="is-invalid" th:id="medications" th:name="medications"
+                                              th:value="${medicalFile.medications ?: updateMedicalFileDto.medications}"></textarea>
                                     <p class="invalid-feedback" id="medicationsValidation"
                                        th:errors="${updateMedicalFileDto.medications}"
                                        th:if="${#fields.hasErrors('medications')}"></p>
@@ -101,10 +105,68 @@
                             </div>
 
                             <!--BODY SIZES-->
-                            <div class="tab-pane" id="body-sizes"></div>
+                            <div class="tab-pane" id="body-sizes">
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-6 has-validation">
+                                        <label class="form-label" for="height">Height</label>
+                                        <div class="input-group">
+                                            <input aria-label="Height" aria-labelledby="heightValidation"
+                                                   class="form-control" min="0" placeholder="e.g. 185"
+                                                   th:errorclass="is-invalid" th:id="height" th:name="height"
+                                                   th:value="${medicalFile.height ?: updateMedicalFileDto.height}"
+                                                   type="number">
+                                            <span class="input-group-text">cm</span>
+                                        </div>
+                                        <p class="invalid-feedback" id="heightValidation"
+                                           th:errors="${updateMedicalFileDto.height}"
+                                           th:if="${#fields.hasErrors('height')}"></p>
+                                    </div>
+
+                                    <div class="col-md-6 has-validation">
+                                        <label class="form-label" for="weight">Weight</label>
+                                        <div class="input-group">
+                                            <input aria-label="Weight" aria-labelledby="weightValidation"
+                                                   class="form-control" min="0" placeholder="e.g. 75"
+                                                   th:errorclass="is-invalid" th:id="weight" th:name="weight"
+                                                   th:value="${medicalFile.weight ?: updateMedicalFileDto.weight}"
+                                                   type="number">
+                                            <span class="input-group-text">kg</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <!--EMERGENCY CONTACT-->
-                            <div class="tab-pane" id="emergency-contact"></div>
+                            <div class="tab-pane" id="emergency-contact">
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-6 has-validation">
+                                        <label class="form-label" for="emergencyContactName">Contact Name</label>
+                                        <input aria-describedby="emergencyContactNameValidation"
+                                               aria-label="Contact Name" class="form-control" id="emergencyContactName"
+                                               maxlength="50" placeholder="e.g. John Doe" th:errorclass="is-invalid"
+                                               th:id="emergencyContactName" th:name="emergencyContactName"
+                                               th:value="${medicalFile.emergencyContactName ?: updateMedicalFileDto.emergencyContactName}"
+                                               type="text">
+                                        <p class="invalid-feedback" id="emergencyContactNameValidation"
+                                           th:errors="${updateMedicalFileDto.emergencyContactName}"
+                                           th:if="${#fields.hasErrors('emergencyContactName')}"></p>
+                                    </div>
+
+                                    <div class="col-md-6 has-validation">
+                                        <label class="form-label" for="emergencyContactPhone">Contact Phone</label>
+                                        <input aria-describedby="emergencyContactPhoneValidation"
+                                               aria-label="Contact Phone" class="form-control"
+                                               id="emergencyContactPhone" maxlength="20"
+                                               placeholder="e.g. +55 24 99876-5321" th:errorclass="is-invalid"
+                                               th:id="emergencyContactPhone" th:name="emergencyContactPhone"
+                                               th:value="${medicalFile.emergencyContactPhone ?: updateMedicalFileDto.emergencyContactPhone}"
+                                               type="tel">
+                                        <p class="invalid-feedback" id="emergencyContactPhoneValidation"
+                                           th:errors="${updateMedicalFileDto.emergencyContactPhone}"
+                                           th:if="${#fields.hasErrors('emergencyContactPhone')}"></p>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="d-flex gap-4 mt-2">
                                 <button class="btn btn-primary w-50" type="submit">Update</button>
