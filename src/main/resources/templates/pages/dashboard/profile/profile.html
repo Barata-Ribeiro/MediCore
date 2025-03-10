@@ -59,17 +59,20 @@
                                                th:if="${#fields.hasErrors('currentPassword')}">
                                             </p>
                                         </div>
-                                        <label class="form-label" for="avatarUrl">Avatar Url</label>
-                                        <div class="input-group has-validation">
+
+                                        <div class="has-validation">
+                                            <label class="form-label" for="avatarUrl">Avatar Url</label>
+                                            <div class="input-group">
                                             <span class="input-group-text bg-dark-subtle text-body-secondary"
                                                   id="basic-addon3">https://</span>
-                                            <input aria-describedby="avatarUrlValidation" aria-label="Avatar Url"
-                                                   class="form-control" id="avatarUrl" name="avatarUrl"
-                                                   placeholder="http://example.com/photo.jpg" th:errorclass="is-invalid"
-                                                   th:field="${updateAppUserDto.avatarUrl}" type="text">
-                                            <button class="btn btn-primary" type="submit">
-                                                Update
-                                            </button>
+                                                <input aria-describedby="avatarUrlValidation" aria-label="Avatar Url"
+                                                       class="form-control" placeholder="http://example.com/photo.jpg"
+                                                       th:errorclass="is-invalid"
+                                                       th:field="${updateAppUserDto.avatarUrl}" type="text">
+                                                <button class="btn btn-primary" type="submit">
+                                                    Update
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="card-footer text-body-secondary">
