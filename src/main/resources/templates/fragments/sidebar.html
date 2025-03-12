@@ -2,84 +2,113 @@
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
     <body>
-        <div class="border-end bg-light-subtle" id="sidebar-wrapper" th:fragment="sidebar">
-            <h1 class="display-6 ps-3 py-1 border-bottom bg-dark-subtle">MediCore</h1>
-
-            <div class="list-group list-group-flush">
-                <a aria-current="page"
-                   class="list-group-item list-group-item-action d-flex list-group-item-light p-3"
-                   th:classappend="${servletPath == userBaseUrl ? 'active' : ''}"
-                   th:href="${'/' + #authentication.principal.username}">
-                    <i aria-hidden="true" class="bi bi-speedometer me-1"></i>Dashboard</a>
-
-                <a aria-current="page"
-                   class="list-group-item list-group-item-action d-flex list-group-item-light p-3"
-                   th:classappend="${servletPath == (userBaseUrl + '/profile') ? 'active' : ''}"
-                   th:href="${userBaseUrl + '/profile'}">
-                    <i aria-hidden="true"></i><i class="bi bi-person-lines-fill me-1"></i>Profile</a>
-
-                <!-- OPEN/CLOSE SUBMENU -->
-                <a aria-controls="medicalFile"
-                   aria-expanded="false"
-                   class="list-group-item list-group-item-action d-flex justify-content-between list-group-item-light p-3"
-                   data-bs-toggle="collapse" href="#medicalFile"
-                   role="button">
-                        <span class="d-flex">
-                            <i aria-hidden="true" class="bi bi-file-medical-fill me-1"></i>Medical File</span>
-                    <i aria-hidden="true" class="bi bi-chevron-down ms-1"></i>
-                </a>
-
-                <!-- SUBMENU -->
-                <div class="collapse" id="medicalFile">
-                    <a class="list-group-item list-group-item-action list-group-item p-2 border-start-0 border-end-0"
-                       th:classappend="${servletPath.startsWith(userBaseUrl + '/medical-history') ? 'active' : ''}"
-                       th:href="${userBaseUrl + '/medical-history'}">
-                        <strong>Medical History</strong>
-                    </a>
-                    <a class="list-group-item list-group-item-action list-group-item p-2 border-start-0 border-end-0"
-                       th:href="${userBaseUrl + '/medical-history/blood-count'}">
-                        Complete Blood Count
-                    </a>
-                    <a class="list-group-item list-group-item-action list-group-item p-2 border-start-0 border-end-0"
-                       th:href="${userBaseUrl + '/medical-history/lipid-profile'}">
-                        Lipid Profile
-                    </a>
-                    <a class="list-group-item list-group-item-action list-group-item p-2 border-start-0 border-end-0"
-                       th:href="${userBaseUrl + '/medical-history/glucose-level'}">
-                        Glucose Level
-                    </a>
-                    <a class="list-group-item list-group-item-action list-group-item p-2 border-start-0 border-end-0"
-                       th:href="${userBaseUrl + '/medical-history/vitamind'}">
-                        Vitamin D
-                    </a>
+        <div class="sidebar border-end col-md-3 col-lg-2 p-0 bg-body-tertiary" th:fragment="sidebar">
+            <div aria-labelledby="sidebarMenuLabel" class="offcanvas-md offcanvas-end bg-body-tertiary"
+                 id="sidebarMenu" tabindex="-1">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title display-4" id="sidebarMenuLabel">MediCore</h5>
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="offcanvas"
+                            data-bs-target="#sidebarMenu" type="button"></button>
                 </div>
 
-                <!-- OPEN/CLOSE SUBMENU 2 -->
-                <a aria-controls="fitnessInfo"
-                   aria-expanded="false"
-                   class="list-group-item list-group-item-action d-flex justify-content-between list-group-item-light p-3 disabled"
-                   data-bs-toggle="collapse" href="#fitnessInfo"
-                   role="button">
-                        <span class="d-flex">
-                            <i aria-hidden="true" class="bi bi-heart-pulse-fill me-1"></i>Fitness</span>
-                    <i aria-hidden="true" class="bi bi-chevron-down ms-1"></i>
-                </a>
+                <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link d-flex p-3 align-items-center gap-2"
+                               th:attr="aria-current=${servletPath == userBaseUrl ? 'page' : null}"
+                               th:classappend="${servletPath == userBaseUrl ? 'active text-bg-dark' : null}"
+                               th:href="@{${userBaseUrl}}">
+                                <i aria-hidden="true" class="bi bi-speedometer"></i>Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link d-flex p-3 align-items-center gap-2"
+                               th:attr="aria-current=${servletPath == (userBaseUrl + '/profile') ? 'page' : null}"
+                               th:classappend="${servletPath == (userBaseUrl + '/profile') ? 'active text-bg-dark' : null}"
+                               th:href="@{${userBaseUrl + '/profile'}}">
+                                <i aria-hidden="true" class="bi bi-person-lines-fill"></i>Profile</a>
+                        </li>
 
-                <!-- SUBMENU 2 -->
-                <div class="collapse" id="fitnessInfo">
-                    <a class="list-group-item list-group-item-action list-group-item p-2 border-start-0 border-end-0"
-                       href="#!">
-                        Sub Item 1
-                    </a>
+                        <!-- OPEN/CLOSE MEDICAL FILE SUBMENU -->
+                        <li class="nav-item">
+                            <a aria-controls="medicalFile" aria-expanded="false"
+                               class="nav-link d-flex p-3 align-items-center gap-2 justify-content-between"
+                               data-bs-toggle="collapse"
+                               href="#medicalFile"
+                               role="button"
+                               th:classappend="${servletPath.startsWith(userBaseUrl + '/medical-history') ? 'active text-bg-dark' : null}">
+                                        <span class="d-flex gap-2">
+                                            <i aria-hidden="true" class="bi bi-file-medical-fill"></i>
+                                            Medical File
+                                        </span>
+                                <i aria-hidden="true" class="bi bi-chevron-down ms-1"></i>
+                            </a>
+
+                            <div class="collapse" id="medicalFile">
+                                <a class="nav-link d-flex p-2 border-start-0 border-end-0"
+                                   th:classappend="${servletPath.endsWith(userBaseUrl + '/medical-history') ? 'active text-bg-dark' : null}"
+                                   th:href="@{${userBaseUrl + '/medical-history'}}">
+                                    Medical History
+                                </a>
+                                <a class="nav-link d-flex p-2 border-start-0 border-end-0"
+                                   th:classappend="${servletPath == (userBaseUrl + '/medical-history/blood-count') ? 'active text-bg-dark' : null}"
+                                   th:href="@{${userBaseUrl + '/medical-history/blood-count'}}">
+                                    Complete Blood Count
+                                </a>
+                                <a class="nav-link d-flex p-2 border-start-0 border-end-0"
+                                   th:classappend="${servletPath == (userBaseUrl + '/medical-history/lipid-profile') ? 'active text-bg-dark' : null}"
+                                   th:href="@{${userBaseUrl + '/medical-history/lipid-profile'}}">
+                                    Lipid Profile
+                                </a>
+                                <a class="nav-link d-flex p-2 border-start-0 border-end-0"
+                                   th:classappend="${servletPath == (userBaseUrl + '/medical-history/glucose-level') ? 'active text-bg-dark' : null}"
+                                   th:href="@{${userBaseUrl + '/medical-history/glucose-level'}}">
+                                    Glucose Level
+                                </a>
+                                <a class="nav-link d-flex p-2 border-start-0 border-end-0"
+                                   th:classappend="${servletPath == (userBaseUrl + '/medical-history/vitamind') ? 'active text-bg-dark' : null}"
+                                   th:href="@{${userBaseUrl + '/medical-history/vitamind'}}">
+                                    Vitamin D
+                                </a>
+                            </div>
+                        </li>
+
+                        <!-- OPEN/CLOSE FITNESS INFO SUBMENU -->
+                        <li class="nav-item">
+                            <a aria-controls="fitnessInfo" aria-expanded="false"
+                               class="nav-link d-flex p-3 align-items-center gap-2 justify-content-between disabled"
+                               data-bs-toggle="collapse"
+                               href="#fitnessInfo"
+                               role="button">
+                                        <span class="d-flex gap-2">
+                                            <i aria-hidden="true" class="bi bi-heart-pulse-fill"></i>
+                                            Fitness
+                                        </span>
+                                <i aria-hidden="true" class="bi bi-chevron-down ms-1"></i>
+                            </a>
+
+                            <div class="collapse" id="fitnessInfo">
+                                <a class="nav-link d-flex p-2 border-start-0 border-end-0" href="#!">
+                                    Sub Item 1
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+
+
+                    <hr class="my-3">
+
+                    <ul class="nav flex-column mb-auto">
+                        <li class="nav-item">
+                            <a class="nav-link d-flex p-3 align-items-center gap-2"
+                               th:attr="aria-current=${servletPath == (userBaseUrl + '/settings') ? 'page' : null}"
+                               th:classappend="${servletPath == (userBaseUrl + '/settings') ? 'active text-bg-dark' : null}"
+                               th:href="@{${userBaseUrl + '/settings'}}">
+                                <i class="bi bi-gear-fill"></i>
+                                Settings
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-
-                <a aria-current="page"
-                   class="list-group-item list-group-item-action d-flex list-group-item-light p-3"
-                   th:classappend="${servletPath == (userBaseUrl + '/settings') ? 'active' : ''}"
-                   th:href="${userBaseUrl + '/settings'}">
-                    <i aria-hidden="true" class="bi bi-gear-fill me-1"></i>
-                    Settings
-                </a>
             </div>
         </div>
     </body>

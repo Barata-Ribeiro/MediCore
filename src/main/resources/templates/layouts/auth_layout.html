@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html data-bs-theme="auto" lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="https://www.thymeleaf.org">
+<html data-bs-theme="auto" lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="https://www.thymeleaf.org">
     <head>
         <meta charset="utf-8" />
         <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -11,51 +11,54 @@
         <meta content="MediCore, health, fitness, personal, data" name="keywords" />
         <title>MediCore</title>
         <link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon" />
+
         <link rel="stylesheet" th:href="${@urlProvider.getVersionedUrl('/css/bootstrap.min.css')}" type="text/css" />
         <link rel="stylesheet" th:href="${@urlProvider.getVersionedUrl('/css/bootstrap-icons.min.css')}"
               type="text/css" />
         <link rel="stylesheet" th:href="${@urlProvider.getVersionedUrl('/css/styles.css')}" type="text/css" />
+
         <style>
-            #wrapper {
-                overflow-x: hidden;
+            /*
+             * Sidebar
+             */
+            @media (min-width: 768px) {
+                .sidebar .offcanvas-lg {
+                    position: -webkit-sticky;
+                    position: sticky;
+                    top: 48px;
+                }
+
+                .navbar-search {
+                    display: block;
+                }
             }
 
-            #sidebar-wrapper {
-                min-height: 100vh;
-                margin-left: -15rem;
-                transition: margin 0.25s ease-out;
+            .sidebar .nav-link {
+                font-size: .875rem;
+                font-weight: 500;
             }
 
-            #sidebar-wrapper .list-group {
-                width: 15rem;
+            .sidebar-heading {
+                font-size: .75rem;
             }
 
-            #page-content-wrapper {
-                min-width: 100vw;
+            /*
+             * Navbar
+             */
+            .navbar-brand {
+                padding-top: .75rem;
+                padding-bottom: .75rem;
+                background-color: rgba(0, 0, 0, .25);
+                box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
             }
 
-            body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
-                margin-left: 0;
+            .navbar .form-control {
+                padding: .75rem 1rem;
             }
 
             .bg-gradient-primary-to-secondary {
                 background-color: #0061f2 !important;
                 background-image: linear-gradient(135deg, rgba(0, 97, 242, 0.95) 0%, rgba(0, 173, 242, 0.95) 100%) !important;
-            }
-
-            @media (min-width: 768px) {
-                #sidebar-wrapper {
-                    margin-left: 0;
-                }
-
-                #page-content-wrapper {
-                    min-width: 0;
-                    width: 100%;
-                }
-
-                body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
-                    margin-left: -15rem;
-                }
             }
         </style>
 
@@ -67,35 +70,19 @@
     <body>
         <th:block th:replace="~{fragments/theme-switcher :: theme-switcher}"></th:block>
 
-        <div class="d-flex" id="wrapper">
-            <!-- SIDEBAR -->
-            <th:block th:replace="~{fragments/sidebar :: sidebar}"></th:block>
+        <!--TOP NAVBAR-->
+        <th:block th:replace="~{fragments/top-navbar :: top-navbar}"></th:block>
 
-            <!-- PAGE WRAPPER -->
-            <div id="page-content-wrapper">
-                <!-- TOP NAVBAR -->
-                <th:block th:replace="~{fragments/top-navbar :: top-navbar}"></th:block>
+        <div class="container-fluid">
+            <div class="row">
+                <!--SIDEBAR-->
+                <th:block th:replace="~{fragments/sidebar :: sidebar}"></th:block>
 
                 <!-- CONTENT -->
-                <th:block layout:fragment="content"></th:block>
+                <div class="col-md-9 ms-sm-auto col-lg-10 min-vh-100">
+                    <th:block layout:fragment="content"></th:block>
+                </div>
             </div>
         </div>
-
-        <script type="text/javascript">
-            $(function() {
-                var sidebarToggle = $('#sidebarToggle')
-                var body = $(document).find('body')
-                body.toggleClass('sb-sidenav-toggled')
-
-                if (sidebarToggle) {
-                    if (localStorage.getItem('sb|sidebar-toggle') === 'true') body.addClass('sb-sidenav-toggled')
-                    sidebarToggle.on('click', function(event) {
-                        event.preventDefault()
-                        body.toggleClass('sb-sidenav-toggled')
-                        localStorage.setItem('sb|sidebar-toggle', body.hasClass('sb-sidenav-toggled').toString())
-                    })
-                }
-            })
-        </script>
     </body>
 </html>
