@@ -56,9 +56,19 @@
                 padding: .75rem 1rem;
             }
 
+            /*
+             * Others
+             */
             .bg-gradient-primary-to-secondary {
                 background-color: #0061f2 !important;
                 background-image: linear-gradient(135deg, rgba(0, 97, 242, 0.95) 0%, rgba(0, 173, 242, 0.95) 100%) !important;
+            }
+
+            @media screen and (max-width: 768px) {
+                .container-fluid {
+                    overflow-x: hidden;
+                    padding-inline: 0;
+                }
             }
         </style>
 
