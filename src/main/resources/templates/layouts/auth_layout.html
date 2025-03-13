@@ -15,68 +15,7 @@
         <link rel="stylesheet" th:href="${@urlProvider.getVersionedUrl('/css/bootstrap.min.css')}" type="text/css" />
         <link rel="stylesheet" th:href="${@urlProvider.getVersionedUrl('/css/bootstrap-icons.min.css')}"
               type="text/css" />
-        <link rel="stylesheet" th:href="${@urlProvider.getVersionedUrl('/css/styles.css')}" type="text/css" />
-
-        <style>
-            /*
-             * Sidebar
-             */
-            @media (min-width: 768px) {
-                .sidebar .offcanvas-lg {
-                    position: -webkit-sticky;
-                    position: sticky;
-                    top: 48px;
-                }
-
-                .navbar-search {
-                    display: block;
-                }
-            }
-
-            .sidebar .nav-link {
-                font-size: .875rem;
-                font-weight: 500;
-            }
-
-            .sidebar-heading {
-                font-size: .75rem;
-            }
-
-            /*
-             * Navbar
-             */
-            .navbar-brand {
-                padding-top: .75rem;
-                padding-bottom: .75rem;
-                background-color: rgba(0, 0, 0, .25);
-                box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
-            }
-
-            .navbar .form-control {
-                padding: .75rem 1rem;
-            }
-
-            /*
-             * Others
-             */
-            .bg-gradient-primary-to-secondary {
-                background-color: #0061f2 !important;
-                background-image: linear-gradient(135deg, rgba(0, 97, 242, 0.95) 0%, rgba(0, 173, 242, 0.95) 100%) !important;
-            }
-
-            @media screen and (min-width: 768px) {
-                .bg-gradient-primary-to-secondary {
-                    margin-inline: calc(var(--bs-gutter-x) * -.5);
-                }
-            }
-
-            @media screen and (max-width: 768px) {
-                .container-fluid {
-                    overflow-x: hidden;
-                    padding-inline: 0;
-                }
-            }
-        </style>
+        <link rel="stylesheet" th:href="${@urlProvider.getVersionedUrl('/css/styles.min.css')}" type="text/css" />
 
         <script th:src="${@urlProvider.getVersionedUrl('/js/jquery.min.js')}" type="text/javascript"></script>
         <script th:src="${@urlProvider.getVersionedUrl('/js/popper.min.js')}" type="text/javascript"></script>
