@@ -33,21 +33,32 @@
                     <span sec:authentication="name">Guest</span>
                 </button>
                 <ul class="dropdown-menu text-small">
-                    <li><a class="dropdown-item"
-                           th:href="'/'+${#authentication.principal.username}">Dashboard
-                    </a></li>
-                    <li><a class="dropdown-item"
-                           th:href="'/'+${#authentication.principal.username} + '/settings'">Settings
-                    </a></li>
-                    <li><a class="dropdown-item"
-                           th:href="'/'+${#authentication.principal.username}+'/profile'">Profile</a></li>
+                    <li>
+                        <a class="dropdown-item" th:href="@{${userBaseUrl}}">
+                            <i aria-hidden="true" class="bi bi-speedometer2 me-2"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" th:href="@{${userBaseUrl} + '/settings'}">
+                            <i aria-hidden="true" class="bi bi-gear me-2"></i>
+                            Settings
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" th:href="@{${userBaseUrl} + '/profile'}">
+                            <i aria-hidden="true" class="bi bi-person me-2"></i>
+                            Profile</a>
+                    </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
                     <li>
                         <form action="/logout" method="post" sec:authorize="isAuthenticated()">
-                            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden" />
-                            <button class="dropdown-item" type="submit">Sign out</button>
+                            <button class="dropdown-item dropdown-item-danger" type="submit">
+                                <i aria-hidden="true" class="bi bi-box-arrow-right me-2"></i>
+                                Sign out
+                            </button>
                         </form>
                     </li>
                 </ul>
