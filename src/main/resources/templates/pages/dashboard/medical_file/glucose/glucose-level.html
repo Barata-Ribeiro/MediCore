@@ -113,11 +113,70 @@
 
         <script th:inline="javascript" type="text/javascript">
             $(function() {
+                // TOOLTIP
                 var tooltipTriggerList = $('[data-bs-toggle="tooltip"]')
                 var tooltipArray = []
 
                 tooltipTriggerList.each(function() {
                     tooltipArray.push(new bootstrap.Tooltip(this))
+                })
+
+                // CHART
+                var chartData = JSON.parse(/*[[${glucoseChart}]]*/ {})
+                var canvas = $('#glucoseLevelChart')
+                var backGroundPlugin = {
+                    id: 'customCanvasBackgroundColor',
+                    beforeDraw: function(chart, args, options) {
+                        var ctx = chart.ctx
+                        ctx.save()
+                        ctx.globalCompositeOperation = 'destination-over'
+                        ctx.fillStyle = options.color || '#ffffff'
+                        ctx.fillRect(0, 0, chart.width, chart.height)
+                        ctx.restore()
+                    }
+                }
+
+                if (!chartData.options.plugins) chartData.options.plugins = {}
+                chartData.options.plugins.customCanvasBackgroundColor = {color: '#ffffff'}
+                chartData.options.plugins.tooltip = {mode: 'index', intersect: false}
+                chartData.options.plugins.title = {display: true, text: 'Glucose Level Chart'}
+                chartData.options.plugins.hover = {mode: 'index', intersect: false}
+
+                if (!chartData.plugins) chartData.plugins = []
+                chartData.plugins.push(backGroundPlugin)
+
+                new Chart(canvas, chartData)
+
+                // PRINT TABLE
+                $('#printTableBtn').on('click', function() {
+                    var glucoselevelProfile = /*[[${glucoses}]]*/ {}
+                    var doc = new jsPDF()
+
+                    // Define page size
+                    var docWidth = doc.internal.pageSize.getWidth()
+                    var docHeight = doc.internal.pageSize.getHeight()
+                    doc.setFontSize(18)
+
+                    // Title
+                    doc.text('Glucose Level Table', docWidth / 2, 10, {align: 'center'})
+
+                    // Table
+                    autoTable(doc, {
+                        theme: 'striped',
+                        head: [ [ 'Date', 'Glucose Level', 'Glycated Hemoglobin', 'Estimated Average Glucose' ] ],
+                        body: glucoselevelProfile.map(function(glucose) {
+                            return [
+                                new Date(glucose.reportDate).toLocaleDateString('en-US', {
+                                    month: 'short',
+                                    day: 'numeric',
+                                    year: 'numeric'
+                                }),
+                                glucose.glucoseLevel,
+                                glucose.glycatedHemoglobin,
+                                glucose.estimatedAverageGlucose
+                            ]
+                        })
+                    })
                 })
             })
         </script>
