@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/auth_layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="${pageTitle + ' - MediCore'}">MediCore</title>
+        <meta name="description" th:content="${pageDescription}" />
+        <script th:src="${@urlProvider.getVersionedUrl('/js/chart.umd.min.js')}" type="text/javascript"></script>
+        <script th:src="${@urlProvider.getVersionedUrl('/js/jspdf.umd.min.js')}" type="text/javascript"></script>
+        <script th:src="${@urlProvider.getVersionedUrl('/js/jspdf.plugin.autotable.min.js')}"
+                type="text/javascript"></script>
+        <script type="text/javascript">window.jsPDF = window.jspdf.jsPDF</script>
+    </head>
+    <body layout:fragment="content">
+        <th:block th:replace="~{fragments/medical-file-header :: medical-file-header}"></th:block>
+
+        <main class="container mx-auto my-2 row g-2">
+            <th:block
+                th:with="breadcrumbs=${breadcrumbHelper.buildBreadcrumbs(userBaseUrl, 'medical-history', 'Medical History', vitamind, 'Vitamin D')}">
+                <th:block
+                    th:replace="~{fragments/breadcrumb-navigation :: breadcrumb-navigation(breadcrumbItems=${breadcrumbs})}"></th:block>
+            </th:block>
+
+            <section aria-labelledby="vitaminDChart" class="card p-0">
+                <div class="card-body bg-dark-subtle m-0 chart-card">
+                    <div class="chart-container">
+                        <canvas aria-label="Lipid Profile Canvas" class="bg-light-subtle rounded shadow-sm"
+                                id="vitaminDChart" role="img">Your browser does not support the canvas element.
+                        </canvas>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <script th:inline="javascript" type="text/javascript"></script>
+    </body>
+</html>
