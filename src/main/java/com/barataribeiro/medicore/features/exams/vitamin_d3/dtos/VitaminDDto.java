@@ -1,5 +1,6 @@
-package com.barataribeiro.medicore.features.exams.vitamin_d3;
+package com.barataribeiro.medicore.features.exams.vitamin_d3.dtos;
 
+import com.barataribeiro.medicore.features.exams.vitamin_d3.VitaminD;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
