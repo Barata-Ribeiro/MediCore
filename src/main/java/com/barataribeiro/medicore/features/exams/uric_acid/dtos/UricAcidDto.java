@@ -1,5 +1,6 @@
-package com.barataribeiro.medicore.features.exams.uric_acid;
+package com.barataribeiro.medicore.features.exams.uric_acid.dtos;
 
+import com.barataribeiro.medicore.features.exams.uric_acid.UricAcid;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
