@@ -26,8 +26,8 @@ public class UricAcid implements Serializable {
     @Column(updatable = false, nullable = false, unique = true)
     private Long id;
 
-    @Column(name = "uric_acid", nullable = false)
-    private Double uricAcid;
+    @Column(name = "uric_acid_level", nullable = false)
+    private Double uricAcidLevel;
 
     @JsonFormat(pattern = "dd/mm/yyyy")
     @Temporal(TemporalType.DATE)

@@ -17,6 +17,6 @@ import java.util.Date;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UricAcidDto implements Serializable {
     private Long id;
-    private Double uricAcid;
+    private Double uricAcidLevel;
     private Date reportDate;
 }
