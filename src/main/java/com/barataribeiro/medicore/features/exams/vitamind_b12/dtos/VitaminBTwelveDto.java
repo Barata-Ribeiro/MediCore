@@ -1,5 +1,6 @@
-package com.barataribeiro.medicore.features.exams.vitamind_b12;
+package com.barataribeiro.medicore.features.exams.vitamind_b12.dtos;
 
+import com.barataribeiro.medicore.features.exams.vitamind_b12.VitaminBTwelve;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,14 +10,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * DTO for {@link VitaminB12}
+ * DTO for {@link VitaminBTwelve}
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class VitaminB12Dto implements Serializable {
+public class VitaminBTwelveDto implements Serializable {
     private Long id;
-    private Double vitaminB12;
+    private Double vitaminBTwelveLevel;
     private Date reportDate;
 }
