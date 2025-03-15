@@ -15,7 +15,6 @@ public interface GlucoseRepository extends JpaRepository<Glucose, Long> {
     @EntityGraph(attributePaths = {"medicalFile.user"})
     Page<Glucose> findAllByMedicalFile_User_Username(String username, Pageable pageable);
 
-    @EntityGraph(attributePaths = {"medicalFile.user"})
     @Transactional
     void deleteByIdAndMedicalFile_User_Username(Long id, String medicalFileUserUsername);
 }
