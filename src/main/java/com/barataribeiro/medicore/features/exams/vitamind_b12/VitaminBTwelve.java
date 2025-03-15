@@ -16,8 +16,8 @@ import java.util.Date;
 @ToString
 @Builder
 @Entity
-@Table(name = "tb_vitamin_b_12")
-public class VitaminB12 implements Serializable {
+@Table(name = "tb_vitamin_b_twelve")
+public class VitaminBTwelve implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -26,8 +26,8 @@ public class VitaminB12 implements Serializable {
     @Column(updatable = false, nullable = false, unique = true)
     private Long id;
 
-    @Column(name = "vitamin_b12", nullable = false)
-    private Double vitaminB12;
+    @Column(name = "vitamin_b_twelve_level", nullable = false)
+    private Double vitaminBTwelveLevel;
 
     @JsonFormat(pattern = "dd/mm/yyyy")
     @Temporal(TemporalType.DATE)

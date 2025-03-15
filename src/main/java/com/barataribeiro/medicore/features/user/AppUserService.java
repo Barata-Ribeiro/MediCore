@@ -94,7 +94,7 @@ public class AppUserService {
                                           dashboardData.getTotalCompleteBloodCounts(),
                                           dashboardData.getTotalGlucoses(),
                                           dashboardData.getTotalVitaminDs(),
-                                          dashboardData.getTotalVitaminB12s(),
+                                          dashboardData.getTotalVitaminBTwelves(),
                                           dashboardData.getTotalUreaAndCreatinines(),
                                           dashboardData.getTotalUricAcids()).parallel().reduce(0L, Long::sum);
 
@@ -104,7 +104,7 @@ public class AppUserService {
                            .totalCompleteBloodCounts(dashboardData.getTotalCompleteBloodCounts())
                            .totalGlucoses(dashboardData.getTotalGlucoses())
                            .totalVitaminDs(dashboardData.getTotalVitaminDs())
-                           .totalVitaminB12s(dashboardData.getTotalVitaminB12s())
+                           .totalVitaminBTwelves(dashboardData.getTotalVitaminBTwelves())
                            .totalUreaAndCreatinines(dashboardData.getTotalUreaAndCreatinines())
                            .totalUricAcids(dashboardData.getTotalUricAcids())
                            .totalMedicalExams(sumOfExams)
@@ -121,7 +121,7 @@ public class AppUserService {
                                                                .addData(dashboardDto.getTotalCompleteBloodCounts())
                                                                .addData(dashboardDto.getTotalGlucoses())
                                                                .addData(dashboardDto.getTotalVitaminDs())
-                                                               .addData(dashboardDto.getTotalVitaminB12s())
+                                                               .addData(dashboardDto.getTotalVitaminBTwelves())
                                                                .addData(dashboardDto.getTotalUreaAndCreatinines())
                                                                .addData(dashboardDto.getTotalUricAcids());
         pieData.addLabels(labels);

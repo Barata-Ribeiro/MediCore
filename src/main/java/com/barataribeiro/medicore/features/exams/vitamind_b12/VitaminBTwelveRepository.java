@@ -7,12 +7,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface VitaminB12Repository extends JpaRepository<VitaminB12, Long> {
+public interface VitaminBTwelveRepository extends JpaRepository<VitaminBTwelve, Long> {
     @EntityGraph(attributePaths = {"medicalFile.user"})
-    Optional<VitaminB12> findByMedicalFile_User_Username(String username);
+    Optional<VitaminBTwelve> findByMedicalFile_User_Username(String username);
 
     @EntityGraph(attributePaths = {"medicalFile.user"})
-    Page<VitaminB12> findAllByMedicalFile_User_Username(String username, Pageable pageable);
+    Page<VitaminBTwelve> findAllByMedicalFile_User_Username(String username, Pageable pageable);
 
     void deleteByIdAndMedicalFile_User_Username(Long id, String username);
 }

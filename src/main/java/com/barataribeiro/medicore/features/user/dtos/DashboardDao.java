@@ -18,13 +18,13 @@ public class DashboardDao {
     private Long totalCompleteBloodCounts;
     private Long totalGlucoses;
     private Long totalVitaminDs;
-    private Long totalVitaminB12s;
+    private Long totalVitaminBTwelves;
     private Long totalUreaAndCreatinines;
     private Long totalUricAcids;
 
     public DashboardDao(Profile profile, MedicalFile medicalFile,
                         int totalLipidProfiles, int totalCompleteBloodCounts,
-                        int totalGlucoses, int totalVitaminDs, int totalVitaminB12s,
+                        int totalGlucoses, int totalVitaminDs, int totalVitaminBTwelves,
                         int totalUreaAndCreatinines, int totalUricAcids) {
         this.profile = profile;
         this.medicalFile = medicalFile;
@@ -32,7 +32,7 @@ public class DashboardDao {
         this.totalCompleteBloodCounts = (long) totalCompleteBloodCounts;
         this.totalGlucoses = (long) totalGlucoses;
         this.totalVitaminDs = (long) totalVitaminDs;
-        this.totalVitaminB12s = (long) totalVitaminB12s;
+        this.totalVitaminBTwelves = (long) totalVitaminBTwelves;
         this.totalUreaAndCreatinines = (long) totalUreaAndCreatinines;
         this.totalUricAcids = (long) totalUricAcids;
     }
