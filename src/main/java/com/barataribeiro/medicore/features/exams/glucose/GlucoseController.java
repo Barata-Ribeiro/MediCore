@@ -46,7 +46,7 @@ class GlucoseController {
 
     @GetMapping("/glucose-level/add")
     @PreAuthorize("#username == authentication.name")
-    public String newLipidProfile(Model model, @PathVariable String username) {
+    public String getGlucoseProfile(Model model, @PathVariable String username) {
         model.addAttribute(PAGE_TITLE, "New Glucose Level Profile");
         model.addAttribute(PAGE_DESCRIPTION, "Add a new glucose level profile");
         model.addAttribute(NEW_GLUCOSE_DTO, new NewGlucoseDto());
@@ -55,15 +55,15 @@ class GlucoseController {
 
     @PostMapping("/glucose-level/add")
     @PreAuthorize("#username == authentication.name")
-    public String newGlucoseLevel(Model model, @PathVariable String username,
-                                  @Valid @ModelAttribute NewGlucoseDto newGlucoseDto) {
+    public String newGlucoseProfile(Model model, @PathVariable String username,
+                                    @Valid @ModelAttribute NewGlucoseDto newGlucoseDto) {
         glucoseService.addGlucoseProfile(newGlucoseDto, username);
         return "redirect:/" + username + "/medical-history/glucose-level";
     }
 
     @DeleteMapping("/glucose-level/{id}/delete")
     @PreAuthorize("#username == authentication.name")
-    public String deleteLipidProfile(@PathVariable String username, @PathVariable Long id) {
+    public String deleteGlucoseProfile(@PathVariable String username, @PathVariable Long id) {
         glucoseRepository.deleteByIdAndMedicalFile_User_Username(id, username);
         return "redirect:/" + username + "/medical-history/glucose-level";
     }

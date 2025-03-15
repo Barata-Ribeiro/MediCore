@@ -45,24 +45,24 @@ public class VitaminDController {
 
     @GetMapping("/vitamind/add")
     @PreAuthorize("#username == authentication.name")
-    public String newLipidProfile(Model model, @PathVariable String username) {
+    public String newVitaminDProfile(Model model, @PathVariable String username) {
         model.addAttribute(PAGE_TITLE, "New Vitamin D3 Profile");
         model.addAttribute(PAGE_DESCRIPTION, "Add a new Vitamin D3 profile");
         model.addAttribute(NEW_VITAMIND_PROFILE_DTO, new NewVitaminDProfileDto());
-        return "pages/dashboard/medical_file/glucose/glucose-level-add";
+        return "pages/dashboard/medical_file/vitamin_d/vitamin_d-add";
     }
 
     @PostMapping("/vitamind/add")
     @PreAuthorize("#username == authentication.name")
-    public String newGlucoseLevel(Model model, @PathVariable String username,
-                                  @Valid @ModelAttribute NewVitaminDProfileDto newVitaminDProfileDto) {
+    public String newVitaminDProfile(Model model, @PathVariable String username,
+                                     @Valid @ModelAttribute NewVitaminDProfileDto newVitaminDProfileDto) {
         vitaminDService.addVitaminD(newVitaminDProfileDto, username);
         return "redirect:/" + username + "/medical-history/vitamind";
     }
 
     @DeleteMapping("/vitamind/{id}/delete")
     @PreAuthorize("#username == authentication.name")
-    public String deleteLipidProfile(@PathVariable String username, @PathVariable Long id) {
+    public String deleteVitaminDProfile(@PathVariable String username, @PathVariable Long id) {
         vitaminDRepository.deleteByIdAndMedicalFile_User_Username(id, username);
         return "redirect:/" + username + "/medical-history/vitamind";
     }

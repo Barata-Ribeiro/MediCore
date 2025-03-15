@@ -45,7 +45,7 @@ public class CompleteBloodCountController {
 
     @GetMapping("/blood-count/add")
     @PreAuthorize("#username == authentication.name")
-    public String newCompleteBloodCount(Model model, @PathVariable String username) {
+    public String newCompleteBloodCountProfile(Model model, @PathVariable String username) {
         model.addAttribute(PAGE_TITLE, "New CBC Test");
         model.addAttribute(PAGE_DESCRIPTION, "Add a new complete blood count test to your medical history");
         model.addAttribute(NEW_CBC_DTO, new NewCBCDto());
@@ -54,7 +54,7 @@ public class CompleteBloodCountController {
 
     @DeleteMapping("/blood-count/{id}/delete")
     @PreAuthorize("#username == authentication.name")
-    public String deleteLipidProfile(@PathVariable String username, @PathVariable Long id) {
+    public String deleteCompleteBloodCountProfile(@PathVariable String username, @PathVariable Long id) {
         completeBloodCountRepository.deleteByIdAndMedicalFile_User_Username(id, username);
         return "redirect:/" + username + "/medical-history/blood-count";
     }
