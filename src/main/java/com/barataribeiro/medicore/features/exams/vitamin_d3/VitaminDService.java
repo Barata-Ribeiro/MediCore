@@ -1,6 +1,10 @@
 package com.barataribeiro.medicore.features.exams.vitamin_d3;
 
+import com.barataribeiro.medicore.features.exams.vitamin_d3.dtos.NewVitaminDProfileDto;
 import com.barataribeiro.medicore.features.exams.vitamin_d3.dtos.VitaminDDto;
+import com.barataribeiro.medicore.features.medical_file.MedicalFile;
+import com.barataribeiro.medicore.features.medical_file.MedicalFileRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +30,7 @@ public class VitaminDService {
 
     private final VitaminDRepository vitaminDRepository;
     private final VitaminDMapper vitaminDMapper;
+    private final MedicalFileRepository medicalFileRepository;
 
     @Transactional(readOnly = true)
     public Page<VitaminDDto> getVitaminDPaginated(int page, int perPage, @NotNull String direction, String orderBy,
@@ -38,6 +43,21 @@ public class VitaminDService {
                                                                                              pageable);
 
         return vitaminDSPage.map(vitaminDMapper::toVitaminDDto);
+    }
+
+    @Transactional
+    public void addVitaminD(@Valid @NotNull NewVitaminDProfileDto newVitaminDProfileDto, String username) {
+        MedicalFile medicalFile = medicalFileRepository
+                .findByUser_Username(username).orElseThrow(() -> new RuntimeException("Medical file not found"));
+
+        VitaminD newVitaminDProfile = VitaminD.builder()
+                                              .twentyfiveHydroxyvitaminD3(newVitaminDProfileDto
+                                                                                  .getTwentyfiveHydroxyvitaminD3())
+                                              .reportDate(newVitaminDProfileDto.getReportDate())
+                                              .medicalFile(medicalFile)
+                                              .build();
+
+        vitaminDRepository.save(newVitaminDProfile);
     }
 
     public BarChart getVitaminDChartInfo(@NotNull List<VitaminDDto> data) {
