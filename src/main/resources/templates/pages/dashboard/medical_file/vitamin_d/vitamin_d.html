@@ -29,8 +29,137 @@
                     </div>
                 </div>
             </section>
+
+            <section aria-labelledby="vitamind-table-title" class="card p-0">
+                <div class="card-header d-sm-flex justify-content-between align-items-center">
+                    <h2 class="card-title" id="vitamind-table-title">Vitamin D Levels</h2>
+                    <div class="d-flex align-items-center gap-2">
+                        <a aria-label="Add new Vitamin D profile" class="btn btn-primary text-light"
+                           th:href="@{${userBaseUrl + '/medical-history/vitamind/add'}}"
+                           title="Add new Vitamin D profile">
+                            <i aria-hidden="true" class="bi bi-plus-lg"></i>
+                        </a>
+
+                        <button aria-label="Print Table" class="btn btn-success text-light" id="printTableBtn"
+                                th:disabled="${vitaminDs.isEmpty()}" title="Print Table" type="button">
+                            <i aria-hidden="true" class="bi bi-printer-fill"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-body overflow-x-auto">
+                    <table class="table table-hover table-responsive-md">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Vitamin D</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="lipidProfile : ${lipidProfiles}">
+                                <td>
+                                    <time class="d-md-block d-none" th:datetime="${vitaminDs.reportDate}"
+                                          th:text="${#dates.format(vitaminDs.reportDate, 'MMMM dd, YYYY')}"></time>
+                                    <time class="d-md-none d-block" th:datetime="${vitaminDs.reportDate}"
+                                          th:text="${#dates.format(vitaminDs.reportDate, 'MM/YY')}"></time>
+                                </td>
+                                <td th:text="${vitaminDs.vitaminDLevel}"></td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a aria-expanded="false" class="text-secondary" data-bs-toggle="dropdown"
+                                           href="#"
+                                           role="button" type="button">
+                                            <i class="bi bi-three-dots m-0"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li>
+                                                <form
+                                                    th:action="@{${userBaseUrl} + '/medical-history/vitamind/' +1 ${vitaminDs.id} + '/delete'}"
+                                                    th:method="delete">
+                                                    <button aria-label="Delete Vitamin D Profile"
+                                                            class="btn text-danger dropdown-item" type="submit">
+                                                        Delete
+                                                    </button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <a aria-label="Edit Vitamin D Profile"
+                                                   class="dropdown-item btn text-primary"
+                                                   th:href="@{${userBaseUrl} + '/medical-history/vitamind/' + ${vitaminDs.id} + '/edit'}">
+                                                    Edit
+                                                </a>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <th:block th:replace="~{fragments/pagination-navigation :: pagination-navigation}"></th:block>
+                </div>
+            </section>
         </main>
 
-        <script th:inline="javascript" type="text/javascript"></script>
+        <script th:inline="javascript" type="text/javascript">
+            $(function() {
+                // CHART
+                var chartData = JSON.parse(/*[[${vitaminDChart}]]*/ {})
+                var canvas = $('#vitaminDChart')
+                var backGroundPlugin = {
+                    id: 'customCanvasBackgroundColor',
+                    beforeDraw: function(chart, args, options) {
+                        var ctx = chart.ctx
+                        ctx.save()
+                        ctx.globalCompositeOperation = 'destination-over'
+                        ctx.fillStyle = options.color || '#ffffff'
+                        ctx.fillRect(0, 0, chart.width, chart.height)
+                        ctx.restore()
+                    }
+                }
+
+                if (!chartData.options.plugins) chartData.options.plugins = {}
+                chartData.options.plugins.customCanvasBackgroundColor = {color: '#ffffff'}
+                chartData.options.plugins.tooltip = {mode: 'index', intersect: false}
+                chartData.options.plugins.title = {display: true, text: 'Vitamin D Chart'}
+                chartData.options.plugins.hover = {mode: 'index', intersect: false}
+
+                if (!chartData.plugins) chartData.plugins = []
+                chartData.plugins.push(backGroundPlugin)
+
+                new Chart(canvas, chartData)
+
+                $('#printTableBtn').on('click', function() {
+                    var vitaminDProfiles = /*[[${vitaminDs}]]*/ {}
+                    var doc = new jsPDF()
+
+                    // Define page size
+                    var docWidth = doc.internal.pageSize.getWidth()
+                    var docHeight = doc.internal.pageSize.getHeight()
+                    doc.setFontSize(18)
+
+                    // Title
+                    doc.text('Vitamin D Levels', docWidth / 2, 10, {align: 'center'})
+
+                    // Table
+                    autoTable(doc, {
+                        theme: 'striped',
+                        head: [ [ 'Date', 'Vitamin D' ] ],
+                        body: vitaminDProfiles.map(function(vitaminD) {
+                            return [
+                                new Date(vitaminD.reportDate).toLocaleDateString('en-US', {
+                                    month: 'short',
+                                    day: 'numeric',
+                                    year: 'numeric'
+                                }),
+                                vitaminD.vitaminDLevel
+                            ]
+                        })
+                    })
+                })
+            })
+        </script>
     </body>
 </html>
