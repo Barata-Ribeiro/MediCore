@@ -2,6 +2,8 @@ package com.barataribeiro.medicore.features.exams.uric_acid;
 
 import com.barataribeiro.medicore.features.exams.uric_acid.dtos.NewUricAcidProfileDto;
 import com.barataribeiro.medicore.features.exams.uric_acid.dtos.UricAcidDto;
+import com.barataribeiro.medicore.features.medical_file.MedicalFile;
+import com.barataribeiro.medicore.features.medical_file.MedicalFileRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -27,6 +29,7 @@ import java.util.List;
 public class UricAcidService {
     private final UricAcidRepository uricAcidRepository;
     private final UricAcidMapper uricAcidMapper;
+    private final MedicalFileRepository medicalFileRepository;
 
     @Transactional(readOnly = true)
     public Page<UricAcidDto> getUricAcidPaginated(int page, int perPage, @NotNull String direction, String orderBy,
@@ -63,14 +66,23 @@ public class UricAcidService {
                                                  .setMaintainAspectRatio(false));
     }
 
+    @Transactional
+    public void addUricAcid(@Valid @NotNull NewUricAcidProfileDto newUricAcidProfileDto, String username) {
+        MedicalFile medicalFile = medicalFileRepository
+                .findByUser_Username(username).orElseThrow(() -> new RuntimeException("Medical file not found"));
+
+        UricAcid newUricAcidProfile = UricAcid.builder()
+                                              .uricAcidLevel(newUricAcidProfileDto.getUricAcidLevel())
+                                              .reportDate(newUricAcidProfileDto.getReportDate())
+                                              .medicalFile(medicalFile)
+                                              .build();
+
+        uricAcidRepository.save(newUricAcidProfile);
+    }
+
     private Double @NotNull [] getUricAcidLevel(@NotNull List<UricAcidDto> data) {
         return data.parallelStream()
                    .map(UricAcidDto::getUricAcidLevel)
                    .toArray(Double[]::new);
-    }
-
-    @Transactional
-    public void addUricAcid(@Valid NewUricAcidProfileDto newUricAcidProfileDto, String username) {
-        // TODO: Implement this method
     }
 }
