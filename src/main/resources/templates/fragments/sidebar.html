@@ -65,6 +65,21 @@
                                     Glucose Level
                                 </a>
                                 <a class="nav-link d-flex p-2 border-start-0 border-end-0"
+                                   th:classappend="${servletPath == (userBaseUrl + '/medical-history/urea-and-creatinine') ? 'active text-bg-dark' : null}"
+                                   th:href="@{${userBaseUrl + '/medical-history/urea-and-creatinine'}}">
+                                    Urea & Creatinine
+                                </a>
+                                <a class="nav-link d-flex p-2 border-start-0 border-end-0"
+                                   th:classappend="${servletPath == (userBaseUrl + '/medical-history/uric-acid') ? 'active text-bg-dark' : null}"
+                                   th:href="@{${userBaseUrl + '/medical-history/uric-acid'}}">
+                                    Uric Acid
+                                </a>
+                                <a class="nav-link d-flex p-2 border-start-0 border-end-0"
+                                   th:classappend="${servletPath == (userBaseUrl + '/medical-history/vitamin-b-twelve') ? 'active text-bg-dark' : null}"
+                                   th:href="@{${userBaseUrl + '/medical-history/vitamin-b-twelve'}}">
+                                    Vitamin B12
+                                </a>
+                                <a class="nav-link d-flex p-2 border-start-0 border-end-0"
                                    th:classappend="${servletPath == (userBaseUrl + '/medical-history/vitamind') ? 'active text-bg-dark' : null}"
                                    th:href="@{${userBaseUrl + '/medical-history/vitamind'}}">
                                     Vitamin D
