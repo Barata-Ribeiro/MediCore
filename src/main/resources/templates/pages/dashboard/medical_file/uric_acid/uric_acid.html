@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/auth_layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="${pageTitle + ' - MediCore'}">MediCore</title>
+        <meta name="description" th:content="${pageDescription}" />
+        <script th:src="${@urlProvider.getVersionedUrl('/js/chart.umd.min.js')}" type="text/javascript"></script>
+        <script th:src="${@urlProvider.getVersionedUrl('/js/jspdf.umd.min.js')}" type="text/javascript"></script>
+        <script th:src="${@urlProvider.getVersionedUrl('/js/jspdf.plugin.autotable.min.js')}"
+                type="text/javascript"></script>
+        <script type="text/javascript">window.jsPDF = window.jspdf.jsPDF</script>
+    </head>
+    <body layout:fragment="content">
+        <th:block th:replace="~{fragments/medical-file-header :: medical-file-header}"></th:block>
+
+        <main class="container mx-auto my-2 row g-2">
+            <th:block
+                th:with="breadcrumbs=${breadcrumbHelper.buildBreadcrumbs(userBaseUrl, 'medical-history', 'Medical History', 'uric-acid', 'Uric Acid Levels')}">
+                <th:block
+                    th:replace="~{fragments/breadcrumb-navigation :: breadcrumb-navigation(breadcrumbItems=${breadcrumbs})}"></th:block>
+            </th:block>
+
+            <section aria-labelledby="uricAcidChart" class="card p-0">
+                <div class="card-body bg-dark-subtle m-0 chart-card">
+                    <div class="chart-container">
+                        <canvas aria-label="Uric Chart Canvas" class="bg-light-subtle rounded shadow-sm"
+                                id="uricAcidChart" role="img">Your browser does not support the canvas element.
+                        </canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section aria-labelledby="uric-acid-table-title" class="card p-0">
+                <div class="card-header d-sm-flex justify-content-between align-items-center">
+                    <h2 class="card-title" id="uric-acid-table-title">Uric Acid Levels</h2>
+                    <div class="d-flex align-items-center gap-2">
+                        <a aria-label="Add new Vitamin D profile" class="btn btn-primary text-light"
+                           th:href="@{${userBaseUrl + '/medical-history/uric-acid/add'}}"
+                           title="Add new Vitamin D profile">
+                            <i aria-hidden="true" class="bi bi-plus-lg"></i>
+                        </a>
+
+                        <button aria-label="Print Table" class="btn btn-success text-light" id="printTableBtn"
+                                th:disabled="${uricAcids.isEmpty()}" title="Print Table" type="button">
+                            <i aria-hidden="true" class="bi bi-printer-fill"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-body overflow-x-auto">
+                    <table class="table table-hover table-responsive-md">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Uric Acid</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="uricAcid : ${uricAcids}">
+                                <td>
+                                    <time class="d-md-block d-none" th:datetime="${uricAcid.reportDate}"
+                                          th:text="${#dates.format(uricAcid.reportDate, 'MMMM dd, YYYY')}"></time>
+                                    <time class="d-md-none d-block" th:datetime="${uricAcid.reportDate}"
+                                          th:text="${#dates.format(uricAcid.reportDate, 'MM/YY')}"></time>
+                                </td>
+                                <td th:text="${uricAcid.uricAcidLevel}"></td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a aria-expanded="false" class="text-secondary" data-bs-toggle="dropdown"
+                                           href="#"
+                                           role="button" type="button">
+                                            <i class="bi bi-three-dots m-0"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li>
+                                                <form
+                                                    th:action="@{${userBaseUrl} + '/medical-history/uric-acid/' + ${uricAcid.id} + '/delete'}"
+                                                    th:method="delete">
+                                                    <button aria-label="Delete Vitamin D Profile"
+                                                            class="btn text-danger dropdown-item" type="submit">
+                                                        Delete
+                                                    </button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <a aria-label="Edit Vitamin D Profile"
+                                                   class="dropdown-item btn text-primary"
+                                                   th:href="@{${userBaseUrl} + '/medical-history/uric-acid/' + ${uricAcid.id} + '/edit'}">
+                                                    Edit
+                                                </a>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <th:block th:replace="~{fragments/pagination-navigation :: pagination-navigation}"></th:block>
+                </div>
+            </section>
+        </main>
+
+        <script th:inline="javascript" type="text/javascript">
+            $(function() {
+                // CHART
+                var chartData = JSON.parse(/*[[${uricAcidChart}]]*/ {})
+                var canvas = $('#uricAcidChart')
+                var backGroundPlugin = {
+                    id: 'customCanvasBackgroundColor',
+                    beforeDraw: function(chart, args, options) {
+                        var ctx = chart.ctx
+                        ctx.save()
+                        ctx.globalCompositeOperation = 'destination-over'
+                        ctx.fillStyle = options.color || '#ffffff'
+                        ctx.fillRect(0, 0, chart.width, chart.height)
+                        ctx.restore()
+                    }
+                }
+
+                if (!chartData.options.plugins) chartData.options.plugins = {}
+                chartData.options.plugins.customCanvasBackgroundColor = {color: '#ffffff'}
+                chartData.options.plugins.tooltip = {mode: 'index', intersect: false}
+                chartData.options.plugins.title = {display: true, text: 'Vitamin D Chart'}
+                chartData.options.plugins.hover = {mode: 'index', intersect: false}
+
+                if (!chartData.plugins) chartData.plugins = []
+                chartData.plugins.push(backGroundPlugin)
+
+                new Chart(canvas, chartData)
+
+                $('#printTableBtn').on('click', function() {
+                    var uricAcidProfiles = /*[[${uricAcids}]]*/ {}
+                    var doc = new jsPDF()
+
+                    // Define page size
+                    var docWidth = doc.internal.pageSize.getWidth()
+                    var docHeight = doc.internal.pageSize.getHeight()
+                    doc.setFontSize(18)
+
+                    // Title
+                    doc.text('Uric Acid Levels', docWidth / 2, 10, {align: 'center'})
+
+                    // Table
+                    autoTable(doc, {
+                        theme: 'striped',
+                        head: [ [ 'Date', 'Uric Acid' ] ],
+                        body: uricAcidProfiles.map(function(uricAcid) {
+                            return [
+                                new Date(uricAcid.reportDate).toLocaleDateString('en-US', {
+                                    month: 'short',
+                                    day: 'numeric',
+                                    year: 'numeric'
+                                }),
+                                uricAcid.uricAcidLevel
+                            ]
+                        })
+                    })
+                })
+            })
+        </script>
+    </body>
+</html>
