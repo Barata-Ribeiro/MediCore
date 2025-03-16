@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import software.xdev.chartjs.model.charts.BarChart;
 
 import static com.barataribeiro.medicore.utils.ApplicationConstants.*;
 
@@ -31,8 +32,16 @@ public class UricAcidController {
                               Authentication authentication, @PathVariable String username) {
         Page<UricAcidDto> response = uricAcidService.getUricAcidPaginated(page, perPage, direction, orderBy,
                                                                           authentication);
+        BarChart chart = uricAcidService.getUricAcidChartInfo(response.getContent());
 
-        return null;
+        model.addAttribute(PAGE_TITLE, "Uric Acid Profile");
+        model.addAttribute(PAGE_DESCRIPTION, "Check your uric acid profile");
+        model.addAttribute("uricAcids", response.getContent());
+        model.addAttribute("currentPage", response.getNumber());
+        model.addAttribute("totalPages", response.getTotalPages());
+        model.addAttribute("totalItems", response.getTotalElements());
+        model.addAttribute("uricAcidChart", chart.toJson());
+        return "pages/dashboard/medical_file/uric_acid/uric_acid";
     }
 
     @GetMapping("/uric-acid/add")
