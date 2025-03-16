@@ -23,7 +23,7 @@
             <section aria-labelledby="vitaminDChart" class="card p-0">
                 <div class="card-body bg-dark-subtle m-0 chart-card">
                     <div class="chart-container">
-                        <canvas aria-label="Lipid Profile Canvas" class="bg-light-subtle rounded shadow-sm"
+                        <canvas aria-label="Vitamin D Profile Canvas" class="bg-light-subtle rounded shadow-sm"
                                 id="vitaminDChart" role="img">Your browser does not support the canvas element.
                         </canvas>
                     </div>
@@ -57,14 +57,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="lipidProfile : ${lipidProfiles}">
+                            <tr th:each="vitaminDProfile : ${vitaminDs}">
                                 <td>
-                                    <time class="d-md-block d-none" th:datetime="${vitaminDs.reportDate}"
-                                          th:text="${#dates.format(vitaminDs.reportDate, 'MMMM dd, YYYY')}"></time>
-                                    <time class="d-md-none d-block" th:datetime="${vitaminDs.reportDate}"
-                                          th:text="${#dates.format(vitaminDs.reportDate, 'MM/YY')}"></time>
+                                    <time class="d-md-block d-none" th:datetime="${vitaminDProfile.reportDate}"
+                                          th:text="${#dates.format(vitaminDProfile.reportDate, 'MMMM dd, YYYY')}"></time>
+                                    <time class="d-md-none d-block" th:datetime="${vitaminDProfile.reportDate}"
+                                          th:text="${#dates.format(vitaminDProfile.reportDate, 'MM/YY')}"></time>
                                 </td>
-                                <td th:text="${vitaminDs.vitaminDLevel}"></td>
+                                <td th:text="${vitaminDProfile.twentyfiveHydroxyvitaminD3}"></td>
                                 <td>
                                     <div class="btn-group">
                                         <a aria-expanded="false" class="text-secondary" data-bs-toggle="dropdown"
@@ -75,7 +75,7 @@
                                         <ul class="dropdown-menu dropdown-menu-end">
                                             <li>
                                                 <form
-                                                    th:action="@{${userBaseUrl} + '/medical-history/vitamind/' +1 ${vitaminDs.id} + '/delete'}"
+                                                    th:action="@{${userBaseUrl} + '/medical-history/vitamind/' + ${vitaminDProfile.id} + '/delete'}"
                                                     th:method="delete">
                                                     <button aria-label="Delete Vitamin D Profile"
                                                             class="btn text-danger dropdown-item" type="submit">
@@ -86,7 +86,7 @@
                                             <li>
                                                 <a aria-label="Edit Vitamin D Profile"
                                                    class="dropdown-item btn text-primary"
-                                                   th:href="@{${userBaseUrl} + '/medical-history/vitamind/' + ${vitaminDs.id} + '/edit'}">
+                                                   th:href="@{${userBaseUrl} + '/medical-history/vitamind/' + ${vitaminDProfile.id} + '/edit'}">
                                                     Edit
                                                 </a>
                                             </li>
@@ -154,7 +154,7 @@
                                     day: 'numeric',
                                     year: 'numeric'
                                 }),
-                                vitaminD.vitaminDLevel
+                                vitaminD.twentyfiveHydroxyvitaminD3
                             ]
                         })
                     })
