@@ -34,9 +34,9 @@
                 <div class="card-header d-sm-flex justify-content-between align-items-center">
                     <h2 class="card-title" id="cbc-tests-table-title">Complete Blood Count</h2>
                     <div class="d-flex align-items-center gap-2">
-                        <a aria-label="Add new Lipid Profile" class="btn btn-primary text-light"
+                        <a aria-label="Add new CBC Test" class="btn btn-primary text-light"
                            th:href="@{${userBaseUrl + '/medical-history/blood-count/add'}}"
-                           title="Add new Lipid Profile">
+                           title="Add new CBC Test">
                             <i aria-hidden="true" class="bi bi-plus-lg"></i>
                         </a>
 
@@ -101,7 +101,7 @@
                                                 <form
                                                     th:action="@{${userBaseUrl} + '/medical-history/blood-count/' + ${cbc.id} + '/delete'}"
                                                     th:method="delete">
-                                                    <button aria-label="Delete Lipid Profile"
+                                                    <button aria-label="Delete CBC Test"
                                                             class="btn text-danger dropdown-item"
                                                             type="submit">
                                                         Delete
@@ -109,7 +109,7 @@
                                                 </form>
                                             </li>
                                             <li>
-                                                <a aria-label="Edit Lipid Profile"
+                                                <a aria-label="Edit CBC Test"
                                                    class="dropdown-item btn text-primary"
                                                    th:href="@{${userBaseUrl} + '/medical-history/blood-count/' + ${cbc.id} + '/edit'}">
                                                     Edit
@@ -120,10 +120,10 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <time class="d-md-block d-none" th:datetime="${lipidProfile.reportDate}"
-                                          th:text="${#dates.format(lipidProfile.reportDate, 'MMMM dd, YYYY')}"></time>
-                                    <time class="d-md-none d-block" th:datetime="${lipidProfile.reportDate}"
-                                          th:text="${#dates.format(lipidProfile.reportDate, 'MM/YY')}"></time>
+                                    <time class="d-md-block d-none" th:datetime="${cbc.reportDate}"
+                                          th:text="${#dates.format(cbc.reportDate, 'MMMM dd, YYYY')}"></time>
+                                    <time class="d-md-none d-block" th:datetime="${cbc.reportDate}"
+                                          th:text="${#dates.format(cbc.reportDate, 'MM/YY')}"></time>
                                 </td>
                                 <td th:text="${cbc.hematocrit}"></td>
                                 <td th:text="${cbc.hemoglobin}"></td>
