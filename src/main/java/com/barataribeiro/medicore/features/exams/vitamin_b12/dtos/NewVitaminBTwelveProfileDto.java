@@ -1,6 +1,6 @@
-package com.barataribeiro.medicore.features.exams.vitamind_b12.dtos;
+package com.barataribeiro.medicore.features.exams.vitamin_b12.dtos;
 
-import com.barataribeiro.medicore.features.exams.vitamind_b12.VitaminBTwelve;
+import com.barataribeiro.medicore.features.exams.vitamin_b12.VitaminBTwelve;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotBlank;

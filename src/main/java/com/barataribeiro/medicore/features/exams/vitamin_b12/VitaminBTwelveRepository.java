@@ -1,4 +1,4 @@
-package com.barataribeiro.medicore.features.exams.vitamind_b12;
+package com.barataribeiro.medicore.features.exams.vitamin_b12;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,4 +1,4 @@
-package com.barataribeiro.medicore.features.exams.vitamind_b12;
+package com.barataribeiro.medicore.features.exams.vitamin_b12;
 
 import com.barataribeiro.medicore.features.medical_file.MedicalFile;
 import com.fasterxml.jackson.annotation.JsonFormat;
