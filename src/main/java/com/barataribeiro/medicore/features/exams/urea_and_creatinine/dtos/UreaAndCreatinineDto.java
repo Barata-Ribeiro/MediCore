@@ -1,5 +1,6 @@
-package com.barataribeiro.medicore.features.exams.urea_and_creatinine;
+package com.barataribeiro.medicore.features.exams.urea_and_creatinine.dtos;
 
+import com.barataribeiro.medicore.features.exams.urea_and_creatinine.UreaAndCreatinine;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
