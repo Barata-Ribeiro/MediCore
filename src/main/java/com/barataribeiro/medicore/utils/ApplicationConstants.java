@@ -9,6 +9,7 @@ public class ApplicationConstants {
     public static final String NEW_LIPID_PROFILE_DTO = "newLipidProfileDto";
     public static final String NEW_VITAMIN_B_TWELVE_PROFILE_DTO = "newVitaminBTwelveProfileDto";
     public static final String NEW_VITAMIND_PROFILE_DTO = "newVitaminDProfileDto";
+    public static final String NEW_UREA_AND_CREATININE_PROFILE_DTO = "newUreaAndCreatinineProfileDto";
     public static final String NEW_URIC_ACID_PROFILE_DTO = "newUricAcidProfileDto";
     public static final String REGISTRATION_DTO = "registrationDto";
     public static final String UPDATE_APP_USER_DTO = "updateAppUserDto";
