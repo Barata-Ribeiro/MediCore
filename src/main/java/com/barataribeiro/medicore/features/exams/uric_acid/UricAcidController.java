@@ -47,8 +47,8 @@ public class UricAcidController {
     @GetMapping("/uric-acid/add")
     @PreAuthorize("#username == authentication.name")
     public String newUricAcidProfile(Model model, @PathVariable String username) {
-        model.addAttribute(PAGE_TITLE, "New Vitamin D3 Profile");
-        model.addAttribute(PAGE_DESCRIPTION, "Add a new Vitamin D3 profile");
+        model.addAttribute(PAGE_TITLE, "New Uric Acid Profile");
+        model.addAttribute(PAGE_DESCRIPTION, "Add a new Uric Acid profile");
         model.addAttribute(NEW_URIC_ACID_PROFILE_DTO, new NewUricAcidProfileDto());
         return "pages/dashboard/medical_file/uric_acid/uric_acid-add";
     }
