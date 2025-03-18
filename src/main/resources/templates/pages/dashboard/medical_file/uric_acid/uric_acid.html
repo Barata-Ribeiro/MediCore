@@ -34,9 +34,9 @@
                 <div class="card-header d-sm-flex justify-content-between align-items-center">
                     <h2 class="card-title" id="uric-acid-table-title">Uric Acid Levels</h2>
                     <div class="d-flex align-items-center gap-2">
-                        <a aria-label="Add new Vitamin D profile" class="btn btn-primary text-light"
+                        <a aria-label="Add new Uric Acid profile" class="btn btn-primary text-light"
                            th:href="@{${userBaseUrl + '/medical-history/uric-acid/add'}}"
-                           title="Add new Vitamin D profile">
+                           title="Add new Uric Acid profile">
                             <i aria-hidden="true" class="bi bi-plus-lg"></i>
                         </a>
 
@@ -77,14 +77,14 @@
                                                 <form
                                                     th:action="@{${userBaseUrl} + '/medical-history/uric-acid/' + ${uricAcid.id} + '/delete'}"
                                                     th:method="delete">
-                                                    <button aria-label="Delete Vitamin D Profile"
+                                                    <button aria-label="Delete Uric Acid Profile"
                                                             class="btn text-danger dropdown-item" type="submit">
                                                         Delete
                                                     </button>
                                                 </form>
                                             </li>
                                             <li>
-                                                <a aria-label="Edit Vitamin D Profile"
+                                                <a aria-label="Edit Uric Acid Profile"
                                                    class="dropdown-item btn text-primary"
                                                    th:href="@{${userBaseUrl} + '/medical-history/uric-acid/' + ${uricAcid.id} + '/edit'}">
                                                     Edit
@@ -123,7 +123,7 @@
                 if (!chartData.options.plugins) chartData.options.plugins = {}
                 chartData.options.plugins.customCanvasBackgroundColor = {color: '#ffffff'}
                 chartData.options.plugins.tooltip = {mode: 'index', intersect: false}
-                chartData.options.plugins.title = {display: true, text: 'Vitamin D Chart'}
+                chartData.options.plugins.title = {display: true, text: 'Uric Acid Chart'}
                 chartData.options.plugins.hover = {mode: 'index', intersect: false}
 
                 if (!chartData.plugins) chartData.plugins = []
