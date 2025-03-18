@@ -15,7 +15,7 @@
 
         <main class="container mx-auto my-2 row g-2">
             <th:block
-                th:with="breadcrumbs=${breadcrumbHelper.buildBreadcrumbs(userBaseUrl, 'medical-history', 'Medical History', 'vitaminb12', 'Vitamin B12')}">
+                th:with="breadcrumbs=${breadcrumbHelper.buildBreadcrumbs(userBaseUrl, 'medical-history', 'Medical History', 'vitamin-b-twelve', 'Vitamin B12')}">
                 <th:block
                     th:replace="~{fragments/breadcrumb-navigation :: breadcrumb-navigation(breadcrumbItems=${breadcrumbs})}"></th:block>
             </th:block>
@@ -30,12 +30,12 @@
                 </div>
             </section>
 
-            <section aria-labelledby="vitaminb12-table-title" class="card p-0">
+            <section aria-labelledby="vitamin-b-twelve-table-title" class="card p-0">
                 <div class="card-header d-sm-flex justify-content-between align-items-center">
-                    <h2 class="card-title" id="vitaminb12-table-title">Vitamin B12 Levels</h2>
+                    <h2 class="card-title" id="vitamin-b-twelve-table-title">Vitamin B12 Levels</h2>
                     <div class="d-flex align-items-center gap-2">
                         <a aria-label="Add new Vitamin B12 profile" class="btn btn-primary text-light"
-                           th:href="@{${userBaseUrl + '/medical-history/vitaminb12/add'}}"
+                           th:href="@{${userBaseUrl + '/medical-history/vitamin-b-twelve/add'}}"
                            title="Add new Vitamin B12 profile">
                             <i aria-hidden="true" class="bi bi-plus-lg"></i>
                         </a>
@@ -75,7 +75,7 @@
                                         <ul class="dropdown-menu dropdown-menu-end">
                                             <li>
                                                 <form
-                                                    th:action="@{${userBaseUrl} + '/medical-history/vitaminb12/' + ${vitaminBTwelveProfile.id} + '/delete'}"
+                                                    th:action="@{${userBaseUrl} + '/medical-history/vitamin-b-twelve/' + ${vitaminBTwelveProfile.id} + '/delete'}"
                                                     th:method="delete">
                                                     <button aria-label="Delete Vitamin B12 Profile"
                                                             class="btn text-danger dropdown-item" type="submit">
@@ -86,7 +86,7 @@
                                             <li>
                                                 <a aria-label="Edit Vitamin B12 Profile"
                                                    class="dropdown-item btn text-primary"
-                                                   th:href="@{${userBaseUrl} + '/medical-history/vitaminb12/' + ${vitaminBTwelveProfile.id} + '/edit'}">
+                                                   th:href="@{${userBaseUrl} + '/medical-history/vitamin-b-twelve/' + ${vitaminBTwelveProfile.id} + '/edit'}">
                                                     Edit
                                                 </a>
                                             </li>
