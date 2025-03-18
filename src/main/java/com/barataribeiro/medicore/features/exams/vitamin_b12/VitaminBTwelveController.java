@@ -47,8 +47,8 @@ public class VitaminBTwelveController {
     @GetMapping("/vitamin-b-twelve/add")
     @PreAuthorize("#username == authentication.name")
     public String newVitaminDProfile(Model model, @PathVariable String username) {
-        model.addAttribute(PAGE_TITLE, "New Vitamin D3 Profile");
-        model.addAttribute(PAGE_DESCRIPTION, "Add a new Vitamin D3 profile");
+        model.addAttribute(PAGE_TITLE, "New Vitamin B12 Profile");
+        model.addAttribute(PAGE_DESCRIPTION, "Add a new Vitamin B12 profile");
         model.addAttribute(NEW_VITAMIN_B_TWELVE_PROFILE_DTO, new NewVitaminBTwelveProfileDto());
         return "pages/dashboard/medical_file/vitamin_b_twelve/vitamin_b_twelve-add";
     }
