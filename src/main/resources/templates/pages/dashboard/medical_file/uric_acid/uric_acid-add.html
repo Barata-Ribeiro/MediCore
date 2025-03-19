@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" layout:decorate="~{layouts/auth_layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="${pageTitle + ' - MediCore'}">MediCore</title>
+        <meta name="description" th:content="${pageDescription}" />
+    </head>
+    <body layout:fragment="content">
+        <th:block th:replace="~{fragments/medical-file-header :: medical-file-header}"></th:block>
+
+        <main class="container mx-auto my-2 row g-2">
+            <th:block
+                th:with="breadcrumbs=${breadcrumbHelper.buildBreadcrumbs(userBaseUrl, 'medical-history', 'Medical History', 'uric-acid', 'Uric Acid Levels', 'uric-acid-add', 'Add New Uric Acid Profile')}">
+                <th:block
+                    th:replace="~{fragments/breadcrumb-navigation :: breadcrumb-navigation(breadcrumbItems=${breadcrumbs})}"></th:block>
+            </th:block>
+
+            <div class="card p-0 w-md-50 w-100 mx-auto">
+                <div class="card-header">
+                    <h1 class="display-6">Add new Profile</h1>
+                </div>
+
+                <th:block
+                    th:replace="~{fragments/forms/new-uric-acid-profile-form :: new-uric-acid-profile-form}"></th:block>
+            </div>
+        </main>
+    </body>
+</html>

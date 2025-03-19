@@ -1,0 +1,37 @@
+<!-- src/main/resources/templates/fragments/forms/new-uric-acid-profile-form.html -->
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <form class="card-body" th:action="@{${userBaseUrl} + '/medical-history/uric-acid/add'}"
+              th:fragment="new-uric-acid-profile-form" th:method="post" th:object="${newUricAcidProfileDto}">
+            <div class="mb-3">
+                <label class="form-label" for="uricAcidLevel">
+                    Uric Acid Level
+                </label>
+                <div class="input-group">
+                    <span class="input-group-text">mg/dL</span>
+                    <input aria-label="Uric Acid Level" aria-labelledby="uricAcidLevelValidation" aria-required="true"
+                           class="form-control" id="uricAcidLevel" min="0" placeholder="e.g. 6" required
+                           th:errorclass="is-invalid" th:field="${newUricAcidProfileDto.uricAcidLevel}" type="number">
+                    <p class="invalid-feedback" id="uricAcidLevelValidation"
+                       th:errors="${newUricAcidProfileDto.uricAcidLevel}"
+                       th:if="${#fields.hasErrors('uricAcidLevel')}">
+                    </p>
+                </div>
+            </div>
+
+            <div class="mb-3 has-validation">
+                <label class="form-label" for="reportDate">Report Date</label>
+                <input aria-labelledby="reportDateValidation" aria-required="true" class="form-control" id="reportDate"
+                       required th:errorclass="is-invalid" th:field="${newUricAcidProfileDto.reportDate}" type="date">
+                <p class="invalid-feedback" id="reportDateValidation" th:errors="${newUricAcidProfileDto.reportDate}"
+                   th:if="${#fields.hasErrors('reportDate')}">
+                </p>
+            </div>
+
+            <button class="btn btn-primary w-100 py-2" type="submit">
+                Save
+            </button>
+        </form>
+    </body>
+</html>
