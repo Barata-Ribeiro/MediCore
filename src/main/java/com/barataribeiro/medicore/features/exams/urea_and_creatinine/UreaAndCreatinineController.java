@@ -57,8 +57,8 @@ public class UreaAndCreatinineController {
     @PostMapping("/urea-and-creatinine/add")
     @PreAuthorize("#username == authentication.name")
     public String newUricAcidProfile(Model model, @PathVariable String username,
-                                     @Valid @ModelAttribute NewUreaAndCreatinineDto newUreaAndCreatinineDto) {
-        ureaAndCreatinineService.addUreaAndCreatinine(newUreaAndCreatinineDto, username);
+                                     @Valid @ModelAttribute NewUreaAndCreatinineDto newUreaAndCreatinineProfileDto) {
+        ureaAndCreatinineService.addUreaAndCreatinine(newUreaAndCreatinineProfileDto, username);
         return "redirect:/" + username + "/medical-history/urea-and-creatinine";
     }
 
