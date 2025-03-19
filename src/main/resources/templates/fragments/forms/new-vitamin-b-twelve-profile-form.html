@@ -11,7 +11,7 @@
                     <span class="input-group-text">pg/mL</span>
                     <input aria-label="Vitamin B12 Level" aria-labelledby="vitaminBTwelveLevelValidation"
                            aria-required="true" class="form-control" id="vitaminBTwelveLevel" min="0"
-                           placeholder="e.g. 650" required th:errorclass="is-invalid"
+                           placeholder="e.g. 650" required step=".01" th:errorclass="is-invalid"
                            th:field="${newVitaminBTwelveProfileDto.vitaminBTwelveLevel}" type="number">
                     <p class="invalid-feedback" id="vitaminBTwelveLevelValidation"
                        th:errors="${newVitaminBTwelveProfileDto.vitaminBTwelveLevel}"

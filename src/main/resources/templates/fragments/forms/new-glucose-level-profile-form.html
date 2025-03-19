@@ -12,7 +12,7 @@
                     <span class="input-group-text">mg/dL</span>
                     <input aria-label="Glucose Level" aria-labelledby="glucoseLevelValidation"
                            aria-required="true" class="form-control" id="glucoseLevel" min="0"
-                           placeholder="e.g. 87" required th:errorclass="is-invalid"
+                           placeholder="e.g. 87" required step=".01" th:errorclass="is-invalid"
                            th:field="${newGlucoseDto.glucoseLevel}"
                            type="number">
                     <p class="invalid-feedback" id="glucoseLevelValidation"
@@ -29,7 +29,7 @@
                         <span class="input-group-text">%</span>
                         <input aria-label="Glycated Hemoglobin" aria-labelledby="glycatedHemoglobinValidation"
                                aria-required="true" class="form-control" id="glycatedHemoglobin" min="0"
-                               placeholder="e.g. 4.9" required th:errorclass="is-invalid"
+                               placeholder="e.g. 4.9" required step=".01" th:errorclass="is-invalid"
                                th:field="${newGlucoseDto.glycatedHemoglobin}" type="number">
                     </div>
                     <p class="invalid-feedback" id="glycatedHemoglobinValidation"

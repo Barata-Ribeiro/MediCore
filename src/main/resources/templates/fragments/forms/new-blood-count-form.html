@@ -13,7 +13,7 @@
                         <span class="input-group-text">%</span>
                         <input aria-label="Hematocrit" aria-labelledby="hematocritValidation"
                                aria-required="true" class="form-control" id="hematocrit" min="0"
-                               placeholder="e.g. 45" required th:errorclass="is-invalid"
+                               placeholder="e.g. 45" required step=".01" th:errorclass="is-invalid"
                                th:field="${newCBCDto.hematocrit}" type="number">
                         <p class="invalid-feedback" id="hematocritValidation" th:errors="${newCBCDto.hematocrit}"
                            th:if="${#fields.hasErrors('hematocrit')}"></p>
@@ -27,7 +27,7 @@
                         <span class="input-group-text">g/dL</span>
                         <input aria-label="Hemoglobin" aria-labelledby="hemoglobinValidation"
                                aria-required="true" class="form-control" id="hemoglobin" min="0"
-                               placeholder="e.g. 15" required th:errorclass="is-invalid"
+                               placeholder="e.g. 15" required step=".01" th:errorclass="is-invalid"
                                th:field="${newCBCDto.hemoglobin}" type="number">
                         <p class="invalid-feedback" id="hemoglobinValidation" th:errors="${newCBCDto.hemoglobin}"
                            th:if="${#fields.hasErrors('hemoglobin')}"></p>
@@ -41,7 +41,7 @@
                         <span class="input-group-text">/mm<sup>3</sup></span>
                         <input aria-label="Red Blood Cells" aria-labelledby="redBloodCellsValidation"
                                aria-required="true" class="form-control" id="redBloodCells" min="0"
-                               placeholder="e.g. 5.5" required th:errorclass="is-invalid"
+                               placeholder="e.g. 5.5" required step=".01" th:errorclass="is-invalid"
                                th:field="${newCBCDto.redBloodCells}" type="number">
                         <p class="invalid-feedback" id="redBloodCellsValidation" th:errors="${newCBCDto.redBloodCells}"
                            th:if="${#fields.hasErrors('redBloodCells')}"></p>
@@ -57,7 +57,7 @@
                         <span class="input-group-text">fL</span>
                         <input aria-label="Mean Corpuscular Volume" aria-labelledby="meanCorpuscularVolumeValidation"
                                aria-required="true" class="form-control" id="meanCorpuscularVolume" min="0"
-                               placeholder="e.g. 90" required th:errorclass="is-invalid"
+                               placeholder="e.g. 90" required step=".01" th:errorclass="is-invalid"
                                th:field="${newCBCDto.meanCorpuscularVolume}" type="number">
                         <p class="invalid-feedback" id="meanCorpuscularVolumeValidation"
                            th:errors="${newCBCDto.meanCorpuscularVolume}"
@@ -75,7 +75,7 @@
                         <input aria-label="Mean Corpuscular Hemoglobin"
                                aria-labelledby="meanCorpuscularHemoglobinValidation"
                                aria-required="true" class="form-control" id="meanCorpuscularHemoglobin" min="0"
-                               placeholder="e.g. 30" required th:errorclass="is-invalid"
+                               placeholder="e.g. 30" required step=".01" th:errorclass="is-invalid"
                                th:field="${newCBCDto.meanCorpuscularHemoglobin}" type="number">
                         <p class="invalid-feedback" id="meanCorpuscularHemoglobinValidation"
                            th:errors="${newCBCDto.meanCorpuscularHemoglobin}"
@@ -95,7 +95,7 @@
                         <input aria-label="Mean Corpuscular Hemoglobin Concentration"
                                aria-labelledby="meanCorpuscularHemoglobinConcentrationValidation"
                                aria-required="true" class="form-control" id="meanCorpuscularHemoglobinConcentration"
-                               min="0" placeholder="e.g. 30" required th:errorclass="is-invalid"
+                               min="0" placeholder="e.g. 30" required step=".01" th:errorclass="is-invalid"
                                th:field="${newCBCDto.meanCorpuscularHemoglobinConcentration}" type="number">
                         <p class="invalid-feedback" id="meanCorpuscularHemoglobinConcentrationValidation"
                            th:errors="${newCBCDto.meanCorpuscularHemoglobinConcentration}"
@@ -113,7 +113,7 @@
                         <input aria-label="Red Cell Distribution Width (RDW)"
                                aria-labelledby="redCellDistributionWidthValidation"
                                aria-required="true" class="form-control" id="redCellDistributionWidth"
-                               min="0" placeholder="e.g. 15" required th:errorclass="is-invalid"
+                               min="0" placeholder="e.g. 15" required step=".01" th:errorclass="is-invalid"
                                th:field="${newCBCDto.redCellDistributionWidth}" type="number">
                         <p class="invalid-feedback" id="redCellDistributionWidthValidation"
                            th:errors="${newCBCDto.redCellDistributionWidth}"
@@ -141,7 +141,7 @@
                         <span class="input-group-text">/mm<sup>3</sup></span>
                         <input aria-label="Rod Neutrophils" aria-labelledby="rodNeutrophilsValidation"
                                aria-required="true" class="form-control" id="rodNeutrophils" min="0"
-                               placeholder="e.g. 15" required th:errorclass="is-invalid"
+                               placeholder="e.g. 15" required step=".01" th:errorclass="is-invalid"
                                th:field="${newCBCDto.rodNeutrophils}" type="number">
                         <p class="invalid-feedback" id="rodNeutrophilsValidation"
                            th:errors="${newCBCDto.rodNeutrophils}" th:if="${#fields.hasErrors('rodNeutrophils')}"></p>
@@ -155,7 +155,7 @@
                         <span class="input-group-text">/mm<sup>3</sup></span>
                         <input aria-label="Segmented Neutrophils" aria-labelledby="segmentedNeutrophilsValidation"
                                aria-required="true" class="form-control" id="segmentedNeutrophils" min="0"
-                               placeholder="e.g. 1700" required th:errorclass="is-invalid"
+                               placeholder="e.g. 1700" required step=".01" th:errorclass="is-invalid"
                                th:field="${newCBCDto.segmentedNeutrophils}" type="number">
                         <p class="invalid-feedback" id="segmentedNeutrophilsValidation"
                            th:errors="${newCBCDto.segmentedNeutrophils}"
@@ -183,7 +183,7 @@
                         <span class="input-group-text">/mm<sup>3</sup></span>
                         <input aria-label="Atypical Lymphocytes" aria-labelledby="atypicalLymphocytesValidation"
                                aria-required="true" class="form-control" id="atypicalLymphocytes" min="0"
-                               placeholder="e.g. 15" required th:errorclass="is-invalid"
+                               placeholder="e.g. 15" required step=".01" th:errorclass="is-invalid"
                                th:field="${newCBCDto.atypicalLymphocytes}" type="number">
                         <p class="invalid-feedback" id="atypicalLymphocytesValidation"
                            th:errors="${newCBCDto.atypicalLymphocytes}"
@@ -237,7 +237,7 @@
                         <span class="input-group-text">/mm<sup>3</sup></span>
                         <input aria-label="Metamyelocytes" aria-labelledby="metamyelocytesValidation"
                                aria-required="true" class="form-control" id="metamyelocytes" min="0"
-                               placeholder="e.g. 15" required th:errorclass="is-invalid"
+                               placeholder="e.g. 15" required step=".01" th:errorclass="is-invalid"
                                th:field="${newCBCDto.metamyelocytes}" type="number">
                         <p class="invalid-feedback" id="metamyelocytesValidation"
                            th:errors="${newCBCDto.metamyelocytes}" th:if="${#fields.hasErrors('metamyelocytes')}"></p>
@@ -251,7 +251,7 @@
                         <span class="input-group-text">/mm<sup>3</sup></span>
                         <input aria-label="Myelocytes" aria-labelledby="myelocytesValidation"
                                aria-required="true" class="form-control" id="myelocytes" min="0"
-                               placeholder="e.g. 15" required th:errorclass="is-invalid"
+                               placeholder="e.g. 15" required step=".01" th:errorclass="is-invalid"
                                th:field="${newCBCDto.myelocytes}" type="number">
                         <p class="invalid-feedback" id="myelocytesValidation"
                            th:errors="${newCBCDto.myelocytes}" th:if="${#fields.hasErrors('myelocytes')}"></p>
@@ -265,7 +265,7 @@
                         <span class="input-group-text">/mm<sup>3</sup></span>
                         <input aria-label="Promyelocytes" aria-labelledby="promyelocytesValidation"
                                aria-required="true" class="form-control" id="promyelocytes" min="0"
-                               placeholder="e.g. 15" required th:errorclass="is-invalid"
+                               placeholder="e.g. 15" required step=".01" th:errorclass="is-invalid"
                                th:field="${newCBCDto.promyelocytes}" type="number">
                         <p class="invalid-feedback" id="promyelocytesValidation"
                            th:errors="${newCBCDto.promyelocytes}" th:if="${#fields.hasErrors('promyelocytes')}"></p>
@@ -279,7 +279,7 @@
                         <span class="input-group-text">/mm<sup>3</sup></span>
                         <input aria-label="Atypical Cells" aria-labelledby="atypicalCellsValidation"
                                aria-required="true" class="form-control" id="atypicalCells" min="0"
-                               placeholder="e.g. 15" required th:errorclass="is-invalid"
+                               placeholder="e.g. 15" required step=".01" th:errorclass="is-invalid"
                                th:field="${newCBCDto.atypicalCells}" type="number">
                         <p class="invalid-feedback" id="atypicalCellsValidation"
                            th:errors="${newCBCDto.atypicalCells}" th:if="${#fields.hasErrors('atypicalCells')}"></p>
@@ -293,7 +293,7 @@
                         <span class="input-group-text">/mm<sup>3</sup></span>
                         <input aria-label="Platelets" aria-labelledby="plateletsValidation"
                                aria-required="true" class="form-control" id="platelets" min="0"
-                               placeholder="e.g. 150000" required th:errorclass="is-invalid"
+                               placeholder="e.g. 150000" required step=".01" th:errorclass="is-invalid"
                                th:field="${newCBCDto.platelets}" type="number">
                         <p class="invalid-feedback" id="plateletsValidation"
                            th:errors="${newCBCDto.platelets}" th:if="${#fields.hasErrors('platelets')}"></p>
