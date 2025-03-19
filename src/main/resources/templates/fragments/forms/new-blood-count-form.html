@@ -127,7 +127,7 @@
                     <div class="input-group">
                         <span class="input-group-text">/mm<sup>3</sup></span>
                         <input aria-label="Leukocytes" aria-labelledby="leukocytesValidation" aria-required="true"
-                               class="form-control" id="leukocytes" min="0" placeholder="e.g. 1500" required
+                               class="form-control" id="leukocytes" min="0" placeholder="e.g. 1500" required step=".01"
                                th:errorclass="is-invalid" th:field="${newCBCDto.leukocytes}" type="number">
                         <p class="invalid-feedback" id="leukocytesValidation" th:errors="${newCBCDto.leukocytes}"
                            th:if="${#fields.hasErrors('leukocytes')}"></p>
@@ -169,7 +169,7 @@
                     <div class="input-group">
                         <span class="input-group-text">/mm<sup>3</sup></span>
                         <input aria-label="Lymphocytes" aria-labelledby="lymphocytesValidation" aria-required="true"
-                               class="form-control" id="lymphocytes" min="0" placeholder="e.g. 900" required
+                               class="form-control" id="lymphocytes" min="0" placeholder="e.g. 900" required step=".01"
                                th:errorclass="is-invalid" th:field="${newCBCDto.lymphocytes}" type="number">
                         <p class="invalid-feedback" id="lymphocytesValidation" th:errors="${newCBCDto.lymphocytes}"
                            th:if="${#fields.hasErrors('lymphocytes')}"></p>
@@ -197,7 +197,7 @@
                     <div class="input-group">
                         <span class="input-group-text">/mm<sup>3</sup></span>
                         <input aria-label="Monocytes" aria-labelledby="monocytesValidation" aria-required="true"
-                               class="form-control" id="monocytes" min="0" placeholder="e.g. 900" required
+                               class="form-control" id="monocytes" min="0" placeholder="e.g. 900" required step=".01"
                                th:errorclass="is-invalid" th:field="${newCBCDto.monocytes}" type="number">
                         <p class="invalid-feedback" id="monocytesValidation" th:errors="${newCBCDto.monocytes}"
                            th:if="${#fields.hasErrors('monocytes')}"></p>
@@ -210,7 +210,7 @@
                     <div class="input-group">
                         <span class="input-group-text">/mm<sup>3</sup></span>
                         <input aria-label="Eosinophils" aria-labelledby="eosinophilsValidation" aria-required="true"
-                               class="form-control" id="eosinophils" min="0" placeholder="e.g. 15" required
+                               class="form-control" id="eosinophils" min="0" placeholder="e.g. 15" required step=".01"
                                th:errorclass="is-invalid" th:field="${newCBCDto.eosinophils}" type="number">
                         <p class="invalid-feedback" id="eosinophilsValidation" th:errors="${newCBCDto.eosinophils}"
                            th:if="${#fields.hasErrors('eosinophils')}"></p>
@@ -223,7 +223,7 @@
                     <div class="input-group">
                         <span class="input-group-text">/mm<sup>3</sup></span>
                         <input aria-label="Basophils" aria-labelledby="basophilsValidation" aria-required="true"
-                               class="form-control" id="basophils" min="0" placeholder="e.g. 15" required
+                               class="form-control" id="basophils" min="0" placeholder="e.g. 15" required step=".01"
                                th:errorclass="is-invalid" th:field="${newCBCDto.basophils}" type="number">
                         <p class="invalid-feedback" id="basophilsValidation" th:errors="${newCBCDto.basophils}"
                            th:if="${#fields.hasErrors('basophils')}"></p>

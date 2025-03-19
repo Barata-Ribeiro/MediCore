@@ -43,8 +43,9 @@
                         <span class="input-group-text">mg/dL</span>
                         <input aria-label="Estimated Average Glucose"
                                aria-labelledby="estimatedAverageGlucoseValidation" aria-required="true"
-                               class="form-control" id="estimatedAverageGlucose" min="0" placeholder="e.g. 95" required
-                               th:errorclass="is-invalid" th:field="${newGlucoseDto.estimatedAverageGlucose}"
+                               class="form-control" id="estimatedAverageGlucose" min="0" placeholder="e.g. 95"
+                               required step=".01" th:errorclass="is-invalid"
+                               th:field="${newGlucoseDto.estimatedAverageGlucose}"
                                type="number">
                     </div>
                     <p class="invalid-feedback" id="estimatedAverageGlucoseValidation"
