@@ -1,0 +1,59 @@
+<!-- src/main/resources/templates/fragments/forms/new-urea-and-creatinine-profile-form.html -->
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <form class="card-body" th:action="@{${userBaseUrl} + '/medical-history/urea-and-creatinine/add'}"
+              th:fragment="new-urea-and-creatinine-profile-form" th:method="post"
+              th:object="${newUreaAndCreatinineProfileDto}">
+            <div class="mb-3 row g-3">
+                <div class="col-md-6">
+                    <label class="form-label" for="urea">
+                        Urea Level
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text">mg/dL</span>
+                        <input aria-label="Urea Level" aria-labelledby="ureaValidation" aria-required="true"
+                               class="form-control" id="urea" min="0" placeholder="e.g. 25" required step=".01"
+                               th:errorclass="is-invalid" th:field="${newUreaAndCreatinineProfileDto.urea}"
+                               type="number">
+                        <p class="invalid-feedback" id="ureaValidation"
+                           th:errors="${newUreaAndCreatinineProfileDto.urea}"
+                           th:if="${#fields.hasErrors('urea')}">
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label" for="creatinine">
+                        Creatinine Level
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text">mg/dL</span>
+                        <input aria-label="Creatinine Level" aria-labelledby="creatinineValidation" aria-required="true"
+                               class="form-control" id="creatinine" min="0" placeholder="e.g. .05" required step=".01"
+                               th:errorclass="is-invalid" th:field="${newUreaAndCreatinineProfileDto.creatinine}"
+                               type="number">
+                        <p class="invalid-feedback" id="creatinineValidation"
+                           th:errors="${newUreaAndCreatinineProfileDto.creatinine}"
+                           th:if="${#fields.hasErrors('creatinine')}">
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 has-validation">
+                <label class="form-label" for="reportDate">Report Date</label>
+                <input aria-labelledby="reportDateValidation" aria-required="true" class="form-control" id="reportDate"
+                       required th:errorclass="is-invalid" th:field="${newUreaAndCreatinineProfileDto.reportDate}"
+                       type="date">
+                <p class="invalid-feedback" id="reportDateValidation"
+                   th:errors="${newUreaAndCreatinineProfileDto.reportDate}" th:if="${#fields.hasErrors('reportDate')}">
+                </p>
+            </div>
+
+            <button class="btn btn-primary w-100 py-2" type="submit">
+                Save
+            </button>
+        </form>
+    </body>
+</html>
