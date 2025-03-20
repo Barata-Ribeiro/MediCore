@@ -3,6 +3,7 @@ package com.barataribeiro.medicore.features.medical_file;
 import com.barataribeiro.medicore.features.exams.complete_blood_count.CompleteBloodCount;
 import com.barataribeiro.medicore.features.exams.glucose.Glucose;
 import com.barataribeiro.medicore.features.exams.lipid_profile.LipidProfile;
+import com.barataribeiro.medicore.features.exams.ultrasensitive_tsh.UltrasensitiveTSH;
 import com.barataribeiro.medicore.features.exams.urea_and_creatinine.UreaAndCreatinine;
 import com.barataribeiro.medicore.features.exams.uric_acid.UricAcid;
 import com.barataribeiro.medicore.features.exams.vitamin_b12.VitaminBTwelve;
@@ -103,6 +104,11 @@ public class MedicalFile implements Serializable {
     @ToString.Exclude
     @OneToMany(mappedBy = "medicalFile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<UricAcid> uricAcids = new LinkedHashSet<>();
+
+    @Builder.Default
+    @ToString.Exclude
+    @OneToMany(mappedBy = "medicalFile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<UltrasensitiveTSH> ultrasensitiveTSHs = new LinkedHashSet<>();
 
     public Double getBmi() {
         if (weight == null || (height == null || height == 0)) return null;
