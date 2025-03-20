@@ -13,9 +13,16 @@ public interface MedicalFileRepository extends JpaRepository<MedicalFile, UUID> 
     Optional<MedicalFile> findByUser_Username(String username);
 
     @Query("""
-           SELECT SIZE(mf.lipidProfiles) + SIZE(mf.ureaAndCreatinines) + SIZE(mf.vitaminDs) + SIZE(mf.vitaminBTwelves) + SIZE(mf.glucoses) + SIZE(mf.uricAcids) + SIZE(mf.completeBloodCounts)
-           FROM MedicalFile mf
-           WHERE mf.user.username = :username
-           """)
+            SELECT SIZE(mf.lipidProfiles) +\s
+                       SIZE(mf.ureaAndCreatinines) +\s
+                       SIZE(mf.vitaminDs) +\s
+                       SIZE(mf.vitaminBTwelves) +\s
+                       SIZE(mf.glucoses) +\s
+                       SIZE(mf.uricAcids) +\s
+                       SIZE(mf.completeBloodCounts) +\s
+                       SIZE(mf.ultrasensitiveTSHs)
+            FROM MedicalFile mf
+            WHERE mf.user.username = :username
+           \s""")
     long getTotalExamsCount(@Param("username") String username);
 }

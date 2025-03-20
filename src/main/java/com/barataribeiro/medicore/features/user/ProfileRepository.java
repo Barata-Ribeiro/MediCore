@@ -31,7 +31,8 @@ public interface ProfileRepository extends JpaRepository<Profile, UUID> {
                (SELECT COUNT(e) FROM VitaminD e WHERE e.medicalFile.id = m.id),
                (SELECT COUNT(e) FROM VitaminBTwelve e WHERE e.medicalFile.id = m.id),
                (SELECT COUNT(e) FROM UreaAndCreatinine e WHERE e.medicalFile.id = m.id),
-               (SELECT COUNT(e) FROM UricAcid e WHERE e.medicalFile.id = m.id)
+               (SELECT COUNT(e) FROM UricAcid e WHERE e.medicalFile.id = m.id),
+               (SELECT COUNT(e) FROM UltrasensitiveTSH e WHERE e.medicalFile.id = m.id)
            )
            FROM Profile p
            LEFT JOIN FETCH p.user u
