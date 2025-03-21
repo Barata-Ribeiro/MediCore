@@ -65,6 +65,11 @@
                                     Glucose Level
                                 </a>
                                 <a class="nav-link d-flex p-2 border-start-0 border-end-0"
+                                   th:classappend="${servletPath == (userBaseUrl + '/medical-history/ultrasensitive-tsh') ? 'active text-bg-dark' : null}"
+                                   th:href="@{${userBaseUrl + '/medical-history/ultrasensitive-tsh'}}">
+                                    Ultrasensitive TSH
+                                </a>
+                                <a class="nav-link d-flex p-2 border-start-0 border-end-0"
                                    th:classappend="${servletPath == (userBaseUrl + '/medical-history/urea-and-creatinine') ? 'active text-bg-dark' : null}"
                                    th:href="@{${userBaseUrl + '/medical-history/urea-and-creatinine'}}">
                                     Urea & Creatinine
