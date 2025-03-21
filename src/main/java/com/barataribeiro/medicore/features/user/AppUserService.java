@@ -90,23 +90,25 @@ public class AppUserService {
                 .getDashboardDataRaw(username)
                 .orElseThrow(() -> new RuntimeException("Dashboard data not found"));
 
-        final long sumOfExams = Stream.of(dashboardData.getTotalLipidProfiles(),
-                                          dashboardData.getTotalCompleteBloodCounts(),
-                                          dashboardData.getTotalGlucoses(),
-                                          dashboardData.getTotalVitaminDs(),
-                                          dashboardData.getTotalVitaminBTwelves(),
-                                          dashboardData.getTotalUreaAndCreatinines(),
-                                          dashboardData.getTotalUricAcids()).parallel().reduce(0L, Long::sum);
+        final long sumOfExams = Stream.of(dashboardData.getLipidProfileCount(),
+                                          dashboardData.getCompleteBloodCountCount(),
+                                          dashboardData.getGlucoseCount(),
+                                          dashboardData.getVitaminDCount(),
+                                          dashboardData.getVitaminBTwelveCount(),
+                                          dashboardData.getUreaAndCreatinineCount(),
+                                          dashboardData.getUricAcidCount(),
+                                          dashboardData.getUltrasensitiveTSHCount()).parallel().reduce(0L, Long::sum);
 
         return DashboardDto.builder().profile(userMapper.toUserProfileDto(dashboardData.getProfile()))
                            .medicalFile(medicalFileMapper.toMedicalFileDto(dashboardData.getMedicalFile()))
-                           .totalLipidProfiles(dashboardData.getTotalLipidProfiles())
-                           .totalCompleteBloodCounts(dashboardData.getTotalCompleteBloodCounts())
-                           .totalGlucoses(dashboardData.getTotalGlucoses())
-                           .totalVitaminDs(dashboardData.getTotalVitaminDs())
-                           .totalVitaminBTwelves(dashboardData.getTotalVitaminBTwelves())
-                           .totalUreaAndCreatinines(dashboardData.getTotalUreaAndCreatinines())
-                           .totalUricAcids(dashboardData.getTotalUricAcids())
+                           .totalLipidProfiles(dashboardData.getLipidProfileCount())
+                           .totalCompleteBloodCounts(dashboardData.getCompleteBloodCountCount())
+                           .totalGlucoses(dashboardData.getGlucoseCount())
+                           .totalVitaminDs(dashboardData.getVitaminDCount())
+                           .totalVitaminBTwelves(dashboardData.getVitaminBTwelveCount())
+                           .totalUreaAndCreatinines(dashboardData.getUreaAndCreatinineCount())
+                           .totalUricAcids(dashboardData.getUricAcidCount())
+                           .totalUltrasensitiveTSHs(dashboardData.getUltrasensitiveTSHCount())
                            .totalMedicalExams(sumOfExams)
                            .build();
     }

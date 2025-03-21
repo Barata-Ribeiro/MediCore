@@ -28,5 +28,6 @@ public class DashboardDto implements Serializable {
     private Long totalVitaminBTwelves;
     private Long totalUreaAndCreatinines;
     private Long totalUricAcids;
+    private Long totalUltrasensitiveTSHs;
     private Long totalMedicalExams;
 }

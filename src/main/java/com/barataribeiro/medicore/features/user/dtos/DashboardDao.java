@@ -10,28 +10,28 @@ import lombok.Data;
 public class DashboardDao {
     private Profile profile;
     private MedicalFile medicalFile;
-    private Long totalLipidProfiles;
-    private Long totalCompleteBloodCounts;
-    private Long totalGlucoses;
-    private Long totalVitaminDs;
-    private Long totalVitaminBTwelves;
-    private Long totalUreaAndCreatinines;
-    private Long totalUricAcids;
-    private Long totalUltrasensitiveTSHs;
+    private Long lipidProfileCount;
+    private Long completeBloodCountCount;
+    private Long glucoseCount;
+    private Long vitaminDCount;
+    private Long vitaminBTwelveCount;
+    private Long ureaAndCreatinineCount;
+    private Long uricAcidCount;
+    private Long ultrasensitiveTSHCount;
 
     public DashboardDao(Profile profile, MedicalFile medicalFile,
-                        int totalLipidProfiles, int totalCompleteBloodCounts,
-                        int totalGlucoses, int totalVitaminDs, int totalVitaminBTwelves,
-                        int totalUreaAndCreatinines, int totalUricAcids, int totalUltrasensitiveTSHs) {
+                        Long totalLipidProfiles, Long totalCompleteBloodCounts,
+                        Long totalGlucoses, Long totalVitaminDs, Long totalVitaminBTwelves,
+                        Long totalUreaAndCreatinines, Long totalUricAcids, Long totalUltrasensitiveTSHs) {
         this.profile = profile;
         this.medicalFile = medicalFile;
-        this.totalLipidProfiles = (long) totalLipidProfiles;
-        this.totalCompleteBloodCounts = (long) totalCompleteBloodCounts;
-        this.totalGlucoses = (long) totalGlucoses;
-        this.totalVitaminDs = (long) totalVitaminDs;
-        this.totalVitaminBTwelves = (long) totalVitaminBTwelves;
-        this.totalUreaAndCreatinines = (long) totalUreaAndCreatinines;
-        this.totalUricAcids = (long) totalUricAcids;
-        this.totalUltrasensitiveTSHs = (long) totalUltrasensitiveTSHs;
+        this.lipidProfileCount = totalLipidProfiles;
+        this.completeBloodCountCount = totalCompleteBloodCounts;
+        this.glucoseCount = totalGlucoses;
+        this.vitaminDCount = totalVitaminDs;
+        this.vitaminBTwelveCount = totalVitaminBTwelves;
+        this.ureaAndCreatinineCount = totalUreaAndCreatinines;
+        this.uricAcidCount = totalUricAcids;
+        this.ultrasensitiveTSHCount = totalUltrasensitiveTSHs;
     }
 }
