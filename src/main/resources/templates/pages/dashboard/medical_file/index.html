@@ -19,10 +19,10 @@
                     <p class="card-subtitle">View your medical history</p>
                 </header>
 
-                <div class="card-body">
-                    <div class="card">
+                <div class="card-body d-grid gap-3">
+                    <section aria-labelledby="medical-file-info-title" class="card" id="medical-file-section">
                         <header class="card-header">
-                            <h5 class="card-title">Your File</h5>
+                            <h2 class="card-title" id="medical-file-info-title">Your File</h2>
                             <ul class="nav nav-tabs card-header-tabs" data-bs-tabs="tabs">
                                 <li class="nav-item">
                                     <a aria-current="true" class="nav-link active" data-bs-toggle="tab"
@@ -173,7 +173,153 @@
                                 <button class="btn btn-outline-secondary w-50" type="reset">Reset</button>
                             </div>
                         </form>
-                    </div>
+                    </section>
+
+                    <section aria-labelledby="latest-exams-title" class="card" id="latest-exams-section">
+                        <header class="card-header">
+                            <h2 class="card-title" id="latest-exams-title">Latest Exams</h2>
+                        </header>
+
+                        <article class="card-body">
+                            <div class="accordion" id="latestExamsAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button aria-controls="completeBloodCount" aria-expanded="false"
+                                                class="accordion-button collapsed" data-bs-target="#completeBloodCount"
+                                                data-bs-toggle="collapse" type="button">
+                                            Complete Blood Count (<span
+                                            th:text="${medicalFile.completeBloodCounts.isEmpty() ? 'N/A' : 'Latest'}"></span>)
+                                        </button>
+                                    </h2>
+                                    <div class="accordion-collapse collapse" data-bs-parent="#latestExamsAccordion"
+                                         id="completeBloodCount">
+                                        <div class="accordion-body">
+                                            <!-- TODO: Complete Blood Count content will go here -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button aria-controls="lipidProfile" aria-expanded="true"
+                                                class="accordion-button" data-bs-target="#lipidProfile"
+                                                data-bs-toggle="collapse" type="button">
+                                            Lipid Profile (<span
+                                            th:text="${medicalFile.lipidProfiles.isEmpty() ? 'N/A' : 'Latest'}"></span>)
+                                        </button>
+                                    </h2>
+                                    <div class="accordion-collapse collapse show" data-bs-parent="#latestExamsAccordion"
+                                         id="lipidProfile">
+                                        <div class="accordion-body">
+                                            <!-- TODO: Lipid Profile content will go here -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button aria-controls="glucoseExam" aria-expanded="false"
+                                                class="accordion-button collapsed" data-bs-target="#glucoseExam"
+                                                data-bs-toggle="collapse" type="button">
+                                            Glucose (<span
+                                            th:text="${medicalFile.glucoses.isEmpty() ? 'N/A' : 'Latest'}"></span>)
+                                        </button>
+                                    </h2>
+                                    <div class="accordion-collapse collapse" data-bs-parent="#latestExamsAccordion"
+                                         id="glucoseExam">
+                                        <div class="accordion-body">
+                                            <!-- TODO: Glucose content will go here -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button aria-controls="ultrasensitiveTSH" aria-expanded="false"
+                                                class="accordion-button collapsed" data-bs-target="#ultrasensitiveTSH"
+                                                data-bs-toggle="collapse" type="button">
+                                            Ultrasensitive TSH (<span
+                                            th:text="${medicalFile.ultrasensitiveTSHs.isEmpty() ? 'N/A' : 'Latest'}"></span>)
+                                        </button>
+                                    </h2>
+                                    <div class="accordion-collapse collapse" data-bs-parent="#latestExamsAccordion"
+                                         id="ultrasensitiveTSH">
+                                        <div class="accordion-body">
+                                            <!-- TODO: Ultrasensitive TSH content will go here -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button aria-controls="ureaAndCreatinine" aria-expanded="false"
+                                                class="accordion-button collapsed" data-bs-target="#ureaAndCreatinine"
+                                                data-bs-toggle="collapse" type="button">
+                                            Urea and Creatinine (<span
+                                            th:text="${medicalFile.ureaAndCreatinines.isEmpty() ? 'N/A' : 'Latest'}"></span>)
+                                        </button>
+                                    </h2>
+                                    <div class="accordion-collapse collapse" data-bs-parent="#latestExamsAccordion"
+                                         id="ureaAndCreatinine">
+                                        <div class="accordion-body">
+                                            <!-- TODO: Urea and Creatinine content will go here -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button aria-controls="uricAcid" aria-expanded="false"
+                                                class="accordion-button collapsed" data-bs-target="#uricAcid"
+                                                data-bs-toggle="collapse" type="button">
+                                            Uric Acid (<span
+                                            th:text="${medicalFile.uricAcids.isEmpty() ? 'N/A' : 'Latest'}"></span>)
+                                        </button>
+                                    </h2>
+                                    <div class="accordion-collapse collapse" data-bs-parent="#latestExamsAccordion"
+                                         id="uricAcid">
+                                        <div class="accordion-body">
+                                            <!-- TODO: Uric Acid content will go here -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button aria-controls="vitaminB12" aria-expanded="false"
+                                                class="accordion-button collapsed" data-bs-target="#vitaminB12"
+                                                data-bs-toggle="collapse" type="button">
+                                            Vitamin B12 (<span
+                                            th:text="${medicalFile.vitaminBTwelves.isEmpty() ? 'N/A' : 'Latest'}"></span>)
+                                        </button>
+                                    </h2>
+                                    <div class="accordion-collapse collapse" data-bs-parent="#latestExamsAccordion"
+                                         id="vitaminB12">
+                                        <div class="accordion-body">
+                                            <!-- TODO: Vitamin B12 content will go here -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button aria-controls="vitaminD" aria-expanded="false"
+                                                class="accordion-button collapsed" data-bs-target="#vitaminD"
+                                                data-bs-toggle="collapse" type="button">
+                                            Vitamin D (<span
+                                            th:text="${medicalFile.vitaminDs.isEmpty() ? 'N/A' : 'Latest'}"></span>)
+                                        </button>
+                                    </h2>
+                                    <div class="accordion-collapse collapse" data-bs-parent="#latestExamsAccordion"
+                                         id="vitaminD">
+                                        <div class="accordion-body">
+                                            <!-- TODO: Vitamin D content will go here -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </section>
                 </div>
             </div>
         </main>
