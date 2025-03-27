@@ -180,15 +180,15 @@
                                 <div class="col-lg-6 d-flex flex-column gap-2">
                                     <a
                                         class="btn btn-outline-secondary d-flex align-items-center justify-content-between"
-                                        th:href="@{${userBaseUrl} + '/medical-history/lipid-profile'}">
-                                        Lipid Profiles <span class="badge text-bg-secondary"
-                                                             th:text="${dashboard.totalLipidProfiles}"></span>
-                                    </a>
-                                    <a
-                                        class="btn btn-outline-secondary d-flex align-items-center justify-content-between"
                                         th:href="@{${userBaseUrl} + '/medical-history/complete-blood-count'}">
                                         CBC tests <span class="badge text-bg-secondary"
                                                         th:text="${dashboard.totalCompleteBloodCounts}"></span>
+                                    </a>
+                                    <a
+                                        class="btn btn-outline-secondary d-flex align-items-center justify-content-between"
+                                        th:href="@{${userBaseUrl} + '/medical-history/lipid-profile'}">
+                                        Lipid Profiles <span class="badge text-bg-secondary"
+                                                             th:text="${dashboard.totalLipidProfiles}"></span>
                                     </a>
                                     <a
                                         class="btn btn-outline-secondary d-flex align-items-center justify-content-between"
@@ -196,21 +196,15 @@
                                         Glucose Tests <span class="badge text-bg-secondary"
                                                             th:text="${dashboard.totalGlucoses}"></span>
                                     </a>
+                                    <a
+                                        class="btn btn-outline-secondary d-flex align-items-center justify-content-between"
+                                        th:href="@{${userBaseUrl} + '/medical-history/ultrasensivite-tsh'}">
+                                        Ultrasensitive TSH <span class="badge text-bg-secondary"
+                                                                 th:text="${dashboard.totalUltrasensitiveTSHs}"></span>
+                                    </a>
                                 </div>
 
                                 <div class="col-lg-6 d-flex flex-column gap-2">
-                                    <a
-                                        class="btn btn-outline-secondary d-flex align-items-center justify-content-between"
-                                        th:href="@{${userBaseUrl} + '/medical-history/vitamind-d'}">
-                                        Vitamin D <span class="badge text-bg-secondary"
-                                                        th:text="${dashboard.totalVitaminDs}"></span>
-                                    </a>
-                                    <a
-                                        class="btn btn-outline-secondary d-flex align-items-center justify-content-between"
-                                        th:href="@{${userBaseUrl} + '/medical-history/vitamind-b12'}">
-                                        Vitamin B12 <span class="badge text-bg-secondary"
-                                                          th:text="${dashboard.totalVitaminBTwelves}"></span>
-                                    </a>
                                     <a
                                         class="btn btn-outline-secondary d-flex align-items-center justify-content-between"
                                         th:href="@{${userBaseUrl} + '/medical-history/urea-and-creatinene'}">
@@ -222,6 +216,18 @@
                                         th:href="@{${userBaseUrl} + '/medical-history/uric-acid'}">
                                         Uric Acids <span class="badge text-bg-secondary"
                                                          th:text="${dashboard.totalUricAcids}"></span>
+                                    </a>
+                                    <a
+                                        class="btn btn-outline-secondary d-flex align-items-center justify-content-between"
+                                        th:href="@{${userBaseUrl} + '/medical-history/vitamind-b12'}">
+                                        Vitamin B12 <span class="badge text-bg-secondary"
+                                                          th:text="${dashboard.totalVitaminBTwelves}"></span>
+                                    </a>
+                                    <a
+                                        class="btn btn-outline-secondary d-flex align-items-center justify-content-between"
+                                        th:href="@{${userBaseUrl} + '/medical-history/vitamind-d'}">
+                                        Vitamin D <span class="badge text-bg-secondary"
+                                                        th:text="${dashboard.totalVitaminDs}"></span>
                                     </a>
                                 </div>
 
