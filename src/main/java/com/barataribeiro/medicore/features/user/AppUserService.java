@@ -93,43 +93,46 @@ public class AppUserService {
         final long sumOfExams = Stream.of(dashboardData.getLipidProfileCount(),
                                           dashboardData.getCompleteBloodCountCount(),
                                           dashboardData.getGlucoseCount(),
-                                          dashboardData.getVitaminDCount(),
-                                          dashboardData.getVitaminBTwelveCount(),
+                                          dashboardData.getUltrasensitiveTSHCount(),
                                           dashboardData.getUreaAndCreatinineCount(),
                                           dashboardData.getUricAcidCount(),
-                                          dashboardData.getUltrasensitiveTSHCount()).parallel().reduce(0L, Long::sum);
+                                          dashboardData.getUltrasensitiveTSHCount(),
+                                          dashboardData.getVitaminDCount(),
+                                          dashboardData.getVitaminBTwelveCount()).parallel().reduce(0L, Long::sum);
 
         return DashboardDto.builder().profile(userMapper.toUserProfileDto(dashboardData.getProfile()))
                            .medicalFile(medicalFileMapper.toMedicalFileDto(dashboardData.getMedicalFile()))
-                           .totalLipidProfiles(dashboardData.getLipidProfileCount())
                            .totalCompleteBloodCounts(dashboardData.getCompleteBloodCountCount())
+                           .totalLipidProfiles(dashboardData.getLipidProfileCount())
                            .totalGlucoses(dashboardData.getGlucoseCount())
-                           .totalVitaminDs(dashboardData.getVitaminDCount())
-                           .totalVitaminBTwelves(dashboardData.getVitaminBTwelveCount())
+                           .totalUltrasensitiveTSHs(dashboardData.getUltrasensitiveTSHCount())
                            .totalUreaAndCreatinines(dashboardData.getUreaAndCreatinineCount())
                            .totalUricAcids(dashboardData.getUricAcidCount())
-                           .totalUltrasensitiveTSHs(dashboardData.getUltrasensitiveTSHCount())
+                           .totalVitaminBTwelves(dashboardData.getVitaminBTwelveCount())
+                           .totalVitaminDs(dashboardData.getVitaminDCount())
                            .totalMedicalExams(sumOfExams)
                            .build();
     }
 
     public PieChart getDashboardPieChart(@NotNull DashboardDto dashboardDto) {
-        String[] labels = {"Lipid Profile", "Complete Blood Count", "Glucose", "Vitamin D", "Vitamin B12",
-                           "Urea and Creatinine", "Uric Acid"};
+        String[] labels = {"Complete Blood Count", "Lipid Profile", "Glucose", "Ultrasensitive TSH",
+                           "Urea and Creatinine", "Uric Acid", "Vitamin B12", "Vitamin D"};
 
         final PieData pieData = new PieData();
         final PieDataset medicalExamsDataset = new PieDataset().setLabel("Total")
-                                                               .addData(dashboardDto.getTotalLipidProfiles())
                                                                .addData(dashboardDto.getTotalCompleteBloodCounts())
+                                                               .addData(dashboardDto.getTotalLipidProfiles())
                                                                .addData(dashboardDto.getTotalGlucoses())
-                                                               .addData(dashboardDto.getTotalVitaminDs())
-                                                               .addData(dashboardDto.getTotalVitaminBTwelves())
+                                                               .addData(dashboardDto.getTotalUltrasensitiveTSHs())
                                                                .addData(dashboardDto.getTotalUreaAndCreatinines())
-                                                               .addData(dashboardDto.getTotalUricAcids());
+                                                               .addData(dashboardDto.getTotalUricAcids())
+                                                               .addData(dashboardDto.getTotalVitaminBTwelves())
+                                                               .addData(dashboardDto.getTotalVitaminDs());
         pieData.addLabels(labels);
         pieData.addDataset(medicalExamsDataset.addBackgroundColors("rgba(229, 221, 200, 1)",
                                                                    "rgba(1, 148, 154, 1)",
                                                                    "rgba(0, 67, 105, 1)",
+                                                                   "rgba(137, 172, 70, 1)",
                                                                    "rgba(219, 31, 72, 1)",
                                                                    "rgba(248, 210, 16, 1)",
                                                                    "rgba(250, 38, 160, 1)",
