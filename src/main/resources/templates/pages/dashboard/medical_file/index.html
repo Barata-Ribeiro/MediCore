@@ -184,34 +184,142 @@
                             <div class="accordion" id="latestExamsAccordion">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
-                                        <button aria-controls="completeBloodCount" aria-expanded="false"
-                                                class="accordion-button collapsed" data-bs-target="#completeBloodCount"
+                                        <button aria-controls="completeBloodCount" aria-expanded="true"
+                                                class="accordion-button" data-bs-target="#completeBloodCount"
                                                 data-bs-toggle="collapse" type="button">
                                             Complete Blood Count (<span
                                             th:text="${medicalFile.completeBloodCounts.isEmpty() ? 'N/A' : 'Latest'}"></span>)
                                         </button>
                                     </h2>
-                                    <div class="accordion-collapse collapse" data-bs-parent="#latestExamsAccordion"
+                                    <div class="accordion-collapse collapse show" data-bs-parent="#latestExamsAccordion"
                                          id="completeBloodCount">
-                                        <div class="accordion-body">
-                                            <!-- TODO: Complete Blood Count content will go here -->
+                                        <div class="accordion-body row g-3">
+                                            <div class="row g-3" th:if="${!medicalFile.completeBloodCounts.isEmpty()}"
+                                                 th:with="cbc=${medicalFile.completeBloodCounts[0]}">
+                                                <dl class="col-md-4 col-sm-6">
+                                                    <dt>Report Date</dt>
+                                                    <dd th:text="${#dates.format(cbc.reportDate, 'MMMM dd, yyyy')}"></dd>
+
+                                                    <dt>Hematocrit</dt>
+                                                    <dd th:text="${cbc.hematocrit}"></dd>
+
+                                                    <dt>Hemoglobin</dt>
+                                                    <dd th:text="${cbc.hemoglobin}"></dd>
+                                                </dl>
+
+                                                <dl class="col-md-4 col-sm-6">
+                                                    <dt>Red Blood Cells</dt>
+                                                    <dd th:text="${cbc.redBloodCells}"></dd>
+
+                                                    <dt>Mean Corpuscular Volume</dt>
+                                                    <dd th:text="${cbc.meanCorpuscularVolume}"></dd>
+
+                                                    <dt>Mean Corp. Hemoglobin</dt>
+                                                    <dd th:text="${cbc.meanCorpuscularHemoglobin}"></dd>
+                                                </dl>
+
+                                                <dl class="col-md-4 col-sm-6">
+                                                    <dt>Mean Corp. Hemoglobin Conc.</dt>
+                                                    <dd th:text="${cbc.meanCorpuscularHemoglobinConcentration}"></dd>
+
+                                                    <dt>Red Cell Distribution Width</dt>
+                                                    <dd th:text="${cbc.redCellDistributionWidth}"></dd>
+
+                                                    <dt>Leukocytes</dt>
+                                                    <dd th:text="${cbc.leukocytes}"></dd>
+                                                </dl>
+
+                                                <dl class="col-md-4 col-sm-6">
+                                                    <dt>Rod Neutrophils</dt>
+                                                    <dd th:text="${cbc.rodNeutrophils}"></dd>
+
+                                                    <dt>Segmented Neutrophils</dt>
+                                                    <dd th:text="${cbc.segmentedNeutrophils}"></dd>
+
+                                                    <dt>Lymphocytes</dt>
+                                                    <dd th:text="${cbc.lymphocytes}"></dd>
+                                                </dl>
+
+                                                <dl class="col-md-4 col-sm-6">
+                                                    <dt>Atypical Lymphocytes</dt>
+                                                    <dd th:text="${cbc.atypicalLymphocytes}"></dd>
+
+                                                    <dt>Monocytes</dt>
+                                                    <dd th:text="${cbc.monocytes}"></dd>
+
+                                                    <dt>Eosinophils</dt>
+                                                    <dd th:text="${cbc.eosinophils}"></dd>
+                                                </dl>
+
+                                                <dl class="col-md-4 col-sm-6">
+                                                    <dt>Basophils</dt>
+                                                    <dd th:text="${cbc.basophils}"></dd>
+
+                                                    <dt>Metamyelocytes</dt>
+                                                    <dd th:text="${cbc.metamyelocytes}"></dd>
+
+                                                    <dt>Myelocytes</dt>
+                                                    <dd th:text="${cbc.myelocytes}"></dd>
+                                                </dl>
+
+                                                <dl class="col-md-4 col-sm-6">
+                                                    <dt>Promyelocytes</dt>
+                                                    <dd th:text="${cbc.promyelocytes}"></dd>
+
+                                                    <dt>Atypical Cells</dt>
+                                                    <dd th:text="${cbc.atypicalCells}"></dd>
+
+                                                    <dt>Platelets</dt>
+                                                    <dd th:text="${cbc.platelets}"></dd>
+                                                </dl>
+                                            </div>
+
+                                            <p th:if="${medicalFile.completeBloodCounts.isEmpty()}">
+                                                No data available
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
-                                        <button aria-controls="lipidProfile" aria-expanded="true"
-                                                class="accordion-button" data-bs-target="#lipidProfile"
+                                        <button aria-controls="lipidProfile" aria-expanded="false"
+                                                class="accordion-button collapsed" data-bs-target="#lipidProfile"
                                                 data-bs-toggle="collapse" type="button">
                                             Lipid Profile (<span
                                             th:text="${medicalFile.lipidProfiles.isEmpty() ? 'N/A' : 'Latest'}"></span>)
                                         </button>
                                     </h2>
-                                    <div class="accordion-collapse collapse show" data-bs-parent="#latestExamsAccordion"
+                                    <div class="accordion-collapse collapse" data-bs-parent="#latestExamsAccordion"
                                          id="lipidProfile">
                                         <div class="accordion-body">
-                                            <!-- TODO: Lipid Profile content will go here -->
+                                            <div class="row g-3" th:if="${!medicalFile.lipidProfiles.isEmpty()}"
+                                                 th:with="lp=${medicalFile.lipidProfiles[0]}">
+                                                <dl class="col-sm-6">
+                                                    <dt>Report Date</dt>
+                                                    <dd th:text="${#dates.format(lp.reportDate, 'MMMM dd, yyyy')}"></dd>
+
+                                                    <dt>Total Cholesterol</dt>
+                                                    <dd th:text="${lp.totalCholesterol}"></dd>
+
+                                                    <dt>HDL Cholesterol</dt>
+                                                    <dd th:text="${lp.hdlCholesterol}"></dd>
+                                                </dl>
+                                                <dl class="col-sm-6">
+                                                    <dt>LDL Cholesterol</dt>
+                                                    <dd th:text="${lp.ldlCholesterol}"></dd>
+
+                                                    <dt>VLDL Cholesterol</dt>
+                                                    <dd th:text="${lp.vldlCholesterol}"></dd>
+
+                                                    <dt>Triglycerides</dt>
+                                                    <dd th:text="${lp.triglycerides}"></dd>
+                                                </dl>
+                                            </div>
+
+                                            <p th:if="${medicalFile.lipidProfiles.isEmpty()}">
+                                                No data available
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -228,7 +336,28 @@
                                     <div class="accordion-collapse collapse" data-bs-parent="#latestExamsAccordion"
                                          id="glucoseExam">
                                         <div class="accordion-body">
-                                            <!-- TODO: Glucose content will go here -->
+                                            <div class="row g-3" th:if="${!medicalFile.glucoses.isEmpty()}"
+                                                 th:with="glucose=${medicalFile.glucoses[0]}">
+                                                <dl class="col-md-6">
+                                                    <dt>Report Date</dt>
+                                                    <dd th:text="${#dates.format(glucose.reportDate, 'MMMM dd, yyyy')}"></dd>
+
+                                                    <dt>Glucose Level</dt>
+                                                    <dd th:text="${glucose.glucoseLevel}"></dd>
+                                                </dl>
+
+                                                <dl class="col-md-6">
+                                                    <dt>Glycated Hemoglobin</dt>
+                                                    <dd th:text="${glucose.glycatedHemoglobin}"></dd>
+
+                                                    <dt>Estimated Average glucose</dt>
+                                                    <dd th:text="${glucose.estimatedAverageGlucose}"></dd>
+                                                </dl>
+                                            </div>
+
+                                            <p th:if="${medicalFile.glucoses.isEmpty()}">
+                                                No data available
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -245,7 +374,18 @@
                                     <div class="accordion-collapse collapse" data-bs-parent="#latestExamsAccordion"
                                          id="ultrasensitiveTSH">
                                         <div class="accordion-body">
-                                            <!-- TODO: Ultrasensitive TSH content will go here -->
+                                            <dl th:if="${!medicalFile.ultrasensitiveTSHs.isEmpty()}"
+                                                th:with="tsh=${medicalFile.ultrasensitiveTSHs[0]}">
+                                                <dt>Report Date</dt>
+                                                <dd th:text="${#dates.format(tsh.reportDate, 'MMMM dd, yyyy')}"></dd>
+
+                                                <dt>Ultrasensitive TSH Level</dt>
+                                                <dd th:text="${tsh.ultrasensitiveTSHLevel}"></dd>
+                                            </dl>
+
+                                            <p th:if="${medicalFile.ultrasensitiveTSHs.isEmpty()}">
+                                                No data available
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -262,7 +402,28 @@
                                     <div class="accordion-collapse collapse" data-bs-parent="#latestExamsAccordion"
                                          id="ureaAndCreatinine">
                                         <div class="accordion-body">
-                                            <!-- TODO: Urea and Creatinine content will go here -->
+                                            <div class="row g-3" th:if="${!medicalFile.ureaAndCreatinines.isEmpty()}"
+                                                 th:with="uc=${medicalFile.ureaAndCreatinines[0]}">
+                                                <dl class="col-md-6">
+                                                    <dt>Report Date</dt>
+                                                    <dd th:text="${#dates.format(uc.reportDate, 'MMMM dd, yyyy')}"></dd>
+
+                                                    <dt>Ureal</dt>
+                                                    <dd th:text="${uc.urea}"></dd>
+                                                </dl>
+
+                                                <dl class="col-md-6">
+                                                    <dt>Creatinine</dt>
+                                                    <dd th:text="${uc.creatinine}"></dd>
+
+                                                    <dt>Urea/Creatinine Ratio</dt>
+                                                    <dd th:text="${uc.ureaCreatinineRatio}"></dd>
+                                                </dl>
+                                            </div>
+
+                                            <p th:if="${medicalFile.ureaAndCreatinines.isEmpty()}">
+                                                No data available
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -279,7 +440,18 @@
                                     <div class="accordion-collapse collapse" data-bs-parent="#latestExamsAccordion"
                                          id="uricAcid">
                                         <div class="accordion-body">
-                                            <!-- TODO: Uric Acid content will go here -->
+                                            <dl th:if="${!medicalFile.uricAcids.isEmpty()}"
+                                                th:with="ua=${medicalFile.uricAcids[0]}">
+                                                <dt>Report Date</dt>
+                                                <dd th:text="${#dates.format(ua.reportDate, 'MMMM dd, yyyy')}"></dd>
+
+                                                <dt>Uric Acid Level</dt>
+                                                <dd th:text="${ua.uricAcidLevel}"></dd>
+                                            </dl>
+
+                                            <p th:if="${medicalFile.uricAcids.isEmpty()}">
+                                                No data available
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -296,7 +468,18 @@
                                     <div class="accordion-collapse collapse" data-bs-parent="#latestExamsAccordion"
                                          id="vitaminB12">
                                         <div class="accordion-body">
-                                            <!-- TODO: Vitamin B12 content will go here -->
+                                            <dl th:if="${!medicalFile.vitaminBTwelves.isEmpty()}"
+                                                th:with="vb12=${medicalFile.vitaminBTwelves[0]}">
+                                                <dt>Report Date</dt>
+                                                <dd th:text="${#dates.format(vb12.reportDate, 'MMMM dd, yyyy')}"></dd>
+
+                                                <dt>Vitamin B12</dt>
+                                                <dd th:text="${vb12.vitaminBTwelveLevel}"></dd>
+                                            </dl>
+
+                                            <p th:if="${medicalFile.vitaminBTwelves.isEmpty()}">
+                                                No data available
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -313,7 +496,18 @@
                                     <div class="accordion-collapse collapse" data-bs-parent="#latestExamsAccordion"
                                          id="vitaminD">
                                         <div class="accordion-body">
-                                            <!-- TODO: Vitamin D content will go here -->
+                                            <dl th:if="${!medicalFile.vitaminDs.isEmpty()}"
+                                                th:with="vd=${medicalFile.vitaminDs[0]}">
+                                                <dt>Report Date</dt>
+                                                <dd th:text="${#dates.format(vd.reportDate, 'MMMM dd, yyyy')}"></dd>
+
+                                                <dt>25-Hydroxyvitamin D3</dt>
+                                                <dd th:text="${vd.twentyfiveHydroxyvitaminD3}"></dd>
+                                            </dl>
+
+                                            <p th:if="${medicalFile.vitaminDs.isEmpty()}">
+                                                No data available
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
