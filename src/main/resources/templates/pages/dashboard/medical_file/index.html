@@ -42,7 +42,7 @@
                         </header>
 
                         <form class="card-body tab-content" th:action="@{${userBaseUrl} + '/medical-history'}"
-                              th:method="PUT" th:object="${updateMedicalFileDto}">
+                              th:method="PATCH" th:object="${updateMedicalFileDto}">
 
                             <!--KEY HEALTH INFO-->
                             <div class="tab-pane active show" id="key-health-info">
@@ -50,15 +50,14 @@
                                 <div class="mb-3 has-validation">
                                     <label class="form-label" for="bloodType">Blood Type</label>
                                     <select aria-label="Select Blood Type" class="form-select" id="bloodType"
-                                            name="bloodType" th:errorclass="is-invalid"
-                                            th:field="${updateMedicalFileDto.bloodType}">
-                                        <option th:selected="${medicalFile.bloodType == null}" value="">
+                                            name="bloodType" th:errorclass="is-invalid">
+                                        <option disabled th:selected="${medicalFile.bloodType == null}" value="">
                                             Select Blood Type
                                         </option>
                                         <option
                                             th:each="bloodType : ${T(com.barataribeiro.medicore.features.medical_file.BloodType).values()}"
-                                            th:selected="${bloodType == medicalFile.bloodType}"
-                                            th:text="${bloodType.value}" th:value="${bloodType}"></option>
+                                            th:selected="${bloodType.name() == medicalFile.bloodType}"
+                                            th:text="${bloodType.value}" th:value="${bloodType.name()}"></option>
                                     </select>
                                     <p class="invalid-feedback" id="bloodTypeValidation"
                                        th:errors="${updateMedicalFileDto.bloodType}"
