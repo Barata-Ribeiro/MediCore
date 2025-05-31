@@ -63,7 +63,7 @@ public class AppUserController {
         return "pages/dashboard/profile/profile";
     }
 
-    @PutMapping("/profile")
+    @PatchMapping("/profile")
     @PreAuthorize("#username == authentication.name")
     public String updateProfile(@PathVariable String username, Model model,
                                 @Valid @ModelAttribute UpdateAppUserDto updateAppUserDto, BindingResult bindingResult) {
