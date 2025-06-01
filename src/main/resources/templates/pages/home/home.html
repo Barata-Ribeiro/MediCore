@@ -1,9 +1,87 @@
 <!doctype html>
-<html lang="en" layout:decorate="~{layouts/main_layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html
+    lang="en"
+    layout:decorate="~{layouts/main_layout}"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
     <head>
         <title th:text="${pageTitle + ' - MediCore'}">MediCore</title>
     </head>
     <body>
-        <div layout:fragment="content">Hello, World!</div>
+        <div layout:fragment="content">
+            <!-- Hero Section -->
+            <section class="py-5 bg-light text-center text-dark">
+                <div class="container">
+                    <h1 class="display-4 fw-bold mb-3">Welcome to MediCore</h1>
+                    <p class="lead mb-4">
+                        Store and access your personal health and fitness information
+                        securely from anywhere, anytime.
+                    </p>
+                    <a class="btn btn-primary btn-lg" href="/register">Get Started</a>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="py-5">
+                <div class="container">
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title d-inline-flex gap-1 align-items-center">
+                                        <i class="bi bi-heart-pulse-fill text-danger"></i>
+                                        Health Records
+                                    </h5>
+                                    <p class="card-text">
+                                        Easily store and manage your medical history, prescriptions,
+                                        and lab results in one secure place.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title d-inline-flex gap-1 align-items-center">
+                                        <i class="bi bi-bar-chart-fill text-success"></i>
+                                        Fitness Tracking
+                                    </h5>
+                                    <p class="card-text">
+                                        Track your workouts, monitor progress, and set fitness goals
+                                        to stay motivated and healthy.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title d-inline-flex gap-1 align-items-center">
+                                        <i class="bi bi-cloud-arrow-up-fill text-primary"></i>
+                                        Access Anywhere
+                                    </h5>
+                                    <p class="card-text">
+                                        Your data is securely stored wherever you want, giving you
+                                        access from any device, wherever you are.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Call to Action -->
+            <section class="py-5 bg-primary text-white text-center">
+                <div class="container">
+                    <h2 class="mb-3">Ready to take control of your health?</h2>
+                    <p class="mb-4">
+                        Sign up now and start managing your health and fitness information
+                        with MediCore.
+                    </p>
+                    <a class="btn btn-light btn-lg" href="/register">Create Your Account</a>
+                </div>
+            </section>
+        </div>
     </body>
 </html>
