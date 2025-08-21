@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.hibernate6.Hibernate6Module;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import org.springframework.session.data.redis.SortedSetRedisSessionExpirationSto
 import java.util.*;
 import java.util.function.BiFunction;
 
+@Slf4j
 @Configuration
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class SessionConfig implements BeanClassLoaderAware {
@@ -126,6 +128,10 @@ public class SessionConfig implements BeanClassLoaderAware {
                 return this.delegate.apply(sessionId, map);
             } catch (IllegalStateException ex) {
                 this.redisOperations.delete("spring:session:sessions:" + sessionId);
+                log.atError().log("The session with id {} was corrupted and has been deleted. "
+                                          + "Please check the configuration of RedisSerializer used by Spring Session. "
+                                          + "The exception was: {}",
+                                  sessionId, ex.getMessage());
                 return null;
             }
         }

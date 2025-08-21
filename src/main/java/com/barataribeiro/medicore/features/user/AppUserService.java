@@ -1,7 +1,6 @@
 package com.barataribeiro.medicore.features.user;
 
 import com.barataribeiro.medicore.features.medical_file.MedicalFileMapper;
-import com.barataribeiro.medicore.features.medical_file.MedicalFileRepository;
 import com.barataribeiro.medicore.features.user.dtos.DashboardDao;
 import com.barataribeiro.medicore.features.user.dtos.DashboardDto;
 import com.barataribeiro.medicore.features.user.dtos.UpdateAppUserDto;
@@ -44,7 +43,6 @@ public class AppUserService {
     private final AppUserRepository appUserRepository;
     private final UserMapper userMapper;
     private final FindByIndexNameSessionRepository<? extends Session> sessions;
-    private final MedicalFileRepository medicalFileRepository;
     private final MedicalFileMapper medicalFileMapper;
 
     public Collection<? extends Session> getSessions(@NotNull Principal principal) {
