@@ -1,12 +1,13 @@
 package com.barataribeiro.medicore.helpers;
 
 import com.barataribeiro.medicore.helpers.BreadcrumbItem.BreadcrumbItem;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BreadcrumbHelper {
-    public List<BreadcrumbItem> buildBreadcrumbs(String userBaseUrl, String... pathItems) {
+    public List<BreadcrumbItem> buildBreadcrumbs(String userBaseUrl, String @NotNull ... pathItems) {
         List<BreadcrumbItem> breadcrumbs = new ArrayList<>();
         breadcrumbs.add(new BreadcrumbItem("Dashboard", userBaseUrl));
 

@@ -5,6 +5,8 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
+
 @Configuration
 public class MapperConfig {
     @Bean
@@ -12,7 +14,7 @@ public class MapperConfig {
         ModelMapper modelMapper = new ModelMapper();
 
         modelMapper.getConfiguration().setFieldMatchingEnabled(true)
-                   .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
+                   .setFieldAccessLevel(PRIVATE)
                    .setMatchingStrategy(MatchingStrategies.STRICT)
                    .setSkipNullEnabled(true);
 
