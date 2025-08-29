@@ -1,8 +1,12 @@
 package com.barataribeiro.medicore.features.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -21,6 +25,7 @@ import java.util.UUID;
 @Table(name = "tb_profiles", indexes = {
         @Index(name = "idx_profile_first_name_unq", columnList = "first_name, last_name", unique = true)
 })
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Profile implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -32,6 +37,7 @@ public class Profile implements Serializable {
 
     @OneToOne(mappedBy = "profile",
               cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, orphanRemoval = true)
+    @Fetch(FetchMode.JOIN)
     private AppUser user;
 
     @Column(name = "first_name")

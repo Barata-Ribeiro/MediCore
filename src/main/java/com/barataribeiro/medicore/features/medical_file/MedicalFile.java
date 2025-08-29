@@ -12,6 +12,8 @@ import com.barataribeiro.medicore.features.user.AppUser;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serial;
@@ -29,7 +31,8 @@ import java.util.UUID;
 @Builder
 @Entity
 @Table(name = "tb_medical_files", indexes = {
-        @Index(name = "idx_medicalfile_unq", columnList = "emergency_contact", unique = true)
+        @Index(name = "idx_medicalfile_unq",
+               columnList = "emergency_contact_name, emergency_contact_phone", unique = true)
 })
 public class MedicalFile implements Serializable {
     @Serial
@@ -42,10 +45,11 @@ public class MedicalFile implements Serializable {
 
     @OneToOne(mappedBy = "medicalFile", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
               orphanRemoval = true)
+    @Fetch(FetchMode.JOIN)
     private AppUser user;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "blood_type", unique = true, length = 12)
+    @Column(name = "blood_type", length = 12)
     private BloodType bloodType;
 
     private String allergies;
@@ -70,48 +74,50 @@ public class MedicalFile implements Serializable {
     @UpdateTimestamp
     private Instant updatedAt;
 
+    // Exams
+
     @Builder.Default
     @ToString.Exclude
-    @OneToMany(mappedBy = "medicalFile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "medicalFile", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<LipidProfile> lipidProfiles = new LinkedHashSet<>();
 
     @Builder.Default
     @ToString.Exclude
-    @OneToMany(mappedBy = "medicalFile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "medicalFile", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CompleteBloodCount> completeBloodCounts = new LinkedHashSet<>();
 
     @Builder.Default
     @ToString.Exclude
-    @OneToMany(mappedBy = "medicalFile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "medicalFile", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Glucose> glucoses = new LinkedHashSet<>();
 
     @Builder.Default
     @ToString.Exclude
-    @OneToMany(mappedBy = "medicalFile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "medicalFile", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<VitaminD> vitaminDs = new LinkedHashSet<>();
 
     @Builder.Default
     @ToString.Exclude
-    @OneToMany(mappedBy = "medicalFile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "medicalFile", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<VitaminBTwelve> vitaminBTwelves = new LinkedHashSet<>();
 
     @Builder.Default
     @ToString.Exclude
-    @OneToMany(mappedBy = "medicalFile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "medicalFile", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UreaAndCreatinine> ureaAndCreatinines = new LinkedHashSet<>();
 
     @Builder.Default
     @ToString.Exclude
-    @OneToMany(mappedBy = "medicalFile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "medicalFile", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UricAcid> uricAcids = new LinkedHashSet<>();
 
     @Builder.Default
     @ToString.Exclude
-    @OneToMany(mappedBy = "medicalFile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "medicalFile", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UltrasensitiveTSH> ultrasensitiveTSHs = new LinkedHashSet<>();
 
     public Double getBmi() {
-        if (weight == null || (height == null || height == 0)) return null;
+        if ((weight == null || weight == 0) || (height == null || height == 0)) return null;
         return weight / (height * height);
     }
 }

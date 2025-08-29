@@ -1,9 +1,13 @@
 package com.barataribeiro.medicore.features.user;
 
 import com.barataribeiro.medicore.features.medical_file.MedicalFile;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,6 +34,7 @@ import java.util.UUID;
 }, uniqueConstraints = {
         @UniqueConstraint(name = "uc_user_username_email", columnNames = {"username", "email"})
 })
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class AppUser implements UserDetails, Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -102,5 +107,25 @@ public class AppUser implements UserDetails, Serializable {
     @Override
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(getId()).append(getUsername()).append(getEmail()).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AppUser appUser = (AppUser) o;
+
+        return new EqualsBuilder()
+                .append(getId(), appUser.getId())
+                .append(getUsername(), appUser.getUsername())
+                .append(getEmail(), appUser.getEmail())
+                .isEquals();
     }
 }
