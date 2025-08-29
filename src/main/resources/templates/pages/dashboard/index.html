@@ -13,7 +13,8 @@
                 <header class="card-header d-flex flex-md-row flex-column align-items-center justify-content-between">
                     <div>
                         <h1 class="card-title">
-                            Welcome, <span class="ms-1 text-break" th:text="${dashboard.profile.user.username}"></span>!
+                            Welcome, <span class="ms-1 text-break"
+                                           th:text="${dashboard.profile?.user?.username}"></span>!
                         </h1>
                         <p class="card-subtitle">Here&apos;s a quick overview of your account.</p>
                     </div>
@@ -38,9 +39,9 @@
                                     class="italic rounded-circle img-thumbnail"
                                     height="64"
                                     style="aspect-ratio: 1/1; object-fit: cover;"
-                                    th:alt="${'Avatar of ' + #authentication.principal.username}"
-                                    th:src="${#authentication.principal.avatarUrl ?: '/assets/images/default-avatar.svg'}"
-                                    th:title="${'Avatar of ' + #authentication.principal.username}"
+                                    th:alt="${'Avatar of ' + (#authentication.principal?.username ?: 'User')}"
+                                    th:src="${#authentication.principal?.avatarUrl ?: '/assets/images/default-avatar.svg'}"
+                                    th:title="${'Avatar of ' + (#authentication.principal?.username ?: 'User')}"
                                     width="64">
                             </header>
 
@@ -48,26 +49,26 @@
                                 <div class="row">
                                     <dl class="col-sm-6">
                                         <dt>Full Name</dt>
-                                        <dd th:text="${dashboard.profile.fullName ?: 'Not Informed'}"></dd>
+                                        <dd th:text="${dashboard.profile?.fullName ?: 'Not Informed'}"></dd>
 
                                         <dt>Sex</dt>
                                         <dd class="text-capitalize"
-                                            th:text="${dashboard.profile.sex.toLowerCase() ?: 'Not Informed'}"></dd>
+                                            th:text="${dashboard.profile?.sex?.toLowerCase() ?: 'Not Informed'}"></dd>
 
                                         <dt>Title</dt>
-                                        <dd th:text="${dashboard.profile.title ?: 'Not Informed'}"></dd>
+                                        <dd th:text="${dashboard.profile?.title ?: 'Not Informed'}"></dd>
                                     </dl>
 
                                     <dl class="col-sm-6">
                                         <dt>Age</dt>
-                                        <dd th:text="${dashboard.profile.age + ' years' ?: 'Not Informed'}"></dd>
+                                        <dd th:text="${dashboard.profile?.age > 0 ? dashboard.profile.age + ' years' : 'Not Informed'}"></dd>
 
                                         <dt>Birth Date</dt>
                                         <dd class="text-capitalize"
-                                            th:text="${#dates.format(dashboard.profile.birthDate, 'dd/MM/yyyy') ?: 'Not Informed'}"></dd>
+                                            th:text="${#dates.format(dashboard.profile?.birthDate, 'dd/MM/yyyy') ?: 'Not Informed'}"></dd>
 
                                         <dt>Email</dt>
-                                        <dd th:text="${dashboard.profile.user.email}">contact@example.com</dd>
+                                        <dd th:text="${dashboard.profile?.user?.email}">contact@example.com</dd>
                                     </dl>
                                 </div>
 
@@ -80,10 +81,11 @@
                                 </div>
                             </div>
                             <footer class="card-footer">
-                                <time class="text-muted"
-                                      th:datetime="${dashboard.profile.user.updatedAt}">Last updated: <span
-                                    th:text="${#dates.format(dashboard.profile.user.updatedAt, 'dd/MM/yyyy')}">
-                                        2021-01-01</span>
+                                <time class="text-muted" th:datetime="${dashboard.profile?.user.updatedAt}">
+                                    Last updated:&nbsp;
+                                    <span th:text="${#dates.format(dashboard.profile?.user.updatedAt, 'dd/MM/yyyy')}">
+                                        2021-01-01
+                                    </span>
                                 </time>
                             </footer>
                         </div>
@@ -147,7 +149,7 @@
                             </header>
                             <dl class="card-body m-0">
                                 <dt>Blood Type</dt>
-                                <dd th:text="${dashboard.medicalFile.bloodType ?: 'Not Informed'}"></dd>
+                                <dd th:text="${dashboard.medicalFile.bloodType?.value ?: 'Not Informed'}"></dd>
 
                                 <dt>Allergies</dt>
                                 <dd class="d-inline-block text-truncate" style="max-width: 300px;"
@@ -281,6 +283,9 @@
                 }
                 if (!chartData.options.plugins) chartData.options.plugins = {}
                 chartData.options.plugins.customCanvasBackgroundColor = {color: '#ffffff'}
+                if (!chartData.plugins) chartData.plugins = []
+                chartData.plugins.push(backGroundPlugin)
+
                 new Chart(canvas, chartData)
 
                 // TIME
@@ -304,8 +309,8 @@
                 }
 
                 var currentTime = $('#currentTime')
-                var currentDate = $('#currentDate').text(formatDate(new Date()))
-                                                   .attr('datetime', new Date().toISOString())
+                $('#currentDate').text(formatDate(new Date())).attr('datetime', new Date().toISOString())
+
                 setInterval(function() {
                     var date = new Date()
                     currentTime.text(formatTime(date)).attr('datetime', date.toISOString())
