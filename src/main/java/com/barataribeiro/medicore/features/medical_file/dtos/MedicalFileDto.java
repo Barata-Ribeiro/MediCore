@@ -1,5 +1,6 @@
 package com.barataribeiro.medicore.features.medical_file.dtos;
 
+import com.barataribeiro.medicore.features.medical_file.BloodType;
 import com.barataribeiro.medicore.features.medical_file.MedicalFile;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ import java.util.UUID;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MedicalFileDto implements Serializable {
     private UUID id;
-    private String bloodType;
+    private BloodType bloodType;
     private String allergies;
     private String diseases;
     private String medications;
