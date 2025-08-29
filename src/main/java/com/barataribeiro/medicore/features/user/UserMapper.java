@@ -1,6 +1,5 @@
 package com.barataribeiro.medicore.features.user;
 
-import com.barataribeiro.medicore.features.medical_file.MedicalFileRepository;
 import com.barataribeiro.medicore.features.user.dtos.AppUserDto;
 import com.barataribeiro.medicore.features.user.dtos.ProfileDto;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class UserMapper {
     private final ModelMapper modelMapper;
-    private final MedicalFileRepository medicalFileRepository;
 
     public AppUserDto toUserDto(AppUser user) {
         return modelMapper.map(user, AppUserDto.class);
