@@ -1,31 +1,41 @@
 name: mediCore
 
 services:
-  #  mediCore-database:
-  #    image: postgres:alpine
-  #    container_name: mediCore-database
-  #    restart: always
-  #    environment:
-  #      POSTGRES_DB: mediCore_db
-  #      POSTGRES_USER: postgres
-  #      POSTGRES_PASSWORD: postgres
-  #      PGDATA: /var/lib/postgresql/data/pgdata
-  #    ports:
-  #      - "5432:5432"
-  #    volumes:
-  #      - pgdata:/var/lib/postgresql/data
+  mediCore-database:
+    image: postgres:alpine
+    container_name: mediCore_database
+    restart: on-failure
+    environment:
+      POSTGRES_DB: mediCore_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - mediCore-network
 
   mediCore-session:
     image: redis:alpine
     container_name: mediCore_redis
-    restart: always
+    restart: on-failure
     command: redis-server --requirepass admin
     ports:
       - "6379:6379"
     volumes:
       - redis_data:/data
+    networks:
+      - mediCore-network
 
 
 volumes:
-  #  pgdata:
+  pgdata:
+    driver: local
   redis_data:
+    driver: local
+
+networks:
+  mediCore-network:
+    driver: bridge
