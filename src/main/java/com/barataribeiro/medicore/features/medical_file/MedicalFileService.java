@@ -3,7 +3,6 @@ package com.barataribeiro.medicore.features.medical_file;
 import com.barataribeiro.medicore.features.medical_file.dtos.UpdateMedicalFileDto;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +12,6 @@ import org.springframework.validation.BindingResult;
 
 import static com.barataribeiro.medicore.utils.ApplicationConstants.*;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class MedicalFileService {
@@ -30,9 +28,6 @@ public class MedicalFileService {
                 .orElseThrow(() -> new RuntimeException("Medical File not found."));
 
         verifyIfBodyExistsThenUpdateProperties(updateMedicalFileDto, bindingResult, medicalFile);
-
-        log.atInfo().log("Medical file for user {} updated with data: {}", username, updateMedicalFileDto);
-        log.atInfo().log("Medical File: {}", medicalFile);
 
         if (bindingResult.hasErrors()) {
             model.addAttribute(PAGE_TITLE, "Medical History");
@@ -81,7 +76,8 @@ public class MedicalFileService {
         }
 
         if (updateMedicalFileDto.getEmergencyContactPhone() != null && !bindingResult.hasErrors()) {
-            medicalFile.setEmergencyContactPhone(updateMedicalFileDto.getEmergencyContactPhone());
+            medicalFile
+                    .setEmergencyContactPhone(updateMedicalFileDto.getEmergencyContactPhone().replaceAll("\\s+", ""));
         }
     }
 }

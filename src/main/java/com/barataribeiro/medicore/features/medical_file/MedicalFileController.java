@@ -4,7 +4,6 @@ import com.barataribeiro.medicore.features.medical_file.dtos.CompleteMedicalFile
 import com.barataribeiro.medicore.features.medical_file.dtos.UpdateMedicalFileDto;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.barataribeiro.medicore.utils.ApplicationConstants.*;
 
-@Slf4j
 @Controller
 @RequestMapping("/{username}/medical-history")
 @AllArgsConstructor(onConstructor_ = {@Autowired})

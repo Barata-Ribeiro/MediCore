@@ -22,7 +22,7 @@ public class UpdateMedicalFileDto implements Serializable {
     private Double height;
     private String emergencyContactName;
 
-    @Pattern(regexp = "^(\\\\+\\\\d{1,3}( )?)?((\\\\(\\\\d{1,3}\\\\))|\\\\d{1,3})[- .]?\\\\d{3,4}[- .]?\\\\d{4}$",
+    @Pattern(regexp = "^(\\+?55\\s?)?((\\([1-9]{2}\\))|\\d{2}\\s?)(9\\d{4}|\\d{4})[\\s.-]?(\\d{4})$",
              message = "Emergency Contact Phone must be a valid phone number.")
     private String emergencyContactPhone;
 }
