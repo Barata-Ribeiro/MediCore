@@ -99,7 +99,11 @@
                                 <p class="text-muted m-0">Body Mass Index</p>
                             </header>
                             <div class="card-body text-center" th:with="bmi=${dashboard.medicalFile.bmi ?: 0}">
-                                <h3 class="display-3" th:text="${bmi}"></h3>
+                                <h3 class="display-3"
+                                    th:text="${T(java.lang.String).format('%.2f', roundedBmi)}"
+                                    th:with="roundedBmi=${T(java.lang.Math).floor(bmi * 100) / 100}">
+                                    BMI
+                                </h3>
 
                                 <div class="d-block">
                                     <span
@@ -125,10 +129,10 @@
 
                                 <div class="d-flex justify-content-between mt-3">
                                     <p class="m-0">
-                                        Height: <span th:text="${dashboard.medicalFile.height ?: '0'}"></span> cm
+                                        Height:&nbsp;<span th:text="${dashboard.medicalFile.height ?: '0'}"></span> cm
                                     </p>
                                     <p class="m-0">
-                                        Weight: <span th:text="${dashboard.medicalFile.weight ?: '0'}"></span> kg
+                                        Weight:&nbsp;<span th:text="${dashboard.medicalFile.weight ?: '0'}"></span> kg
                                     </p>
                                 </div>
                             </div>
@@ -255,7 +259,7 @@
                             <div class="card-body bg-dark-subtle m-0 chart-card" style="height: 50% !important;">
                                 <div class="chart-container">
                                     <canvas aria-label="Exams Canvas" class="bg-light-subtle rounded shadow-sm"
-                                            id="examsChart" role="img">Your browser does not support the canvas element.
+                                            id="examsChart">Your browser does not support the canvas element.
                                     </canvas>
                                 </div>
                             </div>

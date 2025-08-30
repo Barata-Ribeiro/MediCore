@@ -117,7 +117,12 @@ public class MedicalFile implements Serializable {
     private Set<UltrasensitiveTSH> ultrasensitiveTSHs = new LinkedHashSet<>();
 
     public Double getBmi() {
-        if ((weight == null || weight == 0) || (height == null || height == 0)) return null;
-        return weight / (height * height);
+        if (weight == null || height == null) return null;
+        if (weight == 0 || height == 0) return null;
+
+        double heightMeters = height / 100.0;
+        if (heightMeters == 0) return null;
+
+        return weight / (heightMeters * heightMeters);
     }
 }
