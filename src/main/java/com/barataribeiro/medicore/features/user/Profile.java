@@ -64,7 +64,7 @@ public class Profile implements Serializable {
     private String biography;
 
     public String getFullName() {
-        return firstName + " " + lastName;
+        return (firstName == null && lastName == null) ? null : firstName + " " + lastName;
     }
 
     public int getAge() {
