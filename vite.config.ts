@@ -1,4 +1,5 @@
 import { wayfinder } from '@laravel/vite-plugin-wayfinder';
+import inertia from '@inertiajs/vite';
 import babel from '@rolldown/plugin-babel';
 import tailwindcss from '@tailwindcss/vite';
 import react, { reactCompilerPreset } from '@vitejs/plugin-react';
@@ -9,9 +10,9 @@ export default defineConfig({
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.tsx'],
-            ssr: 'resources/js/ssr.tsx',
             refresh: true,
         }),
+        inertia(),
         react(),
         babel({ presets: [reactCompilerPreset()] }),
         tailwindcss(),

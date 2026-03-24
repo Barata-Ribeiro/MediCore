@@ -1,30 +1,49 @@
 import { createInertiaApp } from '@inertiajs/react';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import type { ResolvedComponent } from '@inertiajs/react';
 import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import { createRoot, hydrateRoot } from 'react-dom/client';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import '../css/app.css';
 import { initializeTheme } from '@/hooks/use-appearance';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const pages = import.meta.glob<{ default: ResolvedComponent }>(
+    './pages/**/*.tsx',
+);
 
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
-    resolve: (name) =>
-        resolvePageComponent(
-            `./pages/${name}.tsx`,
-            import.meta.glob('./pages/**/*.tsx'),
-        ),
-    setup({ el, App, props }) {
-        const root = createRoot(el);
+    resolve: async (name) => {
+        const page = pages[`./pages/${name}.tsx`];
 
-        root.render(
+        if (!page) {
+            throw new Error(`Page not found: ${name}`);
+        }
+
+        const module = await page();
+
+        return module.default;
+    },
+    setup({ el, App, props }) {
+        const application = (
             <StrictMode>
                 <TooltipProvider delayDuration={0}>
                     <App {...props} />
                 </TooltipProvider>
-            </StrictMode>,
+            </StrictMode>
         );
+
+        if (globalThis.window === undefined) {
+            return application;
+        }
+
+        if (el.dataset.serverRendered === 'true') {
+            hydrateRoot(el, application);
+
+            return;
+        }
+
+        createRoot(el).render(application);
     },
     progress: {
         color: '#4B5563',
