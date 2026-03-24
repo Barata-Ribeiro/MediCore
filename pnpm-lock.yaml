@@ -18,8 +18,11 @@ importers:
         specifier: ^2.2.9
         version: 2.2.9(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@inertiajs/react':
-        specifier: ^2.3.18
-        version: 2.3.18(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: 3.0.0-beta.5
+        version: 3.0.0-beta.5(axios@1.13.6)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@inertiajs/vite':
+        specifier: 3.0.0-beta.1
+        version: 3.0.0-beta.1(axios@1.13.6)(vite@8.0.2(@types/node@25.5.0)(jiti@2.6.1))
       '@tailwindcss/vite':
         specifier: ^4.2.2
         version: 4.2.2(vite@8.0.2(@types/node@25.5.0)(jiti@2.6.1))
@@ -396,14 +399,32 @@ packages:
     resolution: {integrity: sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==}
     engines: {node: '>=18.18'}
 
-  '@inertiajs/core@2.3.18':
-    resolution: {integrity: sha512-StOszdE28nx9uxY4I28d7oLRGLdu/F9pRgWody2k29Qe9WqAoPHVQ5VJabTi2RTYHJXZrZZ+Wgtw3qVRZMrwOA==}
-
-  '@inertiajs/react@2.3.18':
-    resolution: {integrity: sha512-kcoPveEDN7vyjqhyFEa9dlBjgvAsrz9k9YlrSK9PFJxRBGpCAnovmU37/a9AG2ORUP1zLw2P8y+5QfMgRdEPfw==}
+  '@inertiajs/core@3.0.0-beta.1':
+    resolution: {integrity: sha512-WJms9mpKtEcx7SVghc5mx5FXa5DOnMhCwm6AZgJICzCehZmCohxsF1c9gBzAdkmP/9hmlj5LPYYiBGQLe1LeWA==}
     peerDependencies:
-      react: ^16.9.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-      react-dom: ^16.9.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      axios: ^1.13.2
+    peerDependenciesMeta:
+      axios:
+        optional: true
+
+  '@inertiajs/core@3.0.0-beta.5':
+    resolution: {integrity: sha512-SeM/BozRceCMsm8cKF75snlQlI+SkvSJglHj6YOGD+LOBzyoxiS+OroaGCnxOVuSw2288Xklm6vS6IAFHv8+ww==}
+    peerDependencies:
+      axios: ^1.13.2
+    peerDependenciesMeta:
+      axios:
+        optional: true
+
+  '@inertiajs/react@3.0.0-beta.5':
+    resolution: {integrity: sha512-dzxTV70hWCiHb4qJJDq1JgX/dhuyw1UGdke+rE4oo+jDGhEsQoatxt1RU8fetAvjI0JwDkFKNq91X0ZqB6JbUw==}
+    peerDependencies:
+      react: ^19.0.0
+      react-dom: ^19.0.0
+
+  '@inertiajs/vite@3.0.0-beta.1':
+    resolution: {integrity: sha512-FEjrG8ZQ3GD8t0PpSHdNPGFAuu+XPUJledgUYqE/aPHN1ojEYEi6SyjuX1yh5lN2qfe4VZR2NWZdx9+JWC8Hog==}
+    peerDependencies:
+      vite: ^6.0.0 || ^7.0.0
 
   '@inquirer/ansi@1.0.2':
     resolution: {integrity: sha512-S8qNSZiYzFd0wAcyG5AXCvUHC5Sr7xpZ9wZ2py9XR88jUz8wooStVx5M6dRzczbBWjic9NP7+rY0Xi7qqK/aMQ==}
@@ -2152,6 +2173,9 @@ packages:
     resolution: {integrity: sha512-w+5mJ3GuFL+NjVtJlvydShqE1eN3h3PbI7/5LAsYJP/2qtuMXjfL2LpHSRqo4b4eSF5K/DH1JXKUAHSB2UW50g==}
     engines: {node: '>= 0.4'}
 
+  es-toolkit@1.45.1:
+    resolution: {integrity: sha512-/jhoOj/Fx+A+IIyDNOvO3TItGmlMKhtX8ISAHKE90c4b/k1tqaqEZ+uUqfpU8DMnW5cgNJv606zS55jGvza0Xw==}
+
   escalade@3.2.0:
     resolution: {integrity: sha512-WUj2qlxaQtO4g6Pq5c29GTcWGDyd8itL8zTlipgECz3JesAiiOKotd8JU6otB3PACgG6xkJUyVhboMS+bje/jA==}
     engines: {node: '>=6'}
@@ -2847,8 +2871,21 @@ packages:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
     engines: {node: '>=6'}
 
-  laravel-precognition@1.0.2:
-    resolution: {integrity: sha512-0H08JDdMWONrL/N314fvsO3FATJwGGlFKGkMF3nNmizVFJaWs17816iM+sX7Rp8d5hUjYCx6WLfsehSKfaTxjg==}
+  laravel-precognition@2.0.0-beta.2:
+    resolution: {integrity: sha512-Sg5hOSO4tYXt/ICYJPDcY+HZjP3kuPEhcRx6sNs11q8ndV/kSe2i9uTo3Q9hULBi7ftVMwoS04DbI4ihYhPimg==}
+    peerDependencies:
+      axios: ^1.4.0
+    peerDependenciesMeta:
+      axios:
+        optional: true
+
+  laravel-precognition@2.0.0-beta.5:
+    resolution: {integrity: sha512-m2AYf8nf35kWgrKXJEJfg//PR8Qg0VbnoxAYkon2bEKrZikg+54ubBncm7mpZlnY5crN3zKwoK9P5rI6wXeO4w==}
+    peerDependencies:
+      axios: ^1.4.0
+    peerDependenciesMeta:
+      axios:
+        optional: true
 
   laravel-vite-plugin@3.0.0:
     resolution: {integrity: sha512-eO6B/IPH448XNjyA5OmJsFAeJH3MeQGWodNMzejx44+rhV44cs0op05t4yku9ifaRnikDkSHLOLXszJL0tiW3w==}
@@ -4278,26 +4315,39 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-  '@inertiajs/core@2.3.18':
+  '@inertiajs/core@3.0.0-beta.1(axios@1.13.6)':
     dependencies:
+      '@jridgewell/trace-mapping': 0.3.31
       '@types/lodash-es': 4.17.12
+      laravel-precognition: 2.0.0-beta.2(axios@1.13.6)
+      lodash-es: 4.17.23
+    optionalDependencies:
       axios: 1.13.6
-      laravel-precognition: 1.0.2
-      lodash-es: 4.17.23
-      qs: 6.15.0
-    transitivePeerDependencies:
-      - debug
 
-  '@inertiajs/react@2.3.18(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@inertiajs/core@3.0.0-beta.5(axios@1.13.6)':
     dependencies:
-      '@inertiajs/core': 2.3.18
-      '@types/lodash-es': 4.17.12
-      laravel-precognition: 1.0.2
-      lodash-es: 4.17.23
+      '@jridgewell/trace-mapping': 0.3.31
+      es-toolkit: 1.45.1
+      laravel-precognition: 2.0.0-beta.5(axios@1.13.6)
+    optionalDependencies:
+      axios: 1.13.6
+
+  '@inertiajs/react@3.0.0-beta.5(axios@1.13.6)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+    dependencies:
+      '@inertiajs/core': 3.0.0-beta.5(axios@1.13.6)
+      es-toolkit: 1.45.1
+      laravel-precognition: 2.0.0-beta.5(axios@1.13.6)
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
     transitivePeerDependencies:
-      - debug
+      - axios
+
+  '@inertiajs/vite@3.0.0-beta.1(axios@1.13.6)(vite@8.0.2(@types/node@25.5.0)(jiti@2.6.1))':
+    dependencies:
+      '@inertiajs/core': 3.0.0-beta.1(axios@1.13.6)
+      vite: 8.0.2(@types/node@25.5.0)(jiti@2.6.1)
+    transitivePeerDependencies:
+      - axios
 
   '@inquirer/ansi@1.0.2': {}
 
@@ -5717,7 +5767,8 @@ snapshots:
 
   async-function@1.0.0: {}
 
-  asynckit@0.4.0: {}
+  asynckit@0.4.0:
+    optional: true
 
   available-typed-arrays@1.0.7:
     dependencies:
@@ -5730,6 +5781,7 @@ snapshots:
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
+    optional: true
 
   babel-plugin-react-compiler@1.0.0:
     dependencies:
@@ -5841,6 +5893,7 @@ snapshots:
   combined-stream@1.0.8:
     dependencies:
       delayed-stream: 1.0.0
+    optional: true
 
   commander@11.1.0: {}
 
@@ -5948,7 +6001,8 @@ snapshots:
       has-property-descriptors: 1.0.2
       object-keys: 1.1.1
 
-  delayed-stream@1.0.0: {}
+  delayed-stream@1.0.0:
+    optional: true
 
   depd@2.0.0: {}
 
@@ -6099,6 +6153,8 @@ snapshots:
       is-callable: 1.2.7
       is-date-object: 1.1.0
       is-symbol: 1.1.1
+
+  es-toolkit@1.45.1: {}
 
   escalade@3.2.0: {}
 
@@ -6422,7 +6478,8 @@ snapshots:
 
   flatted@3.4.2: {}
 
-  follow-redirects@1.15.11: {}
+  follow-redirects@1.15.11:
+    optional: true
 
   for-each@0.3.5:
     dependencies:
@@ -6435,6 +6492,7 @@ snapshots:
       es-set-tostringtag: 2.1.0
       hasown: 2.0.2
       mime-types: 2.1.35
+    optional: true
 
   formdata-polyfill@4.0.10:
     dependencies:
@@ -6835,12 +6893,17 @@ snapshots:
 
   kleur@4.1.5: {}
 
-  laravel-precognition@1.0.2:
+  laravel-precognition@2.0.0-beta.2(axios@1.13.6):
     dependencies:
-      axios: 1.13.6
       lodash-es: 4.17.23
-    transitivePeerDependencies:
-      - debug
+    optionalDependencies:
+      axios: 1.13.6
+
+  laravel-precognition@2.0.0-beta.5(axios@1.13.6):
+    dependencies:
+      es-toolkit: 1.45.1
+    optionalDependencies:
+      axios: 1.13.6
 
   laravel-vite-plugin@3.0.0(vite@8.0.2(@types/node@25.5.0)(jiti@2.6.1)):
     dependencies:
@@ -6949,13 +7012,15 @@ snapshots:
       braces: 3.0.3
       picomatch: 2.3.2
 
-  mime-db@1.52.0: {}
+  mime-db@1.52.0:
+    optional: true
 
   mime-db@1.54.0: {}
 
   mime-types@2.1.35:
     dependencies:
       mime-db: 1.52.0
+    optional: true
 
   mime-types@3.0.2:
     dependencies:
@@ -7224,7 +7289,8 @@ snapshots:
       forwarded: 0.2.0
       ipaddr.js: 1.9.1
 
-  proxy-from-env@1.1.0: {}
+  proxy-from-env@1.1.0:
+    optional: true
 
   punycode@2.3.1: {}
 
