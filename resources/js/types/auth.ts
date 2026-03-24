@@ -1,14 +1,4 @@
-export type Pivot = {
-    model_type: string;
-    model_id: number;
-    role_id: number;
-};
-
-export type Role = {
-    id: number;
-    name: string;
-    pivot: Pivot;
-};
+import type { Role, Permission } from '@/types/role-permission';
 
 export type User = {
     id: number;
@@ -25,6 +15,7 @@ export type User = {
 
 export type Auth = {
     user: User;
+    permissions: Permission['name'][];
 };
 
 export type TwoFactorSetupData = {
