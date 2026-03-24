@@ -28,15 +28,11 @@ export default function ConfirmPassword() {
                                 autoFocus
                             />
 
-                            <InputError message={errors.password} />
+                            <InputError message={errors['password']} />
                         </div>
 
                         <div className="flex items-center">
-                            <Button
-                                className="w-full"
-                                disabled={processing}
-                                data-test="confirm-password-button"
-                            >
+                            <Button className="w-full" disabled={processing} data-test="confirm-password-button">
                                 {processing && <Spinner />}
                                 Confirm password
                             </Button>

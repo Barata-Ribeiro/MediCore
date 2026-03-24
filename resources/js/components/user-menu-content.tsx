@@ -16,7 +16,7 @@ type Props = {
     user: User;
 };
 
-export function UserMenuContent({ user }: Props) {
+export function UserMenuContent({ user }: Readonly<Props>) {
     const cleanup = useMobileNavigation();
 
     const handleLogout = () => {
@@ -34,12 +34,7 @@ export function UserMenuContent({ user }: Props) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
                 <DropdownMenuItem asChild>
-                    <Link
-                        className="block w-full cursor-pointer"
-                        href={edit()}
-                        prefetch
-                        onClick={cleanup}
-                    >
+                    <Link className="block w-full cursor-pointer" href={edit()} prefetch onClick={cleanup}>
                         <Settings className="mr-2" />
                         Settings
                     </Link>

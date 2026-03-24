@@ -50,9 +50,7 @@ export const useTwoFactorAuth = (): UseTwoFactorAuthReturn => {
 
     const fetchSetupKey = async (): Promise<void> => {
         try {
-            const { secretKey: key } = await fetchJson<TwoFactorSecretKey>(
-                secretKey.url(),
-            );
+            const { secretKey: key } = await fetchJson<TwoFactorSecretKey>(secretKey.url());
             setManualSetupKey(key);
         } catch {
             setErrors((prev) => [...prev, 'Failed to fetch a setup key']);

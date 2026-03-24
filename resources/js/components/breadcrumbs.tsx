@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { Fragment } from 'react';
+import { Activity, Fragment } from 'react';
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -12,9 +12,9 @@ import type { BreadcrumbItem as BreadcrumbItemType } from '@/types';
 
 export function Breadcrumbs({
     breadcrumbs,
-}: {
+}: Readonly<{
     breadcrumbs: BreadcrumbItemType[];
-}) {
+}>) {
     return (
         <>
             {breadcrumbs.length > 0 && (
@@ -22,22 +22,21 @@ export function Breadcrumbs({
                     <BreadcrumbList>
                         {breadcrumbs.map((item, index) => {
                             const isLast = index === breadcrumbs.length - 1;
+
                             return (
-                                <Fragment key={index}>
+                                <Fragment key={`${JSON.stringify(item.href)}-${item.title}`}>
                                     <BreadcrumbItem>
                                         {isLast ? (
-                                            <BreadcrumbPage>
-                                                {item.title}
-                                            </BreadcrumbPage>
+                                            <BreadcrumbPage>{item.title}</BreadcrumbPage>
                                         ) : (
                                             <BreadcrumbLink asChild>
-                                                <Link href={item.href}>
-                                                    {item.title}
-                                                </Link>
+                                                <Link href={item.href}>{item.title}</Link>
                                             </BreadcrumbLink>
                                         )}
                                     </BreadcrumbItem>
-                                    {!isLast && <BreadcrumbSeparator />}
+                                    <Activity mode={isLast ? 'hidden' : 'visible'}>
+                                        <BreadcrumbSeparator />
+                                    </Activity>
                                 </Fragment>
                             );
                         })}
