@@ -1,3 +1,15 @@
+export type Pivot = {
+    model_type: string;
+    model_id: number;
+    role_id: number;
+};
+
+export type Role = {
+    id: number;
+    name: string;
+    pivot: Pivot;
+};
+
 export type User = {
     id: number;
     name: string;
@@ -7,6 +19,7 @@ export type User = {
     two_factor_enabled?: boolean;
     created_at: string;
     updated_at: string;
+    roles: Role[];
     [key: string]: unknown;
 };
 
