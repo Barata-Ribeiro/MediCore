@@ -32,17 +32,18 @@ jobs:
           tools: composer:v2
           coverage: xdebug
 
-      - name: Setup Node
-        uses: actions/setup-node@v6
-        with:
-          node-version: '25'
-          cache: 'pnpm'
-
       - name: Setup pnpm
-        uses: pnpm/action-setup@v5
+        uses: pnpm/action-setup@v4
         with:
           version: 10
           cache: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 25
+          registry-url: https://registry.npmjs.org
+          cache: pnpm
 
       - name: Install Node Dependencies
         run: pnpm install --frozen-lockfile
