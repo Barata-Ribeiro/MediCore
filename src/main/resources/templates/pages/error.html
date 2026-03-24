@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="${statusCode + ' ' + errorMessage}">Error</title>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css" />
+    </head>
+    <body class="container bg-body-tertiary">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">Oops... something went wrong.</h1>
+            <p class="col-md-8 fs-4" th:text="${statusCode + ' ' + errorMessage}"></p>
+            <a class="btn btn-primary btn-lg" href="/">Go back to the home page</a>
+        </div>
+    </body>
+</html>

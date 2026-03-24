@@ -1,0 +1,29 @@
+<!-- src/main/resources/templates/fragments/medical-file-header.html -->
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+    <body>
+        <header class="bg-gradient-primary-to-secondary py-4" th:fragment="medical-file-header">
+            <div class="container-xl p-4">
+                <div class="row align-content-center justify-content-between">
+                    <div class="col-auto text-light">
+                        <h1>
+                            <i aria-hidden="true" class="bi bi-heart-pulse me-2"></i>
+                            <span class="display-6 text-capitalize"
+                                  th:text="${pageTitle != null ? pageTitle : 'MediCore'}"></span></h1>
+                        <p class="text-light h5 opacity-75" th:if="${pageDescription}"
+                           th:text="${pageDescription}"></p>
+                    </div>
+
+                    <div class="col-12 col-xl-auto mt-4">
+                        <div class="d-flex align-items-center text-light text-capitalize">
+                            <i aria-hidden="true" class="bi bi-calendar me-1"></i>
+                            <time
+                                th:text="${#temporals.format(#temporals.createNow(), 'MMMM dd, YYYY - HH:mm')}"
+                                th:time="${#temporals.createNow()}"></time>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </body>
+</html>

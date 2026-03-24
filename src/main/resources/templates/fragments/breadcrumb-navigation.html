@@ -1,0 +1,18 @@
+<!-- src/main/resources/templates/fragments/breadcrumb-navigation.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <nav aria-label="breadcrumb" class="bg-dark-subtle rounded p-2 m-0"
+             style="--bs-breadcrumb-divider:'&raquo;';"
+             th:fragment="breadcrumb-navigation(breadcrumbItems)">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item" th:classappend="${iterStat.last} ? 'active' : ''"
+                    th:each="item, iterStat : ${breadcrumbItems}">
+                    <a th:attr="aria-label='Go to ' + ${item.title}" th:href="${item.url}" th:if="${!iterStat.last}"
+                       th:text="${item.title}"></a>
+                    <span aria-current="page" th:if="${iterStat.last}" th:text="${item.title}"></span>
+                </li>
+            </ol>
+        </nav>
+    </body>
+</html>
