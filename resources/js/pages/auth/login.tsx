@@ -1,6 +1,3 @@
-import { Form, Head } from '@inertiajs/react';
-import { Activity } from 'react';
-import { Fragment } from 'react/jsx-runtime';
 import InputError from '@/components/helpers/input-error';
 import PasswordInput from '@/components/helpers/password-input';
 import TextLink from '@/components/helpers/text-link';
@@ -14,6 +11,9 @@ import AuthLayout from '@/layouts/auth-layout';
 import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
+import { Form, Head } from '@inertiajs/react';
+import { Activity } from 'react';
+import { Fragment } from 'react/jsx-runtime';
 
 type Props = {
     status?: string;

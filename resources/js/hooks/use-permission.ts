@@ -1,5 +1,5 @@
-import { usePage } from '@inertiajs/react';
 import type { Permission } from '@/types/role-permission';
+import { usePage } from '@inertiajs/react';
 
 export const usePermission = () => {
     const { auth } = usePage().props;

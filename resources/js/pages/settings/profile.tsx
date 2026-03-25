@@ -1,7 +1,3 @@
-import { Transition } from '@headlessui/react';
-import { Form, Head, Link, usePage } from '@inertiajs/react';
-import { ShieldUserIcon } from 'lucide-react';
-import { Activity, Fragment } from 'react';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import DeleteUser from '@/components/helpers/delete-user';
 import Heading from '@/components/helpers/heading';
@@ -16,6 +12,10 @@ import SettingsLayout from '@/layouts/settings/layout';
 import { edit } from '@/routes/profile';
 import { send } from '@/routes/verification';
 import type { BreadcrumbItem } from '@/types';
+import { Transition } from '@headlessui/react';
+import { Form, Head, Link, usePage } from '@inertiajs/react';
+import { ShieldUserIcon } from 'lucide-react';
+import { Activity, Fragment } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {

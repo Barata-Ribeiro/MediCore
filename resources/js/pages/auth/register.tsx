@@ -1,6 +1,3 @@
-import { Form, Head } from '@inertiajs/react';
-import { Activity } from 'react';
-import { Fragment } from 'react/jsx-runtime';
 import InputError from '@/components/helpers/input-error';
 import PasswordInput from '@/components/helpers/password-input';
 import TextLink from '@/components/helpers/text-link';
@@ -11,6 +8,9 @@ import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/auth-layout';
 import { login } from '@/routes';
 import { store } from '@/routes/register';
+import { Form, Head } from '@inertiajs/react';
+import { Activity } from 'react';
+import { Fragment } from 'react/jsx-runtime';
 
 export default function Register() {
     return (

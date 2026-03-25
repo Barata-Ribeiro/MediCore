@@ -1,5 +1,5 @@
-import { Fragment } from 'react/jsx-runtime';
 import AppLogoIcon from '@/components/application/app-logo-icon';
+import { Fragment } from 'react/jsx-runtime';
 
 export default function AppLogo() {
     return (

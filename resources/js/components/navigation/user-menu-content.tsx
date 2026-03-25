@@ -1,6 +1,3 @@
-import { Link, router } from '@inertiajs/react';
-import { LogOut, Settings } from 'lucide-react';
-import { Fragment } from 'react/jsx-runtime';
 import { UserInfo } from '@/components/navigation/user-info';
 import {
     DropdownMenuGroup,
@@ -12,6 +9,9 @@ import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { logout } from '@/routes';
 import { edit } from '@/routes/profile';
 import type { User } from '@/types';
+import { Link, router } from '@inertiajs/react';
+import { LogOut, Settings } from 'lucide-react';
+import { Fragment } from 'react/jsx-runtime';
 
 type Props = {
     user: User;

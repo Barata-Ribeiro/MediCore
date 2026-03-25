@@ -1,5 +1,3 @@
-import { Form, Head } from '@inertiajs/react';
-import { Activity } from 'react';
 import InputError from '@/components/helpers/input-error';
 import PasswordInput from '@/components/helpers/password-input';
 import { Button } from '@/components/ui/button';
@@ -8,6 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/auth-layout';
 import { update } from '@/routes/password';
+import { Form, Head } from '@inertiajs/react';
+import { Activity } from 'react';
 
 type Props = {
     token: string;

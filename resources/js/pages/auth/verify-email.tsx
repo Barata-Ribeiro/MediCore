@@ -1,12 +1,12 @@
 // Components
-import { Form, Head } from '@inertiajs/react';
-import { Activity, Fragment } from 'react';
 import TextLink from '@/components/helpers/text-link';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/auth-layout';
 import { logout } from '@/routes';
 import { send } from '@/routes/verification';
+import { Form, Head } from '@inertiajs/react';
+import { Activity, Fragment } from 'react';
 
 export default function VerifyEmail({ status }: Readonly<{ status?: string }>) {
     return (
