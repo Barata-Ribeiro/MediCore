@@ -13,9 +13,7 @@ export function AppShell({ children, variant = 'sidebar' }: Readonly<Props>) {
     const isOpen = usePage().props.sidebarOpen;
 
     if (variant === 'header') {
-        return (
-            <div className="flex min-h-screen w-full flex-col">{children}</div>
-        );
+        return <div className="flex min-h-screen w-full flex-col">{children}</div>;
     }
 
     return (

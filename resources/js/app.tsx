@@ -1,14 +1,10 @@
 import { createInertiaApp } from '@inertiajs/react';
-import { TooltipProvider } from '@/components/ui/tooltip';
 import { initializeTheme } from '@/hooks/use-appearance';
 import '../css/app.css';
 
 createInertiaApp({
     strictMode: true,
     progress: { color: '#4B5563' },
-    withApp(app) {
-        return <TooltipProvider delayDuration={0}>{app}</TooltipProvider>;
-    },
     defaults: {
         prefetch: {
             cacheFor: '1m',

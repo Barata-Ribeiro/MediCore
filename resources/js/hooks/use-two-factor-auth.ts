@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { qrCode, recoveryCodes, secretKey } from '@/routes/two-factor';
 import type { TwoFactorSecretKey, TwoFactorSetupData } from '@/types';
+import { qrCode, recoveryCodes, secretKey } from '@/routes/two-factor';
 
 export type UseTwoFactorAuthReturn = {
     qrCodeSvg: string | null;
@@ -50,9 +50,7 @@ export const useTwoFactorAuth = (): UseTwoFactorAuthReturn => {
 
     const fetchSetupKey = async (): Promise<void> => {
         try {
-            const { secretKey: key } = await fetchJson<TwoFactorSecretKey>(
-                secretKey.url(),
-            );
+            const { secretKey: key } = await fetchJson<TwoFactorSecretKey>(secretKey.url());
             setManualSetupKey(key);
         } catch {
             setErrors((prev) => [...prev, 'Failed to fetch a setup key']);

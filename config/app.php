@@ -123,4 +123,22 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Admin User Password
+    |--------------------------------------------------------------------------
+    | This value is the default password for the admin user created by the
+    | UserSeeder. It is recommended to change this value in production
+    | environments for security reasons.
+    |--------------------------------------------------------------------------
+    | Note: Ensure that the password meets your application's password
+    | complexity requirements (e.g., minimum length, special characters).
+    |
+    */
+
+    'admin_email' => env('APP_ADMIN_EMAIL', 'admin@example.com'),
+    'admin_name' => env('APP_ADMIN_NAME', 'Administrator'),
+    'admin_password' => env('APP_ADMIN_PASSWORD', '123456A#'),
+    'admin_first_name' => env('APP_ADMIN_FIRST_NAME', 'Admin'),
+    'admin_last_name' => env('APP_ADMIN_LAST_NAME', 'User'),
 ];

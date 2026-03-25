@@ -1,17 +1,20 @@
 import { Transition } from '@headlessui/react';
 import { Form, Head, Link, usePage } from '@inertiajs/react';
-import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
+import { ShieldUserIcon } from 'lucide-react';
+import { Activity } from 'react';
 import DeleteUser from '@/components/delete-user';
 import Heading from '@/components/heading';
 import InputError from '@/components/input-error';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
+import type { BreadcrumbItem } from '@/types';
+import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import { edit } from '@/routes/profile';
 import { send } from '@/routes/verification';
-import type { BreadcrumbItem } from '@/types';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -23,11 +26,13 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function Profile({
     mustVerifyEmail,
     status,
-}: {
+}: Readonly<{
     mustVerifyEmail: boolean;
     status?: string;
-}) {
+}>) {
     const { auth } = usePage().props;
+
+    const isSuperAdmin = auth.user.roles.some((role) => role.name === 'super-admin');
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -45,15 +50,21 @@ export default function Profile({
 
                     <Form
                         {...ProfileController.update.form()}
-                        options={{
-                            preserveScroll: true,
-                        }}
-                        className="space-y-6"
+                        options={{ preserveScroll: true }}
+                        disableWhileProcessing
+                        className="space-y-6 inert:pointer-events-none inert:grayscale-100"
                     >
                         {({ processing, recentlySuccessful, errors }) => (
                             <>
                                 <div className="grid gap-2">
-                                    <Label htmlFor="name">Name</Label>
+                                    <Label htmlFor="name" className="inline-flex items-center gap-x-1">
+                                        <span>Name</span>
+                                        <Activity mode={isSuperAdmin ? 'visible' : 'hidden'}>
+                                            <Badge>
+                                                Super Admin <ShieldUserIcon data-icon="inline-end" aria-hidden />
+                                            </Badge>
+                                        </Activity>
+                                    </Label>
 
                                     <Input
                                         id="name"
@@ -65,10 +76,7 @@ export default function Profile({
                                         placeholder="Full name"
                                     />
 
-                                    <InputError
-                                        className="mt-2"
-                                        message={errors.name}
-                                    />
+                                    <InputError className="mt-2" message={errors['name']} />
                                 </div>
 
                                 <div className="grid gap-2">
@@ -85,44 +93,36 @@ export default function Profile({
                                         placeholder="Email address"
                                     />
 
-                                    <InputError
-                                        className="mt-2"
-                                        message={errors.email}
-                                    />
+                                    <InputError className="mt-2" message={errors['email']} />
                                 </div>
 
-                                {mustVerifyEmail &&
-                                    auth.user.email_verified_at === null && (
-                                        <div>
-                                            <p className="-mt-4 text-sm text-muted-foreground">
-                                                Your email address is
-                                                unverified.{' '}
-                                                <Link
-                                                    href={send()}
-                                                    as="button"
-                                                    className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
-                                                >
-                                                    Click here to resend the
-                                                    verification email.
-                                                </Link>
-                                            </p>
+                                <Activity
+                                    mode={
+                                        mustVerifyEmail && auth.user.email_verified_at === null ? 'visible' : 'hidden'
+                                    }
+                                >
+                                    <div>
+                                        <p className="-mt-4 text-sm text-muted-foreground">
+                                            Your email address is unverified.{' '}
+                                            <Link
+                                                href={send()}
+                                                as="button"
+                                                className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
+                                            >
+                                                Click here to resend the verification email.
+                                            </Link>
+                                        </p>
 
-                                            {status ===
-                                                'verification-link-sent' && (
-                                                <div className="mt-2 text-sm font-medium text-green-600">
-                                                    A new verification link has
-                                                    been sent to your email
-                                                    address.
-                                                </div>
-                                            )}
-                                        </div>
-                                    )}
+                                        <Activity mode={status === 'verification-link-sent' ? 'visible' : 'hidden'}>
+                                            <div className="mt-2 text-sm font-medium text-green-600">
+                                                A new verification link has been sent to your email address.
+                                            </div>
+                                        </Activity>
+                                    </div>
+                                </Activity>
 
                                 <div className="flex items-center gap-4">
-                                    <Button
-                                        disabled={processing}
-                                        data-test="update-profile-button"
-                                    >
+                                    <Button disabled={processing} data-test="update-profile-button">
                                         Save
                                     </Button>
 
@@ -133,9 +133,7 @@ export default function Profile({
                                         leave="transition ease-in-out"
                                         leaveTo="opacity-0"
                                     >
-                                        <p className="text-sm text-neutral-600">
-                                            Saved
-                                        </p>
+                                        <p className="text-sm text-neutral-600">Saved</p>
                                     </Transition>
                                 </div>
                             </>

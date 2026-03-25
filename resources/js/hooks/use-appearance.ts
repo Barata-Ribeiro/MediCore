@@ -13,11 +13,11 @@ const listeners = new Set<() => void>();
 let currentAppearance: Appearance = 'system';
 
 const prefersDark = (): boolean => {
-    if (typeof window === 'undefined') {
+    if (globalThis.window === undefined) {
         return false;
     }
 
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return globalThis.window.matchMedia('(prefers-color-scheme: dark)').matches;
 };
 
 const setCookie = (name: string, value: string, days = 365): void => {
@@ -30,7 +30,7 @@ const setCookie = (name: string, value: string, days = 365): void => {
 };
 
 const getStoredAppearance = (): Appearance => {
-    if (typeof window === 'undefined') {
+    if (globalThis.window === undefined) {
         return 'system';
     }
 
@@ -61,17 +61,17 @@ const subscribe = (callback: () => void) => {
 const notify = (): void => listeners.forEach((listener) => listener());
 
 const mediaQuery = (): MediaQueryList | null => {
-    if (typeof window === 'undefined') {
+    if (globalThis.window === undefined) {
         return null;
     }
 
-    return window.matchMedia('(prefers-color-scheme: dark)');
+    return globalThis.window.matchMedia('(prefers-color-scheme: dark)');
 };
 
 const handleSystemThemeChange = (): void => applyTheme(currentAppearance);
 
 export function initializeTheme(): void {
-    if (typeof window === 'undefined') {
+    if (globalThis.window === undefined) {
         return;
     }
 
@@ -94,9 +94,7 @@ export function useAppearance(): UseAppearanceReturn {
         () => 'system',
     );
 
-    const resolvedAppearance: ResolvedAppearance = isDarkMode(appearance)
-        ? 'dark'
-        : 'light';
+    const resolvedAppearance: ResolvedAppearance = isDarkMode(appearance) ? 'dark' : 'light';
 
     const updateAppearance = (mode: Appearance): void => {
         currentAppearance = mode;

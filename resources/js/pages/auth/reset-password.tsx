@@ -13,12 +13,9 @@ type Props = {
     email: string;
 };
 
-export default function ResetPassword({ token, email }: Props) {
+export default function ResetPassword({ token, email }: Readonly<Props>) {
     return (
-        <AuthLayout
-            title="Reset password"
-            description="Please enter your new password below"
-        >
+        <AuthLayout title="Reset password" description="Please enter your new password below">
             <Head title="Reset password" />
 
             <Form
@@ -39,10 +36,7 @@ export default function ResetPassword({ token, email }: Props) {
                                 className="mt-1 block w-full"
                                 readOnly
                             />
-                            <InputError
-                                message={errors.email}
-                                className="mt-2"
-                            />
+                            <InputError message={errors['email']} className="mt-2" />
                         </div>
 
                         <div className="grid gap-2">
@@ -55,13 +49,11 @@ export default function ResetPassword({ token, email }: Props) {
                                 autoFocus
                                 placeholder="Password"
                             />
-                            <InputError message={errors.password} />
+                            <InputError message={errors['password']} />
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="password_confirmation">
-                                Confirm password
-                            </Label>
+                            <Label htmlFor="password_confirmation">Confirm password</Label>
                             <PasswordInput
                                 id="password_confirmation"
                                 name="password_confirmation"
@@ -69,10 +61,7 @@ export default function ResetPassword({ token, email }: Props) {
                                 className="mt-1 block w-full"
                                 placeholder="Confirm password"
                             />
-                            <InputError
-                                message={errors.password_confirmation}
-                                className="mt-2"
-                            />
+                            <InputError message={errors['password_confirmation']} className="mt-2" />
                         </div>
 
                         <Button
