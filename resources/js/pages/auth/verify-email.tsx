@@ -1,5 +1,6 @@
 // Components
 import { Form, Head } from '@inertiajs/react';
+import { Activity, Fragment } from 'react';
 import TextLink from '@/components/helpers/text-link';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
@@ -15,24 +16,26 @@ export default function VerifyEmail({ status }: Readonly<{ status?: string }>) {
         >
             <Head title="Email verification" />
 
-            {status === 'verification-link-sent' && (
+            <Activity mode={status === 'verification-link-sent' ? 'visible' : 'hidden'}>
                 <div className="mb-4 text-center text-sm font-medium text-green-600">
                     A new verification link has been sent to the email address you provided during registration.
                 </div>
-            )}
+            </Activity>
 
             <Form {...send.form()} className="space-y-6 text-center">
                 {({ processing }) => (
-                    <>
+                    <Fragment>
                         <Button disabled={processing} variant="secondary">
-                            {processing && <Spinner />}
+                            <Activity mode={processing ? 'visible' : 'hidden'}>
+                                <Spinner aria-hidden />
+                            </Activity>
                             Resend verification email
                         </Button>
 
                         <TextLink href={logout()} className="mx-auto block text-sm">
                             Log out
                         </TextLink>
-                    </>
+                    </Fragment>
                 )}
             </Form>
         </AuthLayout>

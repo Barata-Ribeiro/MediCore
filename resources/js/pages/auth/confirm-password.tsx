@@ -1,8 +1,9 @@
 import { Form, Head } from '@inertiajs/react';
+import { Activity } from 'react';
 import InputError from '@/components/helpers/input-error';
 import PasswordInput from '@/components/helpers/password-input';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
+import { Field, FieldLabel } from '@/components/ui/field';
 import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/auth-layout';
 import { store } from '@/routes/password/confirm';
@@ -15,25 +16,33 @@ export default function ConfirmPassword() {
         >
             <Head title="Confirm password" />
 
-            <Form {...store.form()} resetOnSuccess={['password']}>
+            <Form
+                {...store.form()}
+                resetOnSuccess={['password']}
+                disableWhileProcessing
+                className="inert:pointer-events-none inert:grayscale-100"
+            >
                 {({ processing, errors }) => (
                     <div className="space-y-6">
-                        <div className="grid gap-2">
-                            <Label htmlFor="password">Password</Label>
+                        <Field data-invalid={!!errors['password']}>
+                            <FieldLabel htmlFor="password">Password</FieldLabel>
                             <PasswordInput
                                 id="password"
                                 name="password"
                                 placeholder="Password"
                                 autoComplete="current-password"
                                 autoFocus
+                                aria-invalid={!!errors['password']}
                             />
 
                             <InputError message={errors['password']} />
-                        </div>
+                        </Field>
 
                         <div className="flex items-center">
-                            <Button className="w-full" disabled={processing} data-test="confirm-password-button">
-                                {processing && <Spinner />}
+                            <Button className="w-full" data-test="confirm-password-button">
+                                <Activity mode={processing ? 'visible' : 'hidden'}>
+                                    <Spinner />{' '}
+                                </Activity>
                                 Confirm password
                             </Button>
                         </div>

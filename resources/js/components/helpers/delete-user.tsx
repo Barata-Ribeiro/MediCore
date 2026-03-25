@@ -1,7 +1,7 @@
 import { Form } from '@inertiajs/react';
 import { useRef } from 'react';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
-import { Field } from '@/components//ui/field';
+import { Field, FieldLabel } from '@/components//ui/field';
 import Heading from '@/components/helpers/heading';
 import InputError from '@/components/helpers/input-error';
 import PasswordInput from '@/components/helpers/password-input';
@@ -15,7 +15,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
 
 export default function DeleteUser() {
     const passwordInput = useRef<HTMLInputElement>(null);
@@ -58,9 +57,9 @@ export default function DeleteUser() {
                             {({ resetAndClearErrors, errors }) => (
                                 <>
                                     <Field data-invalid={!!errors['password']}>
-                                        <Label htmlFor="password" className="sr-only">
+                                        <FieldLabel htmlFor="password" className="sr-only">
                                             Password
-                                        </Label>
+                                        </FieldLabel>
 
                                         <PasswordInput
                                             id="password"
@@ -68,6 +67,7 @@ export default function DeleteUser() {
                                             ref={passwordInput}
                                             placeholder="Password"
                                             autoComplete="current-password"
+                                            aria-invalid={!!errors['password']}
                                         />
 
                                         <InputError message={errors['password']} />

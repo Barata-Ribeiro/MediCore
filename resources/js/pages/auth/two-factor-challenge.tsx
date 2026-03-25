@@ -1,6 +1,6 @@
 import { Form, Head } from '@inertiajs/react';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
-import { useMemo, useState } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import InputError from '@/components/helpers/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -44,9 +44,15 @@ export default function TwoFactorChallenge() {
             <Head title="Two-factor authentication" />
 
             <div className="space-y-6">
-                <Form {...store.form()} className="space-y-4" resetOnError resetOnSuccess={!showRecoveryInput}>
+                <Form
+                    {...store.form()}
+                    resetOnError
+                    resetOnSuccess={!showRecoveryInput}
+                    disableWhileProcessing
+                    className="space-y-4 inert:pointer-events-none inert:grayscale-100"
+                >
                     {({ errors, processing, clearErrors }) => (
-                        <>
+                        <Fragment>
                             {showRecoveryInput ? (
                                 <>
                                     <Input
@@ -55,6 +61,7 @@ export default function TwoFactorChallenge() {
                                         placeholder="Enter recovery code"
                                         autoFocus={showRecoveryInput}
                                         required
+                                        aria-invalid={!!errors['recovery_code']}
                                     />
                                     <InputError message={errors['recovery_code']} />
                                 </>
@@ -68,6 +75,7 @@ export default function TwoFactorChallenge() {
                                             onChange={(value) => setCode(value)}
                                             disabled={processing}
                                             pattern={REGEXP_ONLY_DIGITS}
+                                            aria-invalid={!!errors['code']}
                                         >
                                             <InputOTPGroup>
                                                 {Array.from({ length: OTP_MAX_LENGTH }, (_, index) => (
@@ -94,7 +102,7 @@ export default function TwoFactorChallenge() {
                                     {authConfigContent.toggleText}
                                 </button>
                             </div>
-                        </>
+                        </Fragment>
                     )}
                 </Form>
             </div>
