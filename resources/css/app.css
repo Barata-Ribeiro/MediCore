@@ -96,6 +96,16 @@
     --sidebar-accent-foreground: oklch(0.218 0.008 223.9);
     --sidebar-border: oklch(0.925 0.005 214.3);
     --sidebar-ring: oklch(0.723 0.014 214.4);
+
+    /* Feedback Colors */
+    --success: oklch(0.62 0.19 145.4);
+    --success-foreground: oklch(0.98 0 0);
+
+    --warning: oklch(0.75 0.15 70);
+    --warning-foreground: oklch(0.98 0 0);
+
+    --info: oklch(0.6 0.16 255);
+    --info-foreground: oklch(0.98 0 0);
 }
 
 .dark {
@@ -131,6 +141,16 @@
     --sidebar-accent-foreground: oklch(0.987 0.002 197.1);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.56 0.021 213.5);
+
+    /* Feedback Colors */
+    --success: oklch(0.55 0.18 145.4);
+    --success-foreground: oklch(1 0 0);
+
+    --warning: oklch(0.7 0.15 70);
+    --warning-foreground: oklch(0.1 0 0);
+
+    --info: oklch(0.55 0.16 255);
+    --info-foreground: oklch(1 0 0);
 }
 
 @layer base {
@@ -180,6 +200,17 @@
     --color-card: var(--card);
     --color-foreground: var(--foreground);
     --color-background: var(--background);
+
+    /* Semantic Color Mapping */
+    --color-success: var(--success);
+    --color-success-content: var(--success-foreground);
+
+    --color-warning: var(--warning);
+    --color-warning-content: var(--warning-foreground);
+
+    --color-info: var(--info);
+    --color-info-content: var(--info-foreground);
+
     --radius-sm: calc(var(--radius) * 0.6);
     --radius-md: calc(var(--radius) * 0.8);
     --radius-lg: var(--radius);
