@@ -2,8 +2,18 @@
     "$schema": "https://www.schemastore.org/package.json",
     "private": true,
     "type": "module",
+    "author": {
+        "name": "João Mendes Jorge Barata Ribeiro",
+        "email": "jmj@barataribeiro.com",
+        "url": "https://github.barataribeiro.com/"
+    },
+    "license": "GPL-3.0-only",
+    "bugs": {
+        "url": "https://github.com/Barata-Ribeiro/MediCore/issues",
+        "email": "jmj@barataribeiro.com"
+    },
     "scripts": {
-        "build": "vite build && vite build --ssr",
+        "build": "vite build",
         "build:ssr": "vite build && vite build --ssr",
         "dev": "vite",
         "format": "prettier --write resources/",
@@ -47,7 +57,7 @@
         "globals": "^17.4.0",
         "input-otp": "^1.4.2",
         "laravel-vite-plugin": "^3.0.0",
-        "lucide-react": "^1.0.1",
+        "lucide-react": "^1.6.0",
         "radix-ui": "^1.4.3",
         "react": "^19.2.4",
         "react-dom": "^19.2.4",
@@ -65,5 +75,12 @@
         "@tailwindcss/oxide-win32-x64-msvc": "^4.2.2",
         "lightningcss-linux-x64-gnu": "^1.32.0",
         "lightningcss-win32-x64-msvc": "^1.32.0"
+    },
+    "packageManager": "pnpm@10.33.0",
+    "pnpm": {
+        "onlyBuiltDependencies": [
+            "msw",
+            "unrs-resolver"
+        ]
     }
 }
