@@ -16,7 +16,7 @@ export function Breadcrumbs({
     breadcrumbs: BreadcrumbItemType[];
 }>) {
     return (
-        <>
+        <Fragment>
             {breadcrumbs.length > 0 && (
                 <Breadcrumb>
                     <BreadcrumbList>
@@ -43,6 +43,6 @@ export function Breadcrumbs({
                     </BreadcrumbList>
                 </Breadcrumb>
             )}
-        </>
+        </Fragment>
     );
 }
