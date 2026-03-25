@@ -1,7 +1,7 @@
 import AppLogoIcon from '@/components/application/app-logo-icon';
+import { home } from '@/routes';
 import type { AuthLayoutProps } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { home } from '@/routes';
 
 export default function AuthSplitLayout({ children, title, description }: Readonly<AuthLayoutProps>) {
     const { name } = usePage().props;

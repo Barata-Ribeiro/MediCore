@@ -1,3 +1,4 @@
+import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import DeleteUser from '@/components/helpers/delete-user';
 import Heading from '@/components/helpers/heading';
 import InputError from '@/components/helpers/input-error';
@@ -8,14 +9,13 @@ import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
+import { edit } from '@/routes/profile';
+import { send } from '@/routes/verification';
 import type { BreadcrumbItem } from '@/types';
 import { Transition } from '@headlessui/react';
 import { Form, Head, Link, usePage } from '@inertiajs/react';
 import { ShieldUserIcon } from 'lucide-react';
 import { Activity, Fragment } from 'react';
-import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
-import { edit } from '@/routes/profile';
-import { send } from '@/routes/verification';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {

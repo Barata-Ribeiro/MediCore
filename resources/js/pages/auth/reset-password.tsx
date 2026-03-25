@@ -5,9 +5,9 @@ import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/auth-layout';
+import { update } from '@/routes/password';
 import { Form, Head } from '@inertiajs/react';
 import { Activity } from 'react';
-import { update } from '@/routes/password';
 
 type Props = {
     token: string;

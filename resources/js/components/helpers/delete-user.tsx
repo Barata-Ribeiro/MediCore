@@ -1,3 +1,4 @@
+import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import { Field, FieldLabel } from '@/components//ui/field';
 import Heading from '@/components/helpers/heading';
 import InputError from '@/components/helpers/input-error';
@@ -14,7 +15,6 @@ import {
 } from '@/components/ui/dialog';
 import { Form } from '@inertiajs/react';
 import { useRef } from 'react';
-import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 
 export default function DeleteUser() {
     const passwordInput = useRef<HTMLInputElement>(null);

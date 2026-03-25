@@ -6,11 +6,11 @@ import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/auth-layout';
+import { login } from '@/routes';
+import { store } from '@/routes/register';
 import { Form, Head } from '@inertiajs/react';
 import { Activity } from 'react';
 import { Fragment } from 'react/jsx-runtime';
-import { login } from '@/routes';
-import { store } from '@/routes/register';
 
 export default function Register() {
     return (

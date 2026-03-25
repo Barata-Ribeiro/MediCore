@@ -8,12 +8,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/auth-layout';
-import { Form, Head } from '@inertiajs/react';
-import { Activity } from 'react';
-import { Fragment } from 'react/jsx-runtime';
 import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
+import { Form, Head } from '@inertiajs/react';
+import { Activity } from 'react';
+import { Fragment } from 'react/jsx-runtime';
 
 type Props = {
     status?: string;
