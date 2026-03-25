@@ -1,6 +1,7 @@
 import { Form } from '@inertiajs/react';
 import { useRef } from 'react';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
+import { Field } from '@/components//ui/field';
 import Heading from '@/components/helpers/heading';
 import InputError from '@/components/helpers/input-error';
 import PasswordInput from '@/components/helpers/password-input';
@@ -34,7 +35,7 @@ export default function DeleteUser() {
 
                 <Dialog>
                     <DialogTrigger asChild>
-                        <Button variant="destructive" data-test="delete-user-button">
+                        <Button type="button" variant="destructive" data-test="delete-user-button">
                             Delete account
                         </Button>
                     </DialogTrigger>
@@ -48,16 +49,15 @@ export default function DeleteUser() {
 
                         <Form
                             {...ProfileController.destroy.form()}
-                            options={{
-                                preserveScroll: true,
-                            }}
+                            options={{ preserveScroll: true }}
                             onError={() => passwordInput.current?.focus()}
+                            disableWhileProcessing
                             resetOnSuccess
-                            className="space-y-6"
+                            className="space-y-6 inert:pointer-events-none inert:grayscale-100"
                         >
-                            {({ resetAndClearErrors, processing, errors }) => (
+                            {({ resetAndClearErrors, errors }) => (
                                 <>
-                                    <div className="grid gap-2">
+                                    <Field data-invalid={!!errors['password']}>
                                         <Label htmlFor="password" className="sr-only">
                                             Password
                                         </Label>
@@ -71,19 +71,25 @@ export default function DeleteUser() {
                                         />
 
                                         <InputError message={errors['password']} />
-                                    </div>
+                                    </Field>
 
                                     <DialogFooter className="gap-2">
                                         <DialogClose asChild>
-                                            <Button variant="secondary" onClick={() => resetAndClearErrors()}>
+                                            <Button
+                                                type="button"
+                                                variant="secondary"
+                                                onClick={() => resetAndClearErrors()}
+                                            >
                                                 Cancel
                                             </Button>
                                         </DialogClose>
 
-                                        <Button variant="destructive" disabled={processing} asChild>
-                                            <button type="submit" data-test="confirm-delete-user-button">
-                                                Delete account
-                                            </button>
+                                        <Button
+                                            type="submit"
+                                            variant="destructive"
+                                            data-test="confirm-delete-user-button"
+                                        >
+                                            Delete account
                                         </Button>
                                     </DialogFooter>
                                 </>
