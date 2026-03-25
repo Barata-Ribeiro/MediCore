@@ -1,5 +1,3 @@
-import { Link, router } from '@inertiajs/react';
-import { LogOut, Settings } from 'lucide-react';
 import { UserInfo } from '@/components/navigation/user-info';
 import {
     DropdownMenuGroup,
@@ -9,6 +7,9 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import type { User } from '@/types';
+import { Link, router } from '@inertiajs/react';
+import { LogOut, Settings } from 'lucide-react';
+import { Fragment } from 'react/jsx-runtime';
 import { logout } from '@/routes';
 import { edit } from '@/routes/profile';
 
@@ -25,7 +26,7 @@ export function UserMenuContent({ user }: Readonly<Props>) {
     };
 
     return (
-        <>
+        <Fragment>
             <DropdownMenuLabel className="p-0 font-normal">
                 <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                     <UserInfo user={user} showEmail={true} />
@@ -35,7 +36,7 @@ export function UserMenuContent({ user }: Readonly<Props>) {
             <DropdownMenuGroup>
                 <DropdownMenuItem asChild>
                     <Link className="block w-full cursor-pointer" href={edit()} prefetch onClick={cleanup}>
-                        <Settings className="mr-2" />
+                        <Settings aria-hidden className="mr-2" />
                         Settings
                     </Link>
                 </DropdownMenuItem>
@@ -49,10 +50,10 @@ export function UserMenuContent({ user }: Readonly<Props>) {
                     onClick={handleLogout}
                     data-test="logout-button"
                 >
-                    <LogOut className="mr-2" />
+                    <LogOut aria-hidden className="mr-2" />
                     Log out
                 </Link>
             </DropdownMenuItem>
-        </>
+        </Fragment>
     );
 }

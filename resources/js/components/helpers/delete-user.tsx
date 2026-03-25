@@ -1,5 +1,4 @@
-import { Form } from '@inertiajs/react';
-import { useRef } from 'react';
+import { Field, FieldLabel } from '@/components//ui/field';
 import Heading from '@/components/helpers/heading';
 import InputError from '@/components/helpers/input-error';
 import PasswordInput from '@/components/helpers/password-input';
@@ -13,7 +12,8 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
+import { Form } from '@inertiajs/react';
+import { useRef } from 'react';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 
 export default function DeleteUser() {
@@ -34,7 +34,7 @@ export default function DeleteUser() {
 
                 <Dialog>
                     <DialogTrigger asChild>
-                        <Button variant="destructive" data-test="delete-user-button">
+                        <Button type="button" variant="destructive" data-test="delete-user-button">
                             Delete account
                         </Button>
                     </DialogTrigger>
@@ -48,19 +48,18 @@ export default function DeleteUser() {
 
                         <Form
                             {...ProfileController.destroy.form()}
-                            options={{
-                                preserveScroll: true,
-                            }}
+                            options={{ preserveScroll: true }}
                             onError={() => passwordInput.current?.focus()}
+                            disableWhileProcessing
                             resetOnSuccess
-                            className="space-y-6"
+                            className="space-y-6 inert:pointer-events-none inert:grayscale-100"
                         >
-                            {({ resetAndClearErrors, processing, errors }) => (
+                            {({ resetAndClearErrors, errors }) => (
                                 <>
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="password" className="sr-only">
+                                    <Field data-invalid={!!errors['password']}>
+                                        <FieldLabel htmlFor="password" className="sr-only">
                                             Password
-                                        </Label>
+                                        </FieldLabel>
 
                                         <PasswordInput
                                             id="password"
@@ -68,22 +67,29 @@ export default function DeleteUser() {
                                             ref={passwordInput}
                                             placeholder="Password"
                                             autoComplete="current-password"
+                                            aria-invalid={!!errors['password']}
                                         />
 
                                         <InputError message={errors['password']} />
-                                    </div>
+                                    </Field>
 
                                     <DialogFooter className="gap-2">
                                         <DialogClose asChild>
-                                            <Button variant="secondary" onClick={() => resetAndClearErrors()}>
+                                            <Button
+                                                type="button"
+                                                variant="secondary"
+                                                onClick={() => resetAndClearErrors()}
+                                            >
                                                 Cancel
                                             </Button>
                                         </DialogClose>
 
-                                        <Button variant="destructive" disabled={processing} asChild>
-                                            <button type="submit" data-test="confirm-delete-user-button">
-                                                Delete account
-                                            </button>
+                                        <Button
+                                            type="submit"
+                                            variant="destructive"
+                                            data-test="confirm-delete-user-button"
+                                        >
+                                            Delete account
                                         </Button>
                                     </DialogFooter>
                                 </>

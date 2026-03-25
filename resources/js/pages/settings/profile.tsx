@@ -1,17 +1,18 @@
-import { Transition } from '@headlessui/react';
-import { Form, Head, Link, usePage } from '@inertiajs/react';
-import { ShieldUserIcon } from 'lucide-react';
-import { Activity } from 'react';
 import DeleteUser from '@/components/helpers/delete-user';
 import Heading from '@/components/helpers/heading';
 import InputError from '@/components/helpers/input-error';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Spinner } from '@/components/ui/spinner';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import type { BreadcrumbItem } from '@/types';
+import { Transition } from '@headlessui/react';
+import { Form, Head, Link, usePage } from '@inertiajs/react';
+import { ShieldUserIcon } from 'lucide-react';
+import { Activity, Fragment } from 'react';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import { edit } from '@/routes/profile';
 import { send } from '@/routes/verification';
@@ -55,16 +56,16 @@ export default function Profile({
                         className="space-y-6 inert:pointer-events-none inert:grayscale-100"
                     >
                         {({ processing, recentlySuccessful, errors }) => (
-                            <>
-                                <div className="grid gap-2">
-                                    <Label htmlFor="name" className="inline-flex items-center gap-x-1">
+                            <Fragment>
+                                <Field data-invalid={!!errors['name']}>
+                                    <FieldLabel htmlFor="name" className="inline-flex items-center gap-x-1">
                                         <span>Name</span>
                                         <Activity mode={isSuperAdmin ? 'visible' : 'hidden'}>
                                             <Badge>
                                                 Super Admin <ShieldUserIcon data-icon="inline-end" aria-hidden />
                                             </Badge>
                                         </Activity>
-                                    </Label>
+                                    </FieldLabel>
 
                                     <Input
                                         id="name"
@@ -74,13 +75,14 @@ export default function Profile({
                                         required
                                         autoComplete="name"
                                         placeholder="Full name"
+                                        aria-invalid={!!errors['name']}
                                     />
 
                                     <InputError className="mt-2" message={errors['name']} />
-                                </div>
+                                </Field>
 
-                                <div className="grid gap-2">
-                                    <Label htmlFor="email">Email address</Label>
+                                <Field data-invalid={!!errors['email']}>
+                                    <FieldLabel htmlFor="email">Email address</FieldLabel>
 
                                     <Input
                                         id="email"
@@ -91,10 +93,11 @@ export default function Profile({
                                         required
                                         autoComplete="username"
                                         placeholder="Email address"
+                                        aria-invalid={!!errors['email']}
                                     />
 
                                     <InputError className="mt-2" message={errors['email']} />
-                                </div>
+                                </Field>
 
                                 <Activity
                                     mode={
@@ -122,7 +125,10 @@ export default function Profile({
                                 </Activity>
 
                                 <div className="flex items-center gap-4">
-                                    <Button disabled={processing} data-test="update-profile-button">
+                                    <Button data-test="update-profile-button">
+                                        <Activity mode={processing ? 'visible' : 'hidden'}>
+                                            <Spinner aria-hidden />
+                                        </Activity>
                                         Save
                                     </Button>
 
@@ -136,7 +142,7 @@ export default function Profile({
                                         <p className="text-sm text-neutral-600">Saved</p>
                                     </Transition>
                                 </div>
-                            </>
+                            </Fragment>
                         )}
                     </Form>
                 </div>

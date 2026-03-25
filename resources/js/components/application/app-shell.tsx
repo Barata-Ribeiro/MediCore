@@ -1,8 +1,8 @@
-import { usePage } from '@inertiajs/react';
-import type { ReactNode } from 'react';
+import { TooltipProvider } from '../ui/tooltip';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import type { AppVariant } from '@/types';
-import { TooltipProvider } from '../ui/tooltip';
+import { usePage } from '@inertiajs/react';
+import type { ReactNode } from 'react';
 
 type Props = {
     children: ReactNode;

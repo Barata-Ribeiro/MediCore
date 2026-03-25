@@ -1,18 +1,19 @@
-import { Transition } from '@headlessui/react';
-import { Form, Head } from '@inertiajs/react';
-import { ShieldCheck } from 'lucide-react';
-import { useRef, useState } from 'react';
 import Heading from '@/components/helpers/heading';
 import InputError from '@/components/helpers/input-error';
 import PasswordInput from '@/components/helpers/password-input';
 import TwoFactorRecoveryCodes from '@/components/helpers/two-factor-recovery-codes';
 import TwoFactorSetupModal from '@/components/helpers/two-factor-setup-modal';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
+import { Field, FieldLabel } from '@/components/ui/field';
+import { Spinner } from '@/components/ui/spinner';
 import { useTwoFactorAuth } from '@/hooks/use-two-factor-auth';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import type { BreadcrumbItem } from '@/types';
+import { Transition } from '@headlessui/react';
+import { Form, Head } from '@inertiajs/react';
+import { ShieldCheck } from 'lucide-react';
+import { Activity, Fragment, useRef, useState } from 'react';
 import SecurityController from '@/actions/App/Http/Controllers/Settings/SecurityController';
 import { edit } from '@/routes/security';
 import { disable, enable } from '@/routes/two-factor';
@@ -66,9 +67,7 @@ export default function Security({
 
                     <Form
                         {...SecurityController.update.form()}
-                        options={{
-                            preserveScroll: true,
-                        }}
+                        options={{ preserveScroll: true }}
                         resetOnError={['password', 'password_confirmation', 'current_password']}
                         resetOnSuccess
                         onError={(errors) => {
@@ -80,12 +79,13 @@ export default function Security({
                                 currentPasswordInput.current?.focus();
                             }
                         }}
-                        className="space-y-6"
+                        disableWhileProcessing
+                        className="space-y-6 inert:pointer-events-none inert:grayscale-100"
                     >
                         {({ errors, processing, recentlySuccessful }) => (
-                            <>
-                                <div className="grid gap-2">
-                                    <Label htmlFor="current_password">Current password</Label>
+                            <Fragment>
+                                <Field data-invalid={!!errors['current_password']}>
+                                    <FieldLabel htmlFor="current_password">Current password</FieldLabel>
 
                                     <PasswordInput
                                         id="current_password"
@@ -94,13 +94,14 @@ export default function Security({
                                         className="mt-1 block w-full"
                                         autoComplete="current-password"
                                         placeholder="Current password"
+                                        aria-invalid={!!errors['current_password']}
                                     />
 
                                     <InputError message={errors['current_password']} />
-                                </div>
+                                </Field>
 
-                                <div className="grid gap-2">
-                                    <Label htmlFor="password">New password</Label>
+                                <Field data-invalid={!!errors['password']}>
+                                    <FieldLabel htmlFor="password">New password</FieldLabel>
 
                                     <PasswordInput
                                         id="password"
@@ -109,13 +110,14 @@ export default function Security({
                                         className="mt-1 block w-full"
                                         autoComplete="new-password"
                                         placeholder="New password"
+                                        aria-invalid={!!errors['password']}
                                     />
 
                                     <InputError message={errors['password']} />
-                                </div>
+                                </Field>
 
-                                <div className="grid gap-2">
-                                    <Label htmlFor="password_confirmation">Confirm password</Label>
+                                <Field data-invalid={!!errors['password_confirmation']}>
+                                    <FieldLabel htmlFor="password_confirmation">Confirm password</FieldLabel>
 
                                     <PasswordInput
                                         id="password_confirmation"
@@ -123,13 +125,17 @@ export default function Security({
                                         className="mt-1 block w-full"
                                         autoComplete="new-password"
                                         placeholder="Confirm password"
+                                        aria-invalid={!!errors['password_confirmation']}
                                     />
 
                                     <InputError message={errors['password_confirmation']} />
-                                </div>
+                                </Field>
 
                                 <div className="flex items-center gap-4">
-                                    <Button disabled={processing} data-test="update-password-button">
+                                    <Button data-test="update-password-button">
+                                        <Activity mode={processing ? 'visible' : 'hidden'}>
+                                            <Spinner aria-hidden />
+                                        </Activity>
                                         Save password
                                     </Button>
 
@@ -143,12 +149,12 @@ export default function Security({
                                         <p className="text-sm text-neutral-600">Saved</p>
                                     </Transition>
                                 </div>
-                            </>
+                            </Fragment>
                         )}
                     </Form>
                 </div>
 
-                {canManageTwoFactor && (
+                <Activity mode={canManageTwoFactor ? 'visible' : 'hidden'}>
                     <div className="space-y-6">
                         <Heading
                             variant="small"
@@ -217,7 +223,7 @@ export default function Security({
                             errors={errors}
                         />
                     </div>
-                )}
+                </Activity>
             </SettingsLayout>
         </AppLayout>
     );

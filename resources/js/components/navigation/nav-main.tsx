@@ -1,4 +1,3 @@
-import { Link } from '@inertiajs/react';
 import {
     SidebarGroup,
     SidebarGroupLabel,
@@ -8,6 +7,7 @@ import {
 } from '@/components/ui/sidebar';
 import { useCurrentUrl } from '@/hooks/use-current-url';
 import type { NavItem } from '@/types';
+import { Link } from '@inertiajs/react';
 
 export function NavMain({ items = [] }: Readonly<{ items: NavItem[] }>) {
     const { isCurrentUrl } = useCurrentUrl();
@@ -24,7 +24,7 @@ export function NavMain({ items = [] }: Readonly<{ items: NavItem[] }>) {
                             tooltip={{ children: item.title }}
                         >
                             <Link href={item.href} prefetch>
-                                {item.icon && <item.icon />}
+                                {item.icon && <item.icon aria-hidden />}
                                 <span>{item.title}</span>
                             </Link>
                         </SidebarMenuButton>

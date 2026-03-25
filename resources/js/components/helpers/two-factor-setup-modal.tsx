@@ -1,7 +1,3 @@
-import { Form } from '@inertiajs/react';
-import { REGEXP_ONLY_DIGITS } from 'input-otp';
-import { Check, Copy, ScanLine } from 'lucide-react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import AlertError from '@/components/helpers/alert-error';
 import InputError from '@/components/helpers/input-error';
 import { Button } from '@/components/ui/button';
@@ -11,6 +7,10 @@ import { Spinner } from '@/components/ui/spinner';
 import { useAppearance } from '@/hooks/use-appearance';
 import { useClipboard } from '@/hooks/use-clipboard';
 import { OTP_MAX_LENGTH } from '@/hooks/use-two-factor-auth';
+import { Form } from '@inertiajs/react';
+import { REGEXP_ONLY_DIGITS } from 'input-otp';
+import { Check, Copy, ScanLine } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { confirm } from '@/routes/two-factor';
 
 function GridScanIcon() {
@@ -265,7 +265,7 @@ export default function TwoFactorSetupModal({
         <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
             <DialogContent className="sm:max-w-md">
                 <DialogHeader className="flex items-center justify-center">
-                    <GridScanIcon />
+                    <GridScanIcon aria-hidden />
                     <DialogTitle>{modalConfig.title}</DialogTitle>
                     <DialogDescription className="text-center">{modalConfig.description}</DialogDescription>
                 </DialogHeader>

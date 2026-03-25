@@ -1,5 +1,3 @@
-import { Link } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid } from 'lucide-react';
 import AppLogo from '@/components/application/app-logo';
 import { NavFooter } from '@/components/navigation/nav-footer';
 import { NavMain } from '@/components/navigation/nav-main';
@@ -14,6 +12,8 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import type { NavItem } from '@/types';
+import { Link } from '@inertiajs/react';
+import { BookOpen, FolderGit2, LayoutGrid } from 'lucide-react';
 import { dashboard } from '@/routes';
 
 const mainNavItems: NavItem[] = [
