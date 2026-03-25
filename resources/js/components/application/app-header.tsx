@@ -1,5 +1,7 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Menu, Search } from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, Menu, SearchIcon } from 'lucide-react';
+import { Activity } from 'react';
+import { Fragment } from 'react/jsx-runtime';
 import AppLogo from '@/components/application/app-logo';
 import AppLogoIcon from '@/components/application/app-logo-icon';
 import { Breadcrumbs } from '@/components/helpers/breadcrumbs';
@@ -55,7 +57,7 @@ export function AppHeader({ breadcrumbs = [] }: Readonly<Props>) {
     const { isCurrentUrl, whenCurrentUrl } = useCurrentUrl();
 
     return (
-        <>
+        <Fragment>
             <div className="border-b border-sidebar-border/80">
                 <div className="mx-auto flex h-16 items-center px-4 md:max-w-7xl">
                     {/* Mobile Menu */}
@@ -83,7 +85,7 @@ export function AppHeader({ breadcrumbs = [] }: Readonly<Props>) {
                                                     href={item.href}
                                                     className="flex items-center space-x-2 font-medium"
                                                 >
-                                                    {item.icon && <item.icon className="h-5 w-5" />}
+                                                    {item.icon && <item.icon aria-hidden className="h-5 w-5" />}
                                                     <span>{item.title}</span>
                                                 </Link>
                                             ))}
@@ -98,7 +100,7 @@ export function AppHeader({ breadcrumbs = [] }: Readonly<Props>) {
                                                     rel="noopener noreferrer"
                                                     className="flex items-center space-x-2 font-medium"
                                                 >
-                                                    {item.icon && <item.icon className="h-5 w-5" />}
+                                                    {item.icon && <item.icon aria-hidden className="h-5 w-5" />}
                                                     <span>{item.title}</span>
                                                 </a>
                                             ))}
@@ -130,12 +132,12 @@ export function AppHeader({ breadcrumbs = [] }: Readonly<Props>) {
                                                 'h-9 cursor-pointer px-3',
                                             )}
                                         >
-                                            {item.icon && <item.icon className="mr-2 h-4 w-4" />}
+                                            {item.icon && <item.icon aria-hidden className="mr-2 h-4 w-4" />}
                                             {item.title}
                                         </Link>
-                                        {isCurrentUrl(item.href) && (
-                                            <div className="absolute bottom-0 left-0 h-0.5 w-full translate-y-px bg-black dark:bg-white"></div>
-                                        )}
+                                        <Activity mode={isCurrentUrl(item.href) ? 'visible' : 'hidden'}>
+                                            <div className="absolute bottom-0 left-0 h-0.5 w-full translate-y-px bg-black dark:bg-white" />
+                                        </Activity>
                                     </NavigationMenuItem>
                                 ))}
                             </NavigationMenuList>
@@ -144,8 +146,8 @@ export function AppHeader({ breadcrumbs = [] }: Readonly<Props>) {
 
                     <div className="ml-auto flex items-center space-x-2">
                         <div className="relative flex items-center space-x-1">
-                            <Button variant="ghost" size="icon" className="group h-9 w-9 cursor-pointer">
-                                <Search className="size-5! opacity-80 group-hover:opacity-100" />
+                            <Button variant="ghost" size="icon" className="group size-9 cursor-pointer">
+                                <SearchIcon aria-hidden className="size-5! opacity-80 group-hover:opacity-100" />
                             </Button>
                             <div className="ml-1 hidden gap-1 lg:flex">
                                 {rightNavItems.map((item) => (
@@ -155,11 +157,14 @@ export function AppHeader({ breadcrumbs = [] }: Readonly<Props>) {
                                                 href={toUrl(item.href)}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="group inline-flex h-9 w-9 items-center justify-center rounded-md bg-transparent p-0 text-sm font-medium text-accent-foreground ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                                                className="group inline-flex size-9 items-center justify-center rounded-md bg-transparent p-0 text-sm font-medium text-accent-foreground ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
                                             >
                                                 <span className="sr-only">{item.title}</span>
                                                 {item.icon && (
-                                                    <item.icon className="size-5 opacity-80 group-hover:opacity-100" />
+                                                    <item.icon
+                                                        aria-hidden
+                                                        className="size-5 opacity-80 group-hover:opacity-100"
+                                                    />
                                                 )}
                                             </a>
                                         </TooltipTrigger>
@@ -195,6 +200,6 @@ export function AppHeader({ breadcrumbs = [] }: Readonly<Props>) {
                     </div>
                 </div>
             )}
-        </>
+        </Fragment>
     );
 }
