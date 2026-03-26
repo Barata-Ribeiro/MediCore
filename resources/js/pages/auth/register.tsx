@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
-import AuthLayout from '@/layouts/auth-layout';
 import { login } from '@/routes';
 import { store } from '@/routes/register';
 import { Form, Head } from '@inertiajs/react';
@@ -14,7 +13,7 @@ import { Fragment } from 'react/jsx-runtime';
 
 export default function Register() {
     return (
-        <AuthLayout title="Create an account" description="Enter your details below to create your account">
+        <Fragment>
             <Head title="Register" />
             <Form
                 {...store.form()}
@@ -101,6 +100,11 @@ export default function Register() {
                     </Fragment>
                 )}
             </Form>
-        </AuthLayout>
+        </Fragment>
     );
 }
+
+Register.layout = {
+    title: 'Create an account',
+    description: 'Enter your details below to create your account',
+};
