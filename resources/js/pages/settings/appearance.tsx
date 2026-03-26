@@ -1,21 +1,13 @@
 import AppearanceTabs from '@/components/helpers/appearance-tabs';
 import Heading from '@/components/helpers/heading';
-import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import { edit as editAppearance } from '@/routes/appearance';
-import type { BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
-
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Appearance settings',
-        href: editAppearance(),
-    },
-];
+import { Fragment } from 'react/jsx-runtime';
 
 export default function Appearance() {
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <Fragment>
             <Head title="Appearance settings" />
 
             <h1 className="sr-only">Appearance settings</h1>
@@ -30,6 +22,15 @@ export default function Appearance() {
                     <AppearanceTabs />
                 </div>
             </SettingsLayout>
-        </AppLayout>
+        </Fragment>
     );
 }
+
+Appearance.layout = {
+    breadcrumbs: [
+        {
+            title: 'Appearance settings',
+            href: editAppearance(),
+        },
+    ],
+};

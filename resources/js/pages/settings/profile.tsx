@@ -1,4 +1,4 @@
-import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
+import ProfileController, { edit } from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import DeleteUser from '@/components/helpers/delete-user';
 import Heading from '@/components/helpers/heading';
 import InputError from '@/components/helpers/input-error';
@@ -7,22 +7,12 @@ import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
-import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
-import { edit } from '@/routes/profile';
 import { send } from '@/routes/verification';
-import type { BreadcrumbItem } from '@/types';
 import { Transition } from '@headlessui/react';
 import { Form, Head, Link, usePage } from '@inertiajs/react';
 import { ShieldUserIcon } from 'lucide-react';
 import { Activity, Fragment } from 'react';
-
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Profile settings',
-        href: edit(),
-    },
-];
 
 export default function Profile({
     mustVerifyEmail,
@@ -36,7 +26,7 @@ export default function Profile({
     const isSuperAdmin = auth.user.roles.some((role) => role.name === 'super-admin');
 
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <Fragment>
             <Head title="Profile settings" />
 
             <h1 className="sr-only">Profile settings</h1>
@@ -149,6 +139,15 @@ export default function Profile({
 
                 <DeleteUser />
             </SettingsLayout>
-        </AppLayout>
+        </Fragment>
     );
 }
+
+Profile.layout = {
+    breadcrumbs: [
+        {
+            title: 'Profile settings',
+            href: edit(),
+        },
+    ],
+};

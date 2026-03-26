@@ -8,28 +8,19 @@ import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Spinner } from '@/components/ui/spinner';
 import { useTwoFactorAuth } from '@/hooks/use-two-factor-auth';
-import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import { edit } from '@/routes/security';
 import { disable, enable } from '@/routes/two-factor';
-import type { BreadcrumbItem } from '@/types';
 import { Transition } from '@headlessui/react';
 import { Form, Head } from '@inertiajs/react';
 import { ShieldCheck } from 'lucide-react';
-import { Activity, Fragment, useRef, useState } from 'react';
+import { Activity, Fragment, useEffect, useRef, useState } from 'react';
 
 type Props = {
     canManageTwoFactor?: boolean;
     requiresConfirmation?: boolean;
     twoFactorEnabled?: boolean;
 };
-
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Security settings',
-        href: edit(),
-    },
-];
 
 export default function Security({
     canManageTwoFactor = false,
@@ -44,15 +35,25 @@ export default function Security({
         hasSetupData,
         manualSetupKey,
         clearSetupData,
+        clearTwoFactorAuthData,
         fetchSetupData,
         recoveryCodesList,
         fetchRecoveryCodes,
         errors,
     } = useTwoFactorAuth();
     const [showSetupModal, setShowSetupModal] = useState<boolean>(false);
+    const prevTwoFactorEnabled = useRef(twoFactorEnabled);
+
+    useEffect(() => {
+        if (prevTwoFactorEnabled.current && !twoFactorEnabled) {
+            clearTwoFactorAuthData();
+        }
+
+        prevTwoFactorEnabled.current = twoFactorEnabled;
+    }, [twoFactorEnabled, clearTwoFactorAuthData]);
 
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <Fragment>
             <Head title="Security settings" />
 
             <h1 className="sr-only">Security settings</h1>
@@ -225,6 +226,15 @@ export default function Security({
                     </div>
                 </Activity>
             </SettingsLayout>
-        </AppLayout>
+        </Fragment>
     );
 }
+
+Security.layout = {
+    breadcrumbs: [
+        {
+            title: 'Security settings',
+            href: edit(),
+        },
+    ],
+};
