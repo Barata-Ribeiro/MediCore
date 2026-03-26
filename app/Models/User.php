@@ -32,8 +32,20 @@ class User extends Authenticatable
         ];
     }
 
+    public function scopeIsSuperAdmin($query)
+    {
+        return $query->whereHas('roles', function ($q) {
+            $q->where('name', 'super-admin');
+        });
+    }
+
     public function profile(): HasOne
     {
         return $this->hasOne(Profile::class);
+    }
+
+    public function medicalFile(): HasOne
+    {
+        return $this->hasOne(MedicalFile::class);
     }
 }
