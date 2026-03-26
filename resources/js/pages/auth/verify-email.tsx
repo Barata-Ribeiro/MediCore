@@ -2,7 +2,6 @@
 import TextLink from '@/components/helpers/text-link';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
-import AuthLayout from '@/layouts/auth-layout';
 import { logout } from '@/routes';
 import { send } from '@/routes/verification';
 import { Form, Head } from '@inertiajs/react';
@@ -10,10 +9,7 @@ import { Activity, Fragment } from 'react';
 
 export default function VerifyEmail({ status }: Readonly<{ status?: string }>) {
     return (
-        <AuthLayout
-            title="Verify email"
-            description="Please verify your email address by clicking on the link we just emailed to you."
-        >
+        <Fragment>
             <Head title="Email verification" />
 
             <Activity mode={status === 'verification-link-sent' ? 'visible' : 'hidden'}>
@@ -38,6 +34,11 @@ export default function VerifyEmail({ status }: Readonly<{ status?: string }>) {
                     </Fragment>
                 )}
             </Form>
-        </AuthLayout>
+        </Fragment>
     );
 }
+
+VerifyEmail.layout = {
+    title: 'Verify email',
+    description: 'Please verify your email address by clicking on the link we just emailed to you.',
+};

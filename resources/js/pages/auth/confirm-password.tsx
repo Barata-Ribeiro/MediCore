@@ -3,17 +3,13 @@ import PasswordInput from '@/components/helpers/password-input';
 import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Spinner } from '@/components/ui/spinner';
-import AuthLayout from '@/layouts/auth-layout';
 import { store } from '@/routes/password/confirm';
 import { Form, Head } from '@inertiajs/react';
-import { Activity } from 'react';
+import { Activity, Fragment } from 'react';
 
 export default function ConfirmPassword() {
     return (
-        <AuthLayout
-            title="Confirm your password"
-            description="This is a secure area of the application. Please confirm your password before continuing."
-        >
+        <Fragment>
             <Head title="Confirm password" />
 
             <Form
@@ -49,6 +45,11 @@ export default function ConfirmPassword() {
                     </div>
                 )}
             </Form>
-        </AuthLayout>
+        </Fragment>
     );
 }
+
+ConfirmPassword.layout = {
+    title: 'Confirm your password',
+    description: 'This is a secure area of the application. Please confirm your password before continuing.',
+};

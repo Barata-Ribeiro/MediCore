@@ -4,10 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
-import AuthLayout from '@/layouts/auth-layout';
 import { update } from '@/routes/password';
 import { Form, Head } from '@inertiajs/react';
-import { Activity } from 'react';
+import { Activity, Fragment } from 'react';
 
 type Props = {
     token: string;
@@ -16,7 +15,7 @@ type Props = {
 
 export default function ResetPassword({ token, email }: Readonly<Props>) {
     return (
-        <AuthLayout title="Reset password" description="Please enter your new password below">
+        <Fragment>
             <Head title="Reset password" />
 
             <Form
@@ -84,6 +83,11 @@ export default function ResetPassword({ token, email }: Readonly<Props>) {
                     </div>
                 )}
             </Form>
-        </AuthLayout>
+        </Fragment>
     );
 }
+
+ResetPassword.layout = {
+    title: 'Reset password',
+    description: 'Please enter your new password below',
+};

@@ -3,9 +3,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { OTP_MAX_LENGTH } from '@/hooks/use-two-factor-auth';
-import AuthLayout from '@/layouts/auth-layout';
 import { store } from '@/routes/two-factor/login';
-import { Form, Head } from '@inertiajs/react';
+import { Form, Head, setLayoutProps } from '@inertiajs/react';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
 import { Fragment, useMemo, useState } from 'react';
 
@@ -33,6 +32,11 @@ export default function TwoFactorChallenge() {
         };
     }, [showRecoveryInput]);
 
+    setLayoutProps({
+        title: authConfigContent.title,
+        description: authConfigContent.description,
+    });
+
     const toggleRecoveryMode = (clearErrors: () => void): void => {
         setShowRecoveryInput(!showRecoveryInput);
         clearErrors();
@@ -40,7 +44,7 @@ export default function TwoFactorChallenge() {
     };
 
     return (
-        <AuthLayout title={authConfigContent.title} description={authConfigContent.description}>
+        <Fragment>
             <Head title="Two-factor authentication" />
 
             <div className="space-y-6">
@@ -106,6 +110,6 @@ export default function TwoFactorChallenge() {
                     )}
                 </Form>
             </div>
-        </AuthLayout>
+        </Fragment>
     );
 }

@@ -7,7 +7,6 @@ import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
-import AuthLayout from '@/layouts/auth-layout';
 import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
@@ -23,7 +22,7 @@ type Props = {
 
 export default function Login({ status, canResetPassword, canRegister }: Readonly<Props>) {
     return (
-        <AuthLayout title="Log in to your account" description="Enter your email and password below to log in">
+        <Fragment>
             <Head title="Log in" />
 
             <Form
@@ -98,6 +97,11 @@ export default function Login({ status, canResetPassword, canRegister }: Readonl
             </Form>
 
             {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}
-        </AuthLayout>
+        </Fragment>
     );
 }
+
+Login.layout = {
+    title: 'Log in to your account',
+    description: 'Enter your email and password below to log in',
+};

@@ -231,6 +231,16 @@ export default function TwoFactorSetupModal({
         };
     }, [twoFactorEnabled, showVerificationStep]);
 
+    const resetModalState = useCallback(() => {
+        setShowVerificationStep(false);
+        clearSetupData();
+    }, [clearSetupData]);
+
+    const handleClose = useCallback(() => {
+        resetModalState();
+        onClose();
+    }, [onClose, resetModalState]);
+
     const handleModalNextStep = useCallback(() => {
         if (requiresConfirmation) {
             setShowVerificationStep(true);
@@ -238,28 +248,20 @@ export default function TwoFactorSetupModal({
             return;
         }
 
-        clearSetupData();
-        onClose();
-    }, [requiresConfirmation, clearSetupData, onClose]);
+        handleClose();
+    }, [requiresConfirmation, handleClose]);
 
-    const resetModalState = useCallback(() => {
-        setShowVerificationStep(false);
+    const fetchSetupDataRef = useRef(fetchSetupData);
 
-        if (twoFactorEnabled) {
-            clearSetupData();
-        }
-    }, [twoFactorEnabled, clearSetupData]);
+    useEffect(() => {
+        fetchSetupDataRef.current = fetchSetupData;
+    }, [fetchSetupData]);
 
     useEffect(() => {
         if (isOpen && !qrCodeSvg) {
-            fetchSetupData();
+            fetchSetupDataRef.current();
         }
-    }, [isOpen, qrCodeSvg, fetchSetupData]);
-
-    const handleClose = useCallback(() => {
-        resetModalState();
-        onClose();
-    }, [onClose, resetModalState]);
+    }, [isOpen, qrCodeSvg]);
 
     return (
         <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
@@ -272,7 +274,10 @@ export default function TwoFactorSetupModal({
 
                 <div className="flex flex-col items-center space-y-5">
                     {showVerificationStep ? (
-                        <TwoFactorVerificationStep onClose={onClose} onBack={() => setShowVerificationStep(false)} />
+                        <TwoFactorVerificationStep
+                            onClose={handleClose}
+                            onBack={() => setShowVerificationStep(false)}
+                        />
                     ) : (
                         <TwoFactorSetupStep
                             qrCodeSvg={qrCodeSvg}

@@ -1,4 +1,3 @@
-import { TooltipProvider } from '../ui/tooltip';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import type { AppVariant } from '@/types';
 import { usePage } from '@inertiajs/react';
@@ -16,9 +15,5 @@ export function AppShell({ children, variant = 'sidebar' }: Readonly<Props>) {
         return <div className="flex min-h-screen w-full flex-col">{children}</div>;
     }
 
-    return (
-        <TooltipProvider>
-            <SidebarProvider defaultOpen={isOpen}>{children}</SidebarProvider>
-        </TooltipProvider>
-    );
+    return <SidebarProvider defaultOpen={isOpen}>{children}</SidebarProvider>;
 }
