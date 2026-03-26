@@ -1,22 +1,53 @@
 <?php
 
-namespace App\Models;
+// @formatter:off
+// phpcs:ignoreFile
+/**
+ * A helper file for your Eloquent Models
+ * Copy the phpDocs from this file to the correct Model,
+ * And remove them from this file, to prevent double declarations.
+ *
+ * @author Barry vd. Heuvel <barryvdh@gmail.com>
+ */
 
-use Carbon\CarbonImmutable;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Hidden;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\DatabaseNotification;
-use Illuminate\Notifications\DatabaseNotificationCollection;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Traits\HasRoles;
 
+namespace App\Models{
+/**
+ * @property int $id
+ * @property string $first_name
+ * @property string $last_name
+ * @property string|null $bio
+ * @property \Carbon\CarbonImmutable $birth_date
+ * @property string $phone_number
+ * @property string $address
+ * @property string|null $sex
+ * @property string|null $gender_identity
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property int $user_id
+ * @property-read int|null $age
+ * @property-read string $full_name
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Profile newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Profile newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Profile query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Profile whereAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Profile whereBio($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Profile whereBirthDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Profile whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Profile whereFirstName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Profile whereGenderIdentity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Profile whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Profile whereLastName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Profile wherePhoneNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Profile whereSex($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Profile whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Profile whereUserId($value)
+ */
+	class Profile extends \Eloquent {}
+}
+
+namespace App\Models{
 /**
  * @property int $id
  * @property string $name
@@ -29,15 +60,12 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $remember_token
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
- * @property-read MedicalFile|null $medicalFile
  * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read Collection<int, Permission> $permissions
  * @property-read int|null $permissions_count
- * @property-read Profile|null $profile
  * @property-read Collection<int, Role> $roles
  * @property-read int|null $roles_count
- *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User isSuperAdmin()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
@@ -58,44 +86,9 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutPermission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutRole($roles, ?string $guard = null)
- *
  * @mixin \Eloquent
+ * @property-read \App\Models\Profile|null $profile
  */
-#[Fillable(['name', 'email', 'password'])]
-#[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
-class User extends Authenticatable
-{
-    /** @use HasFactory<UserFactory> */
-    use HasFactory, HasRoles, Notifiable, TwoFactorAuthenticatable;
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'two_factor_confirmed_at' => 'datetime',
-        ];
-    }
-
-    public function scopeIsSuperAdmin($query)
-    {
-        return $query->whereHas('roles', function ($q) {
-            $q->where('name', 'super-admin');
-        });
-    }
-
-    public function profile(): HasOne
-    {
-        return $this->hasOne(Profile::class);
-    }
-
-    public function medicalFile(): HasOne
-    {
-        return $this->hasOne(MedicalFile::class);
-    }
+	class User extends \Eloquent {}
 }
+
