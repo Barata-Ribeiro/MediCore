@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\BloodType;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Attributes\Appends;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Touches;
@@ -10,7 +11,44 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Touches('user')]
+/**
+ * @property int $id
+ * @property BloodType|null $blood_type
+ * @property string|null $allergies
+ * @property string|null $diseases
+ * @property string|null $medications
+ * @property float|null $weight
+ * @property float|null $height
+ * @property string|null $emergency_contact_name
+ * @property string|null $emergency_contact_phone_number
+ * @property string|null $emergency_contact_relationship
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
+ * @property int $user_id
+ * @property-read float|null $bmi
+ * @property-read User $user
+ *
+ * @method static Builder<static>|MedicalFile newModelQuery()
+ * @method static Builder<static>|MedicalFile newQuery()
+ * @method static Builder<static>|MedicalFile query()
+ * @method static Builder<static>|MedicalFile whereAllergies($value)
+ * @method static Builder<static>|MedicalFile whereBloodType($value)
+ * @method static Builder<static>|MedicalFile whereCreatedAt($value)
+ * @method static Builder<static>|MedicalFile whereDiseases($value)
+ * @method static Builder<static>|MedicalFile whereEmergencyContactName($value)
+ * @method static Builder<static>|MedicalFile whereEmergencyContactPhoneNumber($value)
+ * @method static Builder<static>|MedicalFile whereEmergencyContactRelationship($value)
+ * @method static Builder<static>|MedicalFile whereHeight($value)
+ * @method static Builder<static>|MedicalFile whereId($value)
+ * @method static Builder<static>|MedicalFile whereMedications($value)
+ * @method static Builder<static>|MedicalFile whereUpdatedAt($value)
+ * @method static Builder<static>|MedicalFile whereUserId($value)
+ * @method static Builder<static>|MedicalFile whereWeight($value)
+ * @method static Builder<static>|MedicalFile withBloodType(\App\Enums\BloodType $bloodType)
+ *
+ * @mixin \Eloquent
+ */
+#[Touches(['user'])]
 #[Fillable(['blood_type', 'allergies', 'diseases', 'medications', 'weight', 'height', 'emergency_contact_name', 'emergency_contact_phone_number', 'emergency_contact_relationship'])]
 #[Appends(['bmi'])]
 class MedicalFile extends Model
