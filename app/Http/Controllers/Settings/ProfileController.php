@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Settings;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\ProfileDeleteRequest;
 use App\Http\Requests\Settings\ProfileUpdateRequest;
+use App\Models\Profile;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -22,6 +25,7 @@ class ProfileController extends Controller
         return Inertia::render('settings/profile', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => $request->session()->get('status'),
+            'profile' => $request->user()->profile(),
         ]);
     }
 
@@ -30,13 +34,33 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        $validated = $request->validated();
+
+        $user->fill($validated);
+
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        DB::transaction(function () use ($user, $validated) {
+            Profile::updateOrCreate(
+                ['user_id' => $user->id],
+                [
+                    'first_name' => $validated['first_name'],
+                    'last_name' => $validated['last_name'],
+                    'bio' => $validated['bio'] ?? null,
+                    'birth_date' => Carbon::parse($validated['birth_date'])->toDateString(),
+                    'phone_number' => $validated['phone_number'],
+                    'address' => $validated['address'],
+                    'sex' => $validated['sex'] ?? null,
+                    'gender_identity' => $validated['gender_identity'] ?? null,
+                ]
+            );
+
+            $user->save();
+        });
 
         return to_route('profile.edit');
     }
