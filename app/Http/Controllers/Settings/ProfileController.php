@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Settings;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\ProfileDeleteRequest;
 use App\Http\Requests\Settings\ProfileUpdateRequest;
-use App\Models\Profile;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
@@ -66,10 +65,7 @@ class ProfileController extends Controller
             }
 
             if (! empty($profileData)) {
-                Profile::updateOrCreate(
-                    ['user_id' => $user->id],
-                    $profileData
-                );
+                $user->profile()->updateOrCreate([], $profileData);
             }
 
             $user->save();
