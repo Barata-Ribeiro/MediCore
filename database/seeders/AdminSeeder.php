@@ -23,7 +23,12 @@ class AdminSeeder extends Seeder
                     'password' => config('app.admin_password'),
                     'email_verified_at' => now(),
                 ]
-            )->assignRole('super-admin');
+            )
+                ->assignRole('super-admin')
+                ->profile()->create([
+                    'first_name' => config('app.admin_first_name'),
+                    'last_name' => config('app.admin_last_name'),
+                ]);
 
             Log::info('Super Admin user seeded successfully!', ['email' => $admin->email]);
         } catch (Exception $e) {
