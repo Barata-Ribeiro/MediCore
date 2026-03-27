@@ -1,6 +1,6 @@
 import { edit } from '@/actions/App/Http/Controllers/Settings/ProfileController';
-import BaseAccountUpdateForm from '@/components/forms/base-account-update.form';
-import PersonalProfileManagerForm from '@/components/forms/personal-profile-manager.form';
+import BaseAccountUpdateForm from '@/components/forms/settings/base-account-update.form';
+import PersonalProfileManagerForm from '@/components/forms/settings/personal-profile-manager.form';
 import DeleteUser from '@/components/helpers/delete-user';
 import { Separator } from '@/components/ui/separator';
 import { Head } from '@inertiajs/react';
