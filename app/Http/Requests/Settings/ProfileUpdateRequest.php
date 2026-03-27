@@ -18,8 +18,8 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [...$this->profileRules($this->user()->id),
-            'first_name' => ['nullable', 'string', 'max:255'],
-            'last_name' => ['nullable', 'string', 'max:255'],
+            'first_name' => ['sometimes', 'required_with:last_name', 'string', 'max:255'],
+            'last_name' => ['sometimes', 'required_with:first_name', 'string', 'max:255'],
             'bio' => ['nullable', 'string'],
             'birth_date' => ['nullable', 'date'],
             'phone_number' => ['nullable', 'string', 'max:20'],

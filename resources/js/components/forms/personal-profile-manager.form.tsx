@@ -1,6 +1,7 @@
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import Heading from '@/components/helpers/heading';
 import InputError from '@/components/helpers/input-error';
+import RequiredIndicator from '@/components/helpers/required-indicator';
 import { Button } from '@/components/ui/button';
 import { Field, FieldDescription, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
@@ -34,7 +35,9 @@ export default function PersonalProfileManagerForm() {
                     <Fragment>
                         <FieldGroup className="grid grid-cols-2 gap-4">
                             <Field data-invalid={!!errors['first_name']}>
-                                <FieldLabel htmlFor="first_name">First name</FieldLabel>
+                                <FieldLabel htmlFor="first_name">
+                                    First name <RequiredIndicator />
+                                </FieldLabel>
                                 <Input
                                     type="text"
                                     id="first_name"
@@ -43,11 +46,15 @@ export default function PersonalProfileManagerForm() {
                                     defaultValue={profile?.first_name}
                                     aria-invalid={!!errors['first_name']}
                                     aria-describedby={errors['first_name'] ? 'first_name-error' : undefined}
+                                    required
+                                    aria-required
                                 />
                                 <InputError message={errors['first_name']} />
                             </Field>
                             <Field data-invalid={!!errors['last_name']}>
-                                <FieldLabel htmlFor="last_name">Last name</FieldLabel>
+                                <FieldLabel htmlFor="last_name">
+                                    Last name <RequiredIndicator />
+                                </FieldLabel>
                                 <Input
                                     type="text"
                                     id="last_name"
@@ -56,6 +63,8 @@ export default function PersonalProfileManagerForm() {
                                     defaultValue={profile?.last_name}
                                     aria-invalid={!!errors['last_name']}
                                     aria-describedby={errors['last_name'] ? 'last_name-error' : undefined}
+                                    required
+                                    aria-required
                                 />
                                 <InputError message={errors['last_name']} />
                             </Field>

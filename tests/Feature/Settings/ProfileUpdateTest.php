@@ -68,6 +68,26 @@ test('profile personal information can be updated', function () {
     expect($user->profile->gender_identity)->toBe('cisgender');
 });
 
+test('profile personal information can be partially updated', function () {
+    $user = User::factory()->create();
+
+    $response = $this
+        ->actingAs($user)
+        ->patch(route('profile.update'), [
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+        ]);
+
+    $response
+        ->assertSessionHasNoErrors()
+        ->assertRedirect(route('profile.edit'));
+
+    $user->refresh();
+
+    expect($user->profile->first_name)->toBe('John');
+    expect($user->profile->last_name)->toBe('Doe');
+});
+
 test('email verification status is unchanged when the email address is unchanged', function () {
     $user = User::factory()->create();
 
