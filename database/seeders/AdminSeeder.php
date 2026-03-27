@@ -25,6 +25,7 @@ class AdminSeeder extends Seeder
                 ]
             )
                 ->assignRole('super-admin')
+                ->medicalFile()->create()
                 ->profile()->create([
                     'first_name' => config('app.admin_first_name'),
                     'last_name' => config('app.admin_last_name'),
