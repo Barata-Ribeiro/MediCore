@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
+use function array_key_exists;
+
 class ProfileController extends Controller
 {
     /**
@@ -45,19 +47,30 @@ class ProfileController extends Controller
         }
 
         DB::transaction(function () use ($user, $validated) {
-            Profile::updateOrCreate(
-                ['user_id' => $user->id],
+            $profileData = array_filter(
                 [
-                    'first_name' => $validated['first_name'],
-                    'last_name' => $validated['last_name'],
+                    'first_name' => $validated['first_name'] ?? null,
+                    'last_name' => $validated['last_name'] ?? null,
                     'bio' => $validated['bio'] ?? null,
-                    'birth_date' => Carbon::parse($validated['birth_date'])->toDateString(),
-                    'phone_number' => $validated['phone_number'],
-                    'address' => $validated['address'],
+                    'birth_date' => $validated['birth_date'] ?? null,
+                    'phone_number' => $validated['phone_number'] ?? null,
+                    'address' => $validated['address'] ?? null,
                     'sex' => $validated['sex'] ?? null,
                     'gender_identity' => $validated['gender_identity'] ?? null,
-                ]
+                ],
+                fn ($value) => $value !== null
             );
+
+            if (array_key_exists('birth_date', $profileData)) {
+                $profileData['birth_date'] = Carbon::parse($profileData['birth_date'])->toDateString();
+            }
+
+            if (! empty($profileData)) {
+                Profile::updateOrCreate(
+                    ['user_id' => $user->id],
+                    $profileData
+                );
+            }
 
             $user->save();
         });
