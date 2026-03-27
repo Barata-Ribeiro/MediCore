@@ -21,9 +21,9 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('bio', 500)->nullable();
-            $table->date('birth_date');
-            $table->string('phone_number');
-            $table->string('address');
+            $table->date('birth_date')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('address')->nullable();
             $table->enum('sex', ['male', 'female'])->nullable();
             $table->string('gender_identity')->nullable();
             $table->timestamps();
