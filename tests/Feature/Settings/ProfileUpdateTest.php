@@ -36,6 +36,38 @@ test('profile information can be updated', function () {
     expect($user->email_verified_at)->toBeNull();
 });
 
+test('profile personal information can be updated', function () {
+    $user = User::factory()->create();
+
+    $response = $this
+        ->actingAs($user)
+        ->patch(route('profile.update'), [
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'bio' => 'This is my bio.',
+            'birth_date' => '1990-01-01',
+            'phone_number' => '1234567890',
+            'address' => '123 Main St',
+            'sex' => 'male',
+            'gender_identity' => 'cisgender',
+        ]);
+
+    $response
+        ->assertSessionHasNoErrors()
+        ->assertRedirect(route('profile.edit'));
+
+    $user->refresh();
+
+    expect($user->profile->first_name)->toBe('John');
+    expect($user->profile->last_name)->toBe('Doe');
+    expect($user->profile->bio)->toBe('This is my bio.');
+    expect($user->profile->birth_date->toDateString())->toBe('1990-01-01');
+    expect($user->profile->phone_number)->toBe('1234567890');
+    expect($user->profile->address)->toBe('123 Main St');
+    expect($user->profile->sex)->toBe('male');
+    expect($user->profile->gender_identity)->toBe('cisgender');
+});
+
 test('email verification status is unchanged when the email address is unchanged', function () {
     $user = User::factory()->create();
 
