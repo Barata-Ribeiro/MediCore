@@ -5,12 +5,17 @@ namespace App\Http\Controllers\Settings;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\ProfileDeleteRequest;
 use App\Http\Requests\Settings\ProfileUpdateRequest;
+use App\Models\Profile;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
+
+use function array_key_exists;
 
 class ProfileController extends Controller
 {
@@ -22,6 +27,7 @@ class ProfileController extends Controller
         return Inertia::render('settings/profile', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => $request->session()->get('status'),
+            'profile' => $request->user()->profile(),
         ]);
     }
 
@@ -30,13 +36,44 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        $validated = $request->validated();
+
+        $user->fill($validated);
+
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        DB::transaction(function () use ($user, $validated) {
+            $profileData = array_filter(
+                [
+                    'first_name' => $validated['first_name'] ?? null,
+                    'last_name' => $validated['last_name'] ?? null,
+                    'bio' => $validated['bio'] ?? null,
+                    'birth_date' => $validated['birth_date'] ?? null,
+                    'phone_number' => $validated['phone_number'] ?? null,
+                    'address' => $validated['address'] ?? null,
+                    'sex' => $validated['sex'] ?? null,
+                    'gender_identity' => $validated['gender_identity'] ?? null,
+                ],
+                fn ($value) => $value !== null
+            );
+
+            if (array_key_exists('birth_date', $profileData)) {
+                $profileData['birth_date'] = Carbon::parse($profileData['birth_date'])->toDateString();
+            }
+
+            if (! empty($profileData)) {
+                Profile::updateOrCreate(
+                    ['user_id' => $user->id],
+                    $profileData
+                );
+            }
+
+            $user->save();
+        });
 
         return to_route('profile.edit');
     }
