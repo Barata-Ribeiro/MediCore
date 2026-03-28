@@ -32,10 +32,10 @@ const showFlashToast = (flash: FlashPayload) => {
                 toast.warning('Warning!', { description: String(message) });
                 break;
             case 'info':
-                toast('Info!', { description: String(message) });
+                toast.info('Info!', { description: String(message) });
                 break;
             default:
-                toast('Info!', { description: String(message) });
+                toast(String(message));
                 break;
         }
     }
