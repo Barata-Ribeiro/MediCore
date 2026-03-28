@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\ProfileDeleteRequest;
 use App\Http\Requests\Settings\ProfileUpdateRequest;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
+use Log;
 
 use function array_key_exists;
 
@@ -39,39 +41,48 @@ class ProfileController extends Controller
 
         $validated = $request->validated();
 
-        $user->fill($validated);
+        try {
+            $user->fill($validated);
 
-        if ($user->isDirty('email')) {
-            $user->email_verified_at = null;
+            if ($user->isDirty('email')) {
+                $user->email_verified_at = null;
+            }
+
+            DB::transaction(function () use ($user, $validated) {
+                $profileData = array_filter(
+                    [
+                        'first_name' => $validated['first_name'] ?? null,
+                        'last_name' => $validated['last_name'] ?? null,
+                        'bio' => $validated['bio'] ?? null,
+                        'birth_date' => $validated['birth_date'] ?? null,
+                        'phone_number' => $validated['phone_number'] ?? null,
+                        'address' => $validated['address'] ?? null,
+                        'sex' => $validated['sex'] ?? null,
+                        'gender_identity' => $validated['gender_identity'] ?? null,
+                    ],
+                    fn ($value) => $value !== null
+                );
+
+                if (array_key_exists('birth_date', $profileData)) {
+                    $profileData['birth_date'] = Carbon::parse($profileData['birth_date'])->toDateString();
+                }
+
+                if (! empty($profileData)) {
+                    $user->profile()->updateOrCreate([], $profileData);
+                }
+
+                $user->save();
+            });
+
+            Inertia::flash('success', 'Profile updated successfully.');
+
+            return to_route('profile.edit');
+        } catch (Exception $e) {
+            Inertia::flash('error', 'An error occurred while updating the profile.');
+            Log::error('Failed to update profile', ['user_id' => $user->id, 'error' => $e->getMessage()]);
+
+            return back()->withInput();
         }
-
-        DB::transaction(function () use ($user, $validated) {
-            $profileData = array_filter(
-                [
-                    'first_name' => $validated['first_name'] ?? null,
-                    'last_name' => $validated['last_name'] ?? null,
-                    'bio' => $validated['bio'] ?? null,
-                    'birth_date' => $validated['birth_date'] ?? null,
-                    'phone_number' => $validated['phone_number'] ?? null,
-                    'address' => $validated['address'] ?? null,
-                    'sex' => $validated['sex'] ?? null,
-                    'gender_identity' => $validated['gender_identity'] ?? null,
-                ],
-                fn ($value) => $value !== null
-            );
-
-            if (array_key_exists('birth_date', $profileData)) {
-                $profileData['birth_date'] = Carbon::parse($profileData['birth_date'])->toDateString();
-            }
-
-            if (! empty($profileData)) {
-                $user->profile()->updateOrCreate([], $profileData);
-            }
-
-            $user->save();
-        });
-
-        return to_route('profile.edit');
     }
 
     /**
@@ -81,13 +92,22 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
-        Auth::logout();
+        try {
+            Auth::logout();
 
-        $user->delete();
+            $user->delete();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
 
-        return redirect('/');
+            Inertia::flash('success', 'Account deleted successfully.');
+
+            return redirect('/');
+        } catch (Exception $e) {
+            Inertia::flash('error', 'An error occurred while deleting the account.');
+            Log::error('Failed to delete account', ['user_id' => $user->id, 'error' => $e->getMessage()]);
+
+            return back()->withInput();
+        }
     }
 }
