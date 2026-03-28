@@ -3,13 +3,16 @@
 namespace App\Models;
 
 use App\Enums\BloodType;
+use App\Models\Exams\LipidProfile;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Attributes\Appends;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Touches;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -26,6 +29,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property CarbonImmutable|null $updated_at
  * @property int $user_id
  * @property-read float|null $bmi
+ * @property-read Collection<int, LipidProfile> $lipidProfile
+ * @property-read int|null $lipid_profile_count
  * @property-read User $user
  *
  * @method static Builder<static>|MedicalFile newModelQuery()
@@ -90,5 +95,12 @@ class MedicalFile extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    // Exams
+
+    public function lipidProfile(): HasMany
+    {
+        return $this->hasMany(LipidProfile::class);
     }
 }
