@@ -32,6 +32,6 @@ class MedicalFileController extends Controller
 
         $user->medicalFile()->updateOrCreate([], $validated);
 
-        return to_route('profile.edit');
+        return to_route('medical-file.edit');
     }
 }
