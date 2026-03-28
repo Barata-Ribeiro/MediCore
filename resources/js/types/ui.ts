@@ -14,3 +14,11 @@ export type AuthLayoutProps = {
     title?: string;
     description?: string;
 };
+
+export type FlashPayload = {
+    success?: string | null;
+    error?: string | null;
+    warning?: string | null;
+    info?: string | null;
+    [key: string]: string | null | undefined;
+};
