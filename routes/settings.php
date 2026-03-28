@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Settings\MedicalFileController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\SecurityController;
 use Illuminate\Support\Facades\Route;
@@ -9,6 +10,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('settings/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('settings/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+    Route::get('settings/medical-file', [MedicalFileController::class, 'edit'])->name('medical-file.edit');
+    Route::patch('settings/medical-file', [MedicalFileController::class, 'update'])->name('medical-file.update');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
