@@ -31,11 +31,12 @@ export interface MedicalFile {
     user_id: number;
     blood_type: BloodType | null;
     allergies: string | null;
+    diseases: string | null;
     medications: string | null;
     weight: number | null;
     height: number | null;
     emergency_contact_name: string | null;
-    emergency_contact_phone: string | null;
+    emergency_contact_phone_number: string | null;
     emergency_contact_relationship: string | null;
     created_at: string;
     updated_at: string;
