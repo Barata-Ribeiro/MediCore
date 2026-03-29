@@ -3,7 +3,7 @@ import { columns } from '@/pages/exams/lipid-profile/lipid-profile-columns';
 import { index } from '@/routes/lipid-profile';
 import type { LipidProfile, LipidProfileChartData } from '@/types/application/exams/lipid-profile';
 import type { PaginationMeta } from '@/types/application/metadata';
-import { Head, usePage } from '@inertiajs/react';
+import { Head, setLayoutProps, usePage } from '@inertiajs/react';
 import { Fragment } from 'react/jsx-runtime';
 
 type Props = {
@@ -12,6 +12,11 @@ type Props = {
 };
 
 export default function LipidProfile({ lipidProfile, chartData }: Readonly<Props>) {
+    setLayoutProps({
+        title: 'Lipid profile',
+        description: 'View and analyze lipid profile results for patients',
+    });
+
     const { url } = usePage();
     const { data, ...pagination } = lipidProfile;
 
@@ -20,9 +25,7 @@ export default function LipidProfile({ lipidProfile, chartData }: Readonly<Props
             <Head title="Lipid Profile" />
             <h1 className="sr-only">Lipid Profile</h1>
 
-            <div className="px-4 py-6">
-                <DataTable columns={columns} data={data} pagination={pagination} />
-            </div>
+            <DataTable columns={columns} data={data} pagination={pagination} />
         </Fragment>
     );
 }
