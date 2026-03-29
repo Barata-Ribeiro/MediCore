@@ -15,9 +15,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $first_name
  * @property string $last_name
  * @property string|null $bio
- * @property CarbonImmutable $birth_date
- * @property string $phone_number
- * @property string $address
+ * @property CarbonImmutable|null $birth_date
+ * @property string|null $phone_number
+ * @property string|null $address
  * @property string|null $sex
  * @property string|null $gender_identity
  * @property CarbonImmutable|null $created_at
