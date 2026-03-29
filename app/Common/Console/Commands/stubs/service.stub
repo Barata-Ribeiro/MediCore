@@ -1,0 +1,10 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ interfaceFqn }};
+
+class {{ class }} implements {{ class }}Interface
+{
+
+}
