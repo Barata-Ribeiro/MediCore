@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Interfaces\Exams\LipidProfileServiceInterface;
+use App\Services\Exams\LipidProfileService;
 use Carbon\CarbonImmutable;
 use Gate;
 use Illuminate\Support\Facades\Date;
@@ -18,6 +20,11 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         //
+
+        $this->app->bind(
+            LipidProfileServiceInterface::class,
+            LipidProfileService::class
+        );
     }
 
     /**
