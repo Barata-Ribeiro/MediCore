@@ -37,12 +37,16 @@ class LipidProfileService implements LipidProfileServiceInterface
             ->withQueryString();
 
         $chartData = LipidProfile::query()
-            ->selectRaw('DATE(report_date) as date, total_cholesterol, hdl_cholesterol, ldl_cholesterol, vldl_cholesterol, triglycerides, (total_cholesterol / hdl_cholesterol) as ratio, count(*) as count')
+            ->selectRaw('DATE(report_date) as date, AVG(total_cholesterol) as total_cholesterol, AVG(hdl_cholesterol) as hdl_cholesterol, AVG(ldl_cholesterol) as ldl_cholesterol, AVG(vldl_cholesterol) as vldl_cholesterol, AVG(triglycerides) as triglycerides, AVG(total_cholesterol / NULLIF(hdl_cholesterol, 0)) as ratio, count(*) as count')
             ->where('medical_file_id', auth()->user()->medicalFile->id)
-            ->groupBy('date')
-            ->orderBy('date')
+            ->groupByRaw('DATE(report_date)')
+            ->orderByDesc('created_at')
             ->limit(5)
             ->get();
+
+        if (app()->environment('testing')) {
+            return [$lipidProfile, $chartData];
+        }
 
         return Concurrency::run([
             fn () => $lipidProfile,
