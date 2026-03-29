@@ -30,4 +30,4 @@ export interface Option {
     value: string;
 }
 
-export type FilterVariant = DataTableConfig['filterVariants'][number];
+export type FilterVariant = 'text' | 'number' | 'range' | 'date' | 'dateRange' | 'boolean' | 'select' | 'multiSelect';
