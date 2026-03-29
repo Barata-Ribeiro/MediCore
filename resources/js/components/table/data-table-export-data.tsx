@@ -1,0 +1,49 @@
+import { Button } from '@/components/ui/button';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import type { RouteDefinition } from '@/wayfinder';
+import { FileDownIcon, FileSpreadsheet, FileTextIcon } from 'lucide-react';
+
+interface DataTableExportDataProps {
+    csv?: RouteDefinition<'get'>;
+    pdf?: RouteDefinition<'get'>;
+}
+
+export default function DataTableExportData({ csv, pdf }: Readonly<DataTableExportDataProps>) {
+    return (
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button variant="outline" aria-label="Choose how to export data" title="Choose how to export data">
+                    <FileDownIcon aria-hidden />
+                    Export
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-37.5">
+                <DropdownMenuLabel>Exportables</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {csv && (
+                    <DropdownMenuItem className="w-full" disabled={!csv} asChild>
+                        <a href={csv.url} aria-label="Export as CSV" title="Export as CSV" rel="noopener noreferrer">
+                            <FileSpreadsheet aria-hidden />
+                            CSV
+                        </a>
+                    </DropdownMenuItem>
+                )}
+
+                {pdf && (
+                    <DropdownMenuItem className="w-full" disabled={!pdf} asChild>
+                        <a href={pdf.url} aria-label="Export as PDF" title="Export as PDF" rel="noopener noreferrer">
+                            <FileTextIcon aria-hidden /> PDF
+                        </a>
+                    </DropdownMenuItem>
+                )}
+            </DropdownMenuContent>
+        </DropdownMenu>
+    );
+}
