@@ -52,6 +52,25 @@ class LipidProfileController extends Controller
         }
     }
 
+    public function destroy(int $id)
+    {
+        $user = request()->user();
+
+        try {
+            $record = $user->medicalFile->lipidProfile()->findOrFail($id);
+            $record->delete();
+
+            Inertia::flash('success', 'Lipid profile record deleted successfully.');
+
+            return to_route('lipid-profile.index');
+        } catch (Exception $e) {
+            Inertia::flash('error', 'An error occurred while deleting the lipid profile record.');
+            Log::error('Error deleting lipid profile', ['user_id' => $user->id, 'record_id' => $id, 'error' => $e->getMessage()]);
+
+            return back();
+        }
+    }
+
     /**
      * Validate request query inputs, apply sort/filter defaults, and fetch
      * paginated lipid profile results plus chart data.
