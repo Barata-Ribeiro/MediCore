@@ -15,7 +15,7 @@ export const columns: ColumnDef<LipidProfile>[] = [
     {
         accessorKey: 'report_date',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Report Date" />,
-        cell: ({ row }) => format(row.original.report_date, 'PPpp'),
+        cell: ({ row }) => format(row.original.report_date, 'PPP'),
         meta: {
             label: 'Report Date',
             variant: 'dateRange',
@@ -26,26 +26,31 @@ export const columns: ColumnDef<LipidProfile>[] = [
     {
         accessorKey: 'Total Cholesterol',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Total Cholesterol" />,
+        cell: ({ row }) => `${row.original.total_cholesterol} mg/dL`,
         enableSorting: true,
     },
     {
         accessorKey: 'HDL Cholesterol',
         header: ({ column }) => <DataTableColumnHeader column={column} title="HDL Cholesterol" />,
+        cell: ({ row }) => `${row.original.hdl_cholesterol} mg/dL`,
         enableSorting: true,
     },
     {
         accessorKey: 'LDL Cholesterol',
         header: ({ column }) => <DataTableColumnHeader column={column} title="LDL Cholesterol" />,
+        cell: ({ row }) => `${row.original.ldl_cholesterol} mg/dL`,
         enableSorting: true,
     },
     {
         accessorKey: 'VLDL Cholesterol',
         header: ({ column }) => <DataTableColumnHeader column={column} title="VLDL Cholesterol" />,
+        cell: ({ row }) => `${row.original.vldl_cholesterol} mg/dL`,
         enableSorting: true,
     },
     {
         accessorKey: 'Triglycerides',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Triglycerides" />,
+        cell: ({ row }) => `${row.original.triglycerides} mg/dL`,
         enableSorting: true,
     },
     {

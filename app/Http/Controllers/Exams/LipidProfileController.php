@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Exams;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LipidProfileRequest;
 use App\Http\Requests\QueryRequest;
 use App\Services\Exams\LipidProfileService;
+use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
+use Log;
 
 use function in_array;
 
@@ -22,6 +25,31 @@ class LipidProfileController extends Controller
             'lipidProfile' => $lipidProfile,
             'chartData' => $chartData,
         ]);
+    }
+
+    public function create()
+    {
+        return Inertia::render('exams/lipid-profile/create');
+    }
+
+    public function store(LipidProfileRequest $request)
+    {
+        $user = $request->user();
+
+        $validated = $request->validated();
+
+        try {
+            $user->medicalFile->lipidProfile()->create($validated);
+
+            Inertia::flash('success', 'Lipid profile record created successfully.');
+
+            return to_route('lipid-profile.index');
+        } catch (Exception $e) {
+            Inertia::flash('error', 'An error occurred while creating the lipid profile record.');
+            Log::error('Error creating lipid profile', ['user_id' => $user->id, 'error' => $e->getMessage()]);
+
+            return back()->withInput();
+        }
     }
 
     /**
