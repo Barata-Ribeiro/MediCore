@@ -24,6 +24,11 @@ class LipidProfileController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        return Inertia::render('exams/lipid-profile/create');
+    }
+
     /**
      * Validate request query inputs, apply sort/filter defaults, and fetch
      * paginated lipid profile results plus chart data.
