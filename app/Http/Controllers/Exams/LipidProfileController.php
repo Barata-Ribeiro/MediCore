@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Exams;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LipidProfileRequest;
 use App\Http\Requests\QueryRequest;
+use App\Models\Exams\LipidProfile;
 use App\Services\Exams\LipidProfileService;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -47,6 +48,33 @@ class LipidProfileController extends Controller
         } catch (Exception $e) {
             Inertia::flash('error', 'An error occurred while creating the lipid profile record.');
             Log::error('Error creating lipid profile', ['user_id' => $user->id, 'error' => $e->getMessage()]);
+
+            return back()->withInput();
+        }
+    }
+
+    public function edit(LipidProfile $lipidProfile)
+    {
+        return Inertia::render('exams/lipid-profile/edit', [
+            'lipidProfile' => $lipidProfile,
+        ]);
+    }
+
+    public function update(LipidProfileRequest $request, LipidProfile $lipidProfile)
+    {
+        $user = $request->user();
+
+        $validated = $request->validated();
+
+        try {
+            $lipidProfile->update($validated);
+
+            Inertia::flash('success', 'Lipid profile record updated successfully.');
+
+            return to_route('lipid-profile.index');
+        } catch (Exception $e) {
+            Inertia::flash('error', 'An error occurred while updating the lipid profile record.');
+            Log::error('Error updating lipid profile', ['user_id' => $user->id, 'record_id' => $lipidProfile->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
         }
