@@ -3,6 +3,7 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { initializeTheme } from '@/hooks/use-appearance';
 import AppLayout from '@/layouts/app-layout';
 import AuthLayout from '@/layouts/auth-layout';
+import ExamsLayout from '@/layouts/exams/layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import { createInertiaApp } from '@inertiajs/react';
 
@@ -18,6 +19,8 @@ createInertiaApp({
                 return AuthLayout;
             case name.startsWith('settings/'):
                 return [AppLayout, SettingsLayout];
+            case name.startsWith('exams/'):
+                return [AppLayout, ExamsLayout];
             default:
                 return AppLayout;
         }

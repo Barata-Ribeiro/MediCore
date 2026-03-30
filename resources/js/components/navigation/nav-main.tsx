@@ -22,7 +22,7 @@ export function NavMain({ items = [] }: Readonly<{ items: NavItem[] }>) {
             <SidebarGroupLabel>Platform</SidebarGroupLabel>
             <SidebarMenu>
                 {items.map((item) => {
-                    if (!item.items) {
+                    if (!item.items || item.href !== '#') {
                         return (
                             <SidebarMenuItem key={item.title}>
                                 <SidebarMenuButton

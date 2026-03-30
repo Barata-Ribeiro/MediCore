@@ -12,10 +12,11 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
+import { index as lipidProfileIndex } from '@/routes/lipid-profile';
 import { edit } from '@/routes/medical-file';
 import type { NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BriefcaseBusinessIcon, FileTextIcon, FolderGit2, LayoutGrid } from 'lucide-react';
+import { BriefcaseBusinessIcon, FileTextIcon, FolderGit2, LayoutGrid, MicroscopeIcon } from 'lucide-react';
 
 const mainNavItems: NavItem[] = [
     {
@@ -27,6 +28,17 @@ const mainNavItems: NavItem[] = [
         title: 'Medical File',
         href: edit(),
         icon: FileTextIcon,
+    },
+    {
+        title: 'Exams',
+        href: '#',
+        icon: MicroscopeIcon,
+        items: [
+            {
+                title: 'Lipid Profile',
+                href: lipidProfileIndex(),
+            },
+        ],
     },
 ];
 
