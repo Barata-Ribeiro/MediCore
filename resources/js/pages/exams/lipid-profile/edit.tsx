@@ -1,21 +1,36 @@
 import LipidProfileForm from '@/components/forms/exams/lipid-profile.form';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { create, index } from '@/routes/lipid-profile';
+import { edit, index } from '@/routes/lipid-profile';
+import type { LipidProfile } from '@/types/application/exams/lipid-profile';
 import { Head, Link, setLayoutProps } from '@inertiajs/react';
 import { ArrowLeftIcon } from 'lucide-react';
 import { Fragment } from 'react/jsx-runtime';
 
-export default function Create() {
+type Props = {
+    lipidProfile: LipidProfile;
+};
+
+export default function Edit({ lipidProfile }: Readonly<Props>) {
     setLayoutProps({
-        title: 'Create Lipid Profile',
-        description: 'Register a new lipid profile result for yourself',
+        title: 'Edit Lipid Profile',
+        description: 'Update your lipid profile result to keep your health records accurate and up-to-date',
+        breadcrumbs: [
+            {
+                title: 'Lipid Profiles',
+                href: index(),
+            },
+            {
+                title: 'Edit',
+                href: edit(lipidProfile.id),
+            },
+        ],
     });
 
     return (
         <Fragment>
-            <Head title="Create Lipid Profile" />
-            <h1 className="sr-only">Create Lipid Profile</h1>
+            <Head title="Edit Lipid Profile" />
+            <h1 className="sr-only">Edit Lipid Profile</h1>
 
             <Card className="mx-auto w-full flex-col space-y-4">
                 <CardHeader>
@@ -26,29 +41,16 @@ export default function Create() {
                     </Button>
                 </CardHeader>
                 <CardContent>
-                    <LipidProfileForm />
+                    <LipidProfileForm lipidProfile={lipidProfile} />
                 </CardContent>
                 <CardFooter>
                     <p className="text-sm text-muted-foreground">
-                        By creating a lipid profile, you can track your cholesterol levels over time and and gain
-                        insights into your cardiovascular health. Regular monitoring of your lipid profile can help you
-                        make informed decisions about your lifestyle and healthcare.
+                        By editing a lipid profile, you can track your cholesterol levels over time and gain insights
+                        into your cardiovascular health. Regular monitoring of your lipid profile can help you make
+                        informed decisions about your lifestyle and healthcare.
                     </p>
                 </CardFooter>
             </Card>
         </Fragment>
     );
 }
-
-Create.layout = {
-    breadcrumbs: [
-        {
-            title: 'Lipid Profiles',
-            href: index(),
-        },
-        {
-            title: 'Create',
-            href: create(),
-        },
-    ],
-};
