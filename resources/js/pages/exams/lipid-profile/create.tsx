@@ -1,7 +1,9 @@
 import LipidProfileForm from '@/components/forms/exams/lipid-profile.form';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { create, index } from '@/routes/lipid-profile';
-import { Head, setLayoutProps } from '@inertiajs/react';
+import { Head, Link, setLayoutProps } from '@inertiajs/react';
+import { ArrowLeftIcon } from 'lucide-react';
 import { Fragment } from 'react/jsx-runtime';
 
 export default function Create() {
@@ -16,6 +18,13 @@ export default function Create() {
             <h1 className="sr-only">Create Lipid Profile</h1>
 
             <Card className="mx-auto w-full flex-col space-y-4">
+                <CardHeader>
+                    <Button variant="outline" size="sm" className="w-fit" title="Go Back" aria-label="Go Back" asChild>
+                        <Link href={index()} as="button" prefetch="hover">
+                            <ArrowLeftIcon aria-hidden size={14} /> Back
+                        </Link>
+                    </Button>
+                </CardHeader>
                 <CardContent>
                     <LipidProfileForm />
                 </CardContent>
