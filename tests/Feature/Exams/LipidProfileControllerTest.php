@@ -76,3 +76,49 @@ describe('tests for the "index" method of LipidProfileController', function () {
         $response->assertRedirect(route('login'));
     });
 });
+
+describe('tests for the "create" method of LipidProfileController', function () {
+    $componentName = 'exams/lipid-profile/create';
+
+    it('should return the create view for authenticated users', function () use ($componentName) {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get(route('lipid-profile.create'));
+
+        $response->assertOk();
+        $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName));
+    });
+
+    it('should redirect guests to login if user is not authenticated', function () {
+        $response = $this->actingAsGuest()->get(route('lipid-profile.create'));
+
+        $response->assertRedirect(route('login'));
+    });
+});
+
+describe('tests for the "store" method of LipidProfileController', function () {
+    it('should store a new lipid profile record and redirect to index', function () {
+        $user = User::factory()->create();
+        $user->medicalFile()->create();
+
+        $data = [
+            'total_cholesterol' => 100,
+            'hdl_cholesterol' => 50,
+            'ldl_cholesterol' => 20,
+            'vldl_cholesterol' => 10,
+            'triglycerides' => 80,
+            'report_date' => now()->toDateString(),
+        ];
+
+        $response = $this->actingAs($user)->post(route('lipid-profile.store'), $data);
+
+        $response->assertRedirect(route('lipid-profile.index'));
+        $this->assertDatabaseHas('lipid_profiles', [...$data, 'medical_file_id' => $user->medicalFile->id]);
+    });
+
+    it('should redirect guests to login if user is not authenticated', function () {
+        $response = $this->actingAsGuest()->post(route('lipid-profile.store'), []);
+
+        $response->assertRedirect(route('login'));
+    });
+});
