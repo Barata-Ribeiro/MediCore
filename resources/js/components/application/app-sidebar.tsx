@@ -12,6 +12,7 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
+import { index as cbcIndex } from '@/routes/complete-blood-count';
 import { index as lipidProfileIndex } from '@/routes/lipid-profile';
 import { edit } from '@/routes/medical-file';
 import type { NavItem } from '@/types';
@@ -37,6 +38,10 @@ const mainNavItems: NavItem[] = [
             {
                 title: 'Lipid Profile',
                 href: lipidProfileIndex(),
+            },
+            {
+                title: 'Complete Blood Count',
+                href: cbcIndex(),
             },
         ],
     },
