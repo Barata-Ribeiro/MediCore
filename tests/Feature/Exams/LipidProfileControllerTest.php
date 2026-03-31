@@ -197,3 +197,30 @@ describe('tests for the "update" method of LipidProfileController', function () 
         $response->assertRedirect(route('login'));
     });
 });
+
+describe('tests for the "destroy" method of LipidProfileController', function () {
+    it('should delete the lipid profile record and redirect to index', function () {
+        $user = User::factory()->create();
+        $medicalFile = $user->medicalFile()->create();
+
+        $lipidProfile = $medicalFile->lipidProfile()->create([
+            'total_cholesterol' => 100,
+            'hdl_cholesterol' => 50,
+            'ldl_cholesterol' => 20,
+            'vldl_cholesterol' => 10,
+            'triglycerides' => 80,
+            'report_date' => now()->toDateString(),
+        ]);
+
+        $response = $this->actingAs($user)->delete(route('lipid-profile.destroy', $lipidProfile));
+
+        $response->assertRedirect(route('lipid-profile.index'));
+        $this->assertDatabaseMissing('lipid_profiles', ['id' => $lipidProfile->id]);
+    });
+
+    it('should redirect guests to login if user is not authenticated', function () {
+        $response = $this->actingAsGuest()->delete(route('lipid-profile.destroy', 1));
+
+        $response->assertRedirect(route('login'));
+    });
+});
