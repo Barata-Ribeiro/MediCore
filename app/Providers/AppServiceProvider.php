@@ -25,6 +25,11 @@ class AppServiceProvider extends ServiceProvider
             LipidProfileServiceInterface::class,
             LipidProfileService::class
         );
+
+		$this->app->bind(
+			\App\Interfaces\Exams\CompleteBloodCountServiceInterface::class,
+			\App\Services\Exams\CompleteBloodCountService::class
+		);
     }
 
     /**
