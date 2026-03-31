@@ -54,7 +54,7 @@ const LipidProfileForm = memo(({ lipidProfile }: Readonly<Props>) => {
                         <InputError message={errors['total_cholesterol']} />
                     </Field>
 
-                    <FieldGroup className="grid grid-cols-2 gap-4">
+                    <FieldGroup className="grid gap-4 sm:grid-cols-2">
                         <Field data-invalid={!!errors['hdl_cholesterol']}>
                             <FieldLabel htmlFor="hdl_cholesterol">
                                 HDL Cholesterol <RequiredIndicator />
@@ -104,7 +104,7 @@ const LipidProfileForm = memo(({ lipidProfile }: Readonly<Props>) => {
                         </Field>
                     </FieldGroup>
 
-                    <FieldGroup className="grid grid-cols-2 gap-4">
+                    <FieldGroup className="grid gap-4 sm:grid-cols-2">
                         <Field data-invalid={!!errors['vldl_cholesterol']}>
                             <FieldLabel htmlFor="vldl_cholesterol">
                                 VLDL Cholesterol <RequiredIndicator />

@@ -95,7 +95,7 @@ export default function MedicalFileManagerForm() {
                             <InputError message={errors['medications']} />
                         </Field>
 
-                        <FieldGroup className="grid grid-cols-2 gap-4">
+                        <FieldGroup className="grid gap-4 sm:grid-cols-2">
                             <Field data-invalid={!!errors['height']}>
                                 <FieldLabel htmlFor="input-height">Height</FieldLabel>
                                 <InputGroup>
@@ -141,7 +141,7 @@ export default function MedicalFileManagerForm() {
                                 emergency.
                             </FieldDescription>
                             <FieldGroup>
-                                <FieldGroup className="grid grid-cols-2 gap-4">
+                                <FieldGroup className="grid gap-4 sm:grid-cols-2">
                                     <Field data-invalid={!!errors['emergency_contact_name']}>
                                         <FieldLabel htmlFor="input-emergency_contact_name">Name</FieldLabel>
                                         <Input
