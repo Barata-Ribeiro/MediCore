@@ -23,7 +23,12 @@ class CompleteBloodCountController extends Controller
         ]);
     }
 
-    public function completeBloodCountPageAndChartData(QueryRequest $request): array
+    public function create()
+    {
+        return Inertia::render('exams/complete-blood-count/create');
+    }
+
+    private function completeBloodCountPageAndChartData(QueryRequest $request): array
     {
         $validated = $request->validated();
 
