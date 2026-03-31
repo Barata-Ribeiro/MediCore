@@ -10,6 +10,10 @@ export default function Create() {
     setLayoutProps({
         title: 'Create Lipid Profile',
         description: 'Register a new lipid profile result for yourself',
+        breadcrumbs: [
+            { title: 'Lipid Profiles', href: index() },
+            { title: 'Create', href: create() },
+        ],
     });
 
     return (
@@ -39,16 +43,3 @@ export default function Create() {
         </Fragment>
     );
 }
-
-Create.layout = {
-    breadcrumbs: [
-        {
-            title: 'Lipid Profiles',
-            href: index(),
-        },
-        {
-            title: 'Create',
-            href: create(),
-        },
-    ],
-};
