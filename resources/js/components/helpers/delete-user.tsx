@@ -1,6 +1,6 @@
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import { Field, FieldLabel } from '@/components//ui/field';
-import Heading from '@/components/helpers/heading';
+import Heading from '@/components/common/heading';
 import InputError from '@/components/helpers/input-error';
 import PasswordInput from '@/components/helpers/password-input';
 import { Button } from '@/components/ui/button';

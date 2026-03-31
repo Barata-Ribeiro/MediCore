@@ -1,5 +1,5 @@
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
-import Heading from '@/components/helpers/heading';
+import Heading from '@/components/common/heading';
 import InputError from '@/components/helpers/input-error';
 import RequiredIndicator from '@/components/helpers/required-indicator';
 import { Button } from '@/components/ui/button';

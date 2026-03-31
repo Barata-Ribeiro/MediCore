@@ -1,5 +1,5 @@
 import MedicalFileController from '@/actions/App/Http/Controllers/Settings/MedicalFileController';
-import Heading from '@/components/helpers/heading';
+import Heading from '@/components/common/heading';
 import InputError from '@/components/helpers/input-error';
 import { Button } from '@/components/ui/button';
 import { Field, FieldDescription, FieldGroup, FieldLabel, FieldLegend, FieldSet } from '@/components/ui/field';
