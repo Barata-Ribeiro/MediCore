@@ -1,3 +1,4 @@
+import CbcCountForm from '@/components/forms/exams/cbc-count.form';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { create, index } from '@/routes/complete-blood-count';
@@ -28,7 +29,9 @@ export default function CreateCompleteBloodCount() {
                         </Link>
                     </Button>
                 </CardHeader>
-                <CardContent></CardContent>
+                <CardContent>
+                    <CbcCountForm />
+                </CardContent>
                 <CardFooter>
                     <p className="text-sm text-muted-foreground">
                         By creating a complete blood count, you can track your blood health over time and gain insights
