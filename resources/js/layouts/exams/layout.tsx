@@ -24,7 +24,7 @@ export default function ExamsLayout({ title, description, children }: Readonly<P
 
     return (
         <Fragment>
-            <div className="relative h-full max-h-96 bg-linear-to-r from-chart-5 to-chart-1" />
+            <div className="relative h-96 bg-linear-to-r from-chart-5 to-chart-1" />
 
             <header className="relative z-10 mx-auto -mt-15 w-full max-w-7xl px-4 lg:px-0">
                 <div
