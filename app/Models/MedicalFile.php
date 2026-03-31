@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\BloodType;
+use App\Models\Exams\CompleteBloodCount;
 use App\Models\Exams\LipidProfile;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Attributes\Appends;
@@ -28,6 +29,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
  * @property int $user_id
+ * @property-read Collection<int, CompleteBloodCount> $completeBloodCount
+ * @property-read int|null $complete_blood_count_count
  * @property-read float|null $bmi
  * @property-read Collection<int, LipidProfile> $lipidProfile
  * @property-read int|null $lipid_profile_count
@@ -102,5 +105,10 @@ class MedicalFile extends Model
     public function lipidProfile(): HasMany
     {
         return $this->hasMany(LipidProfile::class);
+    }
+
+    public function completeBloodCount(): HasMany
+    {
+        return $this->hasMany(CompleteBloodCount::class);
     }
 }
