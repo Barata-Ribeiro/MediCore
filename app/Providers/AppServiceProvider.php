@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Interfaces\Exams\CompleteBloodCountServiceInterface;
 use App\Interfaces\Exams\LipidProfileServiceInterface;
+use App\Services\Exams\CompleteBloodCountService;
 use App\Services\Exams\LipidProfileService;
 use Carbon\CarbonImmutable;
 use Gate;
@@ -26,10 +28,10 @@ class AppServiceProvider extends ServiceProvider
             LipidProfileService::class
         );
 
-		$this->app->bind(
-			\App\Interfaces\Exams\CompleteBloodCountServiceInterface::class,
-			\App\Services\Exams\CompleteBloodCountService::class
-		);
+        $this->app->bind(
+            CompleteBloodCountServiceInterface::class,
+            CompleteBloodCountService::class
+        );
     }
 
     /**
