@@ -39,37 +39,37 @@ export const columns: ColumnDef<LipidProfile>[] = [
         enableSorting: true,
     },
     {
-        accessorKey: 'Total Cholesterol',
+        accessorKey: 'total_cholesterol',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Total Cholesterol" />,
         cell: ({ row }) => `${row.original.total_cholesterol} mg/dL`,
         enableSorting: true,
     },
     {
-        accessorKey: 'HDL Cholesterol',
+        accessorKey: 'hdl_cholesterol',
         header: ({ column }) => <DataTableColumnHeader column={column} title="HDL Cholesterol" />,
         cell: ({ row }) => `${row.original.hdl_cholesterol} mg/dL`,
         enableSorting: true,
     },
     {
-        accessorKey: 'LDL Cholesterol',
+        accessorKey: 'ldl_cholesterol',
         header: ({ column }) => <DataTableColumnHeader column={column} title="LDL Cholesterol" />,
         cell: ({ row }) => `${row.original.ldl_cholesterol} mg/dL`,
         enableSorting: true,
     },
     {
-        accessorKey: 'VLDL Cholesterol',
+        accessorKey: 'vldl_cholesterol',
         header: ({ column }) => <DataTableColumnHeader column={column} title="VLDL Cholesterol" />,
         cell: ({ row }) => `${row.original.vldl_cholesterol} mg/dL`,
         enableSorting: true,
     },
     {
-        accessorKey: 'Triglycerides',
+        accessorKey: 'triglycerides',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Triglycerides" />,
         cell: ({ row }) => `${row.original.triglycerides} mg/dL`,
         enableSorting: true,
     },
     {
-        accessorKey: 'Created At',
+        accessorKey: 'created_at',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Created At" />,
         cell: ({ row }) => format(row.original.created_at, 'PPpp'),
         meta: {
