@@ -13,8 +13,9 @@ type Props = {
 
 export default function LipidProfile({ lipidProfile, chartData }: Readonly<Props>) {
     setLayoutProps({
-        title: 'Lipid profile',
+        title: 'Lipid profiles',
         description: 'View and analyze lipid profile results for patients',
+        breadcrumbs: [{ title: 'Lipid Profiles', href: index() }],
     });
 
     const { url } = usePage();
@@ -31,12 +32,3 @@ export default function LipidProfile({ lipidProfile, chartData }: Readonly<Props
         </Fragment>
     );
 }
-
-LipidProfile.layout = {
-    breadcrumbs: [
-        {
-            title: 'Lipid Profiles',
-            href: index(),
-        },
-    ],
-};
