@@ -1,3 +1,4 @@
+import LipidProfileChart from '@/components/application/charts/lipid-profile.chart';
 import { DataTable } from '@/components/table/data-table';
 import { columns } from '@/pages/exams/lipid-profile/lipid-profile-columns';
 import { create, index } from '@/routes/lipid-profile';
@@ -21,14 +22,18 @@ export default function LipidProfile({ lipidProfile, chartData }: Readonly<Props
     const { url } = usePage();
     const { data, ...pagination } = lipidProfile;
 
-    console.log({ url, chartData });
+    console.log({ url, data, pagination, chartData });
 
     return (
         <Fragment>
             <Head title="Lipid Profile" />
             <h1 className="sr-only">Lipid Profile</h1>
 
-            <DataTable columns={columns} data={data} pagination={pagination} createRoute={create()} />
+            <div className="space-y-6">
+                <LipidProfileChart chartData={chartData} total={pagination.total} />
+
+                <DataTable columns={columns} data={data} pagination={pagination} createRoute={create()} />
+            </div>
         </Fragment>
     );
 }

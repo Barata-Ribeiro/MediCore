@@ -36,13 +36,24 @@ class LipidProfileService implements LipidProfileServiceInterface
             ->paginate($perPage)
             ->withQueryString();
 
-        $chartData = LipidProfile::query()
-            ->selectRaw('DATE(report_date) as date, AVG(total_cholesterol) as total_cholesterol, AVG(hdl_cholesterol) as hdl_cholesterol, AVG(ldl_cholesterol) as ldl_cholesterol, AVG(vldl_cholesterol) as vldl_cholesterol, AVG(triglycerides) as triglycerides, AVG(total_cholesterol / NULLIF(hdl_cholesterol, 0)) as ratio, count(*) as count')
+        $chartRows = LipidProfile::query()
+            ->selectRaw('DATE(report_date) as label, AVG(total_cholesterol) as total_cholesterol, AVG(hdl_cholesterol) as hdl_cholesterol, AVG(ldl_cholesterol) as ldl_cholesterol, AVG(vldl_cholesterol) as vldl_cholesterol, AVG(triglycerides) as triglycerides')
             ->where('medical_file_id', auth()->user()->medicalFile->id)
-            ->groupByRaw('DATE(report_date)')
-            ->orderByDesc('created_at')
+            ->groupBy('label')
+            ->orderBy('label')
             ->limit(5)
             ->get();
+
+        $chartData = $chartRows->map(fn ($row) => [
+            'x_axis_label' => $row->label,
+            'datasets' => [
+                'total_cholesterol' => ['label' => 'Total Cholesterol', 'data' => $row->total_cholesterol],
+                'hdl_cholesterol' => ['label' => 'HDL Cholesterol', 'data' => $row->hdl_cholesterol],
+                'ldl_cholesterol' => ['label' => 'LDL Cholesterol', 'data' => $row->ldl_cholesterol],
+                'vldl_cholesterol' => ['label' => 'VLDL Cholesterol', 'data' => $row->vldl_cholesterol],
+                'triglycerides' => ['label' => 'Triglycerides', 'data' => $row->triglycerides],
+            ],
+        ])->toArray();
 
         if (app()->environment('testing')) {
             return [$lipidProfile, $chartData];

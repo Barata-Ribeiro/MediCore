@@ -11,11 +11,7 @@ export interface LipidProfile {
     updated_at: string;
 }
 
-export interface LipidProfileChartData extends Omit<
-    LipidProfile,
-    'id' | 'medical_file_id' | 'report_date' | 'created_at' | 'updated_at'
-> {
-    date: string;
-    ratio: number;
-    count: number;
+export interface LipidProfileChartData {
+    x_axis_label: string;
+    datasets: Record<string, { label: string; data: number }>;
 }
