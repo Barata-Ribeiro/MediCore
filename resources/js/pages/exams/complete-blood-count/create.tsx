@@ -1,25 +1,25 @@
-import LipidProfileForm from '@/components/forms/exams/lipid-profile.form';
+import CbcCountForm from '@/components/forms/exams/cbc-count.form';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { create, index } from '@/routes/lipid-profile';
+import { create, index } from '@/routes/complete-blood-count';
 import { Head, Link, setLayoutProps } from '@inertiajs/react';
 import { ArrowLeftIcon } from 'lucide-react';
 import { Fragment } from 'react/jsx-runtime';
 
-export default function Create() {
+export default function CreateCompleteBloodCount() {
     setLayoutProps({
-        title: 'Create Lipid Profile',
-        description: 'Register a new lipid profile result for yourself',
+        title: 'Create Complete Blood Count',
+        description: 'Register a new complete blood count result for yourself',
         breadcrumbs: [
-            { title: 'Lipid Profiles', href: index() },
+            { title: 'Complete Blood Count', href: index() },
             { title: 'Create', href: create() },
         ],
     });
 
     return (
         <Fragment>
-            <Head title="Create Lipid Profile" />
-            <h1 className="sr-only">Create Lipid Profile</h1>
+            <Head title="Create Complete Blood Count" />
+            <h1 className="sr-only">Create Complete Blood Count</h1>
 
             <Card className="mx-auto w-full flex-col space-y-4">
                 <CardHeader>
@@ -30,13 +30,13 @@ export default function Create() {
                     </Button>
                 </CardHeader>
                 <CardContent>
-                    <LipidProfileForm />
+                    <CbcCountForm />
                 </CardContent>
                 <CardFooter>
                     <p className="text-sm text-muted-foreground">
-                        By creating a lipid profile, you can track your cholesterol levels over time and and gain
-                        insights into your cardiovascular health. Regular monitoring of your lipid profile can help you
-                        make informed decisions about your lifestyle and healthcare.
+                        By creating a complete blood count, you can track your blood health over time and gain insights
+                        into your overall well-being. Regular monitoring of your complete blood count can help you make
+                        informed decisions about your lifestyle and healthcare.
                     </p>
                 </CardFooter>
             </Card>

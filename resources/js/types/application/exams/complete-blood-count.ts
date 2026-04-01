@@ -19,7 +19,7 @@ export interface CompleteBloodCount {
     promyelocyte_count: number;
     atypical_cell_count: number;
     platelet_count: number;
-    report_date: number;
+    report_date: string;
     created_at: string;
     updated_at: string;
 }

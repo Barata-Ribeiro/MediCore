@@ -1,5 +1,5 @@
 import SecurityController from '@/actions/App/Http/Controllers/Settings/SecurityController';
-import Heading from '@/components/helpers/heading';
+import Heading from '@/components/common/heading';
 import InputError from '@/components/helpers/input-error';
 import PasswordInput from '@/components/helpers/password-input';
 import TwoFactorRecoveryCodes from '@/components/helpers/two-factor-recovery-codes';

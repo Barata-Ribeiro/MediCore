@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Exams;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LipidProfileRequest;
+use App\Http\Requests\Exams\LipidProfileRequest;
 use App\Http\Requests\QueryRequest;
 use App\Models\Exams\LipidProfile;
 use App\Services\Exams\LipidProfileService;

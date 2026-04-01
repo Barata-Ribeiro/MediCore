@@ -1,6 +1,6 @@
 import LipidProfileController from '@/actions/App/Http/Controllers/Exams/LipidProfileController';
+import ActionConfirmationDialog from '@/components/common/action-confirmation-dialog';
 import DropdownMenuCopyButton from '@/components/common/dropdown-menu-copy-button';
-import ActionConfirmationDialog from '@/components/helpers/action-confirmation-dialog';
 import DataTableColumnHeader from '@/components/table/data-table-column-header';
 import { Button } from '@/components/ui/button';
 import {

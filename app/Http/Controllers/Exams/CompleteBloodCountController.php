@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Exams;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Exams\CompleteBloodCountRequest;
 use App\Http\Requests\QueryRequest;
 use App\Services\Exams\CompleteBloodCountService;
+use Exception;
 use Inertia\Inertia;
+use Log;
 
 use function in_array;
 
@@ -23,7 +26,32 @@ class CompleteBloodCountController extends Controller
         ]);
     }
 
-    public function completeBloodCountPageAndChartData(QueryRequest $request): array
+    public function create()
+    {
+        return Inertia::render('exams/complete-blood-count/create');
+    }
+
+    public function store(CompleteBloodCountRequest $request)
+    {
+        $user = $request->user();
+
+        $validated = $request->validated();
+
+        try {
+            $user->medicalFile->completeBloodCount()->create($validated);
+
+            Inertia::flash('success', 'Complete blood count record created successfully.');
+
+            return to_route('complete-blood-count.index');
+        } catch (Exception $e) {
+            Inertia::flash('error', 'An error occurred while creating the complete blood count record.');
+            Log::error('Error creating complete blood count', ['user_id' => $user->id, 'error' => $e->getMessage()]);
+
+            return back()->withInput();
+        }
+    }
+
+    private function completeBloodCountPageAndChartData(QueryRequest $request): array
     {
         $validated = $request->validated();
 

@@ -1,5 +1,5 @@
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
-import Heading from '@/components/helpers/heading';
+import Heading from '@/components/common/heading';
 import InputError from '@/components/helpers/input-error';
 import RequiredIndicator from '@/components/helpers/required-indicator';
 import { Button } from '@/components/ui/button';
@@ -33,7 +33,7 @@ export default function PersonalProfileManagerForm() {
             >
                 {({ processing, recentlySuccessful, errors }) => (
                     <Fragment>
-                        <FieldGroup className="grid grid-cols-2 gap-4">
+                        <FieldGroup className="grid gap-4 sm:grid-cols-2">
                             <Field data-invalid={!!errors['first_name']}>
                                 <FieldLabel htmlFor="first_name">
                                     First name <RequiredIndicator />
@@ -88,7 +88,7 @@ export default function PersonalProfileManagerForm() {
                             </FieldDescription>
                         </Field>
 
-                        <FieldGroup className="grid grid-cols-2 gap-4">
+                        <FieldGroup className="grid gap-4 sm:grid-cols-2">
                             <Field data-invalid={!!errors['birth_date']}>
                                 <FieldLabel htmlFor="birth_date">Birth date</FieldLabel>
                                 <Input
@@ -130,7 +130,7 @@ export default function PersonalProfileManagerForm() {
                             <InputError message={errors['address']} />
                         </Field>
 
-                        <FieldGroup className="grid grid-cols-2 gap-4">
+                        <FieldGroup className="grid gap-4 sm:grid-cols-2">
                             <Field data-invalid={!!errors['sex']}>
                                 <FieldLabel htmlFor="sex">Sex</FieldLabel>
                                 <Select
