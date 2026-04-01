@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Exams;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Exams\CompleteBloodCountRequest;
 use App\Http\Requests\QueryRequest;
+use App\Models\Exams\CompleteBloodCount;
 use App\Services\Exams\CompleteBloodCountService;
 use Exception;
 use Inertia\Inertia;
@@ -48,6 +49,63 @@ class CompleteBloodCountController extends Controller
             Log::error('Error creating complete blood count', ['user_id' => $user->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
+        }
+    }
+
+    public function edit(CompleteBloodCount $completeBloodCount)
+    {
+        return Inertia::render('exams/complete-blood-count/edit', [
+            'completeBloodCount' => $completeBloodCount,
+        ]);
+    }
+
+    public function update(CompleteBloodCountRequest $request, CompleteBloodCount $completeBloodCount)
+    {
+        $user = $request->user();
+
+        if ($completeBloodCount->medicalFile->user_id !== $user->id) {
+            Inertia::flash('error', 'You are not authorized to update this complete blood count record.');
+
+            return back();
+        }
+
+        $validated = $request->validated();
+
+        try {
+            $completeBloodCount->update($validated);
+
+            Inertia::flash('success', 'Complete blood count record updated successfully.');
+
+            return to_route('complete-blood-count.index');
+        } catch (Exception $e) {
+            Inertia::flash('error', 'An error occurred while updating the complete blood count record.');
+            Log::error('Error updating complete blood count', ['user_id' => $user->id, 'record_id' => $completeBloodCount->id, 'error' => $e->getMessage()]);
+
+            return back()->withInput();
+        }
+    }
+
+    public function destroy(CompleteBloodCount $completeBloodCount)
+    {
+        $user = request()->user();
+
+        if ($completeBloodCount->medicalFile->user_id !== $user->id) {
+            Inertia::flash('error', 'You are not authorized to delete this complete blood count record.');
+
+            return back();
+        }
+
+        try {
+            $completeBloodCount->delete();
+
+            Inertia::flash('success', 'Complete blood count record deleted successfully.');
+
+            return to_route('complete-blood-count.index');
+        } catch (Exception $e) {
+            Inertia::flash('error', 'An error occurred while deleting the complete blood count record.');
+            Log::error('Error deleting complete blood count', ['user_id' => $user->id, 'record_id' => $completeBloodCount->id, 'error' => $e->getMessage()]);
+
+            return back();
         }
     }
 
