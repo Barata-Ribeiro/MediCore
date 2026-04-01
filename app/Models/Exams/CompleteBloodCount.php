@@ -102,4 +102,18 @@ class CompleteBloodCount extends Model
     {
         return $this->belongsTo(MedicalFile::class);
     }
+
+    /**
+     * Ensure report_date is saved as a date-only string (Y-m-d).
+     */
+    public function setReportDateAttribute(CarbonImmutable|string|\DateTimeInterface|null $value): void
+    {
+        if ($value === null) {
+            $this->attributes['report_date'] = null;
+
+            return;
+        }
+
+        $this->attributes['report_date'] = CarbonImmutable::parse($value)->toDateString();
+    }
 }
