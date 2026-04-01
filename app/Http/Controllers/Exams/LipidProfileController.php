@@ -64,6 +64,12 @@ class LipidProfileController extends Controller
     {
         $user = $request->user();
 
+        if ($lipidProfile->medicalFile->user_id !== $user->id) {
+            Inertia::flash('error', 'You are not authorized to update this lipid profile record.');
+
+            return back();
+        }
+
         $validated = $request->validated();
 
         try {
@@ -80,20 +86,25 @@ class LipidProfileController extends Controller
         }
     }
 
-    public function destroy(int $id)
+    public function destroy(LipidProfile $lipidProfile)
     {
         $user = request()->user();
 
+        if ($lipidProfile->medicalFile->user_id !== $user->id) {
+            Inertia::flash('error', 'You are not authorized to delete this lipid profile record.');
+
+            return back();
+        }
+
         try {
-            $record = $user->medicalFile->lipidProfile()->findOrFail($id);
-            $record->delete();
+            $lipidProfile->delete();
 
             Inertia::flash('success', 'Lipid profile record deleted successfully.');
 
             return to_route('lipid-profile.index');
         } catch (Exception $e) {
             Inertia::flash('error', 'An error occurred while deleting the lipid profile record.');
-            Log::error('Error deleting lipid profile', ['user_id' => $user->id, 'record_id' => $id, 'error' => $e->getMessage()]);
+            Log::error('Error deleting lipid profile', ['user_id' => $user->id, 'record_id' => $lipidProfile->id, 'error' => $e->getMessage()]);
 
             return back();
         }
