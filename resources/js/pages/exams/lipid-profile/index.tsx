@@ -1,4 +1,5 @@
 import LipidProfileChart from '@/components/application/charts/lipid-profile.chart';
+import { EmptyChartData } from '@/components/common/empty-chart-data';
 import { DataTable } from '@/components/table/data-table';
 import { columns } from '@/pages/exams/lipid-profile/lipid-profile-columns';
 import { create, index } from '@/routes/lipid-profile';
@@ -31,7 +32,11 @@ export default function LipidProfile({ lipidProfile, chartData }: Readonly<Props
             <h1 className="sr-only">Lipid Profile</h1>
 
             <div className="space-y-6">
-                <LipidProfileChart chartData={chartData} total={pagination.total} />
+                {chartData.length > 0 ? (
+                    <LipidProfileChart chartData={chartData} total={pagination.total} />
+                ) : (
+                    <EmptyChartData createRoute={create()} />
+                )}
 
                 <DataTable columns={columns} data={data} pagination={pagination} createRoute={create()} />
             </div>
