@@ -8,6 +8,7 @@ use App\Http\Requests\QueryRequest;
 use App\Models\Exams\CompleteBloodCount;
 use App\Services\Exams\CompleteBloodCountService;
 use Exception;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
 use Log;
 
@@ -109,6 +110,15 @@ class CompleteBloodCountController extends Controller
         }
     }
 
+    /**
+     * Validate request query inputs, apply sort/filter defaults, and fetch
+     * paginated complete blood count results plus chart data.
+     *
+     * @return array{
+     *     0: LengthAwarePaginator,
+     *     1: array<string, mixed>
+     * }
+     */
     private function completeBloodCountPageAndChartData(QueryRequest $request): array
     {
         $validated = $request->validated();
