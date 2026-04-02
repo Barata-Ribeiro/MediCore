@@ -1,4 +1,5 @@
 import CbcCountChart from '@/components/application/charts/cbc-count.chart';
+import { EmptyChartData } from '@/components/common/empty-chart-data';
 import { DataTable } from '@/components/table/data-table';
 import { columns } from '@/pages/exams/complete-blood-count/complete-blood-count-columns';
 import { create, index } from '@/routes/complete-blood-count';
@@ -31,7 +32,11 @@ export default function CompleteBloodCount({ completeBloodCount, chartData }: Re
             <h1 className="sr-only">Complete Blood Count</h1>
 
             <div className="space-y-6">
-                <CbcCountChart chartData={chartData} total={pagination.total} />
+                {chartData.length > 0 ? (
+                    <CbcCountChart chartData={chartData} total={pagination.total} />
+                ) : (
+                    <EmptyChartData createRoute={create()} />
+                )}
 
                 <DataTable columns={columns} data={data} pagination={pagination} createRoute={create()} />
             </div>
