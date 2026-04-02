@@ -7,13 +7,13 @@ import {
     ChartTooltip,
     ChartTooltipContent,
 } from '@/components/ui/chart';
-import type { LipidProfileChartData } from '@/types/application/exams/lipid-profile';
+import type { ChartData } from '@/types';
 import { format } from 'date-fns';
 import { memo, useMemo } from 'react';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 
 type Props = {
-    chartData: LipidProfileChartData[];
+    chartData: ChartData[];
     total: number;
 };
 
