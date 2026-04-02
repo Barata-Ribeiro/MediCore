@@ -22,3 +22,8 @@ export type FlashPayload = {
     info?: string | null;
     [key: string]: string | null | undefined;
 };
+
+export type ChartData = {
+    x_axis_label: string;
+    datasets: Record<string, { label: string; data: number }>;
+};

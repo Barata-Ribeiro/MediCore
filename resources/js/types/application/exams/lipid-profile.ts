@@ -10,8 +10,3 @@ export interface LipidProfile {
     created_at: string;
     updated_at: string;
 }
-
-export interface LipidProfileChartData {
-    x_axis_label: string;
-    datasets: Record<string, { label: string; data: number }>;
-}
