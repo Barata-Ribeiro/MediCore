@@ -17,7 +17,7 @@ type Props = {
     total: number;
 };
 
-const LipidProfileChart = memo(({ chartData, total }: Readonly<Props>) => {
+const CbcCountChart = memo(({ chartData, total }: Readonly<Props>) => {
     const rechartsData = useMemo(() => {
         return chartData.map((row) => {
             const base: Record<string, unknown> = { date: row.x_axis_label };
@@ -50,9 +50,10 @@ const LipidProfileChart = memo(({ chartData, total }: Readonly<Props>) => {
     return (
         <Card className="mx-auto max-w-3xl">
             <CardHeader>
-                <CardTitle>Lipid Profile</CardTitle>
+                <CardTitle>Complete Blood Count</CardTitle>
                 <CardDescription>
-                    Check your last 5 lipid profile results and see how your cholesterol levels have changed over time.
+                    Check your last 5 complete blood count results and see how your blood cell levels have changed over
+                    time.
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -97,11 +98,14 @@ const LipidProfileChart = memo(({ chartData, total }: Readonly<Props>) => {
             </CardContent>
             <CardFooter className="border-t">
                 <p className="text-sm text-muted-foreground">
-                    Total lipid profiles: <strong>{total}</strong>
+                    Total complete blood count results: <strong>{total}</strong>
+                    <br />
+                    Note: The chart displays only some of the available metrics. For a complete view of all your blood
+                    count metrics, please refer to the table below.
                 </p>
             </CardFooter>
         </Card>
     );
 });
 
-export default LipidProfileChart;
+export default CbcCountChart;

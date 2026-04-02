@@ -49,13 +49,24 @@ class CompleteBloodCountService implements CompleteBloodCountServiceInterface
             ->paginate($perPage)
             ->withQueryString();
 
-        $chartData = CompleteBloodCount::query()
-            ->selectRaw('DATE(report_date) as date, AVG(hematocrit) as hematocrit, AVG(hemoglobin) as hemoglobin, AVG(red_blood_cell_count) as red_blood_cell_count, AVG(mean_corpuscular_volume) as mean_corpuscular_volume, AVG(mean_corpuscular_hemoglobin) as mean_corpuscular_hemoglobin, AVG(mean_corpuscular_hemoglobin_concentration) as mean_corpuscular_hemoglobin_concentration, AVG(red_blood_cell_distribution_width) as red_blood_cell_distribution_width, AVG(leukocyte_count) as leukocyte_count, AVG(rod_neutrophil_count) as rod_neutrophil_count, AVG(segmented_neutrophil_count) as segmented_neutrophil_count, AVG(lymphocyte_count) as lymphocyte_count, AVG(monocyte_count) as monocyte_count, AVG(eosinophil_count) as eosinophil_count, AVG(basophil_count) as basophil_count, AVG(metamyelocyte_count) as metamyelocyte_count, AVG(promyelocyte_count) as promyelocyte_count, AVG(atypical_cell_count) as atypical_cell_count, AVG(platelet_count) as platelet_count, count(*) as count')
+        $chartRows = CompleteBloodCount::query()
+            ->selectRaw('DATE(report_date) as label, AVG(hematocrit) as hematocrit, AVG(hemoglobin) as hemoglobin, AVG(red_blood_cell_count) as red_blood_cell_count, AVG(leukocyte_count) as leukocyte_count, AVG(platelet_count) as platelet_count')
             ->where('medical_file_id', auth()->user()->medicalFile->id)
-            ->groupByRaw('DATE(report_date)')
-            ->orderByDesc('created_at')
+            ->groupBy('label')
+            ->orderBy('label')
             ->limit(5)
             ->get();
+
+        $chartData = $chartRows->map(fn ($row) => [
+            'x_axis_label' => $row->label,
+            'datasets' => [
+                'hematocrit' => ['label' => 'Hematocrit', 'data' => $row->hematocrit],
+                'hemoglobin' => ['label' => 'Hemoglobin', 'data' => $row->hemoglobin],
+                'red_blood_cell_count' => ['label' => 'Red Blood Cell Count', 'data' => $row->red_blood_cell_count],
+                'leukocyte_count' => ['label' => 'White Blood Cell Count', 'data' => $row->leukocyte_count],
+                'platelet_count' => ['label' => 'Platelet Count', 'data' => $row->platelet_count],
+            ],
+        ])->toArray();
 
         if (app()->environment('testing')) {
             return [$completeBloodCount, $chartData];

@@ -2,14 +2,15 @@ import LipidProfileChart from '@/components/application/charts/lipid-profile.cha
 import { DataTable } from '@/components/table/data-table';
 import { columns } from '@/pages/exams/lipid-profile/lipid-profile-columns';
 import { create, index } from '@/routes/lipid-profile';
-import type { LipidProfile, LipidProfileChartData } from '@/types/application/exams/lipid-profile';
+import type { ChartData } from '@/types';
+import type { LipidProfile } from '@/types/application/exams/lipid-profile';
 import type { PaginationMeta } from '@/types/application/metadata';
 import { Head, setLayoutProps, usePage } from '@inertiajs/react';
 import { Fragment } from 'react/jsx-runtime';
 
 type Props = {
     lipidProfile: PaginationMeta<LipidProfile[]>;
-    chartData: LipidProfileChartData[];
+    chartData: ChartData[];
 };
 
 export default function LipidProfile({ lipidProfile, chartData }: Readonly<Props>) {
