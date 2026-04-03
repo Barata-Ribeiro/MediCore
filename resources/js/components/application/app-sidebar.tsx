@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import { index as cbcIndex } from '@/routes/complete-blood-count';
+import { index as glucoseIndex } from '@/routes/glucose';
 import { index as lipidProfileIndex } from '@/routes/lipid-profile';
 import { edit } from '@/routes/medical-file';
 import type { NavItem } from '@/types';
@@ -42,6 +43,10 @@ const mainNavItems: NavItem[] = [
             {
                 title: 'Complete Blood Count',
                 href: cbcIndex(),
+            },
+            {
+                title: 'Glucose',
+                href: glucoseIndex(),
             },
         ],
     },

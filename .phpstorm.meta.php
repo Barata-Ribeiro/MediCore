@@ -14,6 +14,7 @@ namespace PHPSTORM_META {
     override(new \Illuminate\Contracts\Container\Container, map([
         '' => '@',
             'App\Interfaces\Exams\CompleteBloodCountServiceInterface' => \App\Services\Exams\CompleteBloodCountService::class,
+            'App\Interfaces\Exams\GlucoseServiceInterface' => \App\Services\Exams\GlucoseService::class,
             'App\Interfaces\Exams\LipidProfileServiceInterface' => \App\Services\Exams\LipidProfileService::class,
             'Illuminate\Bus\BatchRepository' => \Illuminate\Bus\DatabaseBatchRepository::class,
             'Illuminate\Contracts\Auth\Access\Gate' => \Illuminate\Auth\Access\Gate::class,
@@ -116,6 +117,7 @@ namespace PHPSTORM_META {
     override(\Illuminate\Container\Container::makeWith(0), map([
         '' => '@',
             'App\Interfaces\Exams\CompleteBloodCountServiceInterface' => \App\Services\Exams\CompleteBloodCountService::class,
+            'App\Interfaces\Exams\GlucoseServiceInterface' => \App\Services\Exams\GlucoseService::class,
             'App\Interfaces\Exams\LipidProfileServiceInterface' => \App\Services\Exams\LipidProfileService::class,
             'Illuminate\Bus\BatchRepository' => \Illuminate\Bus\DatabaseBatchRepository::class,
             'Illuminate\Contracts\Auth\Access\Gate' => \Illuminate\Auth\Access\Gate::class,
@@ -218,6 +220,7 @@ namespace PHPSTORM_META {
     override(\Illuminate\Contracts\Container\Container::get(0), map([
         '' => '@',
             'App\Interfaces\Exams\CompleteBloodCountServiceInterface' => \App\Services\Exams\CompleteBloodCountService::class,
+            'App\Interfaces\Exams\GlucoseServiceInterface' => \App\Services\Exams\GlucoseService::class,
             'App\Interfaces\Exams\LipidProfileServiceInterface' => \App\Services\Exams\LipidProfileService::class,
             'Illuminate\Bus\BatchRepository' => \Illuminate\Bus\DatabaseBatchRepository::class,
             'Illuminate\Contracts\Auth\Access\Gate' => \Illuminate\Auth\Access\Gate::class,
@@ -320,6 +323,7 @@ namespace PHPSTORM_META {
     override(\Illuminate\Contracts\Container\Container::make(0), map([
         '' => '@',
             'App\Interfaces\Exams\CompleteBloodCountServiceInterface' => \App\Services\Exams\CompleteBloodCountService::class,
+            'App\Interfaces\Exams\GlucoseServiceInterface' => \App\Services\Exams\GlucoseService::class,
             'App\Interfaces\Exams\LipidProfileServiceInterface' => \App\Services\Exams\LipidProfileService::class,
             'Illuminate\Bus\BatchRepository' => \Illuminate\Bus\DatabaseBatchRepository::class,
             'Illuminate\Contracts\Auth\Access\Gate' => \Illuminate\Auth\Access\Gate::class,
@@ -422,6 +426,7 @@ namespace PHPSTORM_META {
     override(\Illuminate\Contracts\Container\Container::makeWith(0), map([
         '' => '@',
             'App\Interfaces\Exams\CompleteBloodCountServiceInterface' => \App\Services\Exams\CompleteBloodCountService::class,
+            'App\Interfaces\Exams\GlucoseServiceInterface' => \App\Services\Exams\GlucoseService::class,
             'App\Interfaces\Exams\LipidProfileServiceInterface' => \App\Services\Exams\LipidProfileService::class,
             'Illuminate\Bus\BatchRepository' => \Illuminate\Bus\DatabaseBatchRepository::class,
             'Illuminate\Contracts\Auth\Access\Gate' => \Illuminate\Auth\Access\Gate::class,
@@ -524,6 +529,7 @@ namespace PHPSTORM_META {
     override(\App::get(0), map([
         '' => '@',
             'App\Interfaces\Exams\CompleteBloodCountServiceInterface' => \App\Services\Exams\CompleteBloodCountService::class,
+            'App\Interfaces\Exams\GlucoseServiceInterface' => \App\Services\Exams\GlucoseService::class,
             'App\Interfaces\Exams\LipidProfileServiceInterface' => \App\Services\Exams\LipidProfileService::class,
             'Illuminate\Bus\BatchRepository' => \Illuminate\Bus\DatabaseBatchRepository::class,
             'Illuminate\Contracts\Auth\Access\Gate' => \Illuminate\Auth\Access\Gate::class,
@@ -626,6 +632,7 @@ namespace PHPSTORM_META {
     override(\App::make(0), map([
         '' => '@',
             'App\Interfaces\Exams\CompleteBloodCountServiceInterface' => \App\Services\Exams\CompleteBloodCountService::class,
+            'App\Interfaces\Exams\GlucoseServiceInterface' => \App\Services\Exams\GlucoseService::class,
             'App\Interfaces\Exams\LipidProfileServiceInterface' => \App\Services\Exams\LipidProfileService::class,
             'Illuminate\Bus\BatchRepository' => \Illuminate\Bus\DatabaseBatchRepository::class,
             'Illuminate\Contracts\Auth\Access\Gate' => \Illuminate\Auth\Access\Gate::class,
@@ -728,6 +735,7 @@ namespace PHPSTORM_META {
     override(\App::makeWith(0), map([
         '' => '@',
             'App\Interfaces\Exams\CompleteBloodCountServiceInterface' => \App\Services\Exams\CompleteBloodCountService::class,
+            'App\Interfaces\Exams\GlucoseServiceInterface' => \App\Services\Exams\GlucoseService::class,
             'App\Interfaces\Exams\LipidProfileServiceInterface' => \App\Services\Exams\LipidProfileService::class,
             'Illuminate\Bus\BatchRepository' => \Illuminate\Bus\DatabaseBatchRepository::class,
             'Illuminate\Contracts\Auth\Access\Gate' => \Illuminate\Auth\Access\Gate::class,
@@ -830,6 +838,7 @@ namespace PHPSTORM_META {
     override(\app(0), map([
         '' => '@',
             'App\Interfaces\Exams\CompleteBloodCountServiceInterface' => \App\Services\Exams\CompleteBloodCountService::class,
+            'App\Interfaces\Exams\GlucoseServiceInterface' => \App\Services\Exams\GlucoseService::class,
             'App\Interfaces\Exams\LipidProfileServiceInterface' => \App\Services\Exams\LipidProfileService::class,
             'Illuminate\Bus\BatchRepository' => \Illuminate\Bus\DatabaseBatchRepository::class,
             'Illuminate\Contracts\Auth\Access\Gate' => \Illuminate\Auth\Access\Gate::class,
@@ -932,6 +941,7 @@ namespace PHPSTORM_META {
     override(\resolve(0), map([
         '' => '@',
             'App\Interfaces\Exams\CompleteBloodCountServiceInterface' => \App\Services\Exams\CompleteBloodCountService::class,
+            'App\Interfaces\Exams\GlucoseServiceInterface' => \App\Services\Exams\GlucoseService::class,
             'App\Interfaces\Exams\LipidProfileServiceInterface' => \App\Services\Exams\LipidProfileService::class,
             'Illuminate\Bus\BatchRepository' => \Illuminate\Bus\DatabaseBatchRepository::class,
             'Illuminate\Contracts\Auth\Access\Gate' => \Illuminate\Auth\Access\Gate::class,
@@ -1034,6 +1044,7 @@ namespace PHPSTORM_META {
     override(\Psr\Container\ContainerInterface::get(0), map([
         '' => '@',
             'App\Interfaces\Exams\CompleteBloodCountServiceInterface' => \App\Services\Exams\CompleteBloodCountService::class,
+            'App\Interfaces\Exams\GlucoseServiceInterface' => \App\Services\Exams\GlucoseService::class,
             'App\Interfaces\Exams\LipidProfileServiceInterface' => \App\Services\Exams\LipidProfileService::class,
             'Illuminate\Bus\BatchRepository' => \Illuminate\Bus\DatabaseBatchRepository::class,
             'Illuminate\Contracts\Auth\Access\Gate' => \Illuminate\Auth\Access\Gate::class,
@@ -3210,7 +3221,8 @@ namespace PHPSTORM_META {
 'user-password.update','appearance.edit','lipid-profile.index','lipid-profile.create','lipid-profile.store',
 'lipid-profile.show','lipid-profile.edit','lipid-profile.update','lipid-profile.destroy','complete-blood-count.index',
 'complete-blood-count.create','complete-blood-count.store','complete-blood-count.show','complete-blood-count.edit','complete-blood-count.update',
-'complete-blood-count.destroy','storage.local','storage.local.upload',);
+'complete-blood-count.destroy','glucose.index','glucose.create','glucose.store','glucose.show',
+'glucose.edit','glucose.update','glucose.destroy','storage.local','storage.local.upload',);
         registerArgumentsSet('views', 
 'app','laravel-exceptions-renderer::components.badge','laravel-exceptions-renderer::components.empty-state','laravel-exceptions-renderer::components.file-with-line','laravel-exceptions-renderer::components.formatted-source',
 'laravel-exceptions-renderer::components.frame','laravel-exceptions-renderer::components.frame-code','laravel-exceptions-renderer::components.header','laravel-exceptions-renderer::components.http-method','laravel-exceptions-renderer::components.icons.alert',

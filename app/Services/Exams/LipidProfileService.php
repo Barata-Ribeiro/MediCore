@@ -20,7 +20,7 @@ class LipidProfileService implements LipidProfileServiceInterface
         [$createdAtStart, $createdAtEnd] = Helpers::getDateRange($createdAtRange);
         [$reportDateStart, $reportDateEnd] = Helpers::getDateRange($reportDateRange);
 
-        $lipidProfile = LipidProfile::query()
+        $lipidProfiles = LipidProfile::query()
             ->select('lipid_profiles.*')
             ->where('medical_file_id', auth()->user()->medicalFile->id)
             ->when($createdAtRange, fn ($q) => $q->whereBetween('lipid_profiles.created_at', [$createdAtStart, $createdAtEnd]))
@@ -56,11 +56,11 @@ class LipidProfileService implements LipidProfileServiceInterface
         ])->toArray();
 
         if (app()->environment('testing')) {
-            return [$lipidProfile, $chartData];
+            return [$lipidProfiles, $chartData];
         }
 
         return Concurrency::run([
-            fn () => $lipidProfile,
+            fn () => $lipidProfiles,
             fn () => $chartData,
         ]);
     }

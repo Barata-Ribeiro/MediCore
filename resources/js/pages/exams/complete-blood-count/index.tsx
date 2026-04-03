@@ -10,11 +10,11 @@ import { Head, setLayoutProps, usePage } from '@inertiajs/react';
 import { Fragment } from 'react/jsx-runtime';
 
 type Props = {
-    completeBloodCount: PaginationMeta<CompleteBloodCount[]>;
+    completeBloodCounts: PaginationMeta<CompleteBloodCount[]>;
     chartData: ChartData[];
 };
 
-export default function CompleteBloodCount({ completeBloodCount, chartData }: Readonly<Props>) {
+export default function Index({ completeBloodCounts, chartData }: Readonly<Props>) {
     setLayoutProps({
         title: 'Complete Blood Count',
         description: 'View and analyze complete blood count results for patients',
@@ -22,7 +22,7 @@ export default function CompleteBloodCount({ completeBloodCount, chartData }: Re
     });
 
     const { url } = usePage();
-    const { data, ...pagination } = completeBloodCount;
+    const { data, ...pagination } = completeBloodCounts;
 
     console.log({ url, data, pagination, chartData });
 

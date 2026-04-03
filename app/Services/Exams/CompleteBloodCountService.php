@@ -20,7 +20,7 @@ class CompleteBloodCountService implements CompleteBloodCountServiceInterface
         [$createdAtStart, $createdAtEnd] = Helpers::getDateRange($createdAtRange);
         [$reportDateStart, $reportDateEnd] = Helpers::getDateRange($reportDateRange);
 
-        $completeBloodCount = CompleteBloodCount::query()
+        $completeBloodCounts = CompleteBloodCount::query()
             ->select('complete_blood_counts.*')
             ->where('medical_file_id', auth()->user()->medicalFile->id)
             ->when($createdAtRange, fn ($q) => $q->whereBetween('complete_blood_counts.created_at', [$createdAtStart, $createdAtEnd]))
@@ -69,11 +69,11 @@ class CompleteBloodCountService implements CompleteBloodCountServiceInterface
         ])->toArray();
 
         if (app()->environment('testing')) {
-            return [$completeBloodCount, $chartData];
+            return [$completeBloodCounts, $chartData];
         }
 
         return Concurrency::run([
-            fn () => $completeBloodCount,
+            fn () => $completeBloodCounts,
             fn () => $chartData,
         ]);
     }

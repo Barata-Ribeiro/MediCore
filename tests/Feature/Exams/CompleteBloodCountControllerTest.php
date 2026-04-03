@@ -15,7 +15,7 @@ describe('tests for the "index" method of CompleteBloodCountController', functio
         $response->assertOk();
         $response->assertInertia(
             fn (AssertableInertia $page) => $page->component($componentName)
-                ->has('completeBloodCount.data', 0)
+                ->has('completeBloodCounts.data', 0)
         );
     });
 
@@ -74,8 +74,8 @@ describe('tests for the "index" method of CompleteBloodCountController', functio
 
         $response->assertOk();
         $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
-            ->has('completeBloodCount.data', 2)
-            ->has('completeBloodCount.data.0', fn (AssertableInertia $item) => $item
+            ->has('completeBloodCounts.data', 2)
+            ->has('completeBloodCounts.data.0', fn (AssertableInertia $item) => $item
                 ->where('hematocrit', 40)
                 ->where('hemoglobin', 14)
                 ->where('red_blood_cell_count', 5)
@@ -83,7 +83,7 @@ describe('tests for the "index" method of CompleteBloodCountController', functio
                 ->where('report_date', $today)
                 ->etc()
             )
-            ->has('completeBloodCount.data.1', fn (AssertableInertia $item) => $item
+            ->has('completeBloodCounts.data.1', fn (AssertableInertia $item) => $item
                 ->where('hematocrit', 42)
                 ->where('hemoglobin', 15)
                 ->where('red_blood_cell_count', 6)
