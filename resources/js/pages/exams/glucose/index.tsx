@@ -1,3 +1,5 @@
+import GlucoseChart from '@/components/application/charts/glucose.chart';
+import { EmptyChartData } from '@/components/common/empty-chart-data';
 import { DataTable } from '@/components/table/data-table';
 import { columns } from '@/pages/exams/glucose/glucose-columns';
 import { create, index } from '@/routes/glucose';
@@ -30,6 +32,12 @@ export default function Index({ glucoses, chartData }: Readonly<Props>) {
             <h1 className="sr-only">Glucose</h1>
 
             <div className="space-y-6">
+                {chartData.length > 0 ? (
+                    <GlucoseChart chartData={chartData} total={pagination.total} />
+                ) : (
+                    <EmptyChartData createRoute={create()} />
+                )}
+
                 <DataTable columns={columns} data={data} pagination={pagination} createRoute={create()} />
             </div>
         </Fragment>
