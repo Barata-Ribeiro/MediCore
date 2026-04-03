@@ -1,8 +1,23 @@
+import GlucoseController from '@/actions/App/Http/Controllers/Exams/GlucoseController';
+import ActionConfirmationDialog from '@/components/common/action-confirmation-dialog';
+import DropdownMenuCopyButton from '@/components/common/dropdown-menu-copy-button';
 import DataTableColumnHeader from '@/components/table/data-table-column-header';
+import { Button } from '@/components/ui/button';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import type { Glucose } from '@/types/application/exams/glucose';
+import { Link } from '@inertiajs/react';
 import type { ColumnDef } from '@tanstack/react-table';
-import { format } from 'date-fns/format';
-import { CalendarIcon } from 'lucide-react';
+import { format } from 'date-fns';
+import { CalendarIcon, DeleteIcon, EditIcon, EllipsisIcon } from 'lucide-react';
+import { Fragment, useState } from 'react';
 
 export const columns: ColumnDef<Glucose>[] = [
     {
@@ -51,5 +66,64 @@ export const columns: ColumnDef<Glucose>[] = [
             icon: CalendarIcon,
         },
         enableSorting: true,
+    },
+    {
+        id: 'actions',
+        cell: function Cell({ row }) {
+            const [open, setOpen] = useState(false);
+
+            const valuesToCopy = `Report Date: ${format(row.original.report_date, 'PPP')}, Glucose Level: ${row.original.glucose_level} mg/dL, Glycated Hemoglobin: ${row.original.glycated_hemoglobin}%, Estimated Average Glucose: ${row.original.estimated_average_glucose} mg/dL, Created At: ${format(row.original.created_at, 'PPP p')}`;
+
+            return (
+                <Fragment>
+                    <DropdownMenu modal={false}>
+                        <DropdownMenuTrigger asChild>
+                            <Button
+                                aria-label="Open menu"
+                                variant="ghost"
+                                className="flex size-8 p-0 data-[state=open]:bg-muted"
+                            >
+                                <EllipsisIcon aria-hidden size={16} />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="w-40">
+                            <DropdownMenuLabel>Copy Fields</DropdownMenuLabel>
+                            <DropdownMenuGroup>
+                                <DropdownMenuItem asChild>
+                                    <DropdownMenuCopyButton content={valuesToCopy}>Copy Values</DropdownMenuCopyButton>
+                                </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuGroup>
+                                <DropdownMenuItem asChild>
+                                    <Link
+                                        className="block w-full"
+                                        href={GlucoseController.edit(row.original.id)}
+                                        as="button"
+                                    >
+                                        <EditIcon aria-hidden size={14} /> Edit
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem variant="destructive" onSelect={() => setOpen(true)}>
+                                    <DeleteIcon aria-hidden size={14} /> Delete
+                                </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+
+                    <ActionConfirmationDialog
+                        title="Delete Record"
+                        description="Are you sure you want to delete this record? This action cannot be undone."
+                        open={open}
+                        setOpen={setOpen}
+                        method={'delete'}
+                        route={GlucoseController.destroy(row.original.id)}
+                    />
+                </Fragment>
+            );
+        },
+        size: 40,
+        enableHiding: false,
     },
 ];
