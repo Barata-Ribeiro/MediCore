@@ -20,10 +20,10 @@ class LipidProfileController extends Controller
 
     public function index(QueryRequest $request)
     {
-        [$lipidProfile, $chartData] = $this->lipidProfilePageAndChartData($request);
+        [$lipidProfiles, $chartData] = $this->lipidProfilePageAndChartData($request);
 
         return Inertia::render('exams/lipid-profile/index', [
-            'lipidProfile' => $lipidProfile,
+            'lipidProfiles' => $lipidProfiles,
             'chartData' => $chartData,
         ]);
     }

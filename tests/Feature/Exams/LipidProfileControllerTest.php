@@ -15,7 +15,7 @@ describe('tests for the "index" method of LipidProfileController', function () {
         $response->assertOk();
         $response->assertInertia(
             fn (AssertableInertia $page) => $page->component($componentName)
-                ->has('lipidProfile.data', 0)
+                ->has('lipidProfiles.data', 0)
         );
     });
 
@@ -48,8 +48,8 @@ describe('tests for the "index" method of LipidProfileController', function () {
 
         $response->assertOk();
         $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
-            ->has('lipidProfile.data', 2)
-            ->has('lipidProfile.data.0', fn (AssertableInertia $item) => $item
+            ->has('lipidProfiles.data', 2)
+            ->has('lipidProfiles.data.0', fn (AssertableInertia $item) => $item
                 ->where('total_cholesterol', 100)
                 ->where('hdl_cholesterol', 50)
                 ->where('ldl_cholesterol', 20)
@@ -58,7 +58,7 @@ describe('tests for the "index" method of LipidProfileController', function () {
                 ->where('report_date', $today)
                 ->etc()
             )
-            ->has('lipidProfile.data.1', fn (AssertableInertia $item) => $item
+            ->has('lipidProfiles.data.1', fn (AssertableInertia $item) => $item
                 ->where('total_cholesterol', 120)
                 ->where('hdl_cholesterol', 60)
                 ->where('ldl_cholesterol', 30)

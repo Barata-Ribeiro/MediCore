@@ -10,11 +10,11 @@ import { Head, setLayoutProps, usePage } from '@inertiajs/react';
 import { Fragment } from 'react/jsx-runtime';
 
 type Props = {
-    lipidProfile: PaginationMeta<LipidProfile[]>;
+    lipidProfiles: PaginationMeta<LipidProfile[]>;
     chartData: ChartData[];
 };
 
-export default function LipidProfile({ lipidProfile, chartData }: Readonly<Props>) {
+export default function LipidProfile({ lipidProfiles, chartData }: Readonly<Props>) {
     setLayoutProps({
         title: 'Lipid profiles',
         description: 'View and analyze lipid profile results for patients',
@@ -22,7 +22,7 @@ export default function LipidProfile({ lipidProfile, chartData }: Readonly<Props
     });
 
     const { url } = usePage();
-    const { data, ...pagination } = lipidProfile;
+    const { data, ...pagination } = lipidProfiles;
 
     console.log({ url, data, pagination, chartData });
 
