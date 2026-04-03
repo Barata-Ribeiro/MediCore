@@ -86,6 +86,30 @@ class GlucoseController extends Controller
         }
     }
 
+    public function destroy(Glucose $glucose)
+    {
+        $user = auth()->user();
+
+        if ($glucose->medicalFile->user_id !== $user->id) {
+            Inertia::flash('error', 'Unauthorized to delete this glucose record.');
+
+            return back();
+        }
+
+        try {
+            $glucose->delete();
+
+            Inertia::flash('success', 'Glucose record deleted successfully.');
+
+            return to_route('glucose.index');
+        } catch (Exception $e) {
+            Inertia::flash('error', 'An error occurred while deleting the glucose record.');
+            Log::error('Error deleting glucose record', ['user_id' => $user->id, 'glucose_id' => $glucose->id, 'error' => $e->getMessage()]);
+
+            return back();
+        }
+    }
+
     /**
      * Validate request query inputs, apply sort/filter defaults, and fetch
      * paginated glucose results plus chart data.
