@@ -20,10 +20,10 @@ class CompleteBloodCountController extends Controller
 
     public function index(QueryRequest $request)
     {
-        [$completeBloodCount, $chartData] = $this->completeBloodCountPageAndChartData($request);
+        [$completeBloodCounts, $chartData] = $this->completeBloodCountPageAndChartData($request);
 
         return Inertia::render('exams/complete-blood-count/index', [
-            'completeBloodCount' => $completeBloodCount,
+            'completeBloodCounts' => $completeBloodCounts,
             'chartData' => $chartData,
         ]);
     }
