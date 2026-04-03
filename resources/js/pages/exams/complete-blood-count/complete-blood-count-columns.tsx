@@ -1,8 +1,23 @@
+import CompleteBloodCountController from '@/actions/App/Http/Controllers/Exams/CompleteBloodCountController';
+import ActionConfirmationDialog from '@/components/common/action-confirmation-dialog';
+import DropdownMenuCopyButton from '@/components/common/dropdown-menu-copy-button';
 import DataTableColumnHeader from '@/components/table/data-table-column-header';
+import { Button } from '@/components/ui/button';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import type { CompleteBloodCount } from '@/types/application/exams/complete-blood-count';
+import { Link } from '@inertiajs/react';
 import type { ColumnDef } from '@tanstack/react-table';
-import { format } from 'date-fns/format';
-import { CalendarIcon } from 'lucide-react';
+import { format } from 'date-fns';
+import { CalendarIcon, DeleteIcon, EditIcon, EllipsisIcon } from 'lucide-react';
+import { Fragment, useState } from 'react';
 
 export const columns: ColumnDef<CompleteBloodCount>[] = [
     {
@@ -141,5 +156,65 @@ export const columns: ColumnDef<CompleteBloodCount>[] = [
             icon: CalendarIcon,
         },
         enableSorting: true,
+    },
+
+    {
+        id: 'actions',
+        cell: function Cell({ row }) {
+            const [open, setOpen] = useState(false);
+
+            const valuesToCopy = `Report Date: ${format(row.original.report_date, 'PPP')}, Hematocrit: ${row.original.hematocrit}%, Hemoglobin: ${row.original.hemoglobin} g/dL, RBC: ${row.original.red_blood_cell_count} /mm, MCV: ${row.original.mean_corpuscular_volume} fL, MCH: ${row.original.mean_corpuscular_hemoglobin} pg, MCHC: ${row.original.mean_corpuscular_hemoglobin_concentration} g/dL, RDW: ${row.original.red_blood_cell_distribution_width}%, WBC: ${row.original.leukocyte_count} /mm, Rod Neutrophil Count: ${row.original.rod_neutrophil_count} /mm, Segmented Neutrophil Count: ${row.original.segmented_neutrophil_count} /mm, Lymphocyte Count: ${row.original.lymphocyte_count} /mm, Monocyte Count: ${row.original.monocyte_count} /mm, Eosinophil Count: ${row.original.eosinophil_count} /mm, Basophil Count: ${row.original.basophil_count} /mm, Metamyelocyte Count: ${row.original.metamyelocyte_count} /mm, Promyelocyte Count: ${row.original.promyelocyte_count} /mm, Atypical Cell Count: ${row.original.atypical_cell_count} /mm, Platelet Count: ${row.original.platelet_count} /mm, Created At: ${format(row.original.created_at, 'PPP p')}`;
+
+            return (
+                <Fragment>
+                    <DropdownMenu modal={false}>
+                        <DropdownMenuTrigger asChild>
+                            <Button
+                                aria-label="Open menu"
+                                variant="ghost"
+                                className="flex size-8 p-0 data-[state=open]:bg-muted"
+                            >
+                                <EllipsisIcon aria-hidden size={16} />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="w-40">
+                            <DropdownMenuLabel>Copy Fields</DropdownMenuLabel>
+                            <DropdownMenuGroup>
+                                <DropdownMenuItem asChild>
+                                    <DropdownMenuCopyButton content={valuesToCopy}>Copy Values</DropdownMenuCopyButton>
+                                </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuGroup>
+                                <DropdownMenuItem asChild>
+                                    <Link
+                                        className="block w-full"
+                                        href={CompleteBloodCountController.edit(row.original.id)}
+                                        as="button"
+                                    >
+                                        <EditIcon aria-hidden size={14} /> Edit
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem variant="destructive" onSelect={() => setOpen(true)}>
+                                    <DeleteIcon aria-hidden size={14} /> Delete
+                                </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+
+                    <ActionConfirmationDialog
+                        title="Delete Record"
+                        description="Are you sure you want to delete this record? This action cannot be undone."
+                        open={open}
+                        setOpen={setOpen}
+                        method={'delete'}
+                        route={CompleteBloodCountController.destroy(row.original.id)}
+                    />
+                </Fragment>
+            );
+        },
+        size: 40,
+        enableHiding: false,
     },
 ];
