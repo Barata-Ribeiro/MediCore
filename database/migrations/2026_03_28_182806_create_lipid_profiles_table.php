@@ -24,6 +24,7 @@ return new class extends Migration
             $table->foreignId('medical_file_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
 
             $table->index('medical_file_id');
+            $table->index(['report_date', 'medical_file_id']);
         });
     }
 
