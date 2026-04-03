@@ -23,7 +23,7 @@ describe('tests for the "index" method of LipidProfileController', function () {
         $user = User::factory()->create();
         $medicalFile = $user->medicalFile()->create();
 
-        $medicalFile->lipidProfile()->create([
+        $medicalFile->lipidProfiles()->create([
             'total_cholesterol' => 100,
             'hdl_cholesterol' => 50,
             'ldl_cholesterol' => 20,
@@ -32,7 +32,7 @@ describe('tests for the "index" method of LipidProfileController', function () {
             'report_date' => now()->toDateString(),
         ]);
 
-        $medicalFile->lipidProfile()->create([
+        $medicalFile->lipidProfiles()->create([
             'total_cholesterol' => 120,
             'hdl_cholesterol' => 60,
             'ldl_cholesterol' => 30,
@@ -130,7 +130,7 @@ describe('tests for the "edit" method of LipidProfileController', function () {
         $user = User::factory()->create();
         $medicalFile = $user->medicalFile()->create();
 
-        $lipidProfile = $medicalFile->lipidProfile()->create([
+        $lipidProfile = $medicalFile->lipidProfiles()->create([
             'total_cholesterol' => 100,
             'hdl_cholesterol' => 50,
             'ldl_cholesterol' => 20,
@@ -167,7 +167,7 @@ describe('tests for the "update" method of LipidProfileController', function () 
         $user = User::factory()->create();
         $medicalFile = $user->medicalFile()->create();
 
-        $lipidProfile = $medicalFile->lipidProfile()->create([
+        $lipidProfile = $medicalFile->lipidProfiles()->create([
             'total_cholesterol' => 100,
             'hdl_cholesterol' => 50,
             'ldl_cholesterol' => 20,
@@ -203,7 +203,7 @@ describe('tests for the "destroy" method of LipidProfileController', function ()
         $user = User::factory()->create();
         $medicalFile = $user->medicalFile()->create();
 
-        $lipidProfile = $medicalFile->lipidProfile()->create([
+        $lipidProfile = $medicalFile->lipidProfiles()->create([
             'total_cholesterol' => 100,
             'hdl_cholesterol' => 50,
             'ldl_cholesterol' => 20,
