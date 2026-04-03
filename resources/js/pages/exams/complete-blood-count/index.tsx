@@ -14,7 +14,7 @@ type Props = {
     chartData: ChartData[];
 };
 
-export default function CompleteBloodCount({ completeBloodCounts, chartData }: Readonly<Props>) {
+export default function Index({ completeBloodCounts, chartData }: Readonly<Props>) {
     setLayoutProps({
         title: 'Complete Blood Count',
         description: 'View and analyze complete blood count results for patients',

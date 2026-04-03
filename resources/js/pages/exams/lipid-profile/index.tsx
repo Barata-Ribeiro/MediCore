@@ -14,7 +14,7 @@ type Props = {
     chartData: ChartData[];
 };
 
-export default function LipidProfile({ lipidProfiles, chartData }: Readonly<Props>) {
+export default function Index({ lipidProfiles, chartData }: Readonly<Props>) {
     setLayoutProps({
         title: 'Lipid profiles',
         description: 'View and analyze lipid profile results for patients',
