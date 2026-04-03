@@ -23,7 +23,7 @@ describe('tests for the "index" method of CompleteBloodCountController', functio
         $user = User::factory()->create();
         $medicalFile = $user->medicalFile()->create();
 
-        $medicalFile->completeBloodCount()->create([
+        $medicalFile->completeBloodCounts()->create([
             'hematocrit' => 40,
             'hemoglobin' => 14,
             'red_blood_cell_count' => 5,
@@ -45,7 +45,7 @@ describe('tests for the "index" method of CompleteBloodCountController', functio
             'report_date' => now()->toDateString(),
         ]);
 
-        $medicalFile->completeBloodCount()->create([
+        $medicalFile->completeBloodCounts()->create([
             'hematocrit' => 42,
             'hemoglobin' => 15,
             'red_blood_cell_count' => 6,
@@ -168,7 +168,7 @@ describe('tests for the "edit" method of CompleteBloodCountController', function
         $user = User::factory()->create();
         $medicalFile = $user->medicalFile()->create();
 
-        $completeBloodCount = $medicalFile->completeBloodCount()->create([
+        $completeBloodCount = $medicalFile->completeBloodCounts()->create([
             'hematocrit' => 40,
             'hemoglobin' => 14,
             'red_blood_cell_count' => 5,
@@ -217,7 +217,7 @@ describe('tests for the "update" method of CompleteBloodCountController', functi
         $user = User::factory()->create();
         $medicalFile = $user->medicalFile()->create();
 
-        $completeBloodCount = $medicalFile->completeBloodCount()->create([
+        $completeBloodCount = $medicalFile->completeBloodCounts()->create([
             'hematocrit' => 40,
             'hemoglobin' => 14,
             'red_blood_cell_count' => 5,
@@ -280,7 +280,7 @@ describe('tests for the "destroy" method of CompleteBloodCountController', funct
         $user = User::factory()->create();
         $medicalFile = $user->medicalFile()->create();
 
-        $completeBloodCount = $medicalFile->completeBloodCount()->create([
+        $completeBloodCount = $medicalFile->completeBloodCounts()->create([
             'hematocrit' => 40,
             'hemoglobin' => 14,
             'red_blood_cell_count' => 5,

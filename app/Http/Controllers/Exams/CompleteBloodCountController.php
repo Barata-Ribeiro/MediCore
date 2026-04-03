@@ -40,7 +40,7 @@ class CompleteBloodCountController extends Controller
         $validated = $request->validated();
 
         try {
-            $user->medicalFile->completeBloodCount()->create($validated);
+            $user->medicalFile->completeBloodCounts()->create($validated);
 
             Inertia::flash('success', 'Complete blood count record created successfully.');
 

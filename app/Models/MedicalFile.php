@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\BloodType;
 use App\Models\Exams\CompleteBloodCount;
+use App\Models\Exams\Glucose;
 use App\Models\Exams\LipidProfile;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Attributes\Appends;
@@ -29,11 +30,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
  * @property int $user_id
- * @property-read Collection<int, CompleteBloodCount> $completeBloodCount
- * @property-read int|null $complete_blood_count_count
+ * @property-read Collection<int, CompleteBloodCount> $completeBloodCounts
+ * @property-read int|null $complete_blood_counts_count
  * @property-read float|null $bmi
- * @property-read Collection<int, LipidProfile> $lipidProfile
- * @property-read int|null $lipid_profile_count
+ * @property-read Collection<int, Glucose> $glucoses
+ * @property-read int|null $glucoses_count
+ * @property-read Collection<int, LipidProfile> $lipidProfiles
+ * @property-read int|null $lipid_profiles_count
  * @property-read User $user
  *
  * @method static Builder<static>|MedicalFile newModelQuery()
@@ -102,13 +105,18 @@ class MedicalFile extends Model
 
     // Exams
 
-    public function lipidProfile(): HasMany
+    public function lipidProfiles(): HasMany
     {
         return $this->hasMany(LipidProfile::class);
     }
 
-    public function completeBloodCount(): HasMany
+    public function completeBloodCounts(): HasMany
     {
         return $this->hasMany(CompleteBloodCount::class);
+    }
+
+    public function glucoses(): HasMany
+    {
+        return $this->hasMany(Glucose::class);
     }
 }

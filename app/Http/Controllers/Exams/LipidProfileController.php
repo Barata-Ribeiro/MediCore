@@ -40,7 +40,7 @@ class LipidProfileController extends Controller
         $validated = $request->validated();
 
         try {
-            $user->medicalFile->lipidProfile()->create($validated);
+            $user->medicalFile->lipidProfiles()->create($validated);
 
             Inertia::flash('success', 'Lipid profile record created successfully.');
 
