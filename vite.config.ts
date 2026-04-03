@@ -10,6 +10,7 @@ export default defineConfig({
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.tsx'],
+            detectTls: true,
             refresh: true,
         }),
         inertia({ ssr: { cluster: true } }),
