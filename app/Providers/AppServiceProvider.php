@@ -32,6 +32,11 @@ class AppServiceProvider extends ServiceProvider
             CompleteBloodCountServiceInterface::class,
             CompleteBloodCountService::class
         );
+
+		$this->app->bind(
+			\App\Interfaces\Exams\GlucoseServiceInterface::class,
+			\App\Services\Exams\GlucoseService::class
+		);
     }
 
     /**
