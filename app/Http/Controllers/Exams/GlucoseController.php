@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Exams;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Exams\GlucoseRequest;
 use App\Http\Requests\QueryRequest;
+use App\Models\Exams\Glucose;
 use App\Services\Exams\GlucoseService;
+use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
+use Log;
 
 use function in_array;
 
@@ -22,6 +26,88 @@ class GlucoseController extends Controller
             'glucoses' => $glucoses,
             'chartData' => $chartData,
         ]);
+    }
+
+    public function create()
+    {
+        return Inertia::render('exams/glucose/create');
+    }
+
+    public function store(GlucoseRequest $request)
+    {
+        $user = $request->user();
+
+        $validated = $request->validated();
+
+        try {
+            $user->medicalFile->glucoses()->create($validated);
+
+            Inertia::flash('success', 'Glucose record created successfully.');
+
+            return to_route('glucose.index');
+        } catch (Exception $e) {
+            Inertia::flash('error', 'An error occurred while creating the glucose record.');
+            Log::error('Error creating glucose record', ['user_id' => $user->id, 'error' => $e->getMessage()]);
+
+            return back()->withInput();
+        }
+    }
+
+    public function edit(Glucose $glucose)
+    {
+        return Inertia::render('exams/glucose/edit', [
+            'glucose' => $glucose,
+        ]);
+    }
+
+    public function update(GlucoseRequest $request, Glucose $glucose)
+    {
+        $user = $request->user();
+
+        if ($glucose->medicalFile->user_id !== $user->id) {
+            Inertia::flash('error', 'Unauthorized to update this glucose record.');
+
+            return back();
+        }
+
+        $validated = $request->validated();
+
+        try {
+            $glucose->update($validated);
+
+            Inertia::flash('success', 'Glucose record updated successfully.');
+
+            return to_route('glucose.index');
+        } catch (Exception $e) {
+            Inertia::flash('error', 'An error occurred while updating the glucose record.');
+            Log::error('Error updating glucose record', ['user_id' => $user->id, 'glucose_id' => $glucose->id, 'error' => $e->getMessage()]);
+
+            return back()->withInput();
+        }
+    }
+
+    public function destroy(Glucose $glucose)
+    {
+        $user = auth()->user();
+
+        if ($glucose->medicalFile->user_id !== $user->id) {
+            Inertia::flash('error', 'Unauthorized to delete this glucose record.');
+
+            return back();
+        }
+
+        try {
+            $glucose->delete();
+
+            Inertia::flash('success', 'Glucose record deleted successfully.');
+
+            return to_route('glucose.index');
+        } catch (Exception $e) {
+            Inertia::flash('error', 'An error occurred while deleting the glucose record.');
+            Log::error('Error deleting glucose record', ['user_id' => $user->id, 'glucose_id' => $glucose->id, 'error' => $e->getMessage()]);
+
+            return back();
+        }
     }
 
     /**
