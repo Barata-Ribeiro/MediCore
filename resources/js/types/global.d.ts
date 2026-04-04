@@ -8,6 +8,11 @@ declare module '@inertiajs/core' {
             name: string;
             auth: Auth;
             sidebarOpen: boolean;
+            date: {
+                now: string;
+                displayDate: string;
+                greeting: string;
+            };
             [key: string]: unknown;
         };
     }
