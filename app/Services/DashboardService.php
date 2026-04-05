@@ -23,6 +23,12 @@ class DashboardService implements DashboardServiceInterface
         $glucoseCount = $medicalFile?->glucoses_count ?? 0;
         $totalCount = $lipidProfileCount + $completeBloodCountCount + $glucoseCount;
 
+        $medicalFile?->makeHidden([
+            'lipid_profiles_count',
+            'complete_blood_counts_count',
+            'glucoses_count',
+        ]);
+
         return [
             'profile' => $data->profile,
             'medicalFile' => $medicalFile,

@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Interfaces\DashboardServiceInterface;
 use App\Interfaces\Exams\CompleteBloodCountServiceInterface;
 use App\Interfaces\Exams\GlucoseServiceInterface;
 use App\Interfaces\Exams\LipidProfileServiceInterface;
+use App\Services\DashboardService;
 use App\Services\Exams\CompleteBloodCountService;
 use App\Services\Exams\GlucoseService;
 use App\Services\Exams\LipidProfileService;
@@ -40,10 +42,10 @@ class AppServiceProvider extends ServiceProvider
             GlucoseService::class
         );
 
-		$this->app->bind(
-			\App\Interfaces\DashboardServiceInterface::class,
-			\App\Services\DashboardService::class
-		);
+        $this->app->bind(
+            DashboardServiceInterface::class,
+            DashboardService::class
+        );
     }
 
     /**
