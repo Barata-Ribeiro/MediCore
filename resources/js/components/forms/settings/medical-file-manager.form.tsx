@@ -60,6 +60,7 @@ export default function MedicalFileManagerForm() {
                             <FieldLabel htmlFor="textarea-allergies">Allergies</FieldLabel>
                             <Textarea
                                 id="textarea-allergies"
+                                name="allergies"
                                 placeholder="e.g. peanuts, pollen"
                                 rows={4}
                                 defaultValue={file?.allergies ?? ''}
@@ -73,6 +74,7 @@ export default function MedicalFileManagerForm() {
                             <FieldLabel htmlFor="textarea-diseases">Diseases</FieldLabel>
                             <Textarea
                                 id="textarea-diseases"
+                                name="diseases"
                                 placeholder="e.g. diabetes, hypertension"
                                 rows={4}
                                 defaultValue={file?.diseases ?? ''}
@@ -86,6 +88,7 @@ export default function MedicalFileManagerForm() {
                             <FieldLabel htmlFor="textarea-medications">Medications</FieldLabel>
                             <Textarea
                                 id="textarea-medications"
+                                name="medications"
                                 placeholder="e.g. insulin, aspirin"
                                 rows={4}
                                 defaultValue={file?.medications ?? ''}
@@ -101,6 +104,7 @@ export default function MedicalFileManagerForm() {
                                 <InputGroup>
                                     <InputGroupInput
                                         id="input-height"
+                                        name="height"
                                         type="number"
                                         min={0}
                                         placeholder="e.g. 170"
@@ -119,6 +123,7 @@ export default function MedicalFileManagerForm() {
                                 <InputGroup>
                                     <InputGroupInput
                                         id="input-weight"
+                                        name="weight"
                                         type="number"
                                         placeholder="e.g. 65"
                                         min={0}
@@ -146,6 +151,7 @@ export default function MedicalFileManagerForm() {
                                         <FieldLabel htmlFor="input-emergency_contact_name">Name</FieldLabel>
                                         <Input
                                             id="input-emergency_contact_name"
+                                            name="emergency_contact_name"
                                             type="text"
                                             placeholder="e.g. John Doe"
                                             defaultValue={file?.emergency_contact_name ?? ''}
@@ -165,6 +171,7 @@ export default function MedicalFileManagerForm() {
                                         </FieldLabel>
                                         <Input
                                             id="input-emergency_contact_relationship"
+                                            name="emergency_contact_relationship"
                                             type="text"
                                             placeholder="e.g. Father, Spouse"
                                             defaultValue={file?.emergency_contact_relationship ?? ''}
@@ -183,6 +190,7 @@ export default function MedicalFileManagerForm() {
                                     <FieldLabel htmlFor="input-emergency_contact_phone_number">Phone</FieldLabel>
                                     <Input
                                         id="input-emergency_contact_phone_number"
+                                        name="emergency_contact_phone_number"
                                         type="tel"
                                         placeholder="+1 (555) 123-4567"
                                         defaultValue={file?.emergency_contact_phone_number ?? ''}
