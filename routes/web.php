@@ -1,6 +1,8 @@
 <?php
 
+use App\Interfaces\DashboardServiceInterface;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 use Laravel\Fortify\Features;
 
 Route::inertia('/', 'welcome', [
@@ -8,7 +10,9 @@ Route::inertia('/', 'welcome', [
 ])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'dashboard')->name('dashboard');
+    Route::get('dashboard', fn (DashboardServiceInterface $dashboardService) => Inertia::render('dashboard', [
+        'data' => $dashboardService->getDashboardData(),
+    ]))->name('dashboard');
 });
 
 require __DIR__.'/settings.php';

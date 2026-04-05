@@ -35,6 +35,8 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $now = now();
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
@@ -43,6 +45,15 @@ class HandleInertiaRequests extends Middleware
                 'permissions' => fn () => $request->user()?->getAllPermissions()->pluck('name'),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'date' => [
+                'now' => $now->toISOString(),
+                'displayDate' => $now->format('F j, Y'),
+                'greeting' => match (true) {
+                    $now->hour >= 5 && $now->hour < 12 => 'Good morning',
+                    $now->hour >= 12 && $now->hour < 18 => 'Good afternoon',
+                    default => 'Good evening',
+                },
+            ],
         ];
     }
 }
