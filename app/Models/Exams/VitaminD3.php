@@ -40,7 +40,7 @@ class VitaminD3 extends Model
      * @return array<string, string>
      */
     protected $casts = [
-        'report_date' => 'date',
+        'report_date' => 'date:Y-m-d',
     ];
 
     public function medicalFile(): BelongsTo
