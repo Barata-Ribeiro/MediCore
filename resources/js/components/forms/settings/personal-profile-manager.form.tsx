@@ -1,5 +1,6 @@
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import Heading from '@/components/common/heading';
+import DatePicker from '@/components/helpers/date-picker';
 import InputError from '@/components/helpers/input-error';
 import RequiredIndicator from '@/components/helpers/required-indicator';
 import { Button } from '@/components/ui/button';
@@ -91,15 +92,7 @@ export default function PersonalProfileManagerForm() {
                         <FieldGroup className="grid gap-4 sm:grid-cols-2">
                             <Field data-invalid={!!errors['birth_date']}>
                                 <FieldLabel htmlFor="birth_date">Birth date</FieldLabel>
-                                <Input
-                                    type="date"
-                                    id="birth_date"
-                                    name="birth_date"
-                                    placeholder="YYYY-MM-DD"
-                                    defaultValue={profile?.birth_date ?? ''}
-                                    aria-invalid={!!errors['birth_date']}
-                                    aria-describedby={errors['birth_date'] ? 'birth_date-error' : undefined}
-                                />
+                                <DatePicker id="birth_date" name="birth_date" defaultValue={profile?.birth_date} />
                                 <InputError message={errors['birth_date']} />
                             </Field>
                             <Field data-invalid={!!errors['phone_number']}>
