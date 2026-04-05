@@ -19,4 +19,11 @@ export default defineConfig({
         tailwindcss(),
         wayfinder({ formVariants: true }),
     ],
+    server: {
+        host: 'medicore.test',
+        port: 5173,
+        hmr: {
+            host: 'medicore.test',
+        },
+    },
 });
