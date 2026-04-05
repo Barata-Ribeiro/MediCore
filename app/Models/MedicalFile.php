@@ -6,6 +6,7 @@ use App\Enums\BloodType;
 use App\Models\Exams\CompleteBloodCount;
 use App\Models\Exams\Glucose;
 use App\Models\Exams\LipidProfile;
+use App\Models\Exams\VitaminD3;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Attributes\Appends;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -38,6 +39,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read Collection<int, LipidProfile> $lipidProfiles
  * @property-read int|null $lipid_profiles_count
  * @property-read User $user
+ * @property-read Collection<int, VitaminD3> $vitaminD3s
+ * @property-read int|null $vitamin_d3s_count
  *
  * @method static Builder<static>|MedicalFile newModelQuery()
  * @method static Builder<static>|MedicalFile newQuery()
@@ -105,11 +108,6 @@ class MedicalFile extends Model
 
     // Exams
 
-    public function lipidProfiles(): HasMany
-    {
-        return $this->hasMany(LipidProfile::class);
-    }
-
     public function completeBloodCounts(): HasMany
     {
         return $this->hasMany(CompleteBloodCount::class);
@@ -118,5 +116,15 @@ class MedicalFile extends Model
     public function glucoses(): HasMany
     {
         return $this->hasMany(Glucose::class);
+    }
+
+    public function lipidProfiles(): HasMany
+    {
+        return $this->hasMany(LipidProfile::class);
+    }
+
+    public function vitaminD3s(): HasMany
+    {
+        return $this->hasMany(VitaminD3::class);
     }
 }
