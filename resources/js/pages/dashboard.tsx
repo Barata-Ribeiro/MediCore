@@ -1,9 +1,19 @@
 import DashboardGreetings from '@/components/helpers/dashboard/dashboard-greetings';
 import { dashboard } from '@/routes';
+import type { MedicalFile } from '@/types/application/medical-file';
+import type { Profile } from '@/types/application/profile';
 import { Head } from '@inertiajs/react';
 import { Fragment } from 'react/jsx-runtime';
 
-export default function Dashboard() {
+type Props = {
+    profile: Profile;
+    medicalFile: MedicalFile;
+    exams: Record<string, number>;
+};
+
+export default function Dashboard({ data }: Readonly<{ data: Props }>) {
+    console.log(data);
+
     return (
         <Fragment>
             <Head title="Dashboard" />
