@@ -39,6 +39,11 @@ class AppServiceProvider extends ServiceProvider
             GlucoseServiceInterface::class,
             GlucoseService::class
         );
+
+		$this->app->bind(
+			\App\Interfaces\DashboardServiceInterface::class,
+			\App\Services\DashboardService::class
+		);
     }
 
     /**
