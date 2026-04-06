@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Exams;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Exams\VitaminD3Request;
 use App\Http\Requests\QueryRequest;
+use App\Models\Exams\VitaminD3;
 use App\Services\Exams\VitaminD3Service;
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -51,6 +52,40 @@ class VitaminD3Controller extends Controller
 
             return back()->withInput();
         }
+    }
+
+    public function edit(VitaminD3 $vitaminD3)
+    {
+        return Inertia::render('exams/vitamin-d3/edit', [
+            'vitaminD3' => $vitaminD3,
+        ]);
+    }
+
+    public function update(VitaminD3Request $request, VitaminD3 $vitaminD3)
+    {
+        $user = $request->user();
+
+        if ($vitaminD3->medicalFile->user_id !== $user->id) {
+            Inertia::flash('error', 'Unauthorized to update this Vitamin D3 record.');
+
+            return back();
+        }
+
+        $validated = $request->validated();
+
+        try {
+            $vitaminD3->update($validated);
+
+            Inertia::flash('success', 'Vitamin D3 record updated successfully.');
+
+            return to_route('vitamin-d3.index');
+        } catch (Exception $e) {
+            Inertia::flash('error', 'An error occurred while updating the Vitamin D3 record.');
+            Log::error('Error updating Vitamin D3 record', ['user_id' => $request->user()->id, 'vitamin_d3_id' => $vitaminD3->id, 'error' => $e->getMessage()]);
+
+            return back()->withInput();
+        }
+
     }
 
     /**
