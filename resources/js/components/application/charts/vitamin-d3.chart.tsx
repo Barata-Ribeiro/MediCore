@@ -4,11 +4,7 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/
 import type { ChartData } from '@/types/ui';
 import { format } from 'date-fns';
 import { memo, useMemo } from 'react';
-import { CartesianGrid } from 'recharts/types/cartesian/CartesianGrid';
-import { Line } from 'recharts/types/cartesian/Line';
-import { XAxis } from 'recharts/types/cartesian/XAxis';
-import { LineChart } from 'recharts/types/chart/LineChart';
-import { LabelList } from 'recharts/types/component/LabelList';
+import { CartesianGrid, LabelList, Line, LineChart, XAxis } from 'recharts';
 
 type Props = {
     chartData: ChartData[];
