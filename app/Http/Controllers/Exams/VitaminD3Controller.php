@@ -88,6 +88,30 @@ class VitaminD3Controller extends Controller
 
     }
 
+    public function destroy(VitaminD3 $vitaminD3)
+    {
+        $user = auth()->user();
+
+        if ($vitaminD3->medicalFile->user_id !== $user->id) {
+            Inertia::flash('error', 'Unauthorized to delete this Vitamin D3 record.');
+
+            return back();
+        }
+
+        try {
+            $vitaminD3->delete();
+
+            Inertia::flash('success', 'Vitamin D3 record deleted successfully.');
+
+            return to_route('vitamin-d3.index');
+        } catch (Exception $e) {
+            Inertia::flash('error', 'An error occurred while deleting the Vitamin D3 record.');
+            Log::error('Error deleting Vitamin D3 record', ['user_id' => $user->id, 'vitamin_d3_id' => $vitaminD3->id, 'error' => $e->getMessage()]);
+
+            return back();
+        }
+    }
+
     /**
      * Validate request query inputs, apply sort/filter defaults, and fetch
      * paginated glucose results plus chart data.
