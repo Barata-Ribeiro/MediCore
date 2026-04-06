@@ -69,8 +69,8 @@ describe('tests for the "index" method of CompleteBloodCountController', functio
 
         $response = $this->actingAs($user)->get(route('complete-blood-count.index'));
 
-        $today = now()->startOfDay()->toISOString();
-        $thirtyDaysAgo = now()->subDays(30)->startOfDay()->toISOString();
+        $today = now()->toDateString();
+        $thirtyDaysAgo = now()->subDays(30)->toDateString();
 
         $response->assertOk();
         $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
@@ -199,7 +199,7 @@ describe('tests for the "edit" method of CompleteBloodCountController', function
                 ->where('hemoglobin', 14)
                 ->where('red_blood_cell_count', 5)
                 ->where('platelet_count', 200)
-                ->where('report_date', now()->startOfDay()->toISOString())
+                ->where('report_date', now()->toDateString())
                 ->etc()
             )
         );

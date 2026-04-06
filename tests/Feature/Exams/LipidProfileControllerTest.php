@@ -43,8 +43,8 @@ describe('tests for the "index" method of LipidProfileController', function () {
 
         $response = $this->actingAs($user)->get(route('lipid-profile.index'));
 
-        $today = now()->startOfDay()->toISOString();
-        $thirtyDaysAgo = now()->subDays(30)->startOfDay()->toISOString();
+        $today = now()->toDateString();
+        $thirtyDaysAgo = now()->subDays(30)->toDateString();
 
         $response->assertOk();
         $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
@@ -149,7 +149,7 @@ describe('tests for the "edit" method of LipidProfileController', function () {
                 ->where('ldl_cholesterol', 20)
                 ->where('vldl_cholesterol', 10)
                 ->where('triglycerides', 80)
-                ->where('report_date', now()->startOfDay()->toISOString())
+                ->where('report_date', now()->toDateString())
                 ->etc()
             )
         );
