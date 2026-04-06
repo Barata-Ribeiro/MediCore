@@ -1,3 +1,4 @@
+import VitaminD3Chart from '@/components/application/charts/vitamin-d3.chart';
 import { EmptyChartData } from '@/components/common/empty-chart-data';
 import { DataTable } from '@/components/table/data-table';
 import { columns } from '@/pages/exams/vitamin-d3/vitamin-d3-columns';
