@@ -6,10 +6,12 @@ use App\Interfaces\DashboardServiceInterface;
 use App\Interfaces\Exams\CompleteBloodCountServiceInterface;
 use App\Interfaces\Exams\GlucoseServiceInterface;
 use App\Interfaces\Exams\LipidProfileServiceInterface;
+use App\Interfaces\Exams\VitaminD3ServiceInterface;
 use App\Services\DashboardService;
 use App\Services\Exams\CompleteBloodCountService;
 use App\Services\Exams\GlucoseService;
 use App\Services\Exams\LipidProfileService;
+use App\Services\Exams\VitaminD3Service;
 use Carbon\CarbonImmutable;
 use Gate;
 use Illuminate\Support\Facades\Date;
@@ -45,6 +47,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             DashboardServiceInterface::class,
             DashboardService::class
+        );
+
+        $this->app->bind(
+            VitaminD3ServiceInterface::class,
+            VitaminD3Service::class
         );
     }
 
