@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Exams;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Exams\VitaminD3Request;
 use App\Http\Requests\QueryRequest;
 use App\Services\Exams\VitaminD3Service;
+use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
+use Log;
 
 use function in_array;
 
@@ -22,6 +25,32 @@ class VitaminD3Controller extends Controller
             'vitaminD3s' => $vitaminD3s,
             'chartData' => $chartData,
         ]);
+    }
+
+    public function create()
+    {
+        return Inertia::render('exams/vitamin-d3/create');
+    }
+
+    public function store(VitaminD3Request $request)
+    {
+        $user = $request->user();
+
+        $validated = $request->validated();
+
+        try {
+
+            $user->medicalFile->vitaminD3s()->create($validated);
+
+            Inertia::flash('success', 'Vitamin D3 record created successfully.');
+
+            return to_route('vitamin-d3.index');
+        } catch (Exception $e) {
+            Inertia::flash('error', 'An error occurred while creating the Vitamin D3 record.');
+            Log::error('Error creating Vitamin D3 record', ['user_id' => $request->user()->id, 'error' => $e->getMessage()]);
+
+            return back()->withInput();
+        }
     }
 
     /**
