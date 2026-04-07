@@ -71,18 +71,18 @@ export default function PersonalProfileManagerForm() {
                             </Field>
                         </FieldGroup>
 
-                        <Field data-invalid={!!errors['biography']}>
-                            <FieldLabel htmlFor="biography">Biography</FieldLabel>
+                        <Field data-invalid={!!errors['bio']}>
+                            <FieldLabel htmlFor="bio">Biography</FieldLabel>
                             <Textarea
-                                id="biography"
-                                name="biography"
+                                id="bio"
+                                name="bio"
                                 placeholder="Write something about yourself..."
                                 rows={4}
                                 defaultValue={profile?.bio ?? ''}
-                                aria-invalid={!!errors['biography']}
-                                aria-describedby={errors['biography'] ? 'biography-error' : undefined}
+                                aria-invalid={!!errors['bio']}
+                                aria-describedby={errors['bio'] ? 'bio-error' : undefined}
                             />
-                            <InputError message={errors['biography']} />
+                            <InputError message={errors['bio']} />
 
                             <FieldDescription>
                                 A brief description about yourself that will help us know a little more about you.
