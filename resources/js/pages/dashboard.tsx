@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useInitials } from '@/hooks/use-initials';
 import { dashboard } from '@/routes';
+import { edit as editMedicalFile } from '@/routes/medical-file';
 import { edit as editProfile } from '@/routes/profile';
 import type { MedicalFile } from '@/types/application/medical-file';
 import type { Profile } from '@/types/application/profile';
@@ -97,6 +98,52 @@ export default function Dashboard({ data }: Readonly<{ data: Props }>) {
                             </Button>
                         </CardFooter>
                     </Card>
+
+                    <div className="grid gap-4 lg:grid-cols-2">
+                        {/* MEDICAL FILE SUMMARY */}
+                        <Card className="w-full">
+                            <CardHeader>
+                                <CardTitle className="text-xl">Medical File Summary</CardTitle>
+                                <CardDescription>A quick overview of your medical history and records.</CardDescription>
+                            </CardHeader>
+
+                            <CardContent className="grid gap-4">
+                                <dl className="grid gap-2">
+                                    <div>
+                                        <dt className="font-medium">Blood Type</dt>
+                                        <dd>{data.medicalFile.blood_type ?? 'Not Informed'}</dd>
+                                    </div>
+
+                                    <div>
+                                        <dt className="font-medium">Allergies</dt>
+                                        <dd>{data.medicalFile.allergies ?? 'Not Informed'}</dd>
+                                    </div>
+
+                                    <div>
+                                        <dt className="font-medium">Diseases</dt>
+                                        <dd>{data.medicalFile.diseases ?? 'Not Informed'}</dd>
+                                    </div>
+
+                                    <div>
+                                        <dt className="font-medium">Medications</dt>
+                                        <dd>{data.medicalFile.medications ?? 'Not Informed'}</dd>
+                                    </div>
+                                </dl>
+                            </CardContent>
+
+                            <CardFooter className="flex items-end justify-between gap-4 border-t">
+                                <time dateTime={data.medicalFile.updated_at} className="text-sm text-muted-foreground">
+                                    Last updated: {format(new Date(data.medicalFile.updated_at), 'MMMM dd, yyyy')}
+                                </time>
+
+                                <Button variant="secondary" size="sm" asChild>
+                                    <Link href={editMedicalFile()} as="button" prefetch="hover">
+                                        Edit Medical File
+                                    </Link>
+                                </Button>
+                            </CardFooter>
+                        </Card>
+                    </div>
                 </div>
             </div>
         </Fragment>
