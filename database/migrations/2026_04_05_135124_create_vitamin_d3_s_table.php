@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('vitamin_d3_s', function (Blueprint $table) {
             $table->id();
             $table->double('twenty_five_hydroxyvitamin_d3')->comment('25-Hydroxyvitamin D3 (25(OH)D3) level');
-            $table->date('report_date')->comment('Date of the glucose report');
+            $table->date('report_date')->comment('Date of the Vitamin D3 report');
             $table->timestamps();
 
             $table->foreignId('medical_file_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @property int $id
  * @property float $twenty_five_hydroxyvitamin_d3 25-Hydroxyvitamin D3 (25(OH)D3) level
- * @property CarbonImmutable $report_date Date of the glucose report
+ * @property CarbonImmutable $report_date Date of the Vitamin D3 report
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
  * @property int $medical_file_id
