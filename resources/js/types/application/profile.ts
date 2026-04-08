@@ -5,12 +5,12 @@ export interface Profile {
     user_id: number;
     first_name: string;
     last_name: string;
-    bio: string | null;
-    birth_date: string;
-    phone_number: string;
-    address: string;
-    sex: ProfileSex | null;
-    gender_identity: string | null;
+    bio?: string | null;
+    birth_date?: string;
+    phone_number?: string;
+    address?: string;
+    sex?: ProfileSex | null;
+    gender_identity?: string | null;
     created_at: string;
     updated_at: string;
 
