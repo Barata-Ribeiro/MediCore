@@ -6,10 +6,12 @@ use App\Enums\BloodType;
 use App\Models\Exams\CompleteBloodCount;
 use App\Models\Exams\Glucose;
 use App\Models\Exams\LipidProfile;
+use App\Models\Exams\VitaminB12;
 use App\Models\Exams\VitaminD3;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Attributes\Appends;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Attributes\Touches;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -39,9 +41,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read Collection<int, LipidProfile> $lipidProfiles
  * @property-read int|null $lipid_profiles_count
  * @property-read User $user
+ * @property-read Collection<int, VitaminB12> $vitaminB12s
+ * @property-read int|null $vitamin_b12s_count
  * @property-read Collection<int, VitaminD3> $vitaminD3s
  * @property-read int|null $vitamin_d3s_count
  *
+ * @method static Builder<static>|MedicalFile bloodType(\App\Enums\BloodType $bloodType)
  * @method static Builder<static>|MedicalFile newModelQuery()
  * @method static Builder<static>|MedicalFile newQuery()
  * @method static Builder<static>|MedicalFile query()
@@ -58,7 +63,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static Builder<static>|MedicalFile whereUpdatedAt($value)
  * @method static Builder<static>|MedicalFile whereUserId($value)
  * @method static Builder<static>|MedicalFile whereWeight($value)
- * @method static Builder<static>|MedicalFile withBloodType(\App\Enums\BloodType $bloodType)
  *
  * @mixin \Eloquent
  */
@@ -96,9 +100,13 @@ class MedicalFile extends Model
         return $this->weight / ($heightMeters * $heightMeters);
     }
 
-    public function scopeWithBloodType(Builder $query, BloodType $bloodType)
+    /**
+     * Scope a query to only include users with a specific blood type.
+     */
+    #[Scope]
+    protected function bloodType(Builder $query, BloodType $bloodType): void
     {
-        return $query->where('blood_type', $bloodType->value);
+        $query->where('blood_type', $bloodType->value);
     }
 
     public function user(): BelongsTo
@@ -121,6 +129,11 @@ class MedicalFile extends Model
     public function lipidProfiles(): HasMany
     {
         return $this->hasMany(LipidProfile::class);
+    }
+
+    public function vitaminB12s(): HasMany
+    {
+        return $this->hasMany(VitaminB12::class);
     }
 
     public function vitaminD3s(): HasMany
