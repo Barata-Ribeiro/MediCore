@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Exams;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Exams\CompleteBloodCountRequest;
 use App\Http\Requests\QueryRequest;
+use App\Interfaces\Exams\CompleteBloodCountServiceInterface;
 use App\Models\Exams\CompleteBloodCount;
-use App\Services\Exams\CompleteBloodCountService;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
@@ -16,7 +16,7 @@ use function in_array;
 
 class CompleteBloodCountController extends Controller
 {
-    public function __construct(private CompleteBloodCountService $completeBloodCountService) {}
+    public function __construct(private CompleteBloodCountServiceInterface $completeBloodCountService) {}
 
     public function index(QueryRequest $request)
     {

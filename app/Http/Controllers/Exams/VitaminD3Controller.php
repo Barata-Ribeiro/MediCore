@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Exams;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Exams\VitaminD3Request;
 use App\Http\Requests\QueryRequest;
+use App\Interfaces\Exams\VitaminD3ServiceInterface;
 use App\Models\Exams\VitaminD3;
-use App\Services\Exams\VitaminD3Service;
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
@@ -16,7 +16,7 @@ use function in_array;
 
 class VitaminD3Controller extends Controller
 {
-    public function __construct(private VitaminD3Service $vitaminD3Service) {}
+    public function __construct(private VitaminD3ServiceInterface $vitaminD3Service) {}
 
     public function index(QueryRequest $request)
     {

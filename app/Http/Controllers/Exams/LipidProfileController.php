@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Exams;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Exams\LipidProfileRequest;
 use App\Http\Requests\QueryRequest;
+use App\Interfaces\Exams\LipidProfileServiceInterface;
 use App\Models\Exams\LipidProfile;
-use App\Services\Exams\LipidProfileService;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
@@ -16,7 +16,7 @@ use function in_array;
 
 class LipidProfileController extends Controller
 {
-    public function __construct(private LipidProfileService $lipidProfileService) {}
+    public function __construct(private LipidProfileServiceInterface $lipidProfileService) {}
 
     public function index(QueryRequest $request)
     {
