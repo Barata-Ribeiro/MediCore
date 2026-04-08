@@ -1,4 +1,5 @@
 import DashboardGreetings from '@/components/helpers/dashboard/dashboard-greetings';
+import DashboardMedicalFileCard from '@/components/helpers/dashboard/dashboard-medical-file.card';
 import DashboardProfileCard from '@/components/helpers/dashboard/dashboard-profile.card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -9,7 +10,6 @@ import { cn } from '@/lib/utils';
 import { dashboard } from '@/routes';
 import { edit as editMedicalFile } from '@/routes/medical-file';
 import type { MedicalFile } from '@/types/application/medical-file';
-import { bloodTypeLabel } from '@/types/application/medical-file';
 import type { Profile } from '@/types/application/profile';
 import { Head, Link } from '@inertiajs/react';
 import { format } from 'date-fns';
@@ -165,53 +165,7 @@ export default function Dashboard({ data }: Readonly<{ data: Props }>) {
                             </CardFooter>
                         </Card>
 
-                        {/* MEDICAL FILE SUMMARY */}
-                        <Card className="w-full">
-                            <CardHeader>
-                                <CardTitle className="text-xl">Medical File Summary</CardTitle>
-                                <CardDescription>A quick overview of your medical history and records.</CardDescription>
-                            </CardHeader>
-
-                            <CardContent className="grid gap-4">
-                                <dl className="grid gap-2">
-                                    <div>
-                                        <dt className="font-medium">Blood Type</dt>
-                                        <dd>
-                                            {data.medicalFile.blood_type
-                                                ? bloodTypeLabel(data.medicalFile.blood_type)
-                                                : 'Not Informed'}
-                                        </dd>
-                                    </div>
-
-                                    <div>
-                                        <dt className="font-medium">Allergies</dt>
-                                        <dd>{data.medicalFile.allergies ?? 'Not Informed'}</dd>
-                                    </div>
-
-                                    <div>
-                                        <dt className="font-medium">Diseases</dt>
-                                        <dd>{data.medicalFile.diseases ?? 'Not Informed'}</dd>
-                                    </div>
-
-                                    <div>
-                                        <dt className="font-medium">Medications</dt>
-                                        <dd>{data.medicalFile.medications ?? 'Not Informed'}</dd>
-                                    </div>
-                                </dl>
-                            </CardContent>
-
-                            <CardFooter className="mt-auto flex flex-wrap items-end justify-between gap-4 border-t">
-                                <time dateTime={data.medicalFile.updated_at} className="text-sm text-muted-foreground">
-                                    Last updated: {format(new Date(data.medicalFile.updated_at), 'MMMM dd, yyyy')}
-                                </time>
-
-                                <Button variant="secondary" size="sm" asChild>
-                                    <Link href={editMedicalFile()} as="button" prefetch="hover">
-                                        Edit Medical File
-                                    </Link>
-                                </Button>
-                            </CardFooter>
-                        </Card>
+                        <DashboardMedicalFileCard medicalFile={data.medicalFile} />
                     </div>
                 </div>
             </div>
