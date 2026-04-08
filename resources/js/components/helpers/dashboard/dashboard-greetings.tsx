@@ -16,7 +16,7 @@ export default function DashboardGreetings() {
 
             <div className="relative flex justify-between gap-4">
                 <div className="grid gap-1">
-                    <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+                    <h1 className="text-2xl font-bold tracking-tight text-balance sm:text-3xl">
                         {date.greeting}, {auth.user.name}
                     </h1>
                     <p className="mt-1 text-sm text-white/70">Here&apos;s a quick overview of your account.</p>
