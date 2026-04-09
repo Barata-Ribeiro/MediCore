@@ -11,28 +11,28 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $id
- * @property float $twenty_five_hydroxyvitamin_d3 25-Hydroxyvitamin D3 (25(OH)D3) level
- * @property CarbonImmutable $report_date Date of the Vitamin D3 report
+ * @property float $vitamin_b12_level Vitamin B12 level
+ * @property CarbonImmutable $report_date Date of the Vitamin B12 report
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
  * @property int $medical_file_id
  * @property-read MedicalFile $medicalFile
  *
- * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 whereMedicalFileId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 whereReportDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 whereTwentyFiveHydroxyvitaminD3($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminB12 newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminB12 newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminB12 query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminB12 whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminB12 whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminB12 whereMedicalFileId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminB12 whereReportDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminB12 whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminB12 whereVitaminB12Level($value)
  *
  * @mixin \Eloquent
  */
 #[Touches(['medicalFile'])]
-#[Fillable(['twenty_five_hydroxyvitamin_d3', 'report_date', 'medical_file_id'])]
-class VitaminD3 extends Model
+#[Fillable(['vitamin_b12_level', 'report_date', 'medical_file_id'])]
+class VitaminB12 extends Model
 {
     /**
      * Get the attributes that should be cast.

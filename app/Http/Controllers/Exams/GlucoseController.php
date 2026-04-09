@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Exams;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Exams\GlucoseRequest;
 use App\Http\Requests\QueryRequest;
+use App\Interfaces\Exams\GlucoseServiceInterface;
 use App\Models\Exams\Glucose;
-use App\Services\Exams\GlucoseService;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
@@ -16,7 +16,7 @@ use function in_array;
 
 class GlucoseController extends Controller
 {
-    public function __construct(private GlucoseService $glucoseService) {}
+    public function __construct(private GlucoseServiceInterface $glucoseService) {}
 
     public function index(QueryRequest $request)
     {

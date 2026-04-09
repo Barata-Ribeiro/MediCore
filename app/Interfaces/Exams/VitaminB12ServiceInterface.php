@@ -4,7 +4,7 @@ namespace App\Interfaces\Exams;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 
-interface VitaminD3ServiceInterface
+interface VitaminB12ServiceInterface
 {
     /**
      * Fetch paginated data and chart data for this exam type based on the provided parameters.
@@ -14,5 +14,5 @@ interface VitaminD3ServiceInterface
      *     1: array<string, mixed>
      * }
      */
-    public function getVitaminD3sData(?int $perPage, ?string $sortBy, ?string $sortDir, ?string $search, ?array $filters): array;
+    public function getVitaminB12sData(?int $perPage, ?string $sortBy, ?string $sortDir, ?string $search, ?array $filters): array;
 }

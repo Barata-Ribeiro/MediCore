@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vitamin_d3_s', function (Blueprint $table) {
+        Schema::create('vitamin_b12_s', function (Blueprint $table) {
             $table->id();
-            $table->double('twenty_five_hydroxyvitamin_d3')->comment('25-Hydroxyvitamin D3 (25(OH)D3) level');
-            $table->date('report_date')->comment('Date of the Vitamin D3 report');
+            $table->double('vitamin_b12_level')->comment('Vitamin B12 level');
+            $table->date('report_date')->comment('Date of the Vitamin B12 report');
             $table->timestamps();
 
             $table->foreignId('medical_file_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vitamin_d3_s');
+        Schema::dropIfExists('vitamin_b12_s');
     }
 };
