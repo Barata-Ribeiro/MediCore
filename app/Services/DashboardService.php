@@ -17,7 +17,8 @@ class DashboardService implements DashboardServiceInterface
                 (SELECT COUNT(*) FROM lipid_profiles WHERE medical_file_id = medical_files.id) AS lipid_profiles_count,
                 (SELECT COUNT(*) FROM complete_blood_counts WHERE medical_file_id = medical_files.id) AS complete_blood_counts_count,
                 (SELECT COUNT(*) FROM glucoses WHERE medical_file_id = medical_files.id) AS glucoses_count,
-                (SELECT COUNT(*) FROM vitamin_d3_s WHERE medical_file_id = medical_files.id) AS vitamin_d3s_count')])
+                (SELECT COUNT(*) FROM vitamin_d3_s WHERE medical_file_id = medical_files.id) AS vitamin_d3s_count,
+                (SELECT COUNT(*) FROM vitamin_b12_s WHERE medical_file_id = medical_files.id) AS vitamin_b12s_count')])
             ->where('id', auth()->id())
             ->first();
 
@@ -26,13 +27,15 @@ class DashboardService implements DashboardServiceInterface
         $glucoseCount = $medicalFile?->glucoses_count ?? 0;
         $lipidProfileCount = $medicalFile?->lipid_profiles_count ?? 0;
         $vitaminD3Count = $medicalFile?->vitamin_d3s_count ?? 0;
-        $totalCount = $lipidProfileCount + $completeBloodCountCount + $glucoseCount + $vitaminD3Count;
+        $vitaminB12Count = $medicalFile?->vitamin_b12s_count ?? 0;
+        $totalCount = $lipidProfileCount + $completeBloodCountCount + $glucoseCount + $vitaminD3Count + $vitaminB12Count;
 
         $medicalFile?->makeHidden([
             'complete_blood_counts_count',
             'glucoses_count',
             'lipid_profiles_count',
             'vitamin_d3s_count',
+            'vitamin_b12s_count',
         ]);
 
         return [
@@ -44,6 +47,7 @@ class DashboardService implements DashboardServiceInterface
                 'cbc_count' => $completeBloodCountCount,
                 'glucoses_count' => $glucoseCount,
                 'vitamin_d3s_count' => $vitaminD3Count,
+                'vitamin_b12s_count' => $vitaminB12Count,
             ],
         ];
     }
