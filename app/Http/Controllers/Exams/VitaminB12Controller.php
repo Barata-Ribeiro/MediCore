@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Exams\VitaminB12Request;
 use App\Http\Requests\QueryRequest;
 use App\Interfaces\Exams\VitaminB12ServiceInterface;
+use App\Models\Exams\VitaminB12;
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
@@ -51,6 +52,40 @@ class VitaminB12Controller extends Controller
 
             return back()->withInput();
         }
+    }
+
+    public function edit(VitaminB12 $vitaminB12)
+    {
+        return Inertia::render('exams/vitamin-b12/edit', [
+            'vitaminB12' => $vitaminB12,
+        ]);
+    }
+
+    public function update(VitaminB12Request $request, VitaminB12 $vitaminB12)
+    {
+        $user = $request->user();
+
+        if ($vitaminB12->medicalFile->user_id !== $user->id) {
+            Inertia::flash('error', 'Unauthorized to update this Vitamin B12 record.');
+
+            return back();
+        }
+
+        $validated = $request->validated();
+
+        try {
+            $vitaminB12->update($validated);
+
+            Inertia::flash('success', 'Vitamin B12 record updated successfully.');
+
+            return to_route('vitamin-b12.index');
+        } catch (Exception $e) {
+            Inertia::flash('error', 'An error occurred while updating the Vitamin B12 record.');
+            Log::error('Error updating Vitamin B12 record', ['user_id' => $request->user()->id, 'vitamin_b12_id' => $vitaminB12->id, 'error' => $e->getMessage()]);
+
+            return back()->withInput();
+        }
+
     }
 
     /**
