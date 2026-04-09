@@ -41,12 +41,14 @@ test('dashboard route uses the dashboard service data', function () {
             ->missing('data.medicalFile.complete_blood_counts_count')
             ->missing('data.medicalFile.glucoses_count')
             ->missing('data.medicalFile.vitamin_d3s_count')
+            ->missing('data.medicalFile.vitamin_b12s_count')
             ->has('exams', fn (AssertableInertia $exams) => $exams
                 ->has('total')
                 ->has('lipid_profiles_count')
                 ->has('cbc_count')
                 ->has('glucoses_count')
                 ->has('vitamin_d3s_count')
+                ->has('vitamin_b12s_count')
             )
         )
     );
