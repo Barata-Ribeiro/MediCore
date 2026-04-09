@@ -1,8 +1,23 @@
+import ActionConfirmationDialog from '@/components/common/action-confirmation-dialog';
+import DropdownMenuCopyButton from '@/components/common/dropdown-menu-copy-button';
 import DataTableColumnHeader from '@/components/table/data-table-column-header';
+import { Button } from '@/components/ui/button';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { destroy, edit } from '@/routes/vitamin-d3';
 import type { VitaminD3 } from '@/types/application/exams/vitamin-d3';
+import { Link } from '@inertiajs/react';
 import type { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns/format';
-import { CalendarIcon } from 'lucide-react';
+import { CalendarIcon, DeleteIcon, EditIcon, EllipsisIcon } from 'lucide-react';
+import { Fragment, useState } from 'react';
 
 export const columns: ColumnDef<VitaminD3>[] = [
     {
@@ -40,6 +55,59 @@ export const columns: ColumnDef<VitaminD3>[] = [
         },
         enableSorting: true,
     },
+    {
+        id: 'actions',
+        cell: function Cell({ row }) {
+            const [open, setOpen] = useState(false);
 
-    // TODO: Implement actions column
+            const valuesToCopy = `Report Date: ${format(row.original.report_date, 'PPP')}, Vitamin D3: ${row.original.twenty_five_hydroxyvitamin_d3} ng/mL, Created At: ${format(row.original.created_at, 'PPP p')}`;
+
+            return (
+                <Fragment>
+                    <DropdownMenu modal={false}>
+                        <DropdownMenuTrigger asChild>
+                            <Button
+                                aria-label="Open menu"
+                                variant="ghost"
+                                className="flex size-8 p-0 data-[state=open]:bg-muted"
+                            >
+                                <EllipsisIcon aria-hidden size={16} />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="w-40">
+                            <DropdownMenuLabel>Copy Fields</DropdownMenuLabel>
+                            <DropdownMenuGroup>
+                                <DropdownMenuItem asChild>
+                                    <DropdownMenuCopyButton content={valuesToCopy}>Copy Values</DropdownMenuCopyButton>
+                                </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuGroup>
+                                <DropdownMenuItem asChild>
+                                    <Link className="block w-full" href={edit(row.original.id)} as="button">
+                                        <EditIcon aria-hidden size={14} /> Edit
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem variant="destructive" onSelect={() => setOpen(true)}>
+                                    <DeleteIcon aria-hidden size={14} /> Delete
+                                </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+
+                    <ActionConfirmationDialog
+                        title="Delete Record"
+                        description="Are you sure you want to delete this record? This action cannot be undone."
+                        open={open}
+                        setOpen={setOpen}
+                        method={'delete'}
+                        route={destroy(row.original.id)}
+                    />
+                </Fragment>
+            );
+        },
+        size: 40,
+        enableHiding: false,
+    },
 ];
