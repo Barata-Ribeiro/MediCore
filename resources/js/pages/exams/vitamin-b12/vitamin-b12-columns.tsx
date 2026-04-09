@@ -11,15 +11,15 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { destroy, edit } from '@/routes/vitamin-d3';
-import type { VitaminD3 } from '@/types/application/exams/vitamin-d3';
+import { destroy, edit } from '@/routes/vitamin-b12';
+import type { VitaminB12 } from '@/types/application/exams/vitamin-b12';
 import { Link } from '@inertiajs/react';
 import type { ColumnDef } from '@tanstack/react-table';
-import { format } from 'date-fns/format';
+import { format } from 'date-fns';
 import { CalendarIcon, DeleteIcon, EditIcon, EllipsisIcon } from 'lucide-react';
 import { Fragment, useState } from 'react';
 
-export const columns: ColumnDef<VitaminD3>[] = [
+export const columns: ColumnDef<VitaminB12>[] = [
     {
         accessorKey: 'id',
         header: ({ column }) => <DataTableColumnHeader column={column} title="ID" />,
@@ -39,9 +39,9 @@ export const columns: ColumnDef<VitaminD3>[] = [
         enableSorting: true,
     },
     {
-        accessorKey: 'twenty_five_hydroxyvitamin_d3',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Vitamin D3" />,
-        cell: ({ row }) => `${row.original.twenty_five_hydroxyvitamin_d3} ng/mL`,
+        accessorKey: 'vitamin_b12_level',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Vitamin B12" />,
+        cell: ({ row }) => `${row.original.vitamin_b12_level} pg/mL`,
         enableSorting: true,
     },
     {
@@ -60,7 +60,7 @@ export const columns: ColumnDef<VitaminD3>[] = [
         cell: function Cell({ row }) {
             const [open, setOpen] = useState(false);
 
-            const valuesToCopy = `Report Date: ${format(row.original.report_date, 'PPP')}, Vitamin D3: ${row.original.twenty_five_hydroxyvitamin_d3} ng/mL, Created At: ${format(row.original.created_at, 'PPP p')}`;
+            const valuesToCopy = `Report Date: ${format(row.original.report_date, 'PPP')}, Vitamin B12: ${row.original.vitamin_b12_level} pg/mL, Created At: ${format(row.original.created_at, 'PPP p')}`;
 
             return (
                 <Fragment>
