@@ -34,11 +34,14 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read MedicalFile|null $medicalFile
  * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
+ * @property-read bool|null $notifications_exists
  * @property-read Collection<int, Permission> $permissions
  * @property-read int|null $permissions_count
+ * @property-read bool|null $permissions_exists
  * @property-read Profile|null $profile
  * @property-read Collection<int, Role> $roles
  * @property-read int|null $roles_count
+ * @property-read bool|null $roles_exists
  *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static Builder<static>|User isSuperAdmin()
