@@ -88,6 +88,30 @@ class VitaminB12Controller extends Controller
 
     }
 
+    public function destroy(VitaminB12 $vitaminB12)
+    {
+        $user = auth()->user();
+
+        if ($vitaminB12->medicalFile->user_id !== $user->id) {
+            Inertia::flash('error', 'Unauthorized to delete this Vitamin B12 record.');
+
+            return back();
+        }
+
+        try {
+            $vitaminB12->delete();
+
+            Inertia::flash('success', 'Vitamin B12 record deleted successfully.');
+
+            return to_route('vitamin-b12.index');
+        } catch (Exception $e) {
+            Inertia::flash('error', 'An error occurred while deleting the Vitamin B12 record.');
+            Log::error('Error deleting Vitamin B12 record', ['user_id' => $user->id, 'vitamin_b12_id' => $vitaminB12->id, 'error' => $e->getMessage()]);
+
+            return back();
+        }
+    }
+
     /**
      * Validate request query inputs, apply sort/filter defaults, and fetch
      * paginated glucose results plus chart data.
