@@ -1,5 +1,6 @@
 import AppearanceMenu from '@/components/helpers/appearance-menu';
 import { Breadcrumbs } from '@/components/helpers/breadcrumbs';
+import NavCommandBar from '@/components/navigation/nav-command-bar';
 import { Separator } from '@/components/ui/separator';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import type { BreadcrumbItem as BreadcrumbItemType } from '@/types';
@@ -14,6 +15,7 @@ export function AppSidebarHeader({ breadcrumbs = [] }: Readonly<{ breadcrumbs?: 
             </div>
 
             <div className="ml-auto inline-flex items-center gap-x-2">
+                <NavCommandBar />
                 <AppearanceMenu />
             </div>
         </header>
