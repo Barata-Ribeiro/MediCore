@@ -35,16 +35,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $user_id
  * @property-read Collection<int, CompleteBloodCount> $completeBloodCounts
  * @property-read int|null $complete_blood_counts_count
+ * @property-read bool|null $complete_blood_counts_exists
  * @property-read float|null $bmi
  * @property-read Collection<int, Glucose> $glucoses
  * @property-read int|null $glucoses_count
+ * @property-read bool|null $glucoses_exists
  * @property-read Collection<int, LipidProfile> $lipidProfiles
  * @property-read int|null $lipid_profiles_count
+ * @property-read bool|null $lipid_profiles_exists
  * @property-read User $user
  * @property-read Collection<int, VitaminB12> $vitaminB12s
  * @property-read int|null $vitamin_b12s_count
+ * @property-read bool|null $vitamin_b12s_exists
  * @property-read Collection<int, VitaminD3> $vitaminD3s
  * @property-read int|null $vitamin_d3s_count
+ * @property-read bool|null $vitamin_d3s_exists
  *
  * @method static Builder<static>|MedicalFile bloodType(\App\Enums\BloodType $bloodType)
  * @method static Builder<static>|MedicalFile newModelQuery()

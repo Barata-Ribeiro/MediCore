@@ -1,7 +1,9 @@
 <?php
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Session\Store;
 
 return [
 
@@ -94,7 +96,7 @@ return [
     */
 
     'write_model_relation_count_properties' => true,
-    'write_model_relation_exists_properties' => false,
+    'write_model_relation_exists_properties' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -183,8 +185,8 @@ return [
     */
 
     'extra' => [
-        'Eloquent' => ['Illuminate\Database\Eloquent\Builder', 'Illuminate\Database\Query\Builder'],
-        'Session' => ['Illuminate\Session\Store'],
+        'Eloquent' => [Builder::class, Illuminate\Database\Query\Builder::class],
+        'Session' => [Store::class],
     ],
 
     'magic' => [],
