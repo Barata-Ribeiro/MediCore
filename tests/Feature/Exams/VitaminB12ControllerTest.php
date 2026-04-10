@@ -95,7 +95,7 @@ describe('tests for the "store" method of VitaminB12Controller', function () {
         $response = $this->actingAs($user)->post(route('vitamin-b12.store'), $data);
 
         $response->assertRedirect(route('vitamin-b12.index'));
-        $this->assertDatabaseHas('vitamin_b12s', [...$data, 'medical_file_id' => $user->medicalFile->id]);
+        $this->assertDatabaseHas('vitamin_b12_s', [...$data, 'medical_file_id' => $user->medicalFile->id]);
     });
 
     it('should redirect guests to login if user is not authenticated', function () {
@@ -154,7 +154,7 @@ describe('tests for the "update" method of VitaminB12Controller', function () {
         $response = $this->actingAs($user)->put(route('vitamin-b12.update', $vitaminB12), $updatedData);
 
         $response->assertRedirect(route('vitamin-b12.index'));
-        $this->assertDatabaseHas('vitamin_b12s', [...$updatedData, 'id' => $vitaminB12->id]);
+        $this->assertDatabaseHas('vitamin_b12_s', [...$updatedData, 'id' => $vitaminB12->id]);
     });
 
     it('should not update a vitamin b12 record from another user', function () {
@@ -178,7 +178,7 @@ describe('tests for the "update" method of VitaminB12Controller', function () {
             ->put(route('vitamin-b12.update', $vitaminB12), $updatedData);
 
         $response->assertRedirect(route('vitamin-b12.index'));
-        $this->assertDatabaseHas('vitamin_b12s', [
+        $this->assertDatabaseHas('vitamin_b12_s', [
             'id' => $vitaminB12->id,
             'vitamin_b12_level' => 225,
             'report_date' => now()->toDateString(),
@@ -205,7 +205,7 @@ describe('tests for the "destroy" method of VitaminB12Controller', function () {
         $response = $this->actingAs($user)->delete(route('vitamin-b12.destroy', $vitaminB12));
 
         $response->assertRedirect(route('vitamin-b12.index'));
-        $this->assertDatabaseMissing('vitamin_b12s', ['id' => $vitaminB12->id]);
+        $this->assertDatabaseMissing('vitamin_b12_s', ['id' => $vitaminB12->id]);
     });
 
     it('should not delete a vitamin b12 record from another user', function () {
@@ -224,7 +224,7 @@ describe('tests for the "destroy" method of VitaminB12Controller', function () {
             ->delete(route('vitamin-b12.destroy', $vitaminB12));
 
         $response->assertRedirect(route('vitamin-b12.index'));
-        $this->assertDatabaseHas('vitamin_b12s', ['id' => $vitaminB12->id]);
+        $this->assertDatabaseHas('vitamin_b12_s', ['id' => $vitaminB12->id]);
     });
 
     it('should redirect guests to login if user is not authenticated', function () {
