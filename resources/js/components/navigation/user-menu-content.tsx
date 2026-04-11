@@ -35,16 +35,16 @@ export function UserMenuContent({ user }: Readonly<Props>) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
                 <DropdownMenuItem asChild>
-                    <Link className="block w-full cursor-pointer" href={edit()} prefetch onClick={cleanup}>
+                    <Link className="block w-full" href={edit()} prefetch onClick={cleanup}>
                         <Settings aria-hidden className="mr-2" />
                         Settings
                     </Link>
                 </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
+            <DropdownMenuItem variant="destructive" asChild>
                 <Link
-                    className="block w-full cursor-pointer"
+                    className="block w-full"
                     href={logout()}
                     as="button"
                     onClick={handleLogout}
