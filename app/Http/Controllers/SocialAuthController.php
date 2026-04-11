@@ -50,21 +50,31 @@ class SocialAuthController extends Controller
             $socialUser = Socialite::driver($provider)->user();
 
             $user = DB::transaction(function () use ($provider, $socialUser): User {
-                $user = User::updateOrCreate(
-                    ['provider_name' => $provider, 'provider_id' => $socialUser->getId()],
-                    [
-                        'name' => $socialUser->getName() ?: $socialUser->getNickname(),
-                        'email' => $socialUser->getEmail(),
-                        'avatar' => $socialUser->getAvatar(),
-                        'email_verified_at' => now(),
-                        'provider_token' => $socialUser->token,
-                        'provider_refresh_token' => $socialUser->refreshToken ?? null,
-                        'registration_domain' => request()->getHost(),
-                    ]
-                );
+                $user = User::query()
+                    ->where(fn ($q) => $q->where('provider_name', $provider)->where('provider_id', $socialUser->getId()))
+                    ->orWhere('email', $socialUser->getEmail())
+                    ->first();
 
-                $user->assignRole('user');
-                $user->medicalFile()->firstOrCreate([]);
+                $attributes = [
+                    'name' => $socialUser->getName() ?: $socialUser->getNickname(),
+                    'avatar' => $socialUser->getAvatar(),
+                    'email' => $socialUser->getEmail(),
+                    'provider_name' => $provider,
+                    'provider_id' => $socialUser->getId(),
+                    'provider_token' => $socialUser->token,
+                    'provider_refresh_token' => $socialUser->refreshToken ?? null,
+                    'registration_domain' => request()->getHost(),
+                ];
+
+                if ($user) {
+                    $user->update($attributes);
+                    $user->markEmailAsVerified();
+                } else {
+                    $user = User::query()->create($attributes);
+                    $user->assignRole('user');
+                    $user->markEmailAsVerified();
+                    $user->medicalFile()->firstOrCreate([]);
+                }
 
                 return $user;
             });
