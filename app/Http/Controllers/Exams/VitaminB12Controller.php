@@ -43,11 +43,11 @@ class VitaminB12Controller extends Controller
 
             $user->medicalFile->vitaminB12s()->create($validated);
 
-            Inertia::flash('success', 'Vitamin B12 record created successfully.');
+            Inertia::flash('toast', ['type' => 'success', 'message' => 'Vitamin B12 record created successfully.']);
 
             return to_route('vitamin-b12.index');
         } catch (Exception $e) {
-            Inertia::flash('error', 'An error occurred while creating the Vitamin B12 record.');
+            Inertia::flash('toast', ['type' => 'error', 'message' => 'An error occurred while creating the Vitamin B12 record.']);
             Log::error('Error creating Vitamin B12 record', ['user_id' => $request->user()->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
@@ -66,7 +66,7 @@ class VitaminB12Controller extends Controller
         $user = $request->user();
 
         if ($vitaminB12->medicalFile->user_id !== $user->id) {
-            Inertia::flash('error', 'Unauthorized to update this Vitamin B12 record.');
+            Inertia::flash('toast', ['type' => 'error', 'message' => 'Unauthorized to update this Vitamin B12 record.']);
 
             return back();
         }
@@ -76,11 +76,11 @@ class VitaminB12Controller extends Controller
         try {
             $vitaminB12->update($validated);
 
-            Inertia::flash('success', 'Vitamin B12 record updated successfully.');
+            Inertia::flash('toast', ['type' => 'success', 'message' => 'Vitamin B12 record updated successfully.']);
 
             return to_route('vitamin-b12.index');
         } catch (Exception $e) {
-            Inertia::flash('error', 'An error occurred while updating the Vitamin B12 record.');
+            Inertia::flash('toast', ['type' => 'error', 'message' => 'An error occurred while updating the Vitamin B12 record.']);
             Log::error('Error updating Vitamin B12 record', ['user_id' => $request->user()->id, 'vitamin_b12_id' => $vitaminB12->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
@@ -93,7 +93,7 @@ class VitaminB12Controller extends Controller
         $user = auth()->user();
 
         if ($vitaminB12->medicalFile->user_id !== $user->id) {
-            Inertia::flash('error', 'Unauthorized to delete this Vitamin B12 record.');
+            Inertia::flash('toast', ['type' => 'error', 'message' => 'Unauthorized to delete this Vitamin B12 record.']);
 
             return back();
         }
@@ -101,11 +101,11 @@ class VitaminB12Controller extends Controller
         try {
             $vitaminB12->delete();
 
-            Inertia::flash('success', 'Vitamin B12 record deleted successfully.');
+            Inertia::flash('toast', ['type' => 'success', 'message' => 'Vitamin B12 record deleted successfully.']);
 
             return to_route('vitamin-b12.index');
         } catch (Exception $e) {
-            Inertia::flash('error', 'An error occurred while deleting the Vitamin B12 record.');
+            Inertia::flash('toast', ['type' => 'error', 'message' => 'An error occurred while deleting the Vitamin B12 record.']);
             Log::error('Error deleting Vitamin B12 record', ['user_id' => $user->id, 'vitamin_b12_id' => $vitaminB12->id, 'error' => $e->getMessage()]);
 
             return back();
