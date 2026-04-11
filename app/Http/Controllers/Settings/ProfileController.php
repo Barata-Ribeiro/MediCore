@@ -74,11 +74,11 @@ class ProfileController extends Controller
                 $user->save();
             });
 
-            Inertia::flash('success', 'Profile updated successfully.');
+            Inertia::flash('toast', ['type' => 'success', 'message' => 'Profile updated successfully.']);
 
             return to_route('profile.edit');
         } catch (Exception $e) {
-            Inertia::flash('error', 'An error occurred while updating the profile.');
+            Inertia::flash('toast', ['type' => 'error', 'message' => 'An error occurred while updating the profile.']);
             Log::error('Failed to update profile', ['user_id' => $user->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
@@ -100,11 +100,11 @@ class ProfileController extends Controller
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
-            Inertia::flash('success', 'Account deleted successfully.');
+            Inertia::flash('toast', ['type' => 'success', 'message' => 'Account deleted successfully.']);
 
             return redirect('/');
         } catch (Exception $e) {
-            Inertia::flash('error', 'An error occurred while deleting the account.');
+            Inertia::flash('toast', ['type' => 'error', 'message' => 'An error occurred while deleting the account.']);
             Log::error('Failed to delete account', ['user_id' => $user->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();

@@ -35,11 +35,11 @@ class MedicalFileController extends Controller
 
             $user->medicalFile()->updateOrCreate([], $validated);
 
-            Inertia::flash('success', 'Medical file updated successfully.');
+            Inertia::flash('toast', ['type' => 'success', 'message' => 'Medical file updated successfully.']);
 
             return to_route('medical-file.edit');
         } catch (Exception $e) {
-            Inertia::flash('error', 'An error occurred while updating the medical file.');
+            Inertia::flash('toast', ['type' => 'error', 'message' => 'An error occurred while updating the medical file.']);
             Log::error('Failed to update medical file', ['user_id' => $user->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
