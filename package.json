@@ -48,6 +48,7 @@
         "@inertiajs/react": "^3.0.3",
         "@inertiajs/vite": "^3.0.3",
         "@tailwindcss/vite": "^4.2.2",
+        "@tanstack/react-hotkeys": "^0.9.1",
         "@tanstack/react-table": "^8.21.3",
         "@types/react": "^19.2.14",
         "@types/react-dom": "^19.2.3",

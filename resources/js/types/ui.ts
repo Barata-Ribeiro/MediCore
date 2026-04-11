@@ -15,12 +15,9 @@ export type AuthLayoutProps = {
     description?: string;
 };
 
-export type FlashPayload = {
-    success?: string | null;
-    error?: string | null;
-    warning?: string | null;
-    info?: string | null;
-    [key: string]: string | null | undefined;
+export type FlashToast = {
+    type: 'success' | 'info' | 'warning' | 'error';
+    message: string;
 };
 
 export type ChartData = {
