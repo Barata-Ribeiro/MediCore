@@ -24,11 +24,17 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $name
  * @property string $email
  * @property CarbonImmutable|null $email_verified_at
- * @property string $password
+ * @property string|null $password
  * @property string|null $two_factor_secret
  * @property string|null $two_factor_recovery_codes
  * @property CarbonImmutable|null $two_factor_confirmed_at
  * @property string|null $remember_token
+ * @property string|null $provider_id
+ * @property string|null $provider_name
+ * @property string|null $registration_domain
+ * @property string|null $provider_token
+ * @property string|null $provider_refresh_token
+ * @property string|null $avatar
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
  * @property-read MedicalFile|null $medicalFile
@@ -50,12 +56,18 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder<static>|User permission($permissions, bool $without = false)
  * @method static Builder<static>|User query()
  * @method static Builder<static>|User role($roles, ?string $guard = null, bool $without = false)
+ * @method static Builder<static>|User whereAvatar($value)
  * @method static Builder<static>|User whereCreatedAt($value)
  * @method static Builder<static>|User whereEmail($value)
  * @method static Builder<static>|User whereEmailVerifiedAt($value)
  * @method static Builder<static>|User whereId($value)
  * @method static Builder<static>|User whereName($value)
  * @method static Builder<static>|User wherePassword($value)
+ * @method static Builder<static>|User whereProviderId($value)
+ * @method static Builder<static>|User whereProviderName($value)
+ * @method static Builder<static>|User whereProviderRefreshToken($value)
+ * @method static Builder<static>|User whereProviderToken($value)
+ * @method static Builder<static>|User whereRegistrationDomain($value)
  * @method static Builder<static>|User whereRememberToken($value)
  * @method static Builder<static>|User whereTwoFactorConfirmedAt($value)
  * @method static Builder<static>|User whereTwoFactorRecoveryCodes($value)
@@ -66,7 +78,7 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @mixin \Eloquent
  */
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password', 'provider_id', 'provider_name', 'registration_domain', 'provider_token', 'provider_refresh_token', 'avatar'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
 class User extends Authenticatable
 {
