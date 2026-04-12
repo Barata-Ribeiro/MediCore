@@ -15,7 +15,9 @@ export function UserInfo({ user, showEmail = false }: Readonly<{ user: User; sho
                 </AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
+                <span className="truncate font-medium" aria-label={user.name} title={user.name}>
+                    {user.name}
+                </span>
                 <Activity mode={showEmail ? 'visible' : 'hidden'}>
                     <span className="truncate text-xs text-muted-foreground">{user.email}</span>
                 </Activity>
