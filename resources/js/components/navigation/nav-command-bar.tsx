@@ -67,7 +67,7 @@ export default function NavCommandBar() {
                             .map((item) => (
                                 <CommandGroup key={item.title} heading={item.title}>
                                     {item.items?.map((subItem) => (
-                                        <CommandItem key={subItem.title}>
+                                        <CommandItem key={subItem.title} onSelect={handleRouteChange(subItem.href)}>
                                             <span>{subItem.title}</span>
                                         </CommandItem>
                                     ))}
