@@ -3,6 +3,8 @@ import { index as cbcIndex } from '@/routes/complete-blood-count';
 import { index as glucoseIndex } from '@/routes/glucose';
 import { index as lipidProfileIndex } from '@/routes/lipid-profile';
 import { edit } from '@/routes/medical-file';
+import { index as vitaminB12Index } from '@/routes/vitamin-b12';
+import { index as vitaminD3Index } from '@/routes/vitamin-d3';
 import type { NavItem } from '@/types';
 import { BriefcaseBusinessIcon, FileTextIcon, FolderGit2, LayoutGrid, MicroscopeIcon } from 'lucide-react';
 
@@ -23,16 +25,24 @@ const mainNavItems: NavItem[] = [
         icon: MicroscopeIcon,
         items: [
             {
-                title: 'Lipid Profile',
-                href: lipidProfileIndex(),
-            },
-            {
                 title: 'Complete Blood Count',
                 href: cbcIndex(),
             },
             {
                 title: 'Glucose',
                 href: glucoseIndex(),
+            },
+            {
+                title: 'Lipid Profile',
+                href: lipidProfileIndex(),
+            },
+            {
+                title: 'Vitamin B12',
+                href: vitaminB12Index(),
+            },
+            {
+                title: 'Vitamin D3',
+                href: vitaminD3Index(),
             },
         ],
     },
