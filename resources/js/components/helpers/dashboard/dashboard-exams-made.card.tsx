@@ -8,7 +8,7 @@ type Props = {
 
 const DashboardExamsMadeCard = memo<Readonly<Props>>(({ exams }) => {
     return (
-        <Card>
+        <Card className="w-full">
             <CardHeader>
                 <CardTitle className="text-xl">Exams Made</CardTitle>
                 <CardDescription>A chart showing the number all exams made by you.</CardDescription>
