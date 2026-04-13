@@ -1,3 +1,4 @@
+import type { ChartConfig } from '@/components/ui/chart';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { normalizeString } from '@/lib/utils';
 import { memo, useMemo } from 'react';
@@ -8,40 +9,48 @@ type Props = {
 };
 
 const ExamsSummaryChart = memo<Readonly<Props>>(({ exams }) => {
-    const rechartsData = useMemo(() => {
-        return Object.entries(exams)
-            .filter(([key]) => key !== 'total')
-            .map(([key, value]) => {
-                const removeCounterSuffix = key.replace(/_count$/, '');
-                const normalizedKey = normalizeString(removeCounterSuffix);
+    const examEntries = useMemo(() => Object.entries(exams).filter(([key]) => key !== 'total'), [exams]);
 
-                return {
-                    exam: normalizedKey,
-                    count: value,
-                    fill: `var(--chart-${(Object.keys(exams).indexOf(key) % 6) + 1})`,
-                };
-            });
-    }, [exams]);
+    const rechartsData = useMemo(() => {
+        return examEntries.map(([key, value]) => {
+            const examKey = key.replace(/_count$/, '');
+
+            return {
+                exam: examKey,
+                count: value,
+                fill: `var(--color-${examKey})`,
+            };
+        });
+    }, [examEntries]);
+
+    const totalExams = exams['total'] ?? 0;
+    const hasExamData = rechartsData.some(({ count }) => count > 0);
 
     const chartConfig = useMemo(() => {
-        return Object.keys(exams).reduce(
-            (acc, key, idx) => {
-                const removeCounterSuffix = key.replace(/_count$/, '');
-                const normalizedKey = normalizeString(removeCounterSuffix);
+        return examEntries.reduce(
+            (acc, [key], index) => {
+                const examKey = key.replace(/_count$/, '');
 
-                acc[key] = { label: normalizedKey, color: `var(--chart-${(idx % 6) + 1})` };
+                acc[examKey] = {
+                    label: normalizeString(examKey),
+                    color: `var(--chart-${(index % 6) + 1})`,
+                };
 
                 return acc;
             },
-            {} as Record<string, { label: string; color: string }>,
+            { count: { label: 'Exams' } } as ChartConfig,
         );
-    }, [exams]);
+    }, [examEntries]) satisfies ChartConfig;
+
+    const pieData = hasExamData ? rechartsData : [{ exam: 'empty', count: 1, fill: 'var(--color-border)' }];
 
     return (
         <ChartContainer config={chartConfig} className="mx-auto aspect-square max-h-62.5">
             <PieChart>
-                <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-                <Pie data={rechartsData} dataKey="count" nameKey="exam" innerRadius={60} strokeWidth={5}>
+                {hasExamData ? (
+                    <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel nameKey="exam" />} />
+                ) : null}
+                <Pie data={pieData} dataKey="count" nameKey="exam" innerRadius={60} strokeWidth={5}>
                     <Label
                         content={({ viewBox }) => {
                             if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
@@ -52,18 +61,20 @@ const ExamsSummaryChart = memo<Readonly<Props>>(({ exams }) => {
                                             y={viewBox.cy}
                                             className="fill-foreground text-3xl font-bold"
                                         >
-                                            {(exams['total'] ?? 0).toLocaleString()}
+                                            {totalExams.toLocaleString()}
                                         </tspan>
                                         <tspan
                                             x={viewBox.cx}
                                             y={(viewBox.cy ?? 0) + 24}
                                             className="fill-muted-foreground"
                                         >
-                                            Visitors
+                                            {hasExamData ? 'Exams' : 'No exams yet'}
                                         </tspan>
                                     </text>
                                 );
                             }
+
+                            return null;
                         }}
                     />
                 </Pie>
