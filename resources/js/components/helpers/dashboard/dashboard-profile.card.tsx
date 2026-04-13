@@ -56,7 +56,7 @@ const DashboardProfileCard = memo<Readonly<Props>>(({ profile }) => {
                 </div>
             </CardHeader>
 
-            <CardContent className="grid gap-4 sm:grid-cols-2">
+            <CardContent className="grid gap-4 md:grid-cols-2">
                 <dl className="grid gap-2">
                     <div>
                         <dt className="font-medium">Full Name</dt>

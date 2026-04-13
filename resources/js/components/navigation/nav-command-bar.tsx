@@ -42,7 +42,7 @@ export default function NavCommandBar() {
                 <SearchIcon aria-hidden />
                 <span>Search...</span>
 
-                <Kbd className="-mr-2 ml-18">{formatForDisplay('Mod+K')}</Kbd>
+                <Kbd className="-mr-2 ml-18 hidden sm:inline-flex">{formatForDisplay('Mod+K')}</Kbd>
             </Button>
             <CommandDialog open={open} onOpenChange={setOpen}>
                 <Command>
