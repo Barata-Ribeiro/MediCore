@@ -1,4 +1,5 @@
 import DashboardBMICard from '@/components/helpers/dashboard/dashboard-bmi.card';
+import DashboardExamsMadeCard from '@/components/helpers/dashboard/dashboard-exams-made.card';
 import DashboardExamsSummaryCard from '@/components/helpers/dashboard/dashboard-exams-summary.card';
 import DashboardGreetings from '@/components/helpers/dashboard/dashboard-greetings';
 import DashboardMedicalFileCard from '@/components/helpers/dashboard/dashboard-medical-file.card';
@@ -38,6 +39,7 @@ export default function Dashboard({ data }: Readonly<{ data: Props }>) {
 
                 <div className="grid gap-4 sm:grid-cols-3">
                     <DashboardExamsSummaryCard exams={data.exams} />
+                    <DashboardExamsMadeCard exams={data.exams} />
                 </div>
             </div>
         </Fragment>

@@ -21,7 +21,7 @@ const DashboardExamsSummaryCard = memo<Readonly<Props>>(({ exams }) => {
         );
 
     return (
-        <Card className="col-span-2 w-full">
+        <Card className="w-full sm:col-span-2">
             <CardHeader>
                 <CardTitle className="text-xl">Exams Summary</CardTitle>
                 <CardDescription>A quick overview of your medical exams and their results.</CardDescription>
