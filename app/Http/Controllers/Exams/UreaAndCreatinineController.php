@@ -66,7 +66,6 @@ class UreaAndCreatinineController extends Controller
 
         if ($ureaAndCreatinine->medicalFile->user_id !== $user->id) {
             Inertia::flash('toast', ['type' => 'error', 'message' => 'Unauthorized to update this record.']);
-            Log::warning('Unauthorized update attempt on Urea and Creatinine record', ['user_id' => $request->user()->id, 'record_id' => $ureaAndCreatinine->id]);
 
             return back();
         }
@@ -84,6 +83,30 @@ class UreaAndCreatinineController extends Controller
             Log::error('Error updating Urea and Creatinine record', ['user_id' => $request->user()->id, 'record_id' => $ureaAndCreatinine->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
+        }
+    }
+
+    public function destroy(UreaAndCreatinine $ureaAndCreatinine)
+    {
+        $user = request()->user();
+
+        if ($ureaAndCreatinine->medicalFile->user_id !== $user->id) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => 'Unauthorized to delete this record.']);
+
+            return back();
+        }
+
+        try {
+            $ureaAndCreatinine->delete();
+
+            Inertia::flash('toast', ['type' => 'success', 'message' => 'Record deleted successfully.']);
+
+            return to_route('urea-and-creatinine.index');
+        } catch (Exception $e) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => 'An error occurred while deleting the record.']);
+            Log::error('Error deleting Urea and Creatinine record', ['user_id' => $user->id, 'record_id' => $ureaAndCreatinine->id, 'error' => $e->getMessage()]);
+
+            return back();
         }
     }
 
