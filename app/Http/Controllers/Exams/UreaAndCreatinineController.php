@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Exams;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Exams\UreaAndCreatinineRequest;
 use App\Http\Requests\QueryRequest;
 use App\Interfaces\Exams\UreaAndCreatinineServiceInterface;
+use App\Models\Exams\UreaAndCreatinine;
+use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
+use Log;
 
 use function in_array;
 
@@ -22,6 +26,88 @@ class UreaAndCreatinineController extends Controller
             'ureaAndCreatinines' => $ureaAndCreatinines,
             'chartData' => $chartData,
         ]);
+    }
+
+    public function create()
+    {
+        return Inertia::render('exams/urea-and-creatinine/create');
+    }
+
+    public function store(UreaAndCreatinineRequest $request)
+    {
+        $user = $request->user();
+
+        $validated = $request->validated();
+
+        try {
+            $user->medicalFile->ureaAndCreatinines()->create($validated);
+
+            Inertia::flash('toast', ['type' => 'success', 'message' => 'Urea and Creatinine record created successfully.']);
+
+            return to_route('urea-and-creatinine.index');
+        } catch (Exception $e) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => 'An error occurred while creating the Urea and Creatinine record.']);
+            Log::error('Error creating Urea and Creatinine record', ['user_id' => $request->user()->id, 'error' => $e->getMessage()]);
+
+            return back()->withInput();
+        }
+    }
+
+    public function edit(UreaAndCreatinine $ureaAndCreatinine)
+    {
+        return Inertia::render('exams/urea-and-creatinine/edit', [
+            'ureaAndCreatinine' => $ureaAndCreatinine,
+        ]);
+    }
+
+    public function update(UreaAndCreatinineRequest $request, UreaAndCreatinine $ureaAndCreatinine)
+    {
+        $user = $request->user();
+
+        if ($ureaAndCreatinine->medicalFile->user_id !== $user->id) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => 'Unauthorized to update this record.']);
+
+            return back();
+        }
+
+        $validated = $request->validated();
+
+        try {
+            $ureaAndCreatinine->update($validated);
+
+            Inertia::flash('toast', ['type' => 'success', 'message' => 'Urea and Creatinine record updated successfully.']);
+
+            return to_route('urea-and-creatinine.index');
+        } catch (Exception $e) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => 'An error occurred while updating the record.']);
+            Log::error('Error updating Urea and Creatinine record', ['user_id' => $request->user()->id, 'record_id' => $ureaAndCreatinine->id, 'error' => $e->getMessage()]);
+
+            return back()->withInput();
+        }
+    }
+
+    public function destroy(UreaAndCreatinine $ureaAndCreatinine)
+    {
+        $user = request()->user();
+
+        if ($ureaAndCreatinine->medicalFile->user_id !== $user->id) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => 'Unauthorized to delete this record.']);
+
+            return back();
+        }
+
+        try {
+            $ureaAndCreatinine->delete();
+
+            Inertia::flash('toast', ['type' => 'success', 'message' => 'Record deleted successfully.']);
+
+            return to_route('urea-and-creatinine.index');
+        } catch (Exception $e) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => 'An error occurred while deleting the record.']);
+            Log::error('Error deleting Urea and Creatinine record', ['user_id' => $user->id, 'record_id' => $ureaAndCreatinine->id, 'error' => $e->getMessage()]);
+
+            return back();
+        }
     }
 
     /**
