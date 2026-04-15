@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Http\Requests\Auth\VerifyEmailRequest as AppVerifyEmailRequest;
 use App\Interfaces\DashboardServiceInterface;
 use App\Interfaces\Exams\CompleteBloodCountServiceInterface;
+use App\Interfaces\Exams\Exams\UltrasensitiveTshServiceInterface;
 use App\Interfaces\Exams\GlucoseServiceInterface;
 use App\Interfaces\Exams\LipidProfileServiceInterface;
 use App\Interfaces\Exams\UreaAndCreatinineServiceInterface;
@@ -12,6 +13,7 @@ use App\Interfaces\Exams\VitaminB12ServiceInterface;
 use App\Interfaces\Exams\VitaminD3ServiceInterface;
 use App\Services\DashboardService;
 use App\Services\Exams\CompleteBloodCountService;
+use App\Services\Exams\Exams\UltrasensitiveTshService;
 use App\Services\Exams\GlucoseService;
 use App\Services\Exams\LipidProfileService;
 use App\Services\Exams\UreaAndCreatinineService;
@@ -78,6 +80,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             UreaAndCreatinineServiceInterface::class,
             UreaAndCreatinineService::class
+        );
+
+        $this->app->bind(
+            UltrasensitiveTshServiceInterface::class,
+            UltrasensitiveTshService::class
         );
     }
 
