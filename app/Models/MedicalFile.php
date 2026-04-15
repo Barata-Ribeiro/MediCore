@@ -6,6 +6,7 @@ use App\Enums\BloodType;
 use App\Models\Exams\CompleteBloodCount;
 use App\Models\Exams\Glucose;
 use App\Models\Exams\LipidProfile;
+use App\Models\Exams\UltrasensitiveTsh;
 use App\Models\Exams\UreaAndCreatinine;
 use App\Models\Exams\VitaminB12;
 use App\Models\Exams\VitaminD3;
@@ -44,6 +45,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read Collection<int, LipidProfile> $lipidProfiles
  * @property-read int|null $lipid_profiles_count
  * @property-read bool|null $lipid_profiles_exists
+ * @property-read Collection<int, UltrasensitiveTsh> $ultrasensitiveTshs
+ * @property-read int|null $ultrasensitive_tshs_count
+ * @property-read bool|null $ultrasensitive_tshs_exists
  * @property-read Collection<int, UreaAndCreatinine> $ureaAndCreatinines
  * @property-read int|null $urea_and_creatinines_count
  * @property-read bool|null $urea_and_creatinines_exists
@@ -138,6 +142,11 @@ class MedicalFile extends Model
     public function lipidProfiles(): HasMany
     {
         return $this->hasMany(LipidProfile::class);
+    }
+
+    public function ultrasensitiveTshs(): HasMany
+    {
+        return $this->hasMany(UltrasensitiveTsh::class);
     }
 
     public function ureaAndCreatinines(): HasMany
