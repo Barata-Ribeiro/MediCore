@@ -129,6 +129,29 @@ namespace App\Models\Exams{
 namespace App\Models\Exams{
 /**
  * @property int $id
+ * @property float $tsh_level Ultrasensitive TSH level
+ * @property CarbonImmutable $report_date Date of the Urea and Creatinine report
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
+ * @property int $medical_file_id
+ * @property-read MedicalFile $medicalFile
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh whereMedicalFileId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh whereReportDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh whereTshLevel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
+	class UltrasensitiveTsh extends \Eloquent {}
+}
+
+namespace App\Models\Exams{
+/**
+ * @property int $id
  * @property float $urea_level Urea level
  * @property float $creatinine_level Creatinine level
  * @property CarbonImmutable $report_date Date of the Urea and Creatinine report
@@ -223,6 +246,9 @@ namespace App\Models{
  * @property-read Collection<int, LipidProfile> $lipidProfiles
  * @property-read int|null $lipid_profiles_count
  * @property-read bool|null $lipid_profiles_exists
+ * @property-read Collection<int, UltrasensitiveTsh> $ultrasensitiveTshs
+ * @property-read int|null $ultrasensitive_tshs_count
+ * @property-read bool|null $ultrasensitive_tshs_exists
  * @property-read Collection<int, UreaAndCreatinine> $ureaAndCreatinines
  * @property-read int|null $urea_and_creatinines_count
  * @property-read bool|null $urea_and_creatinines_exists
