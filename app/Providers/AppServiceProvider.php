@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Requests\Auth\VerifyEmailRequest as AppVerifyEmailRequest;
 use App\Interfaces\DashboardServiceInterface;
 use App\Interfaces\Exams\CompleteBloodCountServiceInterface;
 use App\Interfaces\Exams\GlucoseServiceInterface;
@@ -25,6 +26,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 use Inertia\ExceptionResponse;
 use Inertia\Inertia;
+use Laravel\Fortify\Http\Requests\VerifyEmailRequest as FortifyVerifyEmailRequest;
 use Vite;
 
 use function in_array;
@@ -37,6 +39,11 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         //
+
+        $this->app->bind(
+            FortifyVerifyEmailRequest::class,
+            AppVerifyEmailRequest::class
+        );
 
         $this->app->bind(
             LipidProfileServiceInterface::class,
