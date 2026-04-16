@@ -3301,11 +3301,12 @@ namespace PHPSTORM_META {
 'complete-blood-count.destroy','glucose.index','glucose.create','glucose.store','glucose.show',
 'glucose.edit','glucose.update','glucose.destroy','lipid-profile.index','lipid-profile.create',
 'lipid-profile.store','lipid-profile.show','lipid-profile.edit','lipid-profile.update','lipid-profile.destroy',
-'urea-and-creatinine.index','urea-and-creatinine.create','urea-and-creatinine.store','urea-and-creatinine.show','urea-and-creatinine.edit',
-'urea-and-creatinine.update','urea-and-creatinine.destroy','vitamin-b12.index','vitamin-b12.create','vitamin-b12.store',
-'vitamin-b12.show','vitamin-b12.edit','vitamin-b12.update','vitamin-b12.destroy','vitamin-d3.index',
-'vitamin-d3.create','vitamin-d3.store','vitamin-d3.show','vitamin-d3.edit','vitamin-d3.update',
-'vitamin-d3.destroy','storage.local','storage.local.upload',);
+'ultrasensitive-tsh.index','ultrasensitive-tsh.create','ultrasensitive-tsh.store','ultrasensitive-tsh.show','ultrasensitive-tsh.edit',
+'ultrasensitive-tsh.update','ultrasensitive-tsh.destroy','urea-and-creatinine.index','urea-and-creatinine.create','urea-and-creatinine.store',
+'urea-and-creatinine.show','urea-and-creatinine.edit','urea-and-creatinine.update','urea-and-creatinine.destroy','vitamin-b12.index',
+'vitamin-b12.create','vitamin-b12.store','vitamin-b12.show','vitamin-b12.edit','vitamin-b12.update',
+'vitamin-b12.destroy','vitamin-d3.index','vitamin-d3.create','vitamin-d3.store','vitamin-d3.show',
+'vitamin-d3.edit','vitamin-d3.update','vitamin-d3.destroy','storage.local','storage.local.upload',);
         registerArgumentsSet('views', 
 'app','laravel-exceptions-renderer::components.badge','laravel-exceptions-renderer::components.empty-state','laravel-exceptions-renderer::components.file-with-line','laravel-exceptions-renderer::components.formatted-source',
 'laravel-exceptions-renderer::components.frame','laravel-exceptions-renderer::components.frame-code','laravel-exceptions-renderer::components.header','laravel-exceptions-renderer::components.http-method','laravel-exceptions-renderer::components.icons.alert',
