@@ -1,5 +1,5 @@
 <?php
 
-namespace App\Interfaces\Exams\Exams;
+namespace App\Interfaces\Exams;
 
 interface UltrasensitiveTshServiceInterface {}

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Exams\Exams;
+namespace App\Services\Exams;
 
 use App\Interfaces\Exams\Exams\UltrasensitiveTshServiceInterface;
 
