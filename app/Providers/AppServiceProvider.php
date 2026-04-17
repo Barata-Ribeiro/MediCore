@@ -21,7 +21,6 @@ use App\Services\Exams\VitaminB12Service;
 use App\Services\Exams\VitaminD3Service;
 use Carbon\CarbonImmutable;
 use Gate;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
@@ -94,8 +93,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
-
-        FormRequest::failOnUnknownFields();
 
         Inertia::handleExceptionsUsing(function (ExceptionResponse $response) {
             if (in_array($response->statusCode(), [403, 404, 500, 503])) {

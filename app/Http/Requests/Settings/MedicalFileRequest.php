@@ -4,9 +4,11 @@ namespace App\Http\Requests\Settings;
 
 use App\Enums\BloodType;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Foundation\Http\Attributes\FailOnUnknownFields;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+#[FailOnUnknownFields]
 class MedicalFileRequest extends FormRequest
 {
     /**
