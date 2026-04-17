@@ -86,6 +86,29 @@ class UltrasensitiveTshController extends Controller
         }
     }
 
+    public function destroy(UltrasensitiveTsh $ultrasensitiveTsh)
+    {
+        if ($ultrasensitiveTsh->medicalFile->user_id !== request()->user()->id) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => 'Unauthorized to delete this Ultrasensitive TSH record.']);
+            Log::warning('Unauthorized delete attempt on Ultrasensitive TSH record', ['user_id' => request()->user()->id, 'record_id' => $ultrasensitiveTsh->id]);
+
+            return back();
+        }
+
+        try {
+            $ultrasensitiveTsh->delete();
+
+            Inertia::flash('toast', ['type' => 'success', 'message' => 'Ultrasensitive TSH record deleted successfully.']);
+
+            return to_route('ultrasensitive-tsh.index');
+        } catch (Exception $e) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => 'An error occurred while deleting the Ultrasensitive TSH record.']);
+            Log::error('Error deleting Ultrasensitive TSH record', ['user_id' => request()->user()->id, 'ultrasensitive_tsh_id' => $ultrasensitiveTsh->id, 'error' => $e->getMessage()]);
+
+            return back();
+        }
+    }
+
     /**
      * Validate request query inputs, apply sort/filter defaults, and fetch
      * paginated glucose results plus chart data.
