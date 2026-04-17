@@ -3,6 +3,8 @@ import { index as cbcIndex } from '@/routes/complete-blood-count';
 import { index as glucoseIndex } from '@/routes/glucose';
 import { index as lipidProfileIndex } from '@/routes/lipid-profile';
 import { edit } from '@/routes/medical-file';
+import { index as ultrasensitiveTshIndex } from '@/routes/ultrasensitive-tsh';
+import { index as ureaAndCreatinineIndex } from '@/routes/urea-and-creatinine';
 import { index as vitaminB12Index } from '@/routes/vitamin-b12';
 import { index as vitaminD3Index } from '@/routes/vitamin-d3';
 import type { NavItem } from '@/types';
@@ -35,6 +37,14 @@ const mainNavItems: NavItem[] = [
             {
                 title: 'Lipid Profile',
                 href: lipidProfileIndex(),
+            },
+            {
+                title: 'Ultrasensitive TSH',
+                href: ultrasensitiveTshIndex(),
+            },
+            {
+                title: 'Urea and Creatinine',
+                href: ureaAndCreatinineIndex(),
             },
             {
                 title: 'Vitamin B12',
