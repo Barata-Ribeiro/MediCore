@@ -128,7 +128,7 @@ class UltrasensitiveTshController extends Controller
         $search = trim($validated['search'] ?? '');
         $filters = $validated['filters'] ?? [];
 
-        $allowedSorts = ['id', 'tsh_value', 'report_date', 'created_at'];
+        $allowedSorts = ['id', 'tsh_level', 'report_date', 'created_at'];
         if (! in_array($sortBy, $allowedSorts)) {
             $sortBy = 'id';
         }

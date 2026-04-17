@@ -16,7 +16,7 @@ class UltrasensitiveTshRequest extends FormRequest
     {
         return [
             'report_date' => ['required', 'date'],
-            'tsh_value' => ['required', 'numeric', 'min:0'],
+            'tsh_level' => ['required', 'numeric', 'min:0'],
         ];
     }
 }

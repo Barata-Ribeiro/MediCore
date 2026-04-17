@@ -24,13 +24,13 @@ class UltrasensitiveTshService implements UltrasensitiveTshServiceInterface
             ->where('medical_file_id', auth()->user()->medicalFile->id)
             ->when($createdAtRange, fn ($q) => $q->whereBetween('created_at', [$createdAtStart, $createdAtEnd]))
             ->when($reportDateRange, fn ($q) => $q->whereBetween('report_date', [$reportDateStart, $reportDateEnd]))
-            ->when($search, fn ($q) => $q->whereLike('tsh_value', "%{$search}%"))
+            ->when($search, fn ($q) => $q->whereLike('tsh_level', "%{$search}%"))
             ->orderBy($sortBy, $sortDir)
             ->paginate($perPage)
             ->withQueryString();
 
         $chartRows = UltrasensitiveTsh::query()
-            ->selectRaw('DATE(report_date) as label, AVG(tsh_value) as tsh_value')
+            ->selectRaw('DATE(report_date) as label, AVG(tsh_level) as tsh_level')
             ->where('medical_file_id', auth()->user()->medicalFile->id)
             ->groupBy('label')
             ->orderBy('label')
@@ -40,7 +40,7 @@ class UltrasensitiveTshService implements UltrasensitiveTshServiceInterface
         $chartData = $chartRows->map(fn ($row) => [
             'x_axis_label' => $row->label,
             'datasets' => [
-                'tsh_value' => ['label' => 'TSH Value', 'data' => $row->tsh_value],
+                'tsh_level' => ['label' => 'TSH Level', 'data' => $row->tsh_level],
             ],
         ])->toArray();
 
