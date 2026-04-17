@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Exams\UltrasensitiveTshRequest;
 use App\Http\Requests\QueryRequest;
 use App\Interfaces\Exams\UltrasensitiveTshServiceInterface;
+use App\Models\Exams\UltrasensitiveTsh;
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
@@ -48,6 +49,38 @@ class UltrasensitiveTshController extends Controller
         } catch (Exception $e) {
             Inertia::flash('toast', ['type' => 'error', 'message' => 'An error occurred while creating the Ultrasensitive TSH record.']);
             Log::error('Error creating Ultrasensitive TSH record', ['user_id' => $request->user()->id, 'error' => $e->getMessage()]);
+
+            return back()->withInput();
+        }
+    }
+
+    public function edit(UltrasensitiveTsh $ultrasensitiveTsh)
+    {
+        return Inertia::render('exams/ultrasensitive-tsh/edit', [
+            'ultrasensitiveTsh' => $ultrasensitiveTsh,
+        ]);
+    }
+
+    public function update(UltrasensitiveTshRequest $request, UltrasensitiveTsh $ultrasensitiveTsh)
+    {
+        $validated = $request->validated();
+
+        if ($ultrasensitiveTsh->medicalFile->user_id !== $request->user()->id) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => 'Unauthorized to update this Ultrasensitive TSH record.']);
+            Log::warning('Unauthorized update attempt on Ultrasensitive TSH record', ['user_id' => $request->user()->id, 'record_id' => $ultrasensitiveTsh->id]);
+
+            return back();
+        }
+
+        try {
+            $ultrasensitiveTsh->update($validated);
+
+            Inertia::flash('toast', ['type' => 'success', 'message' => 'Ultrasensitive TSH record updated successfully.']);
+
+            return to_route('ultrasensitive-tsh.index');
+        } catch (Exception $e) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => 'An error occurred while updating the Ultrasensitive TSH record.']);
+            Log::error('Error updating Ultrasensitive TSH record', ['user_id' => $request->user()->id, 'ultrasensitive_tsh_id' => $ultrasensitiveTsh->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
         }
