@@ -1,7 +1,7 @@
 import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
 import prettier from 'eslint-config-prettier/flat';
-import importPlugin from 'eslint-plugin-import';
+import { importX } from 'eslint-plugin-import-x';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import globals from 'globals';
@@ -41,11 +41,11 @@ export default [
     },
     {
         plugins: {
-            import: importPlugin,
+            'import-x': importX,
         },
         settings: {
-            'import/internal-regex': '^@/',
-            'import/resolver': {
+            'import-x/internal-regex': '^@/',
+            'import-x/resolver': {
                 typescript: {
                     alwaysTryTypes: true,
                     project: './tsconfig.json',
@@ -62,7 +62,7 @@ export default [
                     fixStyle: 'separate-type-imports',
                 },
             ],
-            'import/order': [
+            'import-x/order': [
                 'error',
                 {
                     groups: ['index', 'sibling', 'parent', 'internal', 'external', 'builtin'],
@@ -72,7 +72,7 @@ export default [
                     },
                 },
             ],
-            'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
+            'import-x/consistent-type-specifier-style': ['error', 'prefer-top-level'],
         },
     },
     {
