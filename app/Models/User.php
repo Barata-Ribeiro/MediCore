@@ -25,18 +25,18 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $email
  * @property CarbonImmutable|null $email_verified_at
  * @property string|null $password
+ * @property string|null $remember_token
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
  * @property string|null $two_factor_secret
  * @property string|null $two_factor_recovery_codes
  * @property CarbonImmutable|null $two_factor_confirmed_at
- * @property string|null $remember_token
  * @property string|null $provider_id
  * @property string|null $provider_name
  * @property string|null $registration_domain
  * @property string|null $provider_token
  * @property string|null $provider_refresh_token
  * @property string|null $avatar
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
  * @property-read MedicalFile|null $medicalFile
  * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
