@@ -20,7 +20,6 @@ class PasswordUpdateRequest extends FormRequest
         return [
             'current_password' => $this->currentPasswordRules(),
             'password' => $this->passwordRules(),
-            'password_confirmation' => ['required', 'same:password'],
         ];
     }
 }

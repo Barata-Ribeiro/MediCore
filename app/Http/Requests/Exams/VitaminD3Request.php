@@ -3,8 +3,10 @@
 namespace App\Http\Requests\Exams;
 
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Foundation\Http\Attributes\FailOnUnknownFields;
 use Illuminate\Foundation\Http\FormRequest;
 
+#[FailOnUnknownFields]
 class VitaminD3Request extends FormRequest
 {
     /**

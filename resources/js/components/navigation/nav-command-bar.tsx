@@ -26,7 +26,12 @@ export default function NavCommandBar() {
 
     const handleRouteChange = useCallback((href: NonNullable<string | UrlMethodPair | undefined>) => {
         return () => {
-            router.get(href, { viewTransition: true });
+            if (typeof href === 'string') {
+                router.get(href, { viewTransition: true });
+            } else if (href) {
+                router.visit(href.url, { method: href.method, viewTransition: true });
+            }
+
             setOpen(false);
         };
     }, []);
