@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ultrasensitive_tshes', function (Blueprint $table) {
+        Schema::create('ultrasensitive_tshs', function (Blueprint $table) {
             $table->id();
             $table->double('tsh_level')->comment('Ultrasensitive TSH level');
             $table->date('report_date')->comment('Date of the Urea and Creatinine report');
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ultrasensitive_tshes');
+        Schema::dropIfExists('ultrasensitive_tshs');
     }
 };
