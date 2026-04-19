@@ -5,6 +5,7 @@ namespace App\Models\Exams;
 use App\Models\MedicalFile;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Attributes\Touches;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -30,6 +31,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @mixin \Eloquent
  */
+#[Table('vitamin_d3_s')]
 #[Touches(['medicalFile'])]
 #[Fillable(['twenty_five_hydroxyvitamin_d3', 'report_date', 'medical_file_id'])]
 class VitaminD3 extends Model

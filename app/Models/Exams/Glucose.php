@@ -5,6 +5,7 @@ namespace App\Models\Exams;
 use App\Models\MedicalFile;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Attributes\Touches;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -34,6 +35,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @mixin \Eloquent
  */
+#[Table('glucoses')]
 #[Touches(['medicalFile'])]
 #[Fillable(['glucose_level', 'glycated_hemoglobin', 'estimated_average_glucose', 'report_date', 'medical_file_id'])]
 class Glucose extends Model

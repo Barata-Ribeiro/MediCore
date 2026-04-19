@@ -6,6 +6,7 @@ use App\Models\MedicalFile;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Attributes\Appends;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Attributes\Touches;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -34,6 +35,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @mixin \Eloquent
  */
+#[Table('urea_and_creatinines')]
 #[Touches(['medicalFile'])]
 #[Fillable(['urea_level', 'creatinine_level', 'report_date', 'medical_file_id'])]
 #[Appends(['urea_creatinine_ratio'])]
