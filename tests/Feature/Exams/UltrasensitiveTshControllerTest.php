@@ -95,7 +95,7 @@ describe('tests for the "store" method of UltrasensitiveTshController', function
         $response = $this->actingAs($user)->post(route('ultrasensitive-tsh.store'), $data);
 
         $response->assertRedirect(route('ultrasensitive-tsh.index'));
-        $this->assertDatabaseHas('ultrasensitive_tshes', [...$data, 'medical_file_id' => $user->medicalFile->id]);
+        $this->assertDatabaseHas('ultrasensitive_tshs', [...$data, 'medical_file_id' => $user->medicalFile->id]);
     });
 
     it('should redirect guests to login if user is not authenticated', function () {
@@ -154,7 +154,7 @@ describe('tests for the "update" method of UltrasensitiveTshController', functio
         $response = $this->actingAs($user)->put(route('ultrasensitive-tsh.update', $ultrasensitiveTsh), $updatedData);
 
         $response->assertRedirect(route('ultrasensitive-tsh.index'));
-        $this->assertDatabaseHas('ultrasensitive_tshes', [...$updatedData, 'id' => $ultrasensitiveTsh->id]);
+        $this->assertDatabaseHas('ultrasensitive_tshs', [...$updatedData, 'id' => $ultrasensitiveTsh->id]);
     });
 
     it('should not update an ultrasensitive tsh record from another user', function () {
@@ -178,7 +178,7 @@ describe('tests for the "update" method of UltrasensitiveTshController', functio
             ->put(route('ultrasensitive-tsh.update', $ultrasensitiveTsh), $updatedData);
 
         $response->assertRedirect(route('ultrasensitive-tsh.index'));
-        $this->assertDatabaseHas('ultrasensitive_tshes', [
+        $this->assertDatabaseHas('ultrasensitive_tshs', [
             'id' => $ultrasensitiveTsh->id,
             'tsh_level' => 1.24,
             'report_date' => now()->toDateString(),
@@ -205,7 +205,7 @@ describe('tests for the "destroy" method of UltrasensitiveTshController', functi
         $response = $this->actingAs($user)->delete(route('ultrasensitive-tsh.destroy', $ultrasensitiveTsh));
 
         $response->assertRedirect(route('ultrasensitive-tsh.index'));
-        $this->assertDatabaseMissing('ultrasensitive_tshes', ['id' => $ultrasensitiveTsh->id]);
+        $this->assertDatabaseMissing('ultrasensitive_tshs', ['id' => $ultrasensitiveTsh->id]);
     });
 
     it('should not delete an ultrasensitive tsh record from another user', function () {
@@ -224,7 +224,7 @@ describe('tests for the "destroy" method of UltrasensitiveTshController', functi
             ->delete(route('ultrasensitive-tsh.destroy', $ultrasensitiveTsh));
 
         $response->assertRedirect(route('ultrasensitive-tsh.index'));
-        $this->assertDatabaseHas('ultrasensitive_tshes', ['id' => $ultrasensitiveTsh->id]);
+        $this->assertDatabaseHas('ultrasensitive_tshs', ['id' => $ultrasensitiveTsh->id]);
     });
 
     it('should redirect guests to login if user is not authenticated', function () {
