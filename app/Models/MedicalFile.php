@@ -8,6 +8,7 @@ use App\Models\Exams\Glucose;
 use App\Models\Exams\LipidProfile;
 use App\Models\Exams\UltrasensitiveTsh;
 use App\Models\Exams\UreaAndCreatinine;
+use App\Models\Exams\UricAcid;
 use App\Models\Exams\VitaminB12;
 use App\Models\Exams\VitaminD3;
 use Carbon\CarbonImmutable;
@@ -51,6 +52,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read Collection<int, UreaAndCreatinine> $ureaAndCreatinines
  * @property-read int|null $urea_and_creatinines_count
  * @property-read bool|null $urea_and_creatinines_exists
+ * @property-read Collection<int, UricAcid> $uricAcids
+ * @property-read int|null $uric_acids_count
+ * @property-read bool|null $uric_acids_exists
  * @property-read User $user
  * @property-read Collection<int, VitaminB12> $vitaminB12s
  * @property-read int|null $vitamin_b12s_count
@@ -152,6 +156,11 @@ class MedicalFile extends Model
     public function ureaAndCreatinines(): HasMany
     {
         return $this->hasMany(UreaAndCreatinine::class);
+    }
+
+    public function uricAcids(): HasMany
+    {
+        return $this->hasMany(UricAcid::class);
     }
 
     public function vitaminB12s(): HasMany
