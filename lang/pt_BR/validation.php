@@ -249,6 +249,20 @@ return [
         'registration_domain' => 'domínio de registro',
         'provider_token' => 'token do provedor',
         'provider_refresh_token' => 'token de atualização do provedor',
+
+        // Medical File
+        'allergies' => 'alergias',
+        'diseases' => 'doenças',
+        'medications' => 'medicações',
+        'weight' => 'peso',
+        'height' => 'altura',
+        'emergency_contact_name' => 'nome do contato de emergência',
+        'emergency_contact_phone_number' => 'número de telefone do contato de emergência',
+        'emergency_contact_relationship' => 'relação do contato de emergência',
+        'bmi' => 'IMC',
+        'report_date' => 'data do exame',
+        'medical_file_id' => 'ID do arquivo médico',
+
     ],
 
 ];
