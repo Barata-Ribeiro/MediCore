@@ -1,4 +1,6 @@
-import type { Role, Permission } from '@/types/role-permission';
+import type { Permission, Role } from '@/types/role-permission';
+
+export type AppLocale = 'en' | 'pt_BR';
 
 export type User = {
     id: number;
@@ -16,6 +18,7 @@ export type User = {
 export type Auth = {
     user: User;
     permissions: Permission['name'][];
+    locale?: AppLocale;
 };
 
 export type TwoFactorSetupData = {
