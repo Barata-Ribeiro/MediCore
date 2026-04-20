@@ -263,6 +263,47 @@ return [
         'report_date' => 'data do exame',
         'medical_file_id' => 'ID do arquivo médico',
 
+        // Exams
+        'hematocrit' => 'hematócrito',
+        'hemoglobin' => 'hemoglobina',
+        'red_blood_cell_count' => 'contagem de glóbulos vermelhos',
+        'mean_corpuscular_volume' => 'volume corpuscular médio',
+        'mean_corpuscular_hemoglobin' => 'hemoglobina corpuscular média',
+        'mean_corpuscular_hemoglobin_concentration' => 'concentração de hemoglobina corpuscular média',
+        'red_blood_cell_distribution_width' => 'largura de distribuição dos glóbulos vermelhos',
+        'leukocyte_count' => 'contagem de leucócitos',
+        'rod_neutrophil_count' => 'contagem de neutrófilos bastonetes',
+        'segmented_neutrophil_count' => 'contagem de neutrófilos segmentados',
+        'lymphocyte_count' => 'contagem de linfócitos',
+        'monocyte_count' => 'contagem de monócitos',
+        'eosinophil_count' => 'contagem de eosinófilos',
+        'basophil_count' => 'contagem de basófilos',
+        'metamyelocyte_count' => 'contagem de metamielócitos',
+        'promyelocyte_count' => 'contagem de promielócitos',
+        'atypical_cell_count' => 'contagem de células atípicas',
+        'platelet_count' => 'contagem de plaquetas',
+
+        'glucose_level' => 'nível de glicose',
+        'glycated_hemoglobin' => 'hemoglobina glicada',
+        'estimated_average_glucose' => 'glicose média estimada',
+
+        'total_cholesterol' => 'colesterol total',
+        'hdl_cholesterol' => 'colesterol HDL',
+        'ldl_cholesterol' => 'colesterol LDL',
+        'vldl_cholesterol' => 'colesterol VLDL',
+        'triglycerides' => 'triglicerídeos',
+
+        'tsh_level' => 'nível de TSH',
+
+        'urea_level' => 'nível de ureia',
+        'creatinine_level' => 'nível de creatinina',
+        'urea_creatinine_ratio' => 'relação ureia/creatinina',
+
+        'uric_acid_level' => 'nível de ácido úrico',
+
+        'vitamin_b12_level' => 'nível de vitamina B12',
+
+        'twenty_five_hydroxyvitamin_d3' => 'nível de 25-Hidroxi vitamina D3',
     ],
 
 ];
