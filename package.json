@@ -42,6 +42,7 @@
         "typescript-eslint": "^8.58.2"
     },
     "dependencies": {
+        "@erag/lang-sync-inertia": "^1.6.1",
         "@fontsource-variable/outfit": "^5.2.8",
         "@fontsource-variable/roboto": "^5.2.10",
         "@headlessui/react": "^2.2.10",
