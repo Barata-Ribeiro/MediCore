@@ -9,6 +9,7 @@ use App\Interfaces\Exams\GlucoseServiceInterface;
 use App\Interfaces\Exams\LipidProfileServiceInterface;
 use App\Interfaces\Exams\UltrasensitiveTshServiceInterface;
 use App\Interfaces\Exams\UreaAndCreatinineServiceInterface;
+use App\Interfaces\Exams\UricAcidServiceInterface;
 use App\Interfaces\Exams\VitaminB12ServiceInterface;
 use App\Interfaces\Exams\VitaminD3ServiceInterface;
 use App\Services\DashboardService;
@@ -17,6 +18,7 @@ use App\Services\Exams\GlucoseService;
 use App\Services\Exams\LipidProfileService;
 use App\Services\Exams\UltrasensitiveTshService;
 use App\Services\Exams\UreaAndCreatinineService;
+use App\Services\Exams\UricAcidService;
 use App\Services\Exams\VitaminB12Service;
 use App\Services\Exams\VitaminD3Service;
 use Carbon\CarbonImmutable;
@@ -84,6 +86,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             UltrasensitiveTshServiceInterface::class,
             UltrasensitiveTshService::class
+        );
+
+        $this->app->bind(
+            UricAcidServiceInterface::class,
+            UricAcidService::class
         );
     }
 
