@@ -178,6 +178,29 @@ namespace App\Models\Exams{
 namespace App\Models\Exams{
 /**
  * @property int $id
+ * @property float $uric_acid_level Uric Acid level
+ * @property CarbonImmutable $report_date Date of the Urea and Creatinine report
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
+ * @property int $medical_file_id
+ * @property-read MedicalFile $medicalFile
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid whereMedicalFileId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid whereReportDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid whereUricAcidLevel($value)
+ * @mixin \Eloquent
+ */
+	class UricAcid extends \Eloquent {}
+}
+
+namespace App\Models\Exams{
+/**
+ * @property int $id
  * @property float $vitamin_b12_level Vitamin B12 level
  * @property CarbonImmutable $report_date Date of the Vitamin B12 report
  * @property CarbonImmutable|null $created_at
@@ -252,7 +275,10 @@ namespace App\Models{
  * @property-read Collection<int, UreaAndCreatinine> $ureaAndCreatinines
  * @property-read int|null $urea_and_creatinines_count
  * @property-read bool|null $urea_and_creatinines_exists
- * @property-read User $user
+ * @property-read Collection<int, UricAcid> $uricAcids
+ * @property-read int|null $uric_acids_count
+ * @property-read bool|null $uric_acids_exists
+ * @property-read \App\Models\User $user
  * @property-read Collection<int, VitaminB12> $vitaminB12s
  * @property-read int|null $vitamin_b12s_count
  * @property-read bool|null $vitamin_b12s_exists
@@ -297,7 +323,7 @@ namespace App\Models{
  * @property int $user_id
  * @property-read int|null $age
  * @property-read string $full_name
- * @property-read User $user
+ * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Profile newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Profile newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Profile query()
@@ -325,26 +351,26 @@ namespace App\Models{
  * @property string $email
  * @property CarbonImmutable|null $email_verified_at
  * @property string|null $password
+ * @property string|null $remember_token
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
  * @property string|null $two_factor_secret
  * @property string|null $two_factor_recovery_codes
  * @property CarbonImmutable|null $two_factor_confirmed_at
- * @property string|null $remember_token
  * @property string|null $provider_id
  * @property string|null $provider_name
  * @property string|null $registration_domain
  * @property string|null $provider_token
  * @property string|null $provider_refresh_token
  * @property string|null $avatar
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
- * @property-read MedicalFile|null $medicalFile
+ * @property-read \App\Models\MedicalFile|null $medicalFile
  * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read bool|null $notifications_exists
  * @property-read Collection<int, Permission> $permissions
  * @property-read int|null $permissions_count
  * @property-read bool|null $permissions_exists
- * @property-read Profile|null $profile
+ * @property-read \App\Models\Profile|null $profile
  * @property-read Collection<int, Role> $roles
  * @property-read int|null $roles_count
  * @property-read bool|null $roles_exists

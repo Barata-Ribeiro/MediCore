@@ -10,6 +10,27 @@ use Illuminate\Database\Eloquent\Attributes\Touches;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property float $uric_acid_level Uric Acid level
+ * @property CarbonImmutable $report_date Date of the Urea and Creatinine report
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
+ * @property int $medical_file_id
+ * @property-read MedicalFile $medicalFile
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid whereMedicalFileId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid whereReportDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid whereUricAcidLevel($value)
+ *
+ * @mixin \Eloquent
+ */
 #[Table('uric_acids')]
 #[Touches(['medicalFile'])]
 #[Fillable(['uric_acid_level', 'report_date', 'medical_file_id'])]
