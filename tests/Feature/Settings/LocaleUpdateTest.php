@@ -20,10 +20,16 @@ test('locale can be updated', function () {
     $user = User::factory()->create(['locale' => 'en']);
 
     $this->actingAs($user)
+        ->followingRedirects()
         ->from(route('profile.edit'))
         ->patch(route('locale.update'), ['locale' => 'pt_BR'])
-        ->assertSessionHasNoErrors()
-        ->assertRedirect(route('profile.edit'));
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('settings/profile')
+            ->where('auth.locale', 'pt_BR')
+            ->hasFlash('toast.type', 'success')
+            ->hasFlash('toast.message', 'Idioma atualizado com sucesso.')
+        );
 
     expect($user->refresh()->locale)->toBe('pt_BR');
 });

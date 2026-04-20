@@ -23,7 +23,7 @@ class SocialAuthController extends Controller
     {
         if (! in_array($provider, self::SUPPORTED_PROVIDERS, true)) {
             return Inertia::render('auth/register')
-                ->flash('toast', ['type' => 'error', 'message' => 'Unsupported provider. Create an account using email and password instead.']);
+                ->flash('toast', ['type' => 'error', 'message' => __('Unsupported provider. Create an account using email and password instead.')]);
         }
 
         try {
@@ -35,7 +35,7 @@ class SocialAuthController extends Controller
             ]);
 
             return Inertia::render('auth/register')
-                ->flash('toast', ['type' => 'error', 'message' => 'Failed to redirect to provider. Please try again.']);
+                ->flash('toast', ['type' => 'error', 'message' => __('Failed to redirect to provider. Please try again.')]);
         }
     }
 
@@ -43,7 +43,7 @@ class SocialAuthController extends Controller
     {
         if (! in_array($provider, self::SUPPORTED_PROVIDERS, true)) {
             return Inertia::render('auth/login')
-                ->flash('toast', ['type' => 'error', 'message' => 'Unsupported provider. Please try again.']);
+                ->flash('toast', ['type' => 'error', 'message' => __('Unsupported provider. Please try again.')]);
         }
 
         try {
@@ -81,7 +81,7 @@ class SocialAuthController extends Controller
 
             Auth::login($user, true);
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => 'Successfully authenticated with '.ucfirst($provider).'.']);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('Successfully authenticated with :provider.', ['provider' => ucfirst($provider)])]);
 
             return to_route('dashboard');
         } catch (Exception $e) {
@@ -91,7 +91,7 @@ class SocialAuthController extends Controller
             ]);
 
             return Inertia::render('auth/login')
-                ->flash('toast', ['type' => 'error', 'message' => 'Failed to authenticate with provider. Please try again.']);
+                ->flash('toast', ['type' => 'error', 'message' => __('Failed to authenticate with :provider. Please try again.', ['provider' => ucfirst($provider)])]);
         }
     }
 }
