@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Settings\LocaleUpdateRequest;
 use App\Http\Requests\Settings\ProfileDeleteRequest;
 use App\Http\Requests\Settings\ProfileUpdateRequest;
 use Carbon\Carbon;
@@ -10,6 +11,7 @@ use Exception;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -83,6 +85,23 @@ class ProfileController extends Controller
 
             return back()->withInput();
         }
+    }
+
+    /**
+     * Update the user's preferred locale.
+     */
+    public function updateLocale(LocaleUpdateRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
+        $locale = $validated['locale'];
+
+        $request->user()->update(['locale' => $locale]);
+
+        App::setLocale($locale);
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Language updated successfully.')]);
+
+        return back();
     }
 
     /**
