@@ -43,11 +43,11 @@ class UltrasensitiveTshController extends Controller
 
             $user->medicalFile->ultrasensitiveTshs()->create($validated);
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => __('exams.ultrasensitive_tsh.store_successfully')]);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exams.ultrasensitive_tsh.store_successfully')]);
 
             return to_route('ultrasensitive-tsh.index');
         } catch (Exception $e) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.ultrasensitive_tsh.store_failed')]);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.ultrasensitive_tsh.store_failed')]);
             Log::error('Error creating Ultrasensitive TSH record', ['user_id' => $request->user()->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
@@ -66,7 +66,7 @@ class UltrasensitiveTshController extends Controller
         $validated = $request->validated();
 
         if ($ultrasensitiveTsh->medicalFile->user_id !== $request->user()->id) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.ultrasensitive_tsh.update_unauthorized')]);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.ultrasensitive_tsh.update_unauthorized')]);
             Log::warning('Unauthorized update attempt on Ultrasensitive TSH record', ['user_id' => $request->user()->id, 'record_id' => $ultrasensitiveTsh->id]);
 
             return back();
@@ -75,11 +75,11 @@ class UltrasensitiveTshController extends Controller
         try {
             $ultrasensitiveTsh->update($validated);
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => __('exams.ultrasensitive_tsh.update_successfully')]);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exams.ultrasensitive_tsh.update_successfully')]);
 
             return to_route('ultrasensitive-tsh.index');
         } catch (Exception $e) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.ultrasensitive_tsh.update_failed')]);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.ultrasensitive_tsh.update_failed')]);
             Log::error('Error updating Ultrasensitive TSH record', ['user_id' => $request->user()->id, 'ultrasensitive_tsh_id' => $ultrasensitiveTsh->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
@@ -89,7 +89,7 @@ class UltrasensitiveTshController extends Controller
     public function destroy(UltrasensitiveTsh $ultrasensitiveTsh)
     {
         if ($ultrasensitiveTsh->medicalFile->user_id !== request()->user()->id) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.ultrasensitive_tsh.destroy_unauthorized')]);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.ultrasensitive_tsh.destroy_unauthorized')]);
             Log::warning('Unauthorized delete attempt on Ultrasensitive TSH record', ['user_id' => request()->user()->id, 'record_id' => $ultrasensitiveTsh->id]);
 
             return back();
@@ -98,11 +98,11 @@ class UltrasensitiveTshController extends Controller
         try {
             $ultrasensitiveTsh->delete();
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => __('exams.ultrasensitive_tsh.destroy_successfully')]);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exams.ultrasensitive_tsh.destroy_successfully')]);
 
             return to_route('ultrasensitive-tsh.index');
         } catch (Exception $e) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.ultrasensitive_tsh.destroy_failed')]);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.ultrasensitive_tsh.destroy_failed')]);
             Log::error('Error deleting Ultrasensitive TSH record', ['user_id' => request()->user()->id, 'ultrasensitive_tsh_id' => $ultrasensitiveTsh->id, 'error' => $e->getMessage()]);
 
             return back();

@@ -76,11 +76,11 @@ class ProfileController extends Controller
                 $user->save();
             });
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => __('settings.profile.update.updated_successfully')]);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.settings.profile.update.updated_successfully')]);
 
             return to_route('profile.edit');
         } catch (Exception $e) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => __('settings.profile.update.failed_update')]);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.settings.profile.update.failed_update')]);
             Log::error('Failed to update profile', ['user_id' => $user->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
@@ -100,11 +100,11 @@ class ProfileController extends Controller
 
             App::setLocale($locale);
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => __('settings.profile.language.updated_successfully')]);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.settings.profile.language.updated_successfully')]);
 
             return back();
         } catch (Exception $e) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => __('settings.profile.language.failed_update')]);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.settings.profile.language.failed_update')]);
             Log::error('Failed to update locale', ['user_id' => $request->user()->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
@@ -126,11 +126,11 @@ class ProfileController extends Controller
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => __('settings.profile.destroy.deleted_successfully')]);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.settings.profile.destroy.deleted_successfully')]);
 
             return redirect('/');
         } catch (Exception $e) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => __('settings.profile.destroy.failed_delete')]);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.settings.profile.destroy.failed_delete')]);
             Log::error('Failed to delete account', ['user_id' => $user->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
