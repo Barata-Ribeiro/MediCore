@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\CarbonImmutable;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Attributes\Scope;
@@ -37,6 +38,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $provider_token
  * @property string|null $provider_refresh_token
  * @property string|null $avatar
+ * @property string $locale
  * @property-read MedicalFile|null $medicalFile
  * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
@@ -61,6 +63,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder<static>|User whereEmail($value)
  * @method static Builder<static>|User whereEmailVerifiedAt($value)
  * @method static Builder<static>|User whereId($value)
+ * @method static Builder<static>|User whereLocale($value)
  * @method static Builder<static>|User whereName($value)
  * @method static Builder<static>|User wherePassword($value)
  * @method static Builder<static>|User whereProviderId($value)
@@ -78,8 +81,8 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @mixin \Eloquent
  */
-#[Fillable(['name', 'email', 'password', 'provider_id', 'provider_name', 'registration_domain', 'provider_token', 'provider_refresh_token', 'avatar'])]
-#[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
+#[Fillable(['name', 'email', 'locale', 'password', 'provider_id', 'provider_name', 'registration_domain', 'provider_token', 'provider_refresh_token', 'avatar'])]
+#[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token', 'provider_token', 'provider_refresh_token'])]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */

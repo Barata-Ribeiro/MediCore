@@ -1,0 +1,9 @@
+{
+    "Unsupported provider. Create an account using email and password instead.": "Unsupported provider. Create an account using email and password instead.",
+    "Failed to redirect to provider. Please try again.": "Failed to redirect to provider. Please try again.",
+    "Unsupported provider. Please try again.": "Unsupported provider. Please try again.",
+    "Successfully authenticated with :provider.": "Successfully authenticated with :provider.",
+    "Failed to authenticate with :provider. Please try again.": "Failed to authenticate with :provider. Please try again.",
+
+    "Language updated successfully.": "Language updated successfully."
+}

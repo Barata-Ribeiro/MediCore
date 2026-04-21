@@ -10850,387 +10850,6 @@ namespace Illuminate\Support\Facades {
 
             }
     /**
-     * @see \Illuminate\Translation\Translator
-     */
-    class Lang {
-        /**
-         * Determine if a translation exists for a given locale.
-         *
-         * @param string $key
-         * @param string|null $locale
-         * @return bool
-         * @static
-         */
-        public static function hasForLocale($key, $locale = null)
-        {
-            /** @var \Illuminate\Translation\Translator $instance */
-            return $instance->hasForLocale($key, $locale);
-        }
-
-        /**
-         * Determine if a translation exists.
-         *
-         * @param string $key
-         * @param string|null $locale
-         * @param bool $fallback
-         * @return bool
-         * @static
-         */
-        public static function has($key, $locale = null, $fallback = true)
-        {
-            /** @var \Illuminate\Translation\Translator $instance */
-            return $instance->has($key, $locale, $fallback);
-        }
-
-        /**
-         * Get the translation for the given key.
-         *
-         * @param string $key
-         * @param array $replace
-         * @param string|null $locale
-         * @param bool $fallback
-         * @return string|array
-         * @static
-         */
-        public static function get($key, $replace = [], $locale = null, $fallback = true)
-        {
-            /** @var \Illuminate\Translation\Translator $instance */
-            return $instance->get($key, $replace, $locale, $fallback);
-        }
-
-        /**
-         * Get a translation according to an integer value.
-         *
-         * @param string $key
-         * @param \Countable|int|float|array $number
-         * @param array $replace
-         * @param string|null $locale
-         * @return string
-         * @static
-         */
-        public static function choice($key, $number, $replace = [], $locale = null)
-        {
-            /** @var \Illuminate\Translation\Translator $instance */
-            return $instance->choice($key, $number, $replace, $locale);
-        }
-
-        /**
-         * Add translation lines to the given locale.
-         *
-         * @param array $lines
-         * @param string $locale
-         * @param string $namespace
-         * @return void
-         * @static
-         */
-        public static function addLines($lines, $locale, $namespace = '*')
-        {
-            /** @var \Illuminate\Translation\Translator $instance */
-            $instance->addLines($lines, $locale, $namespace);
-        }
-
-        /**
-         * Load the specified language group.
-         *
-         * @param string $namespace
-         * @param string $group
-         * @param string $locale
-         * @return void
-         * @static
-         */
-        public static function load($namespace, $group, $locale)
-        {
-            /** @var \Illuminate\Translation\Translator $instance */
-            $instance->load($namespace, $group, $locale);
-        }
-
-        /**
-         * Register a callback that is responsible for handling missing translation keys.
-         *
-         * @param callable|null $callback
-         * @return static
-         * @static
-         */
-        public static function handleMissingKeysUsing($callback)
-        {
-            /** @var \Illuminate\Translation\Translator $instance */
-            return $instance->handleMissingKeysUsing($callback);
-        }
-
-        /**
-         * Add a new namespace to the loader.
-         *
-         * @param string $namespace
-         * @param string $hint
-         * @return void
-         * @static
-         */
-        public static function addNamespace($namespace, $hint)
-        {
-            /** @var \Illuminate\Translation\Translator $instance */
-            $instance->addNamespace($namespace, $hint);
-        }
-
-        /**
-         * Add a new path to the loader.
-         *
-         * @param string $path
-         * @return void
-         * @static
-         */
-        public static function addPath($path)
-        {
-            /** @var \Illuminate\Translation\Translator $instance */
-            $instance->addPath($path);
-        }
-
-        /**
-         * Add a new JSON path to the loader.
-         *
-         * @param string $path
-         * @return void
-         * @static
-         */
-        public static function addJsonPath($path)
-        {
-            /** @var \Illuminate\Translation\Translator $instance */
-            $instance->addJsonPath($path);
-        }
-
-        /**
-         * Parse a key into namespace, group, and item.
-         *
-         * @param string $key
-         * @return array
-         * @static
-         */
-        public static function parseKey($key)
-        {
-            /** @var \Illuminate\Translation\Translator $instance */
-            return $instance->parseKey($key);
-        }
-
-        /**
-         * Specify a callback that should be invoked to determined the applicable locale array.
-         *
-         * @param callable $callback
-         * @return void
-         * @static
-         */
-        public static function determineLocalesUsing($callback)
-        {
-            /** @var \Illuminate\Translation\Translator $instance */
-            $instance->determineLocalesUsing($callback);
-        }
-
-        /**
-         * Get the message selector instance.
-         *
-         * @return \Illuminate\Translation\MessageSelector
-         * @static
-         */
-        public static function getSelector()
-        {
-            /** @var \Illuminate\Translation\Translator $instance */
-            return $instance->getSelector();
-        }
-
-        /**
-         * Set the message selector instance.
-         *
-         * @param \Illuminate\Translation\MessageSelector $selector
-         * @return void
-         * @static
-         */
-        public static function setSelector($selector)
-        {
-            /** @var \Illuminate\Translation\Translator $instance */
-            $instance->setSelector($selector);
-        }
-
-        /**
-         * Get the language line loader implementation.
-         *
-         * @return \Illuminate\Contracts\Translation\Loader
-         * @static
-         */
-        public static function getLoader()
-        {
-            /** @var \Illuminate\Translation\Translator $instance */
-            return $instance->getLoader();
-        }
-
-        /**
-         * Get the default locale being used.
-         *
-         * @return string
-         * @static
-         */
-        public static function locale()
-        {
-            /** @var \Illuminate\Translation\Translator $instance */
-            return $instance->locale();
-        }
-
-        /**
-         * Get the default locale being used.
-         *
-         * @return string
-         * @static
-         */
-        public static function getLocale()
-        {
-            /** @var \Illuminate\Translation\Translator $instance */
-            return $instance->getLocale();
-        }
-
-        /**
-         * Set the default locale.
-         *
-         * @param string $locale
-         * @return void
-         * @throws \InvalidArgumentException
-         * @static
-         */
-        public static function setLocale($locale)
-        {
-            /** @var \Illuminate\Translation\Translator $instance */
-            $instance->setLocale($locale);
-        }
-
-        /**
-         * Get the fallback locale being used.
-         *
-         * @return string
-         * @static
-         */
-        public static function getFallback()
-        {
-            /** @var \Illuminate\Translation\Translator $instance */
-            return $instance->getFallback();
-        }
-
-        /**
-         * Set the fallback locale being used.
-         *
-         * @param string $fallback
-         * @return void
-         * @static
-         */
-        public static function setFallback($fallback)
-        {
-            /** @var \Illuminate\Translation\Translator $instance */
-            $instance->setFallback($fallback);
-        }
-
-        /**
-         * Set the loaded translation groups.
-         *
-         * @param array $loaded
-         * @return void
-         * @static
-         */
-        public static function setLoaded($loaded)
-        {
-            /** @var \Illuminate\Translation\Translator $instance */
-            $instance->setLoaded($loaded);
-        }
-
-        /**
-         * Add a handler to be executed in order to format a given class to a string during translation replacements.
-         *
-         * @param callable|string $class
-         * @param callable|null $handler
-         * @return void
-         * @static
-         */
-        public static function stringable($class, $handler = null)
-        {
-            /** @var \Illuminate\Translation\Translator $instance */
-            $instance->stringable($class, $handler);
-        }
-
-        /**
-         * Register a custom macro.
-         *
-         * @param string $name
-         * @param object|callable $macro
-         * @param-closure-this static  $macro
-         * @return void
-         * @static
-         */
-        public static function macro($name, $macro)
-        {
-            \Illuminate\Translation\Translator::macro($name, $macro);
-        }
-
-        /**
-         * Mix another object into the class.
-         *
-         * @param object $mixin
-         * @param bool $replace
-         * @return void
-         * @throws \ReflectionException
-         * @static
-         */
-        public static function mixin($mixin, $replace = true)
-        {
-            \Illuminate\Translation\Translator::mixin($mixin, $replace);
-        }
-
-        /**
-         * Checks if macro is registered.
-         *
-         * @param string $name
-         * @return bool
-         * @static
-         */
-        public static function hasMacro($name)
-        {
-            return \Illuminate\Translation\Translator::hasMacro($name);
-        }
-
-        /**
-         * Flush the existing macros.
-         *
-         * @return void
-         * @static
-         */
-        public static function flushMacros()
-        {
-            \Illuminate\Translation\Translator::flushMacros();
-        }
-
-        /**
-         * Set the parsed value of a key.
-         *
-         * @param string $key
-         * @param array $parsed
-         * @return void
-         * @static
-         */
-        public static function setParsedKey($key, $parsed)
-        {
-            //Method inherited from \Illuminate\Support\NamespacedItemResolver 
-            /** @var \Illuminate\Translation\Translator $instance */
-            $instance->setParsedKey($key, $parsed);
-        }
-
-        /**
-         * Flush the cache of parsed keys.
-         *
-         * @return void
-         * @static
-         */
-        public static function flushParsedKeys()
-        {
-            //Method inherited from \Illuminate\Support\NamespacedItemResolver 
-            /** @var \Illuminate\Translation\Translator $instance */
-            $instance->flushParsedKeys();
-        }
-
-            }
-    /**
      * @method static void write(string $level, \Illuminate\Contracts\Support\Arrayable|\Illuminate\Contracts\Support\Jsonable|\Illuminate\Support\Stringable|array|string $message, array $context = [])
      * @method static \Illuminate\Log\Logger withContext(array $context = [])
      * @method static void listen(\Closure $callback)
@@ -23669,6 +23288,40 @@ namespace Illuminate\Support\Facades {
             }
     }
 
+namespace LaravelLangSyncInertia\Facades {
+    /**
+     */
+    class Lang {
+        /**
+         * @static
+         */
+        public static function load($file)
+        {
+            /** @var \LaravelLangSyncInertia\Services\LangService $instance */
+            return $instance->load($file);
+        }
+
+        /**
+         * @static
+         */
+        public static function getFile($files)
+        {
+            /** @var \LaravelLangSyncInertia\Services\LangService $instance */
+            return $instance->getFile($files);
+        }
+
+        /**
+         * @static
+         */
+        public static function getLoaded()
+        {
+            /** @var \LaravelLangSyncInertia\Services\LangService $instance */
+            return $instance->getLoaded();
+        }
+
+            }
+    }
+
 namespace Fruitcake\LaravelDebugbar\Facades {
     /**
      * @method static void            alert(mixed $message)
@@ -29886,7 +29539,7 @@ namespace  {
     class Hash extends \Illuminate\Support\Facades\Hash {}
     class Http extends \Illuminate\Support\Facades\Http {}
     class Js extends \Illuminate\Support\Js {}
-    class Lang extends \Illuminate\Support\Facades\Lang {}
+    class Lang extends \LaravelLangSyncInertia\Facades\Lang {}
     class Log extends \Illuminate\Support\Facades\Log {}
     class Mail extends \Illuminate\Support\Facades\Mail {}
     class Notification extends \Illuminate\Support\Facades\Notification {}

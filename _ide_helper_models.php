@@ -363,6 +363,7 @@ namespace App\Models{
  * @property string|null $provider_token
  * @property string|null $provider_refresh_token
  * @property string|null $avatar
+ * @property string $locale
  * @property-read \App\Models\MedicalFile|null $medicalFile
  * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
@@ -386,6 +387,7 @@ namespace App\Models{
  * @method static Builder<static>|User whereEmail($value)
  * @method static Builder<static>|User whereEmailVerifiedAt($value)
  * @method static Builder<static>|User whereId($value)
+ * @method static Builder<static>|User whereLocale($value)
  * @method static Builder<static>|User whereName($value)
  * @method static Builder<static>|User wherePassword($value)
  * @method static Builder<static>|User whereProviderId($value)
