@@ -7,5 +7,30 @@
         "failed_auth": "Failed to authenticate with :provider. Please try again."
     },
 
-    "language": { "updated_successfully": "Language updated successfully." }
+    "settings": {
+        "medical_file": {
+            "updated_successfully": "Medical file updated successfully.",
+            "failed_update": "An error occurred while updating the medical file."
+        },
+        "profile": {
+            "update": {
+                "updated_successfully": "Profile updated successfully.",
+                "failed_update": "An error occurred while updating the profile."
+            },
+            "language": {
+                "updated_successfully": "Language updated successfully.",
+                "failed_update": "An error occurred while updating the language."
+            },
+            "destroy": {
+                "deleted_successfully": "Profile deleted successfully.",
+                "failed_delete": "An error occurred while deleting the profile."
+            }
+        },
+        "security": {
+            "update": {
+                "updated_successfully": "Password updated successfully.",
+                "failed_update": "An error occurred while updating the password. Please try again."
+            }
+        }
+    }
 }

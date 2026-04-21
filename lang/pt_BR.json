@@ -204,5 +204,30 @@
         "failed_auth": "Falha ao autenticar usando :provider. Por favor, tente novamente."
     },
 
-    "language": { "updated_successfully": "Idioma atualizado com sucesso." }
+    "settings": {
+        "medical_file": {
+            "updated_successfully": "Arquivo médico atualizado com sucesso.",
+            "failed_update": "Ocorreu um erro ao atualizar o arquivo médico."
+        },
+        "profile": {
+            "update": {
+                "updated_successfully": "Perfil atualizado com sucesso.",
+                "failed_update": "Ocorreu um erro ao atualizar o perfil."
+            },
+            "language": {
+                "updated_successfully": "Idioma atualizado com sucesso.",
+                "failed_update": "Ocorreu um erro ao atualizar o idioma."
+            },
+            "destroy": {
+                "deleted_successfully": "Perfil deletado com sucesso.",
+                "failed_delete": "Ocorreu um erro ao deletar o perfil."
+            }
+        },
+        "security": {
+            "update": {
+                "updated_successfully": "Senha atualizada com sucesso.",
+                "failed_update": "Ocorreu um erro ao atualizar a senha. Por favor, tente novamente."
+            }
+        }
+    }
 }
