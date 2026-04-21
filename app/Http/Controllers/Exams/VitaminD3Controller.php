@@ -43,11 +43,11 @@ class VitaminD3Controller extends Controller
 
             $user->medicalFile->vitaminD3s()->create($validated);
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => __('exams.vitamin_d3.store_successfully')]);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exams.vitamin_d3.store_successfully')]);
 
             return to_route('vitamin-d3.index');
         } catch (Exception $e) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.vitamin_d3.store_failed')]);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.vitamin_d3.store_failed')]);
             Log::error('Error creating Vitamin D3 record', ['user_id' => $request->user()->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
@@ -66,7 +66,7 @@ class VitaminD3Controller extends Controller
         $user = $request->user();
 
         if ($vitaminD3->medicalFile->user_id !== $user->id) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.vitamin_d3.update_unauthorized')]);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.vitamin_d3.update_unauthorized')]);
 
             return back();
         }
@@ -76,11 +76,11 @@ class VitaminD3Controller extends Controller
         try {
             $vitaminD3->update($validated);
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => __('exams.vitamin_d3.update_successfully')]);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exams.vitamin_d3.update_successfully')]);
 
             return to_route('vitamin-d3.index');
         } catch (Exception $e) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.vitamin_d3.update_failed')]);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.vitamin_d3.update_failed')]);
             Log::error('Error updating Vitamin D3 record', ['user_id' => $request->user()->id, 'vitamin_d3_id' => $vitaminD3->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
@@ -93,7 +93,7 @@ class VitaminD3Controller extends Controller
         $user = auth()->user();
 
         if ($vitaminD3->medicalFile->user_id !== $user->id) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.vitamin_d3.destroy_unauthorized')]);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.vitamin_d3.destroy_unauthorized')]);
 
             return back();
         }
@@ -101,11 +101,11 @@ class VitaminD3Controller extends Controller
         try {
             $vitaminD3->delete();
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => __('exams.vitamin_d3.destroy_successfully')]);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exams.vitamin_d3.destroy_successfully')]);
 
             return to_route('vitamin-d3.index');
         } catch (Exception $e) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.vitamin_d3.destroy_failed')]);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.vitamin_d3.destroy_failed')]);
             Log::error('Error deleting Vitamin D3 record', ['user_id' => $user->id, 'vitamin_d3_id' => $vitaminD3->id, 'error' => $e->getMessage()]);
 
             return back();

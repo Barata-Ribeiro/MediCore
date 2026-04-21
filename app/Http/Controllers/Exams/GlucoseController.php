@@ -42,11 +42,11 @@ class GlucoseController extends Controller
         try {
             $user->medicalFile->glucoses()->create($validated);
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => __('exams.glucose.store_successfully')]);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exams.glucose.store_successfully')]);
 
             return to_route('glucose.index');
         } catch (Exception $e) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.glucose.store_failed')]);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.glucose.store_failed')]);
             Log::error('Error creating glucose record', ['user_id' => $user->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
@@ -65,7 +65,7 @@ class GlucoseController extends Controller
         $user = $request->user();
 
         if ($glucose->medicalFile->user_id !== $user->id) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.glucose.update_unauthorized')]);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.glucose.update_unauthorized')]);
 
             return back();
         }
@@ -75,11 +75,11 @@ class GlucoseController extends Controller
         try {
             $glucose->update($validated);
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => __('exams.glucose.update_successfully')]);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exams.glucose.update_successfully')]);
 
             return to_route('glucose.index');
         } catch (Exception $e) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.glucose.update_failed')]);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.glucose.update_failed')]);
             Log::error('Error updating glucose record', ['user_id' => $user->id, 'glucose_id' => $glucose->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
@@ -91,7 +91,7 @@ class GlucoseController extends Controller
         $user = auth()->user();
 
         if ($glucose->medicalFile->user_id !== $user->id) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.glucose.destroy_unauthorized')]);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.glucose.destroy_unauthorized')]);
 
             return back();
         }
@@ -99,11 +99,11 @@ class GlucoseController extends Controller
         try {
             $glucose->delete();
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => __('exams.glucose.destroy_successfully')]);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exams.glucose.destroy_successfully')]);
 
             return to_route('glucose.index');
         } catch (Exception $e) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.glucose.destroy_failed')]);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.glucose.destroy_failed')]);
             Log::error('Error deleting glucose record', ['user_id' => $user->id, 'glucose_id' => $glucose->id, 'error' => $e->getMessage()]);
 
             return back();
