@@ -27,6 +27,16 @@
             "destroy_unauthorized": "You are not authorized to delete this glucose record.",
             "destroy_successfully": "Glucose record deleted successfully.",
             "destroy_failed": "An error occurred while deleting the glucose record. Please try again."
+        },
+        "lipid_profile": {
+            "store_successfully": "Lipid profile record created successfully.",
+            "store_failed": "An error occurred while creating the lipid profile record. Please try again.",
+            "update_unauthorized": "You are not authorized to update this lipid profile record.",
+            "update_successfully": "Lipid profile record updated successfully.",
+            "update_failed": "An error occurred while updating the lipid profile record. Please try again.",
+            "destroy_unauthorized": "You are not authorized to delete this lipid profile record.",
+            "destroy_successfully": "Lipid profile record deleted successfully.",
+            "destroy_failed": "An error occurred while deleting the lipid profile record. Please try again."
         }
     },
 

@@ -42,11 +42,11 @@ class LipidProfileController extends Controller
         try {
             $user->medicalFile->lipidProfiles()->create($validated);
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => 'Lipid profile record created successfully.']);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('exams.lipid_profile.store_successfully')]);
 
             return to_route('lipid-profile.index');
         } catch (Exception $e) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => 'An error occurred while creating the lipid profile record.']);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.lipid_profile.store_failed')]);
             Log::error('Error creating lipid profile', ['user_id' => $user->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
@@ -65,7 +65,7 @@ class LipidProfileController extends Controller
         $user = $request->user();
 
         if ($lipidProfile->medicalFile->user_id !== $user->id) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => 'You are not authorized to update this lipid profile record.']);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.lipid_profile.update_unauthorized')]);
 
             return back();
         }
@@ -75,11 +75,11 @@ class LipidProfileController extends Controller
         try {
             $lipidProfile->update($validated);
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => 'Lipid profile record updated successfully.']);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('exams.lipid_profile.update_successfully')]);
 
             return to_route('lipid-profile.index');
         } catch (Exception $e) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => 'An error occurred while updating the lipid profile record.']);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.lipid_profile.update_failed')]);
             Log::error('Error updating lipid profile', ['user_id' => $user->id, 'record_id' => $lipidProfile->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
@@ -91,7 +91,7 @@ class LipidProfileController extends Controller
         $user = request()->user();
 
         if ($lipidProfile->medicalFile->user_id !== $user->id) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => 'You are not authorized to delete this lipid profile record.']);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.lipid_profile.destroy_unauthorized')]);
 
             return back();
         }
@@ -99,11 +99,11 @@ class LipidProfileController extends Controller
         try {
             $lipidProfile->delete();
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => 'Lipid profile record deleted successfully.']);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('exams.lipid_profile.destroy_successfully')]);
 
             return to_route('lipid-profile.index');
         } catch (Exception $e) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => 'An error occurred while deleting the lipid profile record.']);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.lipid_profile.destroy_failed')]);
             Log::error('Error deleting lipid profile', ['user_id' => $user->id, 'record_id' => $lipidProfile->id, 'error' => $e->getMessage()]);
 
             return back();

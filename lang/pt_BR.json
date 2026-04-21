@@ -224,6 +224,16 @@
             "destroy_unauthorized": "Você não está autorizado a excluir este registro de glicose.",
             "destroy_successfully": "Registro de glicose excluído com sucesso.",
             "destroy_failed": "Ocorreu um erro ao excluir o registro de glicose. Por favor, tente novamente."
+        },
+        "lipid_profile": {
+            "store_successfully": "Registro de perfil lipídico criado com sucesso.",
+            "store_failed": "Ocorreu um erro ao criar o registro de perfil lipídico. Por favor, tente novamente.",
+            "update_unauthorized": "Você não está autorizado a atualizar este registro de perfil lipídico.",
+            "update_successfully": "Registro de perfil lipídico atualizado com sucesso.",
+            "update_failed": "Ocorreu um erro ao atualizar o registro de perfil lipídico. Por favor, tente novamente.",
+            "destroy_unauthorized": "Você não está autorizado a excluir este registro de perfil lipídico.",
+            "destroy_successfully": "Registro de perfil lipídico excluído com sucesso.",
+            "destroy_failed": "Ocorreu um erro ao excluir o registro de perfil lipídico. Por favor, tente novamente."
         }
     },
 
