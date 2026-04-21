@@ -47,6 +47,16 @@
             "destroy_unauthorized": "You are not authorized to delete this ultrasensitive TSH record.",
             "destroy_successfully": "Ultrasensitive TSH record deleted successfully.",
             "destroy_failed": "An error occurred while deleting the ultrasensitive TSH record. Please try again."
+        },
+        "urea_and_creatinine": {
+            "store_successfully": "Urea and creatinine record created successfully.",
+            "store_failed": "An error occurred while creating the urea and creatinine record. Please try again.",
+            "update_unauthorized": "You are not authorized to update this urea and creatinine record.",
+            "update_successfully": "Urea and creatinine record updated successfully.",
+            "update_failed": "An error occurred while updating the urea and creatinine record. Please try again.",
+            "destroy_unauthorized": "You are not authorized to delete this urea and creatinine record.",
+            "destroy_successfully": "Urea and creatinine record deleted successfully.",
+            "destroy_failed": "An error occurred while deleting the urea and creatinine record. Please try again."
         }
     },
 
