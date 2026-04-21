@@ -99,7 +99,7 @@ class ProfileController extends Controller
 
         App::setLocale($locale);
 
-        Inertia::flash('toast', ['type' => 'success', 'message' => __('Language updated successfully.')]);
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('language.updated_successfully')]);
 
         return back();
     }

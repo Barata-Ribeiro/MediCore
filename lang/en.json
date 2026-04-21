@@ -1,9 +1,11 @@
 {
-    "Unsupported provider. Create an account using email and password instead.": "Unsupported provider. Create an account using email and password instead.",
-    "Failed to redirect to provider. Please try again.": "Failed to redirect to provider. Please try again.",
-    "Unsupported provider. Please try again.": "Unsupported provider. Please try again.",
-    "Successfully authenticated with :provider.": "Successfully authenticated with :provider.",
-    "Failed to authenticate with :provider. Please try again.": "Failed to authenticate with :provider. Please try again.",
+    "social_auth": {
+        "unsupported_provider": "Unsupported provider. Create an account using email and password instead.",
+        "failed_redirect": "Failed to redirect to provider. Please try again.",
+        "unsupported_provider_retry": "Unsupported provider. Please try again.",
+        "successful_auth": "Successfully authenticated with :provider.",
+        "failed_auth": "Failed to authenticate with :provider. Please try again."
+    },
 
-    "Language updated successfully.": "Language updated successfully."
+    "language": { "updated_successfully": "Language updated successfully." }
 }
