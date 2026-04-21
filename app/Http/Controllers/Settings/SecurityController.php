@@ -56,11 +56,11 @@ class SecurityController extends Controller implements HasMiddleware
                 'password' => $request->password,
             ]);
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => 'Password updated successfully.']);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('settings.security.update.updated_successfully')]);
 
             return back();
         } catch (Exception $e) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => 'An error occurred while updating your password. Please try again.']);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('settings.security.update.failed_update')]);
             Log::error('Error updating password', ['user_id' => $request->user()->id, 'error' => $e->getMessage()]);
 
             return back();

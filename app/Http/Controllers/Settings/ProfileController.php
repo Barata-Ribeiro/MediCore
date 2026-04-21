@@ -76,11 +76,11 @@ class ProfileController extends Controller
                 $user->save();
             });
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => 'Profile updated successfully.']);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('settings.profile.update.updated_successfully')]);
 
             return to_route('profile.edit');
         } catch (Exception $e) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => 'An error occurred while updating the profile.']);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('settings.profile.update.failed_update')]);
             Log::error('Failed to update profile', ['user_id' => $user->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
@@ -92,16 +92,23 @@ class ProfileController extends Controller
      */
     public function updateLocale(LocaleUpdateRequest $request): RedirectResponse
     {
-        $validated = $request->validated();
-        $locale = $validated['locale'];
+        try {
+            $validated = $request->validated();
+            $locale = $validated['locale'];
 
-        $request->user()->update(['locale' => $locale]);
+            $request->user()->update(['locale' => $locale]);
 
-        App::setLocale($locale);
+            App::setLocale($locale);
 
-        Inertia::flash('toast', ['type' => 'success', 'message' => __('language.updated_successfully')]);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('settings.profile.language.updated_successfully')]);
 
-        return back();
+            return back();
+        } catch (Exception $e) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('settings.profile.language.failed_update')]);
+            Log::error('Failed to update locale', ['user_id' => $request->user()->id, 'error' => $e->getMessage()]);
+
+            return back()->withInput();
+        }
     }
 
     /**
@@ -119,11 +126,11 @@ class ProfileController extends Controller
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => 'Account deleted successfully.']);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('settings.profile.destroy.deleted_successfully')]);
 
             return redirect('/');
         } catch (Exception $e) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => 'An error occurred while deleting the account.']);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('settings.profile.destroy.failed_delete')]);
             Log::error('Failed to delete account', ['user_id' => $user->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
