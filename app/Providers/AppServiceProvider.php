@@ -21,6 +21,7 @@ use App\Services\Exams\UreaAndCreatinineService;
 use App\Services\Exams\UricAcidService;
 use App\Services\Exams\VitaminB12Service;
 use App\Services\Exams\VitaminD3Service;
+use App\Translation\Translator;
 use Carbon\CarbonImmutable;
 use Gate;
 use Illuminate\Support\Facades\Date;
@@ -107,6 +108,13 @@ class AppServiceProvider extends ServiceProvider
                     'status' => $response->statusCode(),
                 ])->withSharedData();
             }
+        });
+
+        $this->app->extend('translator', function ($service, $app) {
+            $translator = new Translator($service->getLoader(), $service->getLocale());
+            $translator->setFallback($service->getFallback());
+
+            return $translator;
         });
     }
 

@@ -196,11 +196,38 @@
     "Enter your email and password below to log in": "Digite seu e-mail e senha abaixo para entrar",
     "Don't have an account?": "Não tem uma conta?",
 
-    "Unsupported provider. Create an account using email and password instead.": "Provedor não suportado. Crie uma conta usando e-mail e senha.",
-    "Failed to redirect to provider. Please try again.": "Falha ao redirecionar para o provedor. Por favor, tente novamente.",
-    "Unsupported provider. Please try again.": "Provedor não suportado. Por favor, tente novamente.",
-    "Successfully authenticated with :provider.": "Autenticado com sucesso usando :provider.",
-    "Failed to authenticate with :provider. Please try again.": "Falha ao autenticar usando :provider. Por favor, tente novamente.",
+    "social_auth": {
+        "unsupported_provider": "Provedor não suportado. Crie uma conta usando e-mail e senha em vez disso.",
+        "failed_redirect": "Falha ao redirecionar para o provedor. Por favor, tente novamente.",
+        "unsupported_provider_retry": "Provedor não suportado. Por favor, tente novamente.",
+        "successful_auth": "Autenticado com sucesso usando :provider.",
+        "failed_auth": "Falha ao autenticar usando :provider. Por favor, tente novamente."
+    },
 
-    "Language updated successfully.": "Idioma atualizado com sucesso."
+    "settings": {
+        "medical_file": {
+            "updated_successfully": "Arquivo médico atualizado com sucesso.",
+            "failed_update": "Ocorreu um erro ao atualizar o arquivo médico."
+        },
+        "profile": {
+            "update": {
+                "updated_successfully": "Perfil atualizado com sucesso.",
+                "failed_update": "Ocorreu um erro ao atualizar o perfil."
+            },
+            "language": {
+                "updated_successfully": "Idioma atualizado com sucesso.",
+                "failed_update": "Ocorreu um erro ao atualizar o idioma."
+            },
+            "destroy": {
+                "deleted_successfully": "Perfil deletado com sucesso.",
+                "failed_delete": "Ocorreu um erro ao deletar o perfil."
+            }
+        },
+        "security": {
+            "update": {
+                "updated_successfully": "Senha atualizada com sucesso.",
+                "failed_update": "Ocorreu um erro ao atualizar a senha. Por favor, tente novamente."
+            }
+        }
+    }
 }

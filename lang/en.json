@@ -1,9 +1,36 @@
 {
-    "Unsupported provider. Create an account using email and password instead.": "Unsupported provider. Create an account using email and password instead.",
-    "Failed to redirect to provider. Please try again.": "Failed to redirect to provider. Please try again.",
-    "Unsupported provider. Please try again.": "Unsupported provider. Please try again.",
-    "Successfully authenticated with :provider.": "Successfully authenticated with :provider.",
-    "Failed to authenticate with :provider. Please try again.": "Failed to authenticate with :provider. Please try again.",
+    "social_auth": {
+        "unsupported_provider": "Unsupported provider. Create an account using email and password instead.",
+        "failed_redirect": "Failed to redirect to provider. Please try again.",
+        "unsupported_provider_retry": "Unsupported provider. Please try again.",
+        "successful_auth": "Successfully authenticated with :provider.",
+        "failed_auth": "Failed to authenticate with :provider. Please try again."
+    },
 
-    "Language updated successfully.": "Language updated successfully."
+    "settings": {
+        "medical_file": {
+            "updated_successfully": "Medical file updated successfully.",
+            "failed_update": "An error occurred while updating the medical file."
+        },
+        "profile": {
+            "update": {
+                "updated_successfully": "Profile updated successfully.",
+                "failed_update": "An error occurred while updating the profile."
+            },
+            "language": {
+                "updated_successfully": "Language updated successfully.",
+                "failed_update": "An error occurred while updating the language."
+            },
+            "destroy": {
+                "deleted_successfully": "Profile deleted successfully.",
+                "failed_delete": "An error occurred while deleting the profile."
+            }
+        },
+        "security": {
+            "update": {
+                "updated_successfully": "Password updated successfully.",
+                "failed_update": "An error occurred while updating the password. Please try again."
+            }
+        }
+    }
 }
