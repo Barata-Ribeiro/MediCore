@@ -17,6 +17,16 @@
             "destroy_unauthorized": "You are not authorized to delete this complete blood count record.",
             "destroy_successfully": "Complete blood count record deleted successfully.",
             "destroy_failed": "An error occurred while deleting the complete blood count record. Please try again."
+        },
+        "glucose": {
+            "store_successfully": "Glucose record created successfully.",
+            "store_failed": "An error occurred while creating the glucose record. Please try again.",
+            "update_unauthorized": "You are not authorized to update this glucose record.",
+            "update_successfully": "Glucose record updated successfully.",
+            "update_failed": "An error occurred while updating the glucose record. Please try again.",
+            "destroy_unauthorized": "You are not authorized to delete this glucose record.",
+            "destroy_successfully": "Glucose record deleted successfully.",
+            "destroy_failed": "An error occurred while deleting the glucose record. Please try again."
         }
     },
 
