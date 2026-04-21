@@ -7,6 +7,19 @@
         "failed_auth": "Failed to authenticate with :provider. Please try again."
     },
 
+    "exams": {
+        "cbc": {
+            "store_successfully": "Complete blood count record created successfully.",
+            "store_failed": "An error occurred while creating the complete blood count record. Please try again.",
+            "update_unauthorized": "You are not authorized to update this complete blood count record.",
+            "update_successfully": "Complete blood count record updated successfully.",
+            "update_failed": "An error occurred while updating the complete blood count record. Please try again.",
+            "destroy_unauthorized": "You are not authorized to delete this complete blood count record.",
+            "destroy_successfully": "Complete blood count record deleted successfully.",
+            "destroy_failed": "An error occurred while deleting the complete blood count record. Please try again."
+        }
+    },
+
     "settings": {
         "medical_file": {
             "updated_successfully": "Medical file updated successfully.",

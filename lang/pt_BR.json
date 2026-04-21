@@ -204,6 +204,19 @@
         "failed_auth": "Falha ao autenticar usando :provider. Por favor, tente novamente."
     },
 
+    "exams": {
+        "cbc": {
+            "store_successfully": "Registro de hemograma criado com sucesso.",
+            "store_failed": "Ocorreu um erro ao criar o registro de hemograma. Por favor, tente novamente.",
+            "update_unauthorized": "Você não está autorizado a atualizar este registro de hemograma.",
+            "update_successfully": "Registro de hemograma atualizado com sucesso.",
+            "update_failed": "Ocorreu um erro ao atualizar o registro de hemograma. Por favor, tente novamente.",
+            "destroy_unauthorized": "Você não está autorizado a excluir este registro de hemograma.",
+            "destroy_successfully": "Registro de hemograma excluído com sucesso.",
+            "destroy_failed": "Ocorreu um erro ao excluir o registro de hemograma. Por favor, tente novamente."
+        }
+    },
+
     "settings": {
         "medical_file": {
             "updated_successfully": "Arquivo médico atualizado com sucesso.",

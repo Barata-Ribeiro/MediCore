@@ -42,11 +42,11 @@ class CompleteBloodCountController extends Controller
         try {
             $user->medicalFile->completeBloodCounts()->create($validated);
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => 'Complete blood count record created successfully.']);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('exams.cbc.store_successfully')]);
 
             return to_route('complete-blood-count.index');
         } catch (Exception $e) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => 'An error occurred while creating the complete blood count record.']);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.cbc.store_failed')]);
             Log::error('Error creating complete blood count', ['user_id' => $user->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
@@ -65,7 +65,7 @@ class CompleteBloodCountController extends Controller
         $user = $request->user();
 
         if ($completeBloodCount->medicalFile->user_id !== $user->id) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => 'You are not authorized to update this complete blood count record.']);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.cbc.update_unauthorized')]);
 
             return back();
         }
@@ -75,11 +75,11 @@ class CompleteBloodCountController extends Controller
         try {
             $completeBloodCount->update($validated);
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => 'Complete blood count record updated successfully.']);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('exams.cbc.update_successfully')]);
 
             return to_route('complete-blood-count.index');
         } catch (Exception $e) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => 'An error occurred while updating the complete blood count record.']);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.cbc.update_failed')]);
             Log::error('Error updating complete blood count', ['user_id' => $user->id, 'record_id' => $completeBloodCount->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
@@ -91,7 +91,7 @@ class CompleteBloodCountController extends Controller
         $user = request()->user();
 
         if ($completeBloodCount->medicalFile->user_id !== $user->id) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => 'You are not authorized to delete this complete blood count record.']);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.cbc.destroy_unauthorized')]);
 
             return back();
         }
@@ -99,11 +99,11 @@ class CompleteBloodCountController extends Controller
         try {
             $completeBloodCount->delete();
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => 'Complete blood count record deleted successfully.']);
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('exams.cbc.destroy_successfully')]);
 
             return to_route('complete-blood-count.index');
         } catch (Exception $e) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => 'An error occurred while deleting the complete blood count record.']);
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('exams.cbc.destroy_failed')]);
             Log::error('Error deleting complete blood count', ['user_id' => $user->id, 'record_id' => $completeBloodCount->id, 'error' => $e->getMessage()]);
 
             return back();
