@@ -2,12 +2,10 @@
 
 namespace App\Http\Requests\Settings;
 
-use Illuminate\Foundation\Http\Attributes\FailOnUnknownFields;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\In;
 
-#[FailOnUnknownFields]
 class LocaleUpdateRequest extends FormRequest
 {
     /**
