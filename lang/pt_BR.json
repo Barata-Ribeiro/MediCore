@@ -264,6 +264,16 @@
             "destroy_unauthorized": "Você não está autorizado a excluir este registro de vitamina B12.",
             "destroy_successfully": "Registro de vitamina B12 excluído com sucesso.",
             "destroy_failed": "Ocorreu um erro ao excluir o registro de vitamina B12. Por favor, tente novamente."
+        },
+        "vitamin_d3": {
+            "store_successfully": "Registro de vitamina D3 criado com sucesso.",
+            "store_failed": "Ocorreu um erro ao criar o registro de vitamina D3. Por favor, tente novamente.",
+            "update_unauthorized": "Você não está autorizado a atualizar este registro de vitamina D3.",
+            "update_successfully": "Registro de vitamina D3 atualizado com sucesso.",
+            "update_failed": "Ocorreu um erro ao atualizar o registro de vitamina D3. Por favor, tente novamente.",
+            "destroy_unauthorized": "Você não está autorizado a excluir este registro de vitamina D3.",
+            "destroy_successfully": "Registro de vitamina D3 excluído com sucesso.",
+            "destroy_failed": "Ocorreu um erro ao excluir o registro de vitamina D3. Por favor, tente novamente."
         }
     },
 
