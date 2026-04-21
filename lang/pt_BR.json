@@ -234,6 +234,16 @@
             "destroy_unauthorized": "Você não está autorizado a excluir este registro de perfil lipídico.",
             "destroy_successfully": "Registro de perfil lipídico excluído com sucesso.",
             "destroy_failed": "Ocorreu um erro ao excluir o registro de perfil lipídico. Por favor, tente novamente."
+        },
+        "ultrasensitive_tsh": {
+            "store_successfully": "Registro de TSH ultrassensível criado com sucesso.",
+            "store_failed": "Ocorreu um erro ao criar o registro de TSH ultrassensível. Por favor, tente novamente.",
+            "update_unauthorized": "Você não está autorizado a atualizar este registro de TSH ultrassensível.",
+            "update_successfully": "Registro de TSH ultrassensível atualizado com sucesso.",
+            "update_failed": "Ocorreu um erro ao atualizar o registro de TSH ultrassensível. Por favor, tente novamente.",
+            "destroy_unauthorized": "Você não está autorizado a excluir este registro de TSH ultrassensível.",
+            "destroy_successfully": "Registro de TSH ultrassensível excluído com sucesso.",
+            "destroy_failed": "Ocorreu um erro ao excluir o registro de TSH ultrassensível. Por favor, tente novamente."
         }
     },
 

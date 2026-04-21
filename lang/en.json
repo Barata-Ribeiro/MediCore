@@ -37,6 +37,16 @@
             "destroy_unauthorized": "You are not authorized to delete this lipid profile record.",
             "destroy_successfully": "Lipid profile record deleted successfully.",
             "destroy_failed": "An error occurred while deleting the lipid profile record. Please try again."
+        },
+        "ultrasensitive_tsh": {
+            "store_successfully": "Ultrasensitive TSH record created successfully.",
+            "store_failed": "An error occurred while creating the ultrasensitive TSH record. Please try again.",
+            "update_unauthorized": "You are not authorized to update this ultrasensitive TSH record.",
+            "update_successfully": "Ultrasensitive TSH record updated successfully.",
+            "update_failed": "An error occurred while updating the ultrasensitive TSH record. Please try again.",
+            "destroy_unauthorized": "You are not authorized to delete this ultrasensitive TSH record.",
+            "destroy_successfully": "Ultrasensitive TSH record deleted successfully.",
+            "destroy_failed": "An error occurred while deleting the ultrasensitive TSH record. Please try again."
         }
     },
 
