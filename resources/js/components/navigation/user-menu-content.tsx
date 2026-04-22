@@ -9,8 +9,9 @@ import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { logout } from '@/routes';
 import { edit } from '@/routes/profile';
 import type { User } from '@/types';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Link, router } from '@inertiajs/react';
-import { LogOut, Settings } from 'lucide-react';
+import { LogOutIcon, SettingsIcon } from 'lucide-react';
 import { Fragment } from 'react/jsx-runtime';
 
 type Props = {
@@ -18,6 +19,8 @@ type Props = {
 };
 
 export function UserMenuContent({ user }: Readonly<Props>) {
+    const { __ } = lang();
+
     const cleanup = useMobileNavigation();
 
     const handleLogout = () => {
@@ -36,8 +39,8 @@ export function UserMenuContent({ user }: Readonly<Props>) {
             <DropdownMenuGroup>
                 <DropdownMenuItem asChild>
                     <Link className="block w-full" href={edit()} prefetch onClick={cleanup}>
-                        <Settings aria-hidden className="mr-2" />
-                        Settings
+                        <SettingsIcon aria-hidden className="mr-2" />
+                        {__('main.menu.user_dropdown.settings')}
                     </Link>
                 </DropdownMenuItem>
             </DropdownMenuGroup>
@@ -50,8 +53,8 @@ export function UserMenuContent({ user }: Readonly<Props>) {
                     onClick={handleLogout}
                     data-test="logout-button"
                 >
-                    <LogOut aria-hidden className="mr-2" />
-                    Log out
+                    <LogOutIcon aria-hidden className="mr-2" />
+                    {__('main.menu.user_dropdown.logout')}
                 </Link>
             </DropdownMenuItem>
         </Fragment>
