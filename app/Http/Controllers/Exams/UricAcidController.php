@@ -87,6 +87,31 @@ class UricAcidController extends Controller
         }
     }
 
+    public function destroy(UricAcid $uricAcid)
+    {
+        $user = request()->user();
+
+        if ($uricAcid->medicalFile->user_id !== $user->id) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.uric_acid.destroy_unauthorized')]);
+            Log::warning('Unauthorized attempt to delete Uric Acid record', ['user_id' => $user->id, 'uric_acid_id' => $uricAcid->id]);
+
+            return back();
+        }
+
+        try {
+            $uricAcid->delete();
+
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exams.uric_acid.destroy_successfully')]);
+
+            return to_route('uric-acid.index');
+        } catch (Exception $e) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.uric_acid.destroy_failed')]);
+            Log::error('Error deleting Uric Acid record', ['user_id' => $user->id, 'uric_acid_id' => $uricAcid->id, 'error' => $e->getMessage()]);
+
+            return back();
+        }
+    }
+
     /**
      * Validate request query inputs, apply sort/filter defaults, and fetch
      * paginated glucose results plus chart data.
