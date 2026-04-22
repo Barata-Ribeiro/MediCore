@@ -26,4 +26,15 @@ return [
             'logout' => 'Log out',
         ],
     ],
+    'command_bar' => [
+        'placeholder' => 'Search...',
+        'main_navigation' => 'Main Navigation',
+        'search_placeholder' => 'Type a command or search...',
+        'no_results' => 'No results found.',
+        'settings_items' => [
+            'profile' => 'Profile',
+            'change_password' => 'Change Password',
+            'appearance' => 'Appearance',
+        ],
+    ],
 ];

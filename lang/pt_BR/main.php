@@ -26,4 +26,15 @@ return [
             'logout' => 'Sair',
         ],
     ],
+    'command_bar' => [
+        'placeholder' => 'Pesquisar...',
+        'main_navigation' => 'Navegação Principal',
+        'search_placeholder' => 'Digite um comando ou pesquisa...',
+        'no_results' => 'Nenhum resultado encontrado.',
+        'settings_items' => [
+            'profile' => 'Perfil',
+            'change_password' => 'Alterar Senha',
+            'appearance' => 'Aparência',
+        ],
+    ],
 ];
