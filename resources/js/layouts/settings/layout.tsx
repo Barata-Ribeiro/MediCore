@@ -8,38 +8,40 @@ import { edit as editMedicalFile } from '@/routes/medical-file';
 import { edit } from '@/routes/profile';
 import { edit as editSecurity } from '@/routes/security';
 import type { NavItem } from '@/types';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Link } from '@inertiajs/react';
 import type { PropsWithChildren } from 'react';
 
 const sidebarNavItems: NavItem[] = [
     {
-        title: 'Profile',
+        title_path: 'main.settings_layout.sidebar_items.profile',
         href: edit(),
         icon: null,
     },
     {
-        title: 'Medical File',
+        title_path: 'main.settings_layout.sidebar_items.medical_file',
         href: editMedicalFile(),
         icon: null,
     },
     {
-        title: 'Security',
+        title_path: 'main.settings_layout.sidebar_items.security',
         href: editSecurity(),
         icon: null,
     },
     {
-        title: 'Appearance',
+        title_path: 'main.settings_layout.sidebar_items.appearance',
         href: editAppearance(),
         icon: null,
     },
 ];
 
 export default function SettingsLayout({ children }: Readonly<PropsWithChildren>) {
+    const { __ } = lang();
     const { isCurrentOrParentUrl } = useCurrentUrl();
 
     return (
         <div className="px-4 py-6">
-            <Heading title="Settings" description="Manage your profile and account settings" />
+            <Heading title={__('main.settings_layout.title')} description={__('main.settings_layout.description')} />
 
             <div className="flex flex-col lg:flex-row lg:space-x-12">
                 <aside className="w-full max-w-xl lg:w-48">
@@ -56,7 +58,7 @@ export default function SettingsLayout({ children }: Readonly<PropsWithChildren>
                             >
                                 <Link href={item.href}>
                                     {item.icon && <item.icon className="h-4 w-4" />}
-                                    {item.title}
+                                    {__(item.title_path)}
                                 </Link>
                             </Button>
                         ))}
