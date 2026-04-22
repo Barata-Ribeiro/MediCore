@@ -5,6 +5,8 @@ namespace App\Http\Middleware;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
+use function syncLangFiles;
+
 class HandleInertiaRequests extends Middleware
 {
     /**
@@ -35,6 +37,8 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        syncLangFiles('main');
+
         $now = now();
 
         return [
