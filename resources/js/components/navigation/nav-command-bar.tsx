@@ -15,6 +15,7 @@ import { mainNavItems } from '@/lib/navigation-items';
 import { edit as editAppearance } from '@/routes/appearance';
 import { edit } from '@/routes/profile';
 import { edit as editSecurity } from '@/routes/security';
+import { lang } from '@erag/lang-sync-inertia/react';
 import type { UrlMethodPair } from '@inertiajs/core';
 import { router } from '@inertiajs/core';
 import { formatForDisplay, useHotkey } from '@tanstack/react-hotkeys';
@@ -23,6 +24,7 @@ import { useCallback, useState } from 'react';
 
 export default function NavCommandBar() {
     const [open, setOpen] = useState(false);
+    const { __ } = lang();
 
     const handleRouteChange = useCallback((href: NonNullable<string | UrlMethodPair | undefined>) => {
         return () => {
@@ -45,24 +47,24 @@ export default function NavCommandBar() {
         <div className="flex flex-col gap-4">
             <Button variant="outline" size="sm" className="text-muted-foreground" onClick={() => setOpen(true)}>
                 <SearchIcon aria-hidden />
-                <span>Search...</span>
+                <span>{__('main.command_bar.placeholder')}</span>
 
                 <Kbd className="-mr-2 ml-18 hidden sm:inline-flex">{formatForDisplay('Mod+K')}</Kbd>
             </Button>
             <CommandDialog open={open} onOpenChange={setOpen}>
                 <Command>
-                    <CommandInput placeholder="Type something to search..." />
+                    <CommandInput placeholder={__('main.command_bar.search_placeholder')} />
 
                     <CommandList>
-                        <CommandEmpty>No results found.</CommandEmpty>
+                        <CommandEmpty>{__('main.command_bar.no_results')}</CommandEmpty>
 
-                        <CommandGroup heading="Main Navigation">
+                        <CommandGroup heading={__('main.command_bar.main_navigation')}>
                             {mainNavItems
                                 .filter((item) => !item.items || item.href !== '#')
                                 .map((item) => (
-                                    <CommandItem key={item.title} onSelect={handleRouteChange(item.href)}>
+                                    <CommandItem key={item.title_path} onSelect={handleRouteChange(item.href)}>
                                         {item.icon && <item.icon aria-hidden />}
-                                        <span>{item.title}</span>
+                                        <span>{__(item.title_path)}</span>
                                     </CommandItem>
                                 ))}
                         </CommandGroup>
@@ -70,10 +72,13 @@ export default function NavCommandBar() {
                         {mainNavItems
                             .filter((item) => item.items && item.href === '#')
                             .map((item) => (
-                                <CommandGroup key={item.title} heading={item.title}>
+                                <CommandGroup key={item.title_path} heading={__(item.title_path)}>
                                     {item.items?.map((subItem) => (
-                                        <CommandItem key={subItem.title} onSelect={handleRouteChange(subItem.href)}>
-                                            <span>{subItem.title}</span>
+                                        <CommandItem
+                                            key={subItem.title_path}
+                                            onSelect={handleRouteChange(subItem.href)}
+                                        >
+                                            <span>{__(subItem.title_path)}</span>
                                         </CommandItem>
                                     ))}
                                 </CommandGroup>
@@ -82,19 +87,19 @@ export default function NavCommandBar() {
                         <CommandGroup heading="Settings">
                             <CommandItem onSelect={handleRouteChange(edit())}>
                                 <UserIcon aria-hidden />
-                                <span>Profile</span>
+                                <span>{__('main.command_bar.settings_items.profile')}</span>
                                 <CommandShortcut>{formatForDisplay('Mod+P')}</CommandShortcut>
                             </CommandItem>
 
                             <CommandItem onSelect={handleRouteChange(editSecurity())}>
                                 <KeyRoundIcon aria-hidden />
-                                <span>Change Password</span>
+                                <span>{__('main.command_bar.settings_items.change_password')}</span>
                                 <CommandShortcut>{formatForDisplay('Mod+Shift+P')}</CommandShortcut>
                             </CommandItem>
 
                             <CommandItem onSelect={handleRouteChange(editAppearance())}>
                                 <SunMoonIcon aria-hidden />
-                                <span>Appearance</span>
+                                <span>{__('main.command_bar.settings_items.appearance')}</span>
                                 <CommandShortcut>{formatForDisplay('Mod+Shift+A')}</CommandShortcut>
                             </CommandItem>
                         </CommandGroup>
