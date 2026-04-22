@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Exams\UricAcidRequest;
 use App\Http\Requests\QueryRequest;
 use App\Interfaces\Exams\UricAcidServiceInterface;
+use App\Models\Exams\UricAcid;
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
@@ -47,6 +48,40 @@ class UricAcidController extends Controller
         } catch (Exception $e) {
             Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.uric_acid.store_failed')]);
             Log::error('Error creating Uric Acid record', ['user_id' => $request->user()->id, 'error' => $e->getMessage()]);
+
+            return back()->withInput();
+        }
+    }
+
+    public function edit(UricAcid $uricAcid)
+    {
+        return Inertia::render('exams/uric-acid/edit', [
+            'uricAcid' => $uricAcid,
+        ]);
+    }
+
+    public function update(UricAcidRequest $request, UricAcid $uricAcid)
+    {
+        $user = $request->user();
+
+        if ($uricAcid->medicalFile->user_id !== $user->id) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.uric_acid.update_failed')]);
+            Log::warning('Unauthorized attempt to update Uric Acid record', ['user_id' => $user->id, 'uric_acid_id' => $uricAcid->id]);
+
+            return back()->withInput();
+        }
+
+        $validated = $request->validated();
+
+        try {
+            $uricAcid->update($validated);
+
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exams.uric_acid.update_successfully')]);
+
+            return to_route('uric-acid.index');
+        } catch (Exception $e) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.uric_acid.update_failed')]);
+            Log::error('Error updating Uric Acid record', ['user_id' => $request->user()->id, 'uric_acid_id' => $uricAcid->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
         }
