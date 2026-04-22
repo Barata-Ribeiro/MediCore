@@ -37,4 +37,14 @@ return [
             'appearance' => 'Aparência',
         ],
     ],
+    'settings_layout' => [
+        'sidebar_items' => [
+            'profile' => 'Perfil',
+            'medical_file' => 'Prontuário',
+            'security' => 'Segurança',
+            'appearance' => 'Aparência',
+        ],
+        'title' => 'Configurações',
+        'description' => 'Gerencie seu perfil e configurações de conta',
+    ],
 ];

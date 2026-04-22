@@ -37,4 +37,14 @@ return [
             'appearance' => 'Appearance',
         ],
     ],
+    'settings_layout' => [
+        'sidebar_items' => [
+            'profile' => 'Profile',
+            'medical_file' => 'Medical File',
+            'security' => 'Security',
+            'appearance' => 'Appearance',
+        ],
+        'title' => 'Settings',
+        'description' => 'Manage your profile and account settings',
+    ],
 ];
