@@ -52,6 +52,16 @@ return [
             'destroy_successfully' => 'Urea and creatinine record deleted successfully.',
             'destroy_failed' => 'An error occurred while deleting the urea and creatinine record. Please try again.',
         ],
+        'uric_acid' => [
+            'store_successfully' => 'Uric acid record created successfully.',
+            'store_failed' => 'An error occurred while creating the uric acid record. Please try again.',
+            'update_unauthorized' => 'You are not authorized to update this uric acid record.',
+            'update_successfully' => 'Uric acid record updated successfully.',
+            'update_failed' => 'An error occurred while updating the uric acid record. Please try again.',
+            'destroy_unauthorized' => 'You are not authorized to delete this uric acid record.',
+            'destroy_successfully' => 'Uric acid record deleted successfully.',
+            'destroy_failed' => 'An error occurred while deleting the uric acid record. Please try again.',
+        ],
         'vitamin_b12' => [
             'store_successfully' => 'Vitamin B12 record created successfully.',
             'store_failed' => 'An error occurred while creating the vitamin B12 record. Please try again.',

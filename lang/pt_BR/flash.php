@@ -52,6 +52,16 @@ return [
             'destroy_successfully' => 'Registro de ureia e creatinina excluído com sucesso.',
             'destroy_failed' => 'Ocorreu um erro ao excluir o registro de ureia e creatinina. Por favor, tente novamente.',
         ],
+        'uric_acid' => [
+            'store_successfully' => 'Registro de ácido úrico criado com sucesso.',
+            'store_failed' => 'Ocorreu um erro ao criar o registro de ácido úrico. Por favor, tente novamente.',
+            'update_unauthorized' => 'Você não está autorizado a atualizar este registro de ácido úrico.',
+            'update_successfully' => 'Registro de ácido úrico atualizado com sucesso.',
+            'update_failed' => 'Ocorreu um erro ao atualizar o registro de ácido úrico. Por favor, tente novamente.',
+            'destroy_unauthorized' => 'Você não está autorizado a excluir este registro de ácido úrico.',
+            'destroy_successfully' => 'Registro de ácido úrico excluído com sucesso.',
+            'destroy_failed' => 'Ocorreu um erro ao excluir o registro de ácido úrico. Por favor, tente novamente.',
+        ],
         'vitamin_b12' => [
             'store_successfully' => 'Registro de vitamina B12 criado com sucesso.',
             'store_failed' => 'Ocorreu um erro ao criar o registro de vitamina B12. Por favor, tente novamente.',
