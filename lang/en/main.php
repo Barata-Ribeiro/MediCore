@@ -37,6 +37,12 @@ return [
             'appearance' => 'Appearance',
         ],
     ],
+    'appearance_dropdown' => [
+        'title' => 'Select Appearance',
+        'light' => 'Light',
+        'dark' => 'Dark',
+        'system' => 'System',
+    ],
     'settings_layout' => [
         'sidebar_items' => [
             'profile' => 'Profile',
