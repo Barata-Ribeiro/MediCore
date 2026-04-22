@@ -1,4 +1,6 @@
 import { edit } from '@/actions/App/Http/Controllers/Settings/ProfileController';
+import AppLanguageSelector from '@/components/application/app-language-selector';
+import Heading from '@/components/common/heading';
 import BaseAccountUpdateForm from '@/components/forms/settings/base-account-update.form';
 import PersonalProfileManagerForm from '@/components/forms/settings/personal-profile-manager.form';
 import DeleteUser from '@/components/helpers/delete-user';
@@ -22,6 +24,14 @@ export default function Profile({
             <BaseAccountUpdateForm mustVerifyEmail={mustVerifyEmail} status={status} />
 
             <Separator className="my-6" />
+
+            <div className="space-y-6">
+                <Heading variant="small" title="Language" description="Update your language preferences" />
+
+                <AppLanguageSelector />
+            </div>
+
+            <Separator className="mb-6" />
 
             <PersonalProfileManagerForm />
 

@@ -39,12 +39,12 @@ const AppLanguageSelector = memo(() => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="outline">
+                <Button variant="outline" className="w-full justify-start">
                     <LanguagesIcon aria-hidden className="size-4" />
-                    Languages
+                    <span>{currentLocale === 'en' ? '🇺🇸 English' : '🇧🇷 Português (Brasil)'}</span>
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-full max-w-84">
+            <DropdownMenuContent>
                 <DropdownMenuLabel>Select Language</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuRadioGroup value={currentLocale} onValueChange={handleLocaleChange}>
@@ -57,7 +57,7 @@ const AppLanguageSelector = memo(() => {
                     <DropdownMenuRadioItem value="pt_BR">
                         <span className="flex items-center gap-2">
                             <span>🇧🇷</span>
-                            <span>Portuguese (Brazil)</span>
+                            <span>Português (Brasil)</span>
                         </span>
                     </DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
