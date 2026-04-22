@@ -8,50 +8,50 @@ import { index as ureaAndCreatinineIndex } from '@/routes/urea-and-creatinine';
 import { index as vitaminB12Index } from '@/routes/vitamin-b12';
 import { index as vitaminD3Index } from '@/routes/vitamin-d3';
 import type { NavItem } from '@/types';
-import { BriefcaseBusinessIcon, FileTextIcon, FolderGit2, LayoutGrid, MicroscopeIcon } from 'lucide-react';
+import { BriefcaseBusinessIcon, FileTextIcon, FolderGit2Icon, LayoutGridIcon, MicroscopeIcon } from 'lucide-react';
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'Dashboard',
+        title_path: 'main.menu.sidebar_items.dashboard',
         href: dashboard(),
-        icon: LayoutGrid,
+        icon: LayoutGridIcon,
     },
     {
-        title: 'Medical File',
+        title_path: 'main.menu.sidebar_items.medical_file',
         href: edit(),
         icon: FileTextIcon,
     },
     {
-        title: 'Exams',
+        title_path: 'main.menu.sidebar_items.exams',
         href: '#',
         icon: MicroscopeIcon,
         items: [
             {
-                title: 'Complete Blood Count',
+                title_path: 'main.menu.sidebar_items.exams_items.complete_blood_count',
                 href: cbcIndex(),
             },
             {
-                title: 'Glucose',
+                title_path: 'main.menu.sidebar_items.exams_items.glucose',
                 href: glucoseIndex(),
             },
             {
-                title: 'Lipid Profile',
+                title_path: 'main.menu.sidebar_items.exams_items.lipid_profile',
                 href: lipidProfileIndex(),
             },
             {
-                title: 'Ultrasensitive TSH',
+                title_path: 'main.menu.sidebar_items.exams_items.ultrasensitive_tsh',
                 href: ultrasensitiveTshIndex(),
             },
             {
-                title: 'Urea and Creatinine',
+                title_path: 'main.menu.sidebar_items.exams_items.urea_and_creatinine',
                 href: ureaAndCreatinineIndex(),
             },
             {
-                title: 'Vitamin B12',
+                title_path: 'main.menu.sidebar_items.exams_items.vitamin_b12',
                 href: vitaminB12Index(),
             },
             {
-                title: 'Vitamin D3',
+                title_path: 'main.menu.sidebar_items.exams_items.vitamin_d3',
                 href: vitaminD3Index(),
             },
         ],
@@ -60,12 +60,12 @@ const mainNavItems: NavItem[] = [
 
 const footerNavItems: NavItem[] = [
     {
-        title: 'Repository',
+        title_path: 'main.menu.sidebar_items.footer_items.repository',
         href: 'https://github.com/Barata-Ribeiro/MediCore',
-        icon: FolderGit2,
+        icon: FolderGit2Icon,
     },
     {
-        title: 'Made by Barata Ribeiro',
+        title_path: 'main.menu.sidebar_items.footer_items.made_by',
         href: 'https://barataribeiro.com',
         icon: BriefcaseBusinessIcon,
     },
