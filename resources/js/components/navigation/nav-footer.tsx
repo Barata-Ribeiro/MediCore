@@ -5,6 +5,8 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import { useIsomorphicLayoutEffect } from '@/hooks/use-isomorphic-layout-effect';
+import { useIsMounted } from '@/hooks/use-mounted';
 import { cn, toUrl } from '@/lib/utils';
 import type { NavItem } from '@/types';
 import { lang } from '@erag/lang-sync-inertia/react';
@@ -17,7 +19,14 @@ export function NavFooter({
 }: ComponentPropsWithoutRef<typeof SidebarGroup> & {
     items: NavItem[];
 }) {
+    const isMounted = useIsMounted();
     const { __ } = lang();
+
+    useIsomorphicLayoutEffect(() => {
+        if (!isMounted) {
+            return;
+        }
+    }, [isMounted]);
 
     return (
         <SidebarGroup {...props} className={cn('group-data-[collapsible=icon]:p-0', className)}>

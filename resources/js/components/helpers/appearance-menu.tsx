@@ -10,6 +10,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import type { Appearance } from '@/hooks/use-appearance';
 import { useAppearance } from '@/hooks/use-appearance';
+import { useIsomorphicLayoutEffect } from '@/hooks/use-isomorphic-layout-effect';
+import useIsMounted from '@/hooks/use-mounted';
 import { lang } from '@erag/lang-sync-inertia/react';
 import type { LucideIcon } from 'lucide-react';
 import { Monitor, Moon, Sun } from 'lucide-react';
@@ -21,8 +23,15 @@ type AppearanceTab = {
 };
 
 export default function AppearanceMenu() {
+    const isMounted = useIsMounted();
     const { appearance, updateAppearance } = useAppearance();
     const { __ } = lang();
+
+    useIsomorphicLayoutEffect(() => {
+        if (!isMounted) {
+            return;
+        }
+    }, [appearance, isMounted]);
 
     const tabs: AppearanceTab[] = [
         { value: 'light', icon: Sun, label_path: 'main.appearance_dropdown.light' },
