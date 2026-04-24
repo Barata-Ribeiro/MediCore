@@ -5,6 +5,7 @@ import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
 import { update } from '@/routes/password';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Form, Head, setLayoutProps } from '@inertiajs/react';
 import { Activity, Fragment } from 'react';
 
@@ -14,14 +15,16 @@ type Props = {
 };
 
 export default function ResetPassword({ token, email }: Readonly<Props>) {
+    const { __ } = lang();
+
     setLayoutProps({
-        title: 'Reset password',
-        description: 'Please enter your new password below',
+        title: __('auth_pages.reset_password_page.title'),
+        description: __('auth_pages.reset_password_page.description'),
     });
 
     return (
         <Fragment>
-            <Head title="Reset password" />
+            <Head title={__('auth_pages.reset_password_page.head_title')} />
 
             <Form
                 {...update.form()}
@@ -33,7 +36,7 @@ export default function ResetPassword({ token, email }: Readonly<Props>) {
                 {({ processing, errors }) => (
                     <div className="grid gap-6">
                         <Field data-invalid={!!errors['email']}>
-                            <FieldLabel htmlFor="email">Email</FieldLabel>
+                            <FieldLabel htmlFor="email">{__('auth_pages.reset_password_page.form.email')}</FieldLabel>
                             <Input
                                 id="email"
                                 type="email"
@@ -48,13 +51,15 @@ export default function ResetPassword({ token, email }: Readonly<Props>) {
                         </Field>
 
                         <Field data-invalid={!!errors['password']}>
-                            <FieldLabel htmlFor="password">Password</FieldLabel>
+                            <FieldLabel htmlFor="password">
+                                {__('auth_pages.reset_password_page.form.password')}
+                            </FieldLabel>
                             <PasswordInput
                                 id="password"
                                 name="password"
                                 autoComplete="new-password"
                                 className="mt-1 block w-full"
-                                placeholder="Password"
+                                placeholder={__('auth_pages.reset_password_page.form.password_placeholder')}
                                 autoFocus
                                 aria-invalid={!!errors['password']}
                             />
@@ -62,13 +67,17 @@ export default function ResetPassword({ token, email }: Readonly<Props>) {
                         </Field>
 
                         <Field data-invalid={!!errors['password_confirmation']}>
-                            <FieldLabel htmlFor="password_confirmation">Confirm password</FieldLabel>
+                            <FieldLabel htmlFor="password_confirmation">
+                                {__('auth_pages.reset_password_page.form.password_confirmation')}
+                            </FieldLabel>
                             <PasswordInput
                                 id="password_confirmation"
                                 name="password_confirmation"
                                 autoComplete="new-password"
                                 className="mt-1 block w-full"
-                                placeholder="Confirm password"
+                                placeholder={__(
+                                    'auth_pages.reset_password_page.form.password_confirmation_placeholder',
+                                )}
                                 aria-invalid={!!errors['password_confirmation']}
                             />
                             <InputError message={errors['password_confirmation']} className="mt-2" />
@@ -83,7 +92,7 @@ export default function ResetPassword({ token, email }: Readonly<Props>) {
                             <Activity mode={processing ? 'visible' : 'hidden'}>
                                 <Spinner aria-hidden />
                             </Activity>
-                            Reset password
+                            {__('auth_pages.reset_password_page.form.submit')}
                         </Button>
                     </div>
                 )}
