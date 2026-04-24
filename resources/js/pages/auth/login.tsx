@@ -11,6 +11,7 @@ import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
 import social from '@/routes/social';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Form, Head, Link, setLayoutProps } from '@inertiajs/react';
 import { Activity } from 'react';
 import { Fragment } from 'react/jsx-runtime';
@@ -22,14 +23,16 @@ type Props = {
 };
 
 export default function Login({ status, canResetPassword, canRegister }: Readonly<Props>) {
+    const { __ } = lang();
+
     setLayoutProps({
-        title: 'Log in to your account',
-        description: 'Enter your email and password below to log in',
+        title: __('auth_pages.login_page.title'),
+        description: __('auth_pages.login_page.description'),
     });
 
     return (
         <Fragment>
-            <Head title="Log in" />
+            <Head title={__('auth_pages.login_page.head_title')} />
 
             <Form
                 {...store.form()}
@@ -41,7 +44,7 @@ export default function Login({ status, canResetPassword, canRegister }: Readonl
                     <Fragment>
                         <div className="grid gap-6">
                             <Field data-invalid={!!errors['email']}>
-                                <FieldLabel htmlFor="email">Email address</FieldLabel>
+                                <FieldLabel htmlFor="email">{__('auth_pages.login_page.form.email')}</FieldLabel>
                                 <Input
                                     id="email"
                                     type="email"
@@ -58,10 +61,12 @@ export default function Login({ status, canResetPassword, canRegister }: Readonl
 
                             <Field data-invalid={!!errors['password']}>
                                 <div className="flex items-center">
-                                    <FieldLabel htmlFor="password">Password</FieldLabel>
+                                    <FieldLabel htmlFor="password">
+                                        {__('auth_pages.login_page.form.password')}
+                                    </FieldLabel>
                                     <Activity mode={canResetPassword ? 'visible' : 'hidden'}>
                                         <TextLink href={request()} className="ml-auto text-sm" tabIndex={0}>
-                                            Forgot password?
+                                            {__('auth_pages.login_page.form.password_forgotten_link')}
                                         </TextLink>
                                     </Activity>
                                 </div>
@@ -71,7 +76,7 @@ export default function Login({ status, canResetPassword, canRegister }: Readonl
                                     required
                                     tabIndex={0}
                                     autoComplete="current-password"
-                                    placeholder="Password"
+                                    placeholder={__('auth_pages.login_page.form.password')}
                                     aria-invalid={!!errors['password']}
                                 />
                                 <InputError message={errors['password']} />
@@ -79,27 +84,27 @@ export default function Login({ status, canResetPassword, canRegister }: Readonl
 
                             <div className="flex items-center space-x-3">
                                 <Checkbox id="remember" name="remember" tabIndex={0} />
-                                <Label htmlFor="remember">Remember me</Label>
+                                <Label htmlFor="remember">{__('auth_pages.login_page.form.remember_me')}</Label>
                             </div>
 
                             <Button type="submit" className="mt-4 w-full" tabIndex={0} data-test="login-button">
                                 <Activity mode={processing ? 'visible' : 'hidden'}>
                                     <Spinner aria-hidden />
                                 </Activity>
-                                Log in
+                                {__('auth_pages.login_page.form.submit')}
                             </Button>
                         </div>
 
                         <Activity mode={canRegister ? 'visible' : 'hidden'}>
                             <div className="text-center text-sm text-muted-foreground">
-                                Don't have an account?{' '}
+                                {__('auth_pages.login_page.form.register_message_text')}{' '}
                                 <TextLink href={register()} tabIndex={0}>
-                                    Sign up
+                                    {__('auth_pages.login_page.form.register_message_link')}
                                 </TextLink>
                             </div>
                         </Activity>
 
-                        <FieldSeparator>Or</FieldSeparator>
+                        <FieldSeparator>{__('auth_pages.login_page.form.two_factor_message_divider')}</FieldSeparator>
 
                         <Button type="button" variant="outline" asChild className="w-full">
                             <Link href={social.redirect('google')} tabIndex={0} as="button">
@@ -109,7 +114,7 @@ export default function Login({ status, canResetPassword, canRegister }: Readonl
                                         fill="currentColor"
                                     />
                                 </svg>
-                                Continue with Google
+                                {__('auth_pages.login_page.form.two_factor_message_google')}
                             </Link>
                         </Button>
                     </Fragment>
