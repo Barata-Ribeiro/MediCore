@@ -7,12 +7,17 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { login } from '@/routes';
 import { email } from '@/routes/password';
-import { Form, Head } from '@inertiajs/react';
+import { Form, Head, setLayoutProps } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { Activity } from 'react';
 import { Fragment } from 'react/jsx-runtime';
 
 export default function ForgotPassword({ status }: Readonly<{ status?: string }>) {
+    setLayoutProps({
+        title: 'Forgot password',
+        description: 'Enter your email to receive a password reset link',
+    });
+
     return (
         <Fragment>
             <Head title="Forgot password" />
@@ -62,8 +67,3 @@ export default function ForgotPassword({ status }: Readonly<{ status?: string }>
         </Fragment>
     );
 }
-
-ForgotPassword.layout = {
-    title: 'Forgot password',
-    description: 'Enter your email to receive a password reset link',
-};

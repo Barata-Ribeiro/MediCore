@@ -4,10 +4,15 @@ import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { logout } from '@/routes';
 import { send } from '@/routes/verification';
-import { Form, Head } from '@inertiajs/react';
+import { Form, Head, setLayoutProps } from '@inertiajs/react';
 import { Activity, Fragment } from 'react';
 
 export default function VerifyEmail({ status }: Readonly<{ status?: string }>) {
+    setLayoutProps({
+        title: 'Verify email',
+        description: 'Please verify your email address by clicking on the link we just emailed to you.',
+    });
+
     return (
         <Fragment>
             <Head title="Email verification" />
@@ -37,8 +42,3 @@ export default function VerifyEmail({ status }: Readonly<{ status?: string }>) {
         </Fragment>
     );
 }
-
-VerifyEmail.layout = {
-    title: 'Verify email',
-    description: 'Please verify your email address by clicking on the link we just emailed to you.',
-};

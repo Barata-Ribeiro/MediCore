@@ -11,7 +11,7 @@ import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
 import social from '@/routes/social';
-import { Form, Head, Link } from '@inertiajs/react';
+import { Form, Head, Link, setLayoutProps } from '@inertiajs/react';
 import { Activity } from 'react';
 import { Fragment } from 'react/jsx-runtime';
 
@@ -22,6 +22,11 @@ type Props = {
 };
 
 export default function Login({ status, canResetPassword, canRegister }: Readonly<Props>) {
+    setLayoutProps({
+        title: 'Log in to your account',
+        description: 'Enter your email and password below to log in',
+    });
+
     return (
         <Fragment>
             <Head title="Log in" />
@@ -115,8 +120,3 @@ export default function Login({ status, canResetPassword, canRegister }: Readonl
         </Fragment>
     );
 }
-
-Login.layout = {
-    title: 'Log in to your account',
-    description: 'Enter your email and password below to log in',
-};

@@ -4,10 +4,15 @@ import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Spinner } from '@/components/ui/spinner';
 import { store } from '@/routes/password/confirm';
-import { Form, Head } from '@inertiajs/react';
+import { Form, Head, setLayoutProps } from '@inertiajs/react';
 import { Activity, Fragment } from 'react';
 
 export default function ConfirmPassword() {
+    setLayoutProps({
+        title: 'Confirm your password',
+        description: 'This is a secure area of the application. Please confirm your password before continuing.',
+    });
+
     return (
         <Fragment>
             <Head title="Confirm password" />
@@ -48,8 +53,3 @@ export default function ConfirmPassword() {
         </Fragment>
     );
 }
-
-ConfirmPassword.layout = {
-    title: 'Confirm your password',
-    description: 'This is a secure area of the application. Please confirm your password before continuing.',
-};

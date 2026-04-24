@@ -7,11 +7,16 @@ import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
 import { login } from '@/routes';
 import { store } from '@/routes/register';
-import { Form, Head } from '@inertiajs/react';
+import { Form, Head, setLayoutProps } from '@inertiajs/react';
 import { Activity } from 'react';
 import { Fragment } from 'react/jsx-runtime';
 
 export default function Register() {
+    setLayoutProps({
+        title: 'Create an account',
+        description: 'Enter your details below to create your account',
+    });
+
     return (
         <Fragment>
             <Head title="Register" />
@@ -103,8 +108,3 @@ export default function Register() {
         </Fragment>
     );
 }
-
-Register.layout = {
-    title: 'Create an account',
-    description: 'Enter your details below to create your account',
-};
