@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
+use function in_array;
 use function syncLangFiles;
 
 class HandleInertiaRequests extends Middleware
@@ -17,6 +18,11 @@ class HandleInertiaRequests extends Middleware
      * @var string
      */
     protected $rootView = 'app';
+
+    protected array $authRoutes = [
+        'login', 'register', 'password.request', 'password.reset',
+        'password.confirm', 'verification.notice', 'two-factor.login',
+    ];
 
     /**
      * Determines the current asset version.
@@ -38,6 +44,10 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         syncLangFiles('main');
+
+        if (in_array($request->route()?->getName(), $this->authRoutes)) {
+            syncLangFiles('auth_pages');
+        }
 
         $now = now();
 
