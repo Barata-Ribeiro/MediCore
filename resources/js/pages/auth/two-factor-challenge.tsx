@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { OTP_MAX_LENGTH } from '@/hooks/use-two-factor-auth';
 import { store } from '@/routes/two-factor/login';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Form, Head, setLayoutProps } from '@inertiajs/react';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
 import { Fragment, useMemo, useState } from 'react';
@@ -11,6 +12,7 @@ import { Fragment, useMemo, useState } from 'react';
 export default function TwoFactorChallenge() {
     const [showRecoveryInput, setShowRecoveryInput] = useState<boolean>(false);
     const [code, setCode] = useState<string>('');
+    const { __ } = lang();
 
     const authConfigContent = useMemo<{
         title: string;
@@ -19,18 +21,18 @@ export default function TwoFactorChallenge() {
     }>(() => {
         if (showRecoveryInput) {
             return {
-                title: 'Recovery code',
-                description: 'Please confirm access to your account by entering one of your emergency recovery codes.',
-                toggleText: 'login using an authentication code',
+                title: __('auth_pages.two_factor_challenge_page.recovery.title'),
+                description: __('auth_pages.two_factor_challenge_page.recovery.description'),
+                toggleText: __('auth_pages.two_factor_challenge_page.recovery.toggle_text'),
             };
         }
 
         return {
-            title: 'Authentication code',
-            description: 'Enter the authentication code provided by your authenticator application.',
-            toggleText: 'login using a recovery code',
+            title: __('auth_pages.two_factor_challenge_page.authentication.title'),
+            description: __('auth_pages.two_factor_challenge_page.authentication.description'),
+            toggleText: __('auth_pages.two_factor_challenge_page.authentication.toggle_text'),
         };
-    }, [showRecoveryInput]);
+    }, [__, showRecoveryInput]);
 
     setLayoutProps({
         title: authConfigContent.title,
@@ -45,7 +47,7 @@ export default function TwoFactorChallenge() {
 
     return (
         <Fragment>
-            <Head title="Two-factor authentication" />
+            <Head title={__('auth_pages.two_factor_challenge_page.head_title')} />
 
             <div className="space-y-6">
                 <Form
@@ -62,7 +64,9 @@ export default function TwoFactorChallenge() {
                                     <Input
                                         name="recovery_code"
                                         type="text"
-                                        placeholder="Enter recovery code"
+                                        placeholder={__(
+                                            'auth_pages.two_factor_challenge_page.recovery.form.recovery_code_placeholder',
+                                        )}
                                         autoFocus={showRecoveryInput}
                                         required
                                         aria-invalid={!!errors['recovery_code']}
@@ -93,11 +97,11 @@ export default function TwoFactorChallenge() {
                             )}
 
                             <Button type="submit" className="w-full" disabled={processing}>
-                                Continue
+                                {__('auth_pages.two_factor_challenge_page.submit')}
                             </Button>
 
                             <div className="text-center text-sm text-muted-foreground">
-                                <span>or you can </span>
+                                <span>{__('auth_pages.two_factor_challenge_page.toggle_text_before')} </span>
                                 <button
                                     type="button"
                                     className="cursor-pointer text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
