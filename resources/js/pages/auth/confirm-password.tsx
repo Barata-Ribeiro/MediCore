@@ -4,18 +4,21 @@ import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Spinner } from '@/components/ui/spinner';
 import { store } from '@/routes/password/confirm';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Form, Head, setLayoutProps } from '@inertiajs/react';
 import { Activity, Fragment } from 'react';
 
 export default function ConfirmPassword() {
+    const { __ } = lang();
+
     setLayoutProps({
-        title: 'Confirm your password',
-        description: 'This is a secure area of the application. Please confirm your password before continuing.',
+        title: __('auth_pages.confirm_password_page.title'),
+        description: __('auth_pages.confirm_password_page.description'),
     });
 
     return (
         <Fragment>
-            <Head title="Confirm password" />
+            <Head title={__('auth_pages.confirm_password_page.head_title')} />
 
             <Form
                 {...store.form()}
@@ -26,11 +29,13 @@ export default function ConfirmPassword() {
                 {({ processing, errors }) => (
                     <div className="space-y-6">
                         <Field data-invalid={!!errors['password']}>
-                            <FieldLabel htmlFor="password">Password</FieldLabel>
+                            <FieldLabel htmlFor="password">
+                                {__('auth_pages.confirm_password_page.form.password')}
+                            </FieldLabel>
                             <PasswordInput
                                 id="password"
                                 name="password"
-                                placeholder="Password"
+                                placeholder={__('auth_pages.confirm_password_page.form.password')}
                                 autoComplete="current-password"
                                 autoFocus
                                 aria-invalid={!!errors['password']}
@@ -44,7 +49,7 @@ export default function ConfirmPassword() {
                                 <Activity mode={processing ? 'visible' : 'hidden'}>
                                     <Spinner />{' '}
                                 </Activity>
-                                Confirm password
+                                {__('auth_pages.confirm_password_page.form.submit')}
                             </Button>
                         </div>
                     </div>
