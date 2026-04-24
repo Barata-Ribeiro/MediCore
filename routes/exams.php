@@ -5,9 +5,9 @@ use App\Http\Controllers\Exams\GlucoseController;
 use App\Http\Controllers\Exams\LipidProfileController;
 use App\Http\Controllers\Exams\UltrasensitiveTshController;
 use App\Http\Controllers\Exams\UreaAndCreatinineController;
+use App\Http\Controllers\Exams\UricAcidController;
 use App\Http\Controllers\Exams\VitaminB12Controller;
 use App\Http\Controllers\Exams\VitaminD3Controller;
-use App\Http\Controllers\UricAcidController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified'])->prefix('exams')->group(function () {
