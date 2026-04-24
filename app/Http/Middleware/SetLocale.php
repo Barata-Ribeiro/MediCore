@@ -16,6 +16,7 @@ class SetLocale
      * @var list<string>
      */
     private const array COUNTRY_HEADERS = [
+        'Accept-Language',
         'CF-IPCountry',
         'CloudFront-Viewer-Country',
         'X-Appengine-Country',
