@@ -4,22 +4,25 @@ import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { logout } from '@/routes';
 import { send } from '@/routes/verification';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Form, Head, setLayoutProps } from '@inertiajs/react';
 import { Activity, Fragment } from 'react';
 
 export default function VerifyEmail({ status }: Readonly<{ status?: string }>) {
+    const { __ } = lang();
+
     setLayoutProps({
-        title: 'Verify email',
-        description: 'Please verify your email address by clicking on the link we just emailed to you.',
+        title: __('auth_pages.verify_email_page.title'),
+        description: __('auth_pages.verify_email_page.description'),
     });
 
     return (
         <Fragment>
-            <Head title="Email verification" />
+            <Head title={__('auth_pages.verify_email_page.head_title')} />
 
             <Activity mode={status === 'verification-link-sent' ? 'visible' : 'hidden'}>
                 <div className="mb-4 text-center text-sm font-medium text-green-600">
-                    A new verification link has been sent to the email address you provided during registration.
+                    {__('auth_pages.verify_email_page.resend_message')}
                 </div>
             </Activity>
 
@@ -30,11 +33,11 @@ export default function VerifyEmail({ status }: Readonly<{ status?: string }>) {
                             <Activity mode={processing ? 'visible' : 'hidden'}>
                                 <Spinner aria-hidden />
                             </Activity>
-                            Resend verification email
+                            {__('auth_pages.verify_email_page.form.submit')}
                         </Button>
 
                         <TextLink href={logout()} className="mx-auto block text-sm">
-                            Log out
+                            {__('auth_pages.verify_email_page.form.logout')}
                         </TextLink>
                     </Fragment>
                 )}
