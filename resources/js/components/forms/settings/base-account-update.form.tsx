@@ -5,7 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
+import { useIsomorphicLayoutEffect } from '@/hooks/use-isomorphic-layout-effect';
+import { useIsMounted } from '@/hooks/use-mounted';
 import { send } from '@/routes/verification';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Transition } from '@headlessui/react';
 import { Form, Link, usePage } from '@inertiajs/react';
 import { ShieldUserIcon } from 'lucide-react';
@@ -17,7 +20,15 @@ type Props = {
 };
 
 export default function BaseAccountUpdateForm({ mustVerifyEmail, status }: Readonly<Props>) {
+    const { __ } = lang();
     const { auth } = usePage().props;
+    const isMounted = useIsMounted();
+
+    useIsomorphicLayoutEffect(() => {
+        if (!isMounted) {
+            return;
+        }
+    }, []);
 
     const isSuperAdmin = auth.user.roles.some((role) => role.name === 'super-admin');
 
@@ -32,7 +43,7 @@ export default function BaseAccountUpdateForm({ mustVerifyEmail, status }: Reado
                 <Fragment>
                     <Field data-invalid={!!errors['name']}>
                         <FieldLabel htmlFor="name" className="inline-flex items-center gap-x-1">
-                            <span>Name</span>
+                            <span>{__('settings_pages.profile_page.profile_info.form.name')}</span>
                             <Activity mode={isSuperAdmin ? 'visible' : 'hidden'}>
                                 <Badge>
                                     Super Admin <ShieldUserIcon data-icon="inline-end" aria-hidden />
@@ -47,7 +58,7 @@ export default function BaseAccountUpdateForm({ mustVerifyEmail, status }: Reado
                             name="name"
                             required
                             autoComplete="name"
-                            placeholder="Full name"
+                            placeholder={__('settings_pages.profile_page.profile_info.form.name_placeholder')}
                             aria-invalid={!!errors['name']}
                         />
 
@@ -55,7 +66,9 @@ export default function BaseAccountUpdateForm({ mustVerifyEmail, status }: Reado
                     </Field>
 
                     <Field data-invalid={!!errors['email']}>
-                        <FieldLabel htmlFor="email">Email address</FieldLabel>
+                        <FieldLabel htmlFor="email">
+                            {__('settings_pages.profile_page.profile_info.form.email')}
+                        </FieldLabel>
 
                         <Input
                             id="email"
@@ -65,7 +78,7 @@ export default function BaseAccountUpdateForm({ mustVerifyEmail, status }: Reado
                             name="email"
                             required
                             autoComplete="username"
-                            placeholder="Email address"
+                            placeholder={__('settings_pages.profile_page.profile_info.form.email_placeholder')}
                             aria-invalid={!!errors['email']}
                         />
 
@@ -75,19 +88,19 @@ export default function BaseAccountUpdateForm({ mustVerifyEmail, status }: Reado
                     <Activity mode={mustVerifyEmail && auth.user.email_verified_at === null ? 'visible' : 'hidden'}>
                         <div>
                             <p className="-mt-4 text-sm text-muted-foreground">
-                                Your email address is unverified.{' '}
+                                {__('settings_pages.profile_page.profile_info.form.must_verify_email_text')}{' '}
                                 <Link
                                     href={send()}
                                     as="button"
                                     className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
                                 >
-                                    Click here to resend the verification email.
+                                    {__('settings_pages.profile_page.profile_info.form.must_verify_email_action')}
                                 </Link>
                             </p>
 
                             <Activity mode={status === 'verification-link-sent' ? 'visible' : 'hidden'}>
                                 <div className="mt-2 text-sm font-medium text-green-600">
-                                    A new verification link has been sent to your email address.
+                                    {__('settings_pages.profile_page.profile_info.form.verification_link_sent')}
                                 </div>
                             </Activity>
                         </div>
@@ -98,7 +111,7 @@ export default function BaseAccountUpdateForm({ mustVerifyEmail, status }: Reado
                             <Activity mode={processing ? 'visible' : 'hidden'}>
                                 <Spinner aria-hidden />
                             </Activity>
-                            Save
+                            {__('settings_pages.profile_page.profile_info.form.submit')}
                         </Button>
 
                         <Transition
@@ -108,7 +121,9 @@ export default function BaseAccountUpdateForm({ mustVerifyEmail, status }: Reado
                             leave="transition ease-in-out"
                             leaveTo="opacity-0"
                         >
-                            <p className="text-sm text-neutral-600">Saved</p>
+                            <p className="text-sm text-neutral-600">
+                                {__('settings_pages.profile_page.profile_info.form.success_message')}
+                            </p>
                         </Transition>
                     </div>
                 </Fragment>
