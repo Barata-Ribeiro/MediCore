@@ -5,6 +5,9 @@ import BaseAccountUpdateForm from '@/components/forms/settings/base-account-upda
 import PersonalProfileManagerForm from '@/components/forms/settings/personal-profile-manager.form';
 import DeleteUser from '@/components/helpers/delete-user';
 import { Separator } from '@/components/ui/separator';
+import { useIsomorphicLayoutEffect } from '@/hooks/use-isomorphic-layout-effect';
+import useIsMounted from '@/hooks/use-mounted';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Head, setLayoutProps } from '@inertiajs/react';
 import { Fragment } from 'react';
 
@@ -15,22 +18,35 @@ export default function Profile({
     mustVerifyEmail: boolean;
     status?: string;
 }>) {
+    const { __ } = lang();
+    const isMounted = useIsMounted();
+
     setLayoutProps({
         breadcrumbs: [
             {
-                title: 'Profile settings',
+                title: __('settings_pages.profile_page.head_title'),
                 href: edit(),
             },
         ],
     });
 
+    useIsomorphicLayoutEffect(() => {
+        if (!isMounted) {
+            return;
+        }
+    }, [isMounted, setLayoutProps]);
+
     return (
         <Fragment>
-            <Head title="Profile settings" />
-            <h1 className="sr-only">Profile settings</h1>
+            <Head title={__('settings_pages.profile_page.head_title')} />
+            <h1 className="sr-only">{__('settings_pages.profile_page.head_title')}</h1>
 
             <div className="space-y-6">
-                <Heading variant="small" title="Profile information" description="Update your name and email address" />
+                <Heading
+                    variant="small"
+                    title={__('settings_pages.profile_page.profile_info.title')}
+                    description={__('settings_pages.profile_page.profile_info.description')}
+                />
 
                 <BaseAccountUpdateForm mustVerifyEmail={mustVerifyEmail} status={status} />
             </div>
@@ -38,7 +54,11 @@ export default function Profile({
             <Separator className="my-6" />
 
             <div className="space-y-6">
-                <Heading variant="small" title="Language" description="Update your language preferences" />
+                <Heading
+                    variant="small"
+                    title={__('settings_pages.profile_page.app_language.title')}
+                    description={__('settings_pages.profile_page.app_language.description')}
+                />
 
                 <AppLanguageSelector />
             </div>
@@ -46,7 +66,11 @@ export default function Profile({
             <Separator className="mb-6" />
 
             <div className="space-y-6">
-                <Heading variant="small" title="Personal Information" description="Update your personal details" />
+                <Heading
+                    variant="small"
+                    title={__('settings_pages.profile_page.personal_profile_manager.title')}
+                    description={__('settings_pages.profile_page.personal_profile_manager.description')}
+                />
 
                 <PersonalProfileManagerForm />
             </div>
