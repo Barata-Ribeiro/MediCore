@@ -1,5 +1,4 @@
 import MedicalFileController from '@/actions/App/Http/Controllers/Settings/MedicalFileController';
-import Heading from '@/components/common/heading';
 import InputError from '@/components/helpers/input-error';
 import { Button } from '@/components/ui/button';
 import { Field, FieldDescription, FieldGroup, FieldLabel, FieldLegend, FieldSet } from '@/components/ui/field';
@@ -10,6 +9,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { Textarea } from '@/components/ui/textarea';
 import type { MedicalFile } from '@/types/application/medical-file';
 import { BloodType, bloodTypeLabel } from '@/types/application/medical-file';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Transition } from '@headlessui/react';
 import { Form, usePage } from '@inertiajs/react';
 import { Activity } from 'react';
@@ -20,213 +20,238 @@ type MedicalFilePayload = {
 };
 
 export default function MedicalFileManagerForm() {
+    const { __ } = lang();
+
     const { file } = usePage<MedicalFilePayload>().props;
 
     return (
-        <div className="space-y-6">
-            <Heading variant="small" title="Medical File" description="Manage your medical information" />
+        <Form
+            {...MedicalFileController.update.form()}
+            options={{ preserveScroll: true }}
+            disableWhileProcessing
+            className="space-y-6 inert:pointer-events-none inert:grayscale-100"
+        >
+            {({ processing, recentlySuccessful, errors }) => (
+                <Fragment>
+                    <Field data-invalid={!!errors['blood_type']}>
+                        <FieldLabel htmlFor="blood_type">
+                            {__('settings_pages.medical_file_page.form.blood_type')}
+                        </FieldLabel>
+                        <Select
+                            name="blood_type"
+                            defaultValue={file?.blood_type ?? undefined}
+                            aria-describedby={errors['blood_type'] ? 'error-blood_type' : undefined}
+                        >
+                            <SelectTrigger aria-invalid={!!errors['blood_type']}>
+                                <SelectValue
+                                    placeholder={__('settings_pages.medical_file_page.form.blood_type_placeholder')}
+                                />
+                            </SelectTrigger>
+                            <SelectContent position="item-aligned">
+                                <SelectGroup>
+                                    {Object.values(BloodType).map((type) => (
+                                        <SelectItem key={type} value={type}>
+                                            {bloodTypeLabel(type)}
+                                        </SelectItem>
+                                    ))}
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </Field>
 
-            <Form
-                {...MedicalFileController.update.form()}
-                options={{ preserveScroll: true }}
-                disableWhileProcessing
-                className="space-y-6 inert:pointer-events-none inert:grayscale-100"
-            >
-                {({ processing, recentlySuccessful, errors }) => (
-                    <Fragment>
-                        <Field data-invalid={!!errors['blood_type']}>
-                            <FieldLabel htmlFor="blood_type">Blood Type</FieldLabel>
-                            <Select
-                                name="blood_type"
-                                defaultValue={file?.blood_type ?? undefined}
-                                aria-describedby={errors['blood_type'] ? 'error-blood_type' : undefined}
-                            >
-                                <SelectTrigger aria-invalid={!!errors['blood_type']}>
-                                    <SelectValue placeholder="Select your blood type" />
-                                </SelectTrigger>
-                                <SelectContent position="item-aligned">
-                                    <SelectGroup>
-                                        {Object.values(BloodType).map((type) => (
-                                            <SelectItem key={type} value={type}>
-                                                {bloodTypeLabel(type)}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
+                    <Field data-invalid={!!errors['allergies']}>
+                        <FieldLabel htmlFor="textarea-allergies">
+                            {__('settings_pages.medical_file_page.form.allergies')}
+                        </FieldLabel>
+                        <Textarea
+                            id="textarea-allergies"
+                            name="allergies"
+                            placeholder={__('settings_pages.medical_file_page.form.allergies_placeholder')}
+                            rows={4}
+                            defaultValue={file?.allergies ?? ''}
+                            aria-invalid={!!errors['allergies']}
+                            aria-describedby={errors['allergies'] ? 'error-allergies' : undefined}
+                        />
+                        <InputError message={errors['allergies']} />
+                    </Field>
+
+                    <Field data-invalid={!!errors['diseases']}>
+                        <FieldLabel htmlFor="textarea-diseases">
+                            {__('settings_pages.medical_file_page.form.diseases')}
+                        </FieldLabel>
+                        <Textarea
+                            id="textarea-diseases"
+                            name="diseases"
+                            placeholder={__('settings_pages.medical_file_page.form.diseases_placeholder')}
+                            rows={4}
+                            defaultValue={file?.diseases ?? ''}
+                            aria-invalid={!!errors['diseases']}
+                            aria-describedby={errors['diseases'] ? 'error-diseases' : undefined}
+                        />
+                        <InputError message={errors['diseases']} />
+                    </Field>
+
+                    <Field data-invalid={!!errors['medications']}>
+                        <FieldLabel htmlFor="textarea-medications">
+                            {__('settings_pages.medical_file_page.form.medications')}
+                        </FieldLabel>
+                        <Textarea
+                            id="textarea-medications"
+                            name="medications"
+                            placeholder={__('settings_pages.medical_file_page.form.medications_placeholder')}
+                            rows={4}
+                            defaultValue={file?.medications ?? ''}
+                            aria-invalid={!!errors['medications']}
+                            aria-describedby={errors['medications'] ? 'error-medications' : undefined}
+                        />
+                        <InputError message={errors['medications']} />
+                    </Field>
+
+                    <FieldGroup className="grid gap-4 sm:grid-cols-2">
+                        <Field data-invalid={!!errors['height']}>
+                            <FieldLabel htmlFor="input-height">
+                                {__('settings_pages.medical_file_page.form.height')}
+                            </FieldLabel>
+                            <InputGroup>
+                                <InputGroupInput
+                                    id="input-height"
+                                    name="height"
+                                    type="number"
+                                    min={0}
+                                    placeholder={__('settings_pages.medical_file_page.form.height_placeholder')}
+                                    defaultValue={file?.height ?? ''}
+                                    aria-invalid={!!errors['height']}
+                                    aria-describedby={errors['height'] ? 'error-height' : undefined}
+                                />
+                                <InputGroupAddon align="inline-end">
+                                    <InputGroupText>Cm</InputGroupText>
+                                </InputGroupAddon>
+                            </InputGroup>
+                            <InputError message={errors['height']} />
                         </Field>
-
-                        <Field data-invalid={!!errors['allergies']}>
-                            <FieldLabel htmlFor="textarea-allergies">Allergies</FieldLabel>
-                            <Textarea
-                                id="textarea-allergies"
-                                name="allergies"
-                                placeholder="e.g. peanuts, pollen"
-                                rows={4}
-                                defaultValue={file?.allergies ?? ''}
-                                aria-invalid={!!errors['allergies']}
-                                aria-describedby={errors['allergies'] ? 'error-allergies' : undefined}
-                            />
-                            <InputError message={errors['allergies']} />
+                        <Field data-invalid={!!errors['weight']}>
+                            <FieldLabel htmlFor="input-weight">
+                                {__('settings_pages.medical_file_page.form.weight')}
+                            </FieldLabel>
+                            <InputGroup>
+                                <InputGroupInput
+                                    id="input-weight"
+                                    name="weight"
+                                    type="number"
+                                    placeholder={__('settings_pages.medical_file_page.form.weight_placeholder')}
+                                    min={0}
+                                    defaultValue={file?.weight ?? ''}
+                                    aria-invalid={!!errors['weight']}
+                                    aria-describedby={errors['weight'] ? 'error-weight' : undefined}
+                                />
+                                <InputGroupAddon align="inline-end">
+                                    <InputGroupText>Kg</InputGroupText>
+                                </InputGroupAddon>
+                            </InputGroup>
+                            <InputError message={errors['weight']} />
                         </Field>
+                    </FieldGroup>
 
-                        <Field data-invalid={!!errors['diseases']}>
-                            <FieldLabel htmlFor="textarea-diseases">Diseases</FieldLabel>
-                            <Textarea
-                                id="textarea-diseases"
-                                name="diseases"
-                                placeholder="e.g. diabetes, hypertension"
-                                rows={4}
-                                defaultValue={file?.diseases ?? ''}
-                                aria-invalid={!!errors['diseases']}
-                                aria-describedby={errors['diseases'] ? 'error-diseases' : undefined}
-                            />
-                            <InputError message={errors['diseases']} />
-                        </Field>
-
-                        <Field data-invalid={!!errors['medications']}>
-                            <FieldLabel htmlFor="textarea-medications">Medications</FieldLabel>
-                            <Textarea
-                                id="textarea-medications"
-                                name="medications"
-                                placeholder="e.g. insulin, aspirin"
-                                rows={4}
-                                defaultValue={file?.medications ?? ''}
-                                aria-invalid={!!errors['medications']}
-                                aria-describedby={errors['medications'] ? 'error-medications' : undefined}
-                            />
-                            <InputError message={errors['medications']} />
-                        </Field>
-
-                        <FieldGroup className="grid gap-4 sm:grid-cols-2">
-                            <Field data-invalid={!!errors['height']}>
-                                <FieldLabel htmlFor="input-height">Height</FieldLabel>
-                                <InputGroup>
-                                    <InputGroupInput
-                                        id="input-height"
-                                        name="height"
-                                        type="number"
-                                        min={0}
-                                        placeholder="e.g. 170"
-                                        defaultValue={file?.height ?? ''}
-                                        aria-invalid={!!errors['height']}
-                                        aria-describedby={errors['height'] ? 'error-height' : undefined}
-                                    />
-                                    <InputGroupAddon align="inline-end">
-                                        <InputGroupText>Cm</InputGroupText>
-                                    </InputGroupAddon>
-                                </InputGroup>
-                                <InputError message={errors['height']} />
-                            </Field>
-                            <Field data-invalid={!!errors['weight']}>
-                                <FieldLabel htmlFor="input-weight">Weight</FieldLabel>
-                                <InputGroup>
-                                    <InputGroupInput
-                                        id="input-weight"
-                                        name="weight"
-                                        type="number"
-                                        placeholder="e.g. 65"
-                                        min={0}
-                                        defaultValue={file?.weight ?? ''}
-                                        aria-invalid={!!errors['weight']}
-                                        aria-describedby={errors['weight'] ? 'error-weight' : undefined}
-                                    />
-                                    <InputGroupAddon align="inline-end">
-                                        <InputGroupText>Kg</InputGroupText>
-                                    </InputGroupAddon>
-                                </InputGroup>
-                                <InputError message={errors['weight']} />
-                            </Field>
-                        </FieldGroup>
-
-                        <FieldSet>
-                            <FieldLegend>Emergency Contact</FieldLegend>
-                            <FieldDescription>
-                                Provide the name, phone number and relationship of a person to contact in case of an
-                                emergency.
-                            </FieldDescription>
-                            <FieldGroup>
-                                <FieldGroup className="grid gap-4 sm:grid-cols-2">
-                                    <Field data-invalid={!!errors['emergency_contact_name']}>
-                                        <FieldLabel htmlFor="input-emergency_contact_name">Name</FieldLabel>
-                                        <Input
-                                            id="input-emergency_contact_name"
-                                            name="emergency_contact_name"
-                                            type="text"
-                                            placeholder="e.g. John Doe"
-                                            defaultValue={file?.emergency_contact_name ?? ''}
-                                            aria-invalid={!!errors['emergency_contact_name']}
-                                            aria-describedby={
-                                                errors['emergency_contact_name']
-                                                    ? 'error-emergency_contact_name'
-                                                    : undefined
-                                            }
-                                        />
-                                        <InputError message={errors['emergency_contact_name']} />
-                                    </Field>
-
-                                    <Field data-invalid={!!errors['emergency_contact_relationship']}>
-                                        <FieldLabel htmlFor="input-emergency_contact_relationship">
-                                            Relationship
-                                        </FieldLabel>
-                                        <Input
-                                            id="input-emergency_contact_relationship"
-                                            name="emergency_contact_relationship"
-                                            type="text"
-                                            placeholder="e.g. Father, Spouse"
-                                            defaultValue={file?.emergency_contact_relationship ?? ''}
-                                            aria-invalid={!!errors['emergency_contact_relationship']}
-                                            aria-describedby={
-                                                errors['emergency_contact_relationship']
-                                                    ? 'error-emergency_contact_relationship'
-                                                    : undefined
-                                            }
-                                        />
-                                        <InputError message={errors['emergency_contact_relationship']} />
-                                    </Field>
-                                </FieldGroup>
-
-                                <Field data-invalid={!!errors['emergency_contact_phone_number']}>
-                                    <FieldLabel htmlFor="input-emergency_contact_phone_number">Phone</FieldLabel>
+                    <FieldSet>
+                        <FieldLegend>
+                            {__('settings_pages.medical_file_page.form.emergency_contact_field_legend')}
+                        </FieldLegend>
+                        <FieldDescription>
+                            {__('settings_pages.medical_file_page.form.emergency_contact_field_description')}
+                        </FieldDescription>
+                        <FieldGroup>
+                            <FieldGroup className="grid gap-4 sm:grid-cols-2">
+                                <Field data-invalid={!!errors['emergency_contact_name']}>
+                                    <FieldLabel htmlFor="input-emergency_contact_name">
+                                        {__('settings_pages.medical_file_page.form.emergency_contact_name')}
+                                    </FieldLabel>
                                     <Input
-                                        id="input-emergency_contact_phone_number"
-                                        name="emergency_contact_phone_number"
-                                        type="tel"
-                                        placeholder="+1 (555) 123-4567"
-                                        defaultValue={file?.emergency_contact_phone_number ?? ''}
-                                        aria-invalid={!!errors['emergency_contact_phone_number']}
+                                        id="input-emergency_contact_name"
+                                        name="emergency_contact_name"
+                                        type="text"
+                                        placeholder={__(
+                                            'settings_pages.medical_file_page.form.emergency_contact_name_placeholder',
+                                        )}
+                                        defaultValue={file?.emergency_contact_name ?? ''}
+                                        aria-invalid={!!errors['emergency_contact_name']}
                                         aria-describedby={
-                                            errors['emergency_contact_phone_number']
-                                                ? 'error-emergency_contact_phone_number'
+                                            errors['emergency_contact_name']
+                                                ? 'error-emergency_contact_name'
                                                 : undefined
                                         }
                                     />
-                                    <InputError message={errors['emergency_contact_phone_number']} />
+                                    <InputError message={errors['emergency_contact_name']} />
+                                </Field>
+
+                                <Field data-invalid={!!errors['emergency_contact_relationship']}>
+                                    <FieldLabel htmlFor="input-emergency_contact_relationship">
+                                        {__('settings_pages.medical_file_page.form.emergency_contact_relationship')}
+                                    </FieldLabel>
+                                    <Input
+                                        id="input-emergency_contact_relationship"
+                                        name="emergency_contact_relationship"
+                                        type="text"
+                                        placeholder={__(
+                                            'settings_pages.medical_file_page.form.emergency_contact_relationship_placeholder',
+                                        )}
+                                        defaultValue={file?.emergency_contact_relationship ?? ''}
+                                        aria-invalid={!!errors['emergency_contact_relationship']}
+                                        aria-describedby={
+                                            errors['emergency_contact_relationship']
+                                                ? 'error-emergency_contact_relationship'
+                                                : undefined
+                                        }
+                                    />
+                                    <InputError message={errors['emergency_contact_relationship']} />
                                 </Field>
                             </FieldGroup>
-                        </FieldSet>
 
-                        <div className="flex items-center gap-4">
-                            <Button data-test="update-profile-button">
-                                <Activity mode={processing ? 'visible' : 'hidden'}>
-                                    <Spinner aria-hidden />
-                                </Activity>
-                                Save
-                            </Button>
+                            <Field data-invalid={!!errors['emergency_contact_phone_number']}>
+                                <FieldLabel htmlFor="input-emergency_contact_phone_number">
+                                    {__('settings_pages.medical_file_page.form.emergency_contact_phone')}
+                                </FieldLabel>
+                                <Input
+                                    id="input-emergency_contact_phone_number"
+                                    name="emergency_contact_phone_number"
+                                    type="tel"
+                                    placeholder={__(
+                                        'settings_pages.medical_file_page.form.emergency_contact_phone_placeholder',
+                                    )}
+                                    defaultValue={file?.emergency_contact_phone_number ?? ''}
+                                    aria-invalid={!!errors['emergency_contact_phone_number']}
+                                    aria-describedby={
+                                        errors['emergency_contact_phone_number']
+                                            ? 'error-emergency_contact_phone_number'
+                                            : undefined
+                                    }
+                                />
+                                <InputError message={errors['emergency_contact_phone_number']} />
+                            </Field>
+                        </FieldGroup>
+                    </FieldSet>
 
-                            <Transition
-                                show={recentlySuccessful}
-                                enter="transition ease-in-out"
-                                enterFrom="opacity-0"
-                                leave="transition ease-in-out"
-                                leaveTo="opacity-0"
-                            >
-                                <p className="text-sm text-neutral-600">Saved</p>
-                            </Transition>
-                        </div>
-                    </Fragment>
-                )}
-            </Form>
-        </div>
+                    <div className="flex items-center gap-4">
+                        <Button data-test="update-profile-button">
+                            <Activity mode={processing ? 'visible' : 'hidden'}>
+                                <Spinner aria-hidden />
+                            </Activity>
+                            {__('settings_pages.medical_file_page.form.submit')}
+                        </Button>
+
+                        <Transition
+                            show={recentlySuccessful}
+                            enter="transition ease-in-out"
+                            enterFrom="opacity-0"
+                            leave="transition ease-in-out"
+                            leaveTo="opacity-0"
+                        >
+                            <p className="text-sm text-neutral-600">
+                                {__('settings_pages.medical_file_page.form.success_message')}
+                            </p>
+                        </Transition>
+                    </div>
+                </Fragment>
+            )}
+        </Form>
     );
 }
