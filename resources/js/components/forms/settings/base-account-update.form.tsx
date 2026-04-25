@@ -5,8 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
-import { useIsomorphicLayoutEffect } from '@/hooks/use-isomorphic-layout-effect';
-import { useIsMounted } from '@/hooks/use-mounted';
 import { send } from '@/routes/verification';
 import { lang } from '@erag/lang-sync-inertia/react';
 import { Transition } from '@headlessui/react';
@@ -22,13 +20,6 @@ type Props = {
 export default function BaseAccountUpdateForm({ mustVerifyEmail, status }: Readonly<Props>) {
     const { __ } = lang();
     const { auth } = usePage().props;
-    const isMounted = useIsMounted();
-
-    useIsomorphicLayoutEffect(() => {
-        if (!isMounted) {
-            return;
-        }
-    }, []);
 
     const isSuperAdmin = auth.user.roles.some((role) => role.name === 'super-admin');
 
