@@ -1,4 +1,3 @@
-// Components
 import InputError from '@/components/helpers/input-error';
 import TextLink from '@/components/helpers/text-link';
 import { Button } from '@/components/ui/button';
@@ -7,15 +6,23 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { login } from '@/routes';
 import { email } from '@/routes/password';
-import { Form, Head } from '@inertiajs/react';
+import { lang } from '@erag/lang-sync-inertia/react';
+import { Form, Head, setLayoutProps } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { Activity } from 'react';
 import { Fragment } from 'react/jsx-runtime';
 
 export default function ForgotPassword({ status }: Readonly<{ status?: string }>) {
+    const { __ } = lang();
+
+    setLayoutProps({
+        title: __('auth_pages.forgot_password_page.title'),
+        description: __('auth_pages.forgot_password_page.description'),
+    });
+
     return (
         <Fragment>
-            <Head title="Forgot password" />
+            <Head title={__('auth_pages.forgot_password_page.head_title')} />
 
             {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}
 
@@ -28,7 +35,7 @@ export default function ForgotPassword({ status }: Readonly<{ status?: string }>
                     {({ processing, errors }) => (
                         <Fragment>
                             <Field data-invalid={!!errors['email']}>
-                                <Label htmlFor="email">Email address</Label>
+                                <Label htmlFor="email">{__('auth_pages.forgot_password_page.form.email')}</Label>
                                 <Input
                                     id="email"
                                     type="email"
@@ -47,7 +54,7 @@ export default function ForgotPassword({ status }: Readonly<{ status?: string }>
                                     <Activity mode={processing ? 'visible' : 'hidden'}>
                                         <LoaderCircle aria-hidden className="size-4 animate-spin" />
                                     </Activity>
-                                    Email password reset link
+                                    {__('auth_pages.forgot_password_page.form.submit')}
                                 </Button>
                             </div>
                         </Fragment>
@@ -55,15 +62,10 @@ export default function ForgotPassword({ status }: Readonly<{ status?: string }>
                 </Form>
 
                 <div className="space-x-1 text-center text-sm text-muted-foreground">
-                    <span>Or, return to</span>
-                    <TextLink href={login()}>log in</TextLink>
+                    <span>{__('auth_pages.forgot_password_page.return_message_text')}</span>
+                    <TextLink href={login()}>{__('auth_pages.forgot_password_page.return_message_link')}</TextLink>
                 </div>
             </div>
         </Fragment>
     );
 }
-
-ForgotPassword.layout = {
-    title: 'Forgot password',
-    description: 'Enter your email to receive a password reset link',
-};
