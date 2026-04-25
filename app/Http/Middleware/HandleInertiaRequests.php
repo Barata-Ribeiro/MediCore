@@ -24,6 +24,10 @@ class HandleInertiaRequests extends Middleware
         'password.confirm', 'verification.notice', 'two-factor.login',
     ];
 
+    protected array $settingsRoutes = [
+        'profile.edit', 'security.edit', 'appearance.edit', 'medical-file.edit',
+    ];
+
     /**
      * Determines the current asset version.
      *
@@ -47,6 +51,10 @@ class HandleInertiaRequests extends Middleware
 
         if (in_array($request->route()?->getName(), $this->authRoutes)) {
             syncLangFiles('auth_pages');
+        }
+
+        if (in_array($request->route()?->getName(), $this->settingsRoutes)) {
+            syncLangFiles('settings_pages');
         }
 
         $now = now();
