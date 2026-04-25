@@ -10,12 +10,15 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { update } from '@/routes/locale';
 import type { AppLocale } from '@/types/auth';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { router } from '@inertiajs/core';
 import { usePage } from '@inertiajs/react';
 import { LanguagesIcon } from 'lucide-react';
 import { memo } from 'react';
 
 const AppLanguageSelector = memo(() => {
+    const { __ } = lang();
+
     const { auth } = usePage().props;
     const currentLocale: AppLocale = auth.locale ?? 'en';
 
@@ -45,7 +48,7 @@ const AppLanguageSelector = memo(() => {
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-                <DropdownMenuLabel>Select Language</DropdownMenuLabel>
+                <DropdownMenuLabel>{__('settings_pages.profile_page.app_language.selector_label')}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuRadioGroup value={currentLocale} onValueChange={handleLocaleChange}>
                     <DropdownMenuRadioItem value="en">
