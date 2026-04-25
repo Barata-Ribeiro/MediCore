@@ -8,8 +8,6 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
 import { Textarea } from '@/components/ui/textarea';
-import { useIsomorphicLayoutEffect } from '@/hooks/use-isomorphic-layout-effect';
-import { useIsMounted } from '@/hooks/use-mounted';
 import type { Profile } from '@/types/application/profile';
 import { lang } from '@erag/lang-sync-inertia/react';
 import { Transition } from '@headlessui/react';
@@ -24,13 +22,6 @@ type ProfilePayload = {
 export default function PersonalProfileManagerForm() {
     const { __ } = lang();
     const { profile } = usePage<ProfilePayload>().props;
-    const isMounted = useIsMounted();
-
-    useIsomorphicLayoutEffect(() => {
-        if (!isMounted) {
-            return;
-        }
-    }, []);
 
     return (
         <Form
