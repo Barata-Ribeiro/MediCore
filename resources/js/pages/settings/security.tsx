@@ -7,13 +7,15 @@ import TwoFactorSetupModal from '@/components/helpers/two-factor-setup-modal';
 import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Spinner } from '@/components/ui/spinner';
+import { useIsomorphicLayoutEffect } from '@/hooks/use-isomorphic-layout-effect';
 import { useTwoFactorAuth } from '@/hooks/use-two-factor-auth';
 import { edit } from '@/routes/security';
 import { disable, enable } from '@/routes/two-factor';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Transition } from '@headlessui/react';
-import { Form, Head } from '@inertiajs/react';
-import { ShieldCheck } from 'lucide-react';
-import { Activity, Fragment, useEffect, useRef, useState } from 'react';
+import { Form, Head, setLayoutProps } from '@inertiajs/react';
+import { ShieldCheckIcon } from 'lucide-react';
+import { Activity, Fragment, useRef, useState } from 'react';
 
 type Props = {
     canManageTwoFactor?: boolean;
@@ -26,8 +28,13 @@ export default function Security({
     requiresConfirmation = false,
     twoFactorEnabled = false,
 }: Readonly<Props>) {
+    const { __ } = lang();
     const passwordInput = useRef<HTMLInputElement>(null);
     const currentPasswordInput = useRef<HTMLInputElement>(null);
+
+    setLayoutProps({
+        breadcrumbs: [{ title: __('settings_pages.security_page.head_title'), href: edit() }],
+    });
 
     const {
         qrCodeSvg,
@@ -43,7 +50,7 @@ export default function Security({
     const [showSetupModal, setShowSetupModal] = useState<boolean>(false);
     const prevTwoFactorEnabled = useRef(twoFactorEnabled);
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         if (prevTwoFactorEnabled.current && !twoFactorEnabled) {
             clearTwoFactorAuthData();
         }
@@ -53,15 +60,15 @@ export default function Security({
 
     return (
         <Fragment>
-            <Head title="Security settings" />
+            <Head title={__('settings_pages.security_page.head_title')} />
 
-            <h1 className="sr-only">Security settings</h1>
+            <h1 className="sr-only">{__('settings_pages.security_page.head_title')}</h1>
 
             <div className="space-y-6">
                 <Heading
                     variant="small"
-                    title="Update password"
-                    description="Ensure your account is using a long, random password to stay secure"
+                    title={__('settings_pages.security_page.password_section.title')}
+                    description={__('settings_pages.security_page.password_section.description')}
                 />
 
                 <Form
@@ -84,7 +91,9 @@ export default function Security({
                     {({ errors, processing, recentlySuccessful }) => (
                         <Fragment>
                             <Field data-invalid={!!errors['current_password']}>
-                                <FieldLabel htmlFor="current_password">Current password</FieldLabel>
+                                <FieldLabel htmlFor="current_password">
+                                    {__('settings_pages.security_page.password_section.form.current_password')}
+                                </FieldLabel>
 
                                 <PasswordInput
                                     id="current_password"
@@ -92,7 +101,9 @@ export default function Security({
                                     name="current_password"
                                     className="mt-1 block w-full"
                                     autoComplete="current-password"
-                                    placeholder="Current password"
+                                    placeholder={__(
+                                        'settings_pages.security_page.password_section.form.current_password_placeholder',
+                                    )}
                                     aria-invalid={!!errors['current_password']}
                                 />
 
@@ -100,7 +111,9 @@ export default function Security({
                             </Field>
 
                             <Field data-invalid={!!errors['password']}>
-                                <FieldLabel htmlFor="password">New password</FieldLabel>
+                                <FieldLabel htmlFor="password">
+                                    {__('settings_pages.security_page.password_section.form.new_password')}
+                                </FieldLabel>
 
                                 <PasswordInput
                                     id="password"
@@ -108,7 +121,9 @@ export default function Security({
                                     name="password"
                                     className="mt-1 block w-full"
                                     autoComplete="new-password"
-                                    placeholder="New password"
+                                    placeholder={__(
+                                        'settings_pages.security_page.password_section.form.new_password_placeholder',
+                                    )}
                                     aria-invalid={!!errors['password']}
                                 />
 
@@ -116,14 +131,18 @@ export default function Security({
                             </Field>
 
                             <Field data-invalid={!!errors['password_confirmation']}>
-                                <FieldLabel htmlFor="password_confirmation">Confirm password</FieldLabel>
+                                <FieldLabel htmlFor="password_confirmation">
+                                    {__('settings_pages.security_page.password_section.form.confirm_password')}
+                                </FieldLabel>
 
                                 <PasswordInput
                                     id="password_confirmation"
                                     name="password_confirmation"
                                     className="mt-1 block w-full"
                                     autoComplete="new-password"
-                                    placeholder="Confirm password"
+                                    placeholder={__(
+                                        'settings_pages.security_page.password_section.form.confirm_password_placeholder',
+                                    )}
                                     aria-invalid={!!errors['password_confirmation']}
                                 />
 
@@ -135,7 +154,7 @@ export default function Security({
                                     <Activity mode={processing ? 'visible' : 'hidden'}>
                                         <Spinner aria-hidden />
                                     </Activity>
-                                    Save password
+                                    {__('settings_pages.security_page.password_section.form.submit')}
                                 </Button>
 
                                 <Transition
@@ -145,7 +164,9 @@ export default function Security({
                                     leave="transition ease-in-out"
                                     leaveTo="opacity-0"
                                 >
-                                    <p className="text-sm text-neutral-600">Saved</p>
+                                    <p className="text-sm text-neutral-600">
+                                        {__('settings_pages.security_page.password_section.form.success_message')}
+                                    </p>
                                 </Transition>
                             </div>
                         </Fragment>
@@ -163,15 +184,18 @@ export default function Security({
                     {twoFactorEnabled ? (
                         <div className="flex flex-col items-start justify-start space-y-4">
                             <p className="text-sm text-muted-foreground">
-                                You will be prompted for a secure, random pin during login, which you can retrieve from
-                                the TOTP-supported application on your phone.
+                                {__(
+                                    'settings_pages.security_page.two_factor_authentication_section.two_factor_authentication_enabled',
+                                )}
                             </p>
 
                             <div className="relative inline">
                                 <Form {...disable.form()}>
                                     {({ processing }) => (
                                         <Button variant="destructive" type="submit" disabled={processing}>
-                                            Disable 2FA
+                                            {__(
+                                                'settings_pages.security_page.two_factor_authentication_section.two_factor_authentication_enabled_button',
+                                            )}
                                         </Button>
                                     )}
                                 </Form>
@@ -186,21 +210,26 @@ export default function Security({
                     ) : (
                         <div className="flex flex-col items-start justify-start space-y-4">
                             <p className="text-sm text-muted-foreground">
-                                When you enable two-factor authentication, you will be prompted for a secure pin during
-                                login. This pin can be retrieved from a TOTP-supported application on your phone.
+                                {__(
+                                    'settings_pages.security_page.two_factor_authentication_section.two_factor_authentication_disabled',
+                                )}
                             </p>
 
                             <div>
                                 {hasSetupData ? (
                                     <Button onClick={() => setShowSetupModal(true)}>
-                                        <ShieldCheck />
-                                        Continue setup
+                                        <ShieldCheckIcon aria-hidden />
+                                        {__(
+                                            'settings_pages.security_page.two_factor_authentication_section.two_factor_authentication_has_setup_data',
+                                        )}
                                     </Button>
                                 ) : (
                                     <Form {...enable.form()} onSuccess={() => setShowSetupModal(true)}>
                                         {({ processing }) => (
                                             <Button type="submit" disabled={processing}>
-                                                Enable 2FA
+                                                {__(
+                                                    'settings_pages.security_page.two_factor_authentication_section.two_factor_authentication_disabled_button',
+                                                )}
                                             </Button>
                                         )}
                                     </Form>
@@ -225,12 +254,3 @@ export default function Security({
         </Fragment>
     );
 }
-
-Security.layout = {
-    breadcrumbs: [
-        {
-            title: 'Security settings',
-            href: edit(),
-        },
-    ],
-};
