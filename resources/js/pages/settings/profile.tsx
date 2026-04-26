@@ -5,7 +5,8 @@ import BaseAccountUpdateForm from '@/components/forms/settings/base-account-upda
 import PersonalProfileManagerForm from '@/components/forms/settings/personal-profile-manager.form';
 import DeleteUser from '@/components/helpers/delete-user';
 import { Separator } from '@/components/ui/separator';
-import { Head } from '@inertiajs/react';
+import { lang } from '@erag/lang-sync-inertia/react';
+import { Head, setLayoutProps } from '@inertiajs/react';
 import { Fragment } from 'react';
 
 export default function Profile({
@@ -15,36 +16,57 @@ export default function Profile({
     mustVerifyEmail: boolean;
     status?: string;
 }>) {
+    const { __ } = lang();
+
+    setLayoutProps({
+        breadcrumbs: [
+            {
+                title: __('settings_pages.profile_page.head_title'),
+                href: edit(),
+            },
+        ],
+    });
+
     return (
         <Fragment>
-            <Head title="Profile settings" />
+            <Head title={__('settings_pages.profile_page.head_title')} />
+            <h1 className="sr-only">{__('settings_pages.profile_page.head_title')}</h1>
 
-            <h1 className="sr-only">Profile settings</h1>
+            <div className="space-y-6">
+                <Heading
+                    variant="small"
+                    title={__('settings_pages.profile_page.profile_info.title')}
+                    description={__('settings_pages.profile_page.profile_info.description')}
+                />
 
-            <BaseAccountUpdateForm mustVerifyEmail={mustVerifyEmail} status={status} />
+                <BaseAccountUpdateForm mustVerifyEmail={mustVerifyEmail} status={status} />
+            </div>
 
             <Separator className="my-6" />
 
             <div className="space-y-6">
-                <Heading variant="small" title="Language" description="Update your language preferences" />
+                <Heading
+                    variant="small"
+                    title={__('settings_pages.profile_page.app_language.title')}
+                    description={__('settings_pages.profile_page.app_language.description')}
+                />
 
                 <AppLanguageSelector />
             </div>
 
             <Separator className="mb-6" />
 
-            <PersonalProfileManagerForm />
+            <div className="space-y-6">
+                <Heading
+                    variant="small"
+                    title={__('settings_pages.profile_page.personal_profile_manager.title')}
+                    description={__('settings_pages.profile_page.personal_profile_manager.description')}
+                />
+
+                <PersonalProfileManagerForm />
+            </div>
 
             <DeleteUser />
         </Fragment>
     );
 }
-
-Profile.layout = {
-    breadcrumbs: [
-        {
-            title: 'Profile settings',
-            href: edit(),
-        },
-    ],
-};
