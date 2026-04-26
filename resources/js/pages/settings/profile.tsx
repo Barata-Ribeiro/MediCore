@@ -5,8 +5,6 @@ import BaseAccountUpdateForm from '@/components/forms/settings/base-account-upda
 import PersonalProfileManagerForm from '@/components/forms/settings/personal-profile-manager.form';
 import DeleteUser from '@/components/helpers/delete-user';
 import { Separator } from '@/components/ui/separator';
-import { useIsomorphicLayoutEffect } from '@/hooks/use-isomorphic-layout-effect';
-import useIsMounted from '@/hooks/use-mounted';
 import { lang } from '@erag/lang-sync-inertia/react';
 import { Head, setLayoutProps } from '@inertiajs/react';
 import { Fragment } from 'react';
@@ -19,7 +17,6 @@ export default function Profile({
     status?: string;
 }>) {
     const { __ } = lang();
-    const isMounted = useIsMounted();
 
     setLayoutProps({
         breadcrumbs: [
@@ -29,12 +26,6 @@ export default function Profile({
             },
         ],
     });
-
-    useIsomorphicLayoutEffect(() => {
-        if (!isMounted) {
-            return;
-        }
-    }, [isMounted, setLayoutProps]);
 
     return (
         <Fragment>
