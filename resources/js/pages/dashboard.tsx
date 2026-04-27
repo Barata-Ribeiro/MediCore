@@ -7,7 +7,8 @@ import DashboardProfileCard from '@/components/helpers/dashboard/dashboard-profi
 import { dashboard } from '@/routes';
 import type { MedicalFile } from '@/types/application/medical-file';
 import type { Profile } from '@/types/application/profile';
-import { Head } from '@inertiajs/react';
+import { lang } from '@erag/lang-sync-inertia/react';
+import { Head, setLayoutProps } from '@inertiajs/react';
 import { Fragment } from 'react/jsx-runtime';
 
 type Props = {
@@ -17,9 +18,16 @@ type Props = {
 };
 
 export default function Dashboard({ data }: Readonly<{ data: Props }>) {
+    const { __ } = lang();
+
+    setLayoutProps({
+        breadcrumbs: [{ title: __('dashboard.head_title'), href: dashboard() }],
+    });
+
     return (
         <Fragment>
-            <Head title="Dashboard" />
+            <Head title={__('dashboard.head_title')} />
+
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <DashboardGreetings />
 
@@ -45,12 +53,3 @@ export default function Dashboard({ data }: Readonly<{ data: Props }>) {
         </Fragment>
     );
 }
-
-Dashboard.layout = {
-    breadcrumbs: [
-        {
-            title: 'Dashboard',
-            href: dashboard(),
-        },
-    ],
-};
