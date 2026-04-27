@@ -6,12 +6,14 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp
 import { Spinner } from '@/components/ui/spinner';
 import { useAppearance } from '@/hooks/use-appearance';
 import { useClipboard } from '@/hooks/use-clipboard';
+import { useIsomorphicLayoutEffect } from '@/hooks/use-isomorphic-layout-effect';
 import { OTP_MAX_LENGTH } from '@/hooks/use-two-factor-auth';
 import { confirm } from '@/routes/two-factor';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Form } from '@inertiajs/react';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
-import { Check, Copy, ScanLine } from 'lucide-react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Check, Copy, ScanLineIcon } from 'lucide-react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 function GridScanIcon() {
     return (
@@ -27,7 +29,7 @@ function GridScanIcon() {
                         <div key={`row-${i + 1}`} className="border-b border-border last:border-b-0" />
                     ))}
                 </div>
-                <ScanLine className="relative z-20 size-6 text-foreground" />
+                <ScanLineIcon aria-hidden className="relative z-20 size-6 text-foreground" />
             </div>
         </div>
     );
@@ -46,6 +48,7 @@ function TwoFactorSetupStep({
     onNextStep: () => void;
     errors: string[];
 }>) {
+    const { __ } = lang();
     const { resolvedAppearance } = useAppearance();
     const [copiedText, copy] = useClipboard();
     const IconComponent = copiedText === manualSetupKey ? Check : Copy;
@@ -62,9 +65,7 @@ function TwoFactorSetupStep({
                                 {qrCodeSvg ? (
                                     <div
                                         className="aspect-square w-full rounded-lg bg-white p-2 [&_svg]:size-full"
-                                        dangerouslySetInnerHTML={{
-                                            __html: qrCodeSvg,
-                                        }}
+                                        dangerouslySetInnerHTML={{ __html: qrCodeSvg }}
                                         style={{
                                             filter:
                                                 resolvedAppearance === 'dark' ? 'invert(1) brightness(1.5)' : undefined,
@@ -85,7 +86,9 @@ function TwoFactorSetupStep({
 
                     <div className="relative flex w-full items-center justify-center">
                         <div className="absolute inset-0 top-1/2 h-px w-full bg-border" />
-                        <span className="relative bg-card px-2 py-1">or, enter the code manually</span>
+                        <span className="relative bg-card px-2 py-1">
+                            {__('settings_pages.two_factor_setup_modal.setup_step_message_end')}
+                        </span>
                     </div>
 
                     <div className="flex w-full space-x-2">
@@ -119,10 +122,11 @@ function TwoFactorSetupStep({
 }
 
 function TwoFactorVerificationStep({ onClose, onBack }: Readonly<{ onClose: () => void; onBack: () => void }>) {
+    const { __ } = lang();
     const [code, setCode] = useState<string>('');
     const pinInputContainerRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         setTimeout(() => {
             pinInputContainerRef.current?.querySelector('input')?.focus();
         }, 0);
@@ -164,10 +168,10 @@ function TwoFactorVerificationStep({ onClose, onBack }: Readonly<{ onClose: () =
                             onClick={onBack}
                             disabled={processing}
                         >
-                            Back
+                            {__('settings_pages.two_factor_setup_modal.form.back')}
                         </Button>
                         <Button type="submit" className="flex-1" disabled={processing || code.length < OTP_MAX_LENGTH}>
-                            Confirm
+                            {__('settings_pages.two_factor_setup_modal.form.confirm')}
                         </Button>
                     </div>
                 </div>
@@ -199,6 +203,7 @@ export default function TwoFactorSetupModal({
     fetchSetupData,
     errors,
 }: Readonly<Props>) {
+    const { __ } = lang();
     const [showVerificationStep, setShowVerificationStep] = useState<boolean>(false);
 
     const modalConfig = useMemo<{
@@ -208,28 +213,26 @@ export default function TwoFactorSetupModal({
     }>(() => {
         if (twoFactorEnabled) {
             return {
-                title: 'Two-factor authentication enabled',
-                description:
-                    'Two-factor authentication is now enabled. Scan the QR code or enter the setup key in your authenticator app.',
-                buttonText: 'Close',
+                title: __('settings_pages.two_factor_setup_modal.enabled.title'),
+                description: __('settings_pages.two_factor_setup_modal.enabled.description'),
+                buttonText: __('settings_pages.two_factor_setup_modal.enabled.button'),
             };
         }
 
         if (showVerificationStep) {
             return {
-                title: 'Verify authentication code',
-                description: 'Enter the 6-digit code from your authenticator app',
-                buttonText: 'Continue',
+                title: __('settings_pages.two_factor_setup_modal.verification.title'),
+                description: __('settings_pages.two_factor_setup_modal.verification.description'),
+                buttonText: __('settings_pages.two_factor_setup_modal.verification.button'),
             };
         }
 
         return {
-            title: 'Enable two-factor authentication',
-            description:
-                'To finish enabling two-factor authentication, scan the QR code or enter the setup key in your authenticator app',
-            buttonText: 'Continue',
+            title: __('settings_pages.two_factor_setup_modal.disabled.title'),
+            description: __('settings_pages.two_factor_setup_modal.disabled.description'),
+            buttonText: __('settings_pages.two_factor_setup_modal.disabled.button'),
         };
-    }, [twoFactorEnabled, showVerificationStep]);
+    }, [twoFactorEnabled, showVerificationStep, __]);
 
     const resetModalState = useCallback(() => {
         setShowVerificationStep(false);
@@ -253,11 +256,11 @@ export default function TwoFactorSetupModal({
 
     const fetchSetupDataRef = useRef(fetchSetupData);
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         fetchSetupDataRef.current = fetchSetupData;
     }, [fetchSetupData]);
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         if (isOpen && !qrCodeSvg) {
             fetchSetupDataRef.current();
         }

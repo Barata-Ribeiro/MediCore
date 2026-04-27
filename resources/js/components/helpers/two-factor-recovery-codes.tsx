@@ -1,10 +1,12 @@
 import AlertError from '@/components/helpers/alert-error';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useIsomorphicLayoutEffect } from '@/hooks/use-isomorphic-layout-effect';
 import { regenerateRecoveryCodes } from '@/routes/two-factor';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Form } from '@inertiajs/react';
-import { Eye, EyeOff, LockKeyhole, RefreshCw } from 'lucide-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { Eye, EyeOff, LockKeyhole, RefreshCwIcon } from 'lucide-react';
+import { useCallback, useRef, useState } from 'react';
 
 type Props = {
     recoveryCodesList: string[];
@@ -13,6 +15,7 @@ type Props = {
 };
 
 export default function TwoFactorRecoveryCodes({ recoveryCodesList, fetchRecoveryCodes, errors }: Readonly<Props>) {
+    const { __ } = lang();
     const [codesAreVisible, setCodesAreVisible] = useState<boolean>(false);
     const codesSectionRef = useRef<HTMLDivElement | null>(null);
     const canRegenerateCodes = recoveryCodesList.length > 0 && codesAreVisible;
@@ -34,7 +37,7 @@ export default function TwoFactorRecoveryCodes({ recoveryCodesList, fetchRecover
         }
     }, [codesAreVisible, recoveryCodesList.length, fetchRecoveryCodes]);
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         if (!recoveryCodesList.length) {
             fetchRecoveryCodes();
         }
@@ -47,11 +50,10 @@ export default function TwoFactorRecoveryCodes({ recoveryCodesList, fetchRecover
             <CardHeader>
                 <CardTitle className="flex gap-3">
                     <LockKeyhole className="size-4" aria-hidden="true" />
-                    2FA recovery codes
+                    {__('settings_pages.security_page.two_factor_recovery_codes_section.card_title')}
                 </CardTitle>
                 <CardDescription>
-                    Recovery codes let you regain access if you lose your 2FA device. Store them in a secure password
-                    manager.
+                    {__('settings_pages.security_page.two_factor_recovery_codes_section.card_description')}
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -63,7 +65,12 @@ export default function TwoFactorRecoveryCodes({ recoveryCodesList, fetchRecover
                         aria-controls="recovery-codes-section"
                     >
                         <RecoveryCodeIconComponent className="size-4" aria-hidden="true" />
-                        {codesAreVisible ? 'Hide' : 'View'} recovery codes
+                        {codesAreVisible
+                            ? __('settings_pages.security_page.two_factor_recovery_codes_section.hide_codes_button')
+                            : __('settings_pages.security_page.two_factor_recovery_codes_section.show_codes_button')}
+                        {__(
+                            'settings_pages.security_page.two_factor_recovery_codes_section.show_or_hide_codes_message',
+                        )}
                     </Button>
 
                     {canRegenerateCodes && (
@@ -79,7 +86,10 @@ export default function TwoFactorRecoveryCodes({ recoveryCodesList, fetchRecover
                                     disabled={processing}
                                     aria-describedby="regenerate-warning"
                                 >
-                                    <RefreshCw /> Regenerate codes
+                                    <RefreshCwIcon aria-hidden />{' '}
+                                    {__(
+                                        'settings_pages.security_page.two_factor_recovery_codes_section.regenerate_codes_button',
+                                    )}
                                 </Button>
                             )}
                         </Form>
@@ -99,7 +109,9 @@ export default function TwoFactorRecoveryCodes({ recoveryCodesList, fetchRecover
                                     ref={codesSectionRef}
                                     className="grid gap-1 rounded-lg bg-muted p-4 font-mono text-sm"
                                     role="list"
-                                    aria-label="Recovery codes"
+                                    aria-label={__(
+                                        'settings_pages.security_page.two_factor_recovery_codes_section.codes_section_label',
+                                    )}
                                 >
                                     {recoveryCodesList.length ? (
                                         recoveryCodesList.map((code, index) => (
@@ -108,7 +120,12 @@ export default function TwoFactorRecoveryCodes({ recoveryCodesList, fetchRecover
                                             </div>
                                         ))
                                     ) : (
-                                        <div className="space-y-2" aria-label="Loading recovery codes">
+                                        <div
+                                            className="space-y-2"
+                                            aria-label={__(
+                                                'settings_pages.security_page.two_factor_recovery_codes_section.codes_loading_message',
+                                            )}
+                                        >
                                             {Array.from({ length: 8 }, (_, index) => (
                                                 <div
                                                     key={index}
@@ -122,9 +139,17 @@ export default function TwoFactorRecoveryCodes({ recoveryCodesList, fetchRecover
 
                                 <div className="text-xs text-muted-foreground select-none">
                                     <p id="regenerate-warning">
-                                        Each recovery code can be used once to access your account and will be removed
-                                        after use. If you need more, click{' '}
-                                        <span className="font-bold">Regenerate codes</span> above.
+                                        {__(
+                                            'settings_pages.security_page.two_factor_recovery_codes_section.regenerate_warning_message',
+                                        )}{' '}
+                                        <span className="font-bold">
+                                            {__(
+                                                'settings_pages.security_page.two_factor_recovery_codes_section.regenerate_warning_message_span',
+                                            )}
+                                        </span>{' '}
+                                        {__(
+                                            'settings_pages.security_page.two_factor_recovery_codes_section.regenerate_warning_message_end',
+                                        )}
                                     </p>
                                 </div>
                             </>
