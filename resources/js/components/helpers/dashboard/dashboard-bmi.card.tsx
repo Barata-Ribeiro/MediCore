@@ -6,6 +6,7 @@ import { Field, FieldLabel } from '@/components/ui/field';
 import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
 import { edit as editMedicalFile } from '@/routes/medical-file';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Link } from '@inertiajs/react';
 import { FileTextIcon } from 'lucide-react';
 import { memo } from 'react';
@@ -47,37 +48,37 @@ function getBMICategory(bmi: number): { label: string; style: string; percentage
     switch (true) {
         case bmi <= 18.4:
             return {
-                label: 'Underweight',
+                label: 'underweight',
                 style: cn('bg-destructive text-destructive-foreground'),
                 percentage: getBMIProgressPercentage(bmi),
             };
         case bmi >= 18.5 && bmi <= 24.9:
             return {
-                label: 'Normal',
+                label: 'normal',
                 style: cn('bg-success text-success-content'),
                 percentage: getBMIProgressPercentage(bmi),
             };
         case bmi >= 25 && bmi <= 29.9:
             return {
-                label: 'Overweight',
+                label: 'overweight',
                 style: cn('bg-warning text-warning-content'),
                 percentage: getBMIProgressPercentage(bmi),
             };
         case bmi >= 30 && bmi <= 34.9:
             return {
-                label: 'Obesity Class I',
+                label: 'obesity_class_1',
                 style: cn('bg-destructive text-destructive-foreground'),
                 percentage: getBMIProgressPercentage(bmi),
             };
         case bmi >= 35 && bmi <= 39.9:
             return {
-                label: 'Obesity Class II',
+                label: 'obesity_class_2',
                 style: cn('bg-destructive text-destructive-foreground'),
                 percentage: getBMIProgressPercentage(bmi),
             };
         default:
             return {
-                label: 'Obesity Class III',
+                label: 'obesity_class_3',
                 style: cn('bg-destructive text-destructive-foreground'),
                 percentage: getBMIProgressPercentage(bmi),
             };
@@ -85,6 +86,8 @@ function getBMICategory(bmi: number): { label: string; style: string; percentage
 }
 
 const DashboardBMICard = memo<Readonly<Props>>(({ bmi, height, weight }) => {
+    const { __ } = lang();
+
     if (!bmi || !height || !weight || height <= 0 || weight <= 0) {
         return (
             <Empty className="border border-dashed">
@@ -92,16 +95,13 @@ const DashboardBMICard = memo<Readonly<Props>>(({ bmi, height, weight }) => {
                     <EmptyMedia variant="icon">
                         <FileTextIcon aria-hidden />
                     </EmptyMedia>
-                    <EmptyTitle>No Height or Weight Information</EmptyTitle>
-                    <EmptyDescription>
-                        It seems like your medical file is missing height and weight information, which are necessary to
-                        calculate your BMI
-                    </EmptyDescription>
+                    <EmptyTitle>{__('dashboard.bmi_card.empty.title')}</EmptyTitle>
+                    <EmptyDescription>{__('dashboard.bmi_card.empty.message')}</EmptyDescription>
                 </EmptyHeader>
                 <EmptyContent>
                     <Button variant="outline" size="sm" asChild>
                         <Link href={editMedicalFile()} as="button" prefetch="hover">
-                            Update Medical File
+                            {__('dashboard.bmi_card.empty.action')}
                         </Link>
                     </Button>
                 </EmptyContent>
@@ -115,25 +115,26 @@ const DashboardBMICard = memo<Readonly<Props>>(({ bmi, height, weight }) => {
     return (
         <Card className="w-full">
             <CardHeader>
-                <CardTitle className="text-xl">Body Mass Index (BMI)</CardTitle>
-                <CardDescription>Your BMI is a measure of body fat based on your weight and height.</CardDescription>
+                <CardTitle className="text-xl">{__('dashboard.bmi_card.card.title')}</CardTitle>
+                <CardDescription>{__('dashboard.bmi_card.card.description')}</CardDescription>
             </CardHeader>
 
             <CardContent className="grid gap-4">
                 <h3 className="text-center text-4xl font-bold">{roundedBmi}</h3>
 
                 <div className="flex flex-col items-center">
-                    <Badge className={bmiCategory.style}>{bmiCategory.label}</Badge>
+                    <Badge className={bmiCategory.style}>
+                        {__(`dashboard.bmi_card.card.category.${bmiCategory.label}`)}
+                    </Badge>
 
                     <Field className="mt-2 w-full">
                         <FieldLabel htmlFor="progress-bmi" className="sr-only">
-                            BMI progress bar
+                            {__('dashboard.bmi_card.card.label')}
                         </FieldLabel>
 
                         <Progress
                             id="progress-bmi"
-                            aria-label="BMI progress bar"
-                            aria-valuetext={`BMI ${roundedBmi}`}
+                            aria-label={__('dashboard.bmi_card.card.label')}
                             value={bmiCategory.percentage}
                             aria-readonly
                         />
@@ -148,10 +149,10 @@ const DashboardBMICard = memo<Readonly<Props>>(({ bmi, height, weight }) => {
 
                         <div className="mt-3 flex justify-between text-sm text-muted-foreground">
                             <p className="m-0">
-                                Height:&nbsp; <span>{height ?? '0'}</span> cm
+                                {__('dashboard.bmi_card.card.height')}:&nbsp; <span>{height ?? '0'}</span> cm
                             </p>
                             <p className="m-0">
-                                Weight:&nbsp; <span>{weight ?? '0'}</span> kg
+                                {__('dashboard.bmi_card.card.weight')}:&nbsp; <span>{weight ?? '0'}</span> kg
                             </p>
                         </div>
                     </Field>
@@ -161,7 +162,7 @@ const DashboardBMICard = memo<Readonly<Props>>(({ bmi, height, weight }) => {
             <CardFooter className="mt-auto border-t">
                 <Button variant="secondary" size="sm" className="ml-auto" asChild>
                     <Link href={editMedicalFile()} as="button" prefetch="hover">
-                        Edit Medical File
+                        {__('dashboard.bmi_card.card.action')}
                     </Link>
                 </Button>
             </CardFooter>
