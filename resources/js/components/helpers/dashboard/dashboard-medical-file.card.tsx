@@ -4,6 +4,7 @@ import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTi
 import { edit as editMedicalFile } from '@/routes/medical-file';
 import type { MedicalFile } from '@/types/application/medical-file';
 import { bloodTypeLabel } from '@/types/application/medical-file';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Link } from '@inertiajs/react';
 import { format } from 'date-fns';
 import { FileTextIcon } from 'lucide-react';
@@ -14,6 +15,8 @@ type Props = {
 };
 
 const DashboardMedicalFileCard = memo<Readonly<Props>>(({ medicalFile }) => {
+    const { __ } = lang();
+
     if (!medicalFile) {
         return (
             <Empty className="border border-dashed">
@@ -21,13 +24,13 @@ const DashboardMedicalFileCard = memo<Readonly<Props>>(({ medicalFile }) => {
                     <EmptyMedia variant="icon">
                         <FileTextIcon aria-hidden />
                     </EmptyMedia>
-                    <EmptyTitle>No Medical File Information</EmptyTitle>
-                    <EmptyDescription>Please complete your medical file to view this card</EmptyDescription>
+                    <EmptyTitle>{__('dashboard.medical_file_card.empty.title')}</EmptyTitle>
+                    <EmptyDescription>{__('dashboard.medical_file_card.empty.message')}</EmptyDescription>
                 </EmptyHeader>
                 <EmptyContent>
                     <Button variant="outline" size="sm" asChild>
                         <Link href={editMedicalFile()} as="button" prefetch="hover">
-                            Complete Medical File
+                            {__('dashboard.medical_file_card.empty.action')}
                         </Link>
                     </Button>
                 </EmptyContent>
@@ -38,42 +41,47 @@ const DashboardMedicalFileCard = memo<Readonly<Props>>(({ medicalFile }) => {
     return (
         <Card className="w-full">
             <CardHeader>
-                <CardTitle className="text-xl">Medical File Summary</CardTitle>
-                <CardDescription>A quick overview of your medical history and records.</CardDescription>
+                <CardTitle className="text-xl">{__('dashboard.medical_file_card.card.title')}</CardTitle>
+                <CardDescription>{__('dashboard.medical_file_card.card.description')}</CardDescription>
             </CardHeader>
 
             <CardContent className="grid gap-4">
                 <dl className="grid gap-2">
                     <div>
-                        <dt className="font-medium">Blood Type</dt>
-                        <dd>{medicalFile.blood_type ? bloodTypeLabel(medicalFile.blood_type) : 'Not Informed'}</dd>
+                        <dt className="font-medium">{__('dashboard.medical_file_card.card.blood_type')}</dt>
+                        <dd>
+                            {medicalFile.blood_type
+                                ? bloodTypeLabel(medicalFile.blood_type)
+                                : __('dashboard.card_not_informed')}
+                        </dd>
                     </div>
 
                     <div>
-                        <dt className="font-medium">Allergies</dt>
-                        <dd>{medicalFile.allergies ?? 'Not Informed'}</dd>
+                        <dt className="font-medium">{__('dashboard.medical_file_card.card.allergies')}</dt>
+                        <dd>{medicalFile.allergies ?? __('dashboard.card_not_informed')}</dd>
                     </div>
 
                     <div>
-                        <dt className="font-medium">Diseases</dt>
-                        <dd>{medicalFile.diseases ?? 'Not Informed'}</dd>
+                        <dt className="font-medium">{__('dashboard.medical_file_card.card.diseases')}</dt>
+                        <dd>{medicalFile.diseases ?? __('dashboard.card_not_informed')}</dd>
                     </div>
 
                     <div>
-                        <dt className="font-medium">Medications</dt>
-                        <dd>{medicalFile.medications ?? 'Not Informed'}</dd>
+                        <dt className="font-medium">{__('dashboard.medical_file_card.card.medications')}</dt>
+                        <dd>{medicalFile.medications ?? __('dashboard.card_not_informed')}</dd>
                     </div>
                 </dl>
             </CardContent>
 
             <CardFooter className="mt-auto flex flex-wrap items-end justify-between gap-4 border-t">
                 <time dateTime={medicalFile.updated_at} className="text-sm text-muted-foreground">
-                    Last updated: {format(new Date(medicalFile.updated_at), 'MMMM dd, yyyy')}
+                    {__('dashboard.medical_file_card.card.updated_at')}{' '}
+                    {format(new Date(medicalFile.updated_at), 'MMMM dd, yyyy')}
                 </time>
 
                 <Button variant="secondary" size="sm" asChild>
                     <Link href={editMedicalFile()} as="button" prefetch="hover">
-                        Edit Medical File
+                        {__('dashboard.medical_file_card.card.edit_action')}
                     </Link>
                 </Button>
             </CardFooter>
