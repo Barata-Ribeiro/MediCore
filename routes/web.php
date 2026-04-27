@@ -14,9 +14,13 @@ Route::inertia('/', 'welcome', [
 ])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', fn (DashboardServiceInterface $dashboardService) => Inertia::render('dashboard', [
-        'data' => $dashboardService->getDashboardData(),
-    ]))->name('dashboard');
+    Route::get('dashboard', function (DashboardServiceInterface $dashboardService) {
+        syncLangFiles('dashboard');
+
+        return Inertia::render('dashboard', [
+            'data' => $dashboardService->getDashboardData(),
+        ]);
+    })->name('dashboard');
 });
 
 require __DIR__.'/settings.php';
