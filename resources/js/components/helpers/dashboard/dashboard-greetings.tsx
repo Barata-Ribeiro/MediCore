@@ -1,7 +1,10 @@
+import { lang } from '@erag/lang-sync-inertia/react';
 import { usePage } from '@inertiajs/react';
 import { CalendarDaysIcon } from 'lucide-react';
 
 export default function DashboardGreetings() {
+    const { __ } = lang();
+
     const { auth, date } = usePage().props;
 
     return (
@@ -19,7 +22,7 @@ export default function DashboardGreetings() {
                     <h1 className="text-2xl font-bold tracking-tight text-balance sm:text-3xl">
                         {date.greeting}, {auth.user.name}
                     </h1>
-                    <p className="mt-1 text-sm text-white/70">Here&apos;s a quick overview of your account.</p>
+                    <p className="mt-1 text-sm text-white/70">{__('dashboard.greeting.message')}</p>
                 </div>
 
                 <time dateTime={date.now} className="hidden items-center gap-x-1 text-sm text-white/70 sm:inline-flex">

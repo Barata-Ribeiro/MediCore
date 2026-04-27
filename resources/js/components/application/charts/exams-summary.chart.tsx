@@ -1,6 +1,7 @@
 import type { ChartConfig } from '@/components/ui/chart';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { normalizeString } from '@/lib/utils';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { memo, useMemo } from 'react';
 import { Label, Pie, PieChart } from 'recharts';
 
@@ -9,6 +10,8 @@ type Props = {
 };
 
 const ExamsSummaryChart = memo<Readonly<Props>>(({ exams }) => {
+    const { __ } = lang();
+
     const examEntries = useMemo(() => Object.entries(exams).filter(([key]) => key !== 'total'), [exams]);
 
     const rechartsData = useMemo(() => {
@@ -68,7 +71,9 @@ const ExamsSummaryChart = memo<Readonly<Props>>(({ exams }) => {
                                             y={(viewBox.cy ?? 0) + 24}
                                             className="fill-muted-foreground"
                                         >
-                                            {hasExamData ? 'Exams' : 'No exams yet'}
+                                            {hasExamData
+                                                ? __('dashboard.exams_made_card.chart_label')
+                                                : __('dashboard.exams_made_card.chart_empty')}
                                         </tspan>
                                     </text>
                                 );

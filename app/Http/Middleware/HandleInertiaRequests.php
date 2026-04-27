@@ -70,11 +70,11 @@ class HandleInertiaRequests extends Middleware
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'date' => [
                 'now' => $now->toISOString(),
-                'displayDate' => $now->format('F j, Y'),
+                'displayDate' => $now->translatedFormat('F j, Y'),
                 'greeting' => match (true) {
-                    $now->hour >= 5 && $now->hour < 12 => 'Good morning',
-                    $now->hour >= 12 && $now->hour < 18 => 'Good afternoon',
-                    default => 'Good evening',
+                    $now->hour >= 5 && $now->hour < 12 => __('dashboard.greeting.morning'),
+                    $now->hour >= 12 && $now->hour < 18 => __('dashboard.greeting.afternoon'),
+                    default => __('dashboard.greeting.evening'),
                 },
             ],
         ];
