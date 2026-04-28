@@ -8,13 +8,13 @@ import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from '@/
 import { Spinner } from '@/components/ui/spinner';
 import type { Glucose } from '@/types/application/exams/glucose';
 import { Form } from '@inertiajs/react';
-import { Activity, Fragment, memo } from 'react';
+import { Activity, Fragment } from 'react';
 
 type Props = {
     glucose?: Glucose;
 };
 
-const GlucoseForm = memo(({ glucose }: Readonly<Props>) => {
+export default function GlucoseForm({ glucose }: Readonly<Props>) {
     const isEditMode = glucose && glucose !== null;
 
     const formRoute = isEditMode ? GlucoseController.update.form(glucose.id) : GlucoseController.store.form();
@@ -112,6 +112,4 @@ const GlucoseForm = memo(({ glucose }: Readonly<Props>) => {
             )}
         </Form>
     );
-});
-
-export default GlucoseForm;
+}

@@ -8,13 +8,13 @@ import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from '@/
 import { Spinner } from '@/components/ui/spinner';
 import type { CompleteBloodCount } from '@/types/application/exams/complete-blood-count';
 import { Form } from '@inertiajs/react';
-import { Activity, Fragment, memo } from 'react';
+import { Activity, Fragment } from 'react';
 
 type Props = {
     cbcCount?: CompleteBloodCount;
 };
 
-const CbcCountForm = memo(({ cbcCount }: Readonly<Props>) => {
+export default function CbcCountForm({ cbcCount }: Readonly<Props>) {
     const isEditMode = cbcCount && cbcCount !== null;
 
     const formRoute = isEditMode
@@ -511,6 +511,4 @@ const CbcCountForm = memo(({ cbcCount }: Readonly<Props>) => {
             )}
         </Form>
     );
-});
-
-export default CbcCountForm;
+}
