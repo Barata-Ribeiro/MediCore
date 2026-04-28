@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import type { ChartConfig } from '@/components/ui/chart';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import type { ChartData } from '@/types/ui';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { format } from 'date-fns';
 import { memo, useMemo } from 'react';
 import { CartesianGrid, LabelList, Line, LineChart, XAxis } from 'recharts';
@@ -12,6 +13,8 @@ type Props = {
 };
 
 const VitaminD3Chart = memo(({ chartData, total }: Readonly<Props>) => {
+    const { __ } = lang();
+
     const rechartsData = useMemo(() => {
         return chartData.map((row) => {
             const base: Record<string, unknown> = { date: row.x_axis_label };
@@ -44,10 +47,8 @@ const VitaminD3Chart = memo(({ chartData, total }: Readonly<Props>) => {
     return (
         <Card className="mx-auto max-w-3xl">
             <CardHeader>
-                <CardTitle>Vitamin D3</CardTitle>
-                <CardDescription>
-                    Check your last 5 Vitamin D3 results and see how your levels have changed over time.
-                </CardDescription>
+                <CardTitle>{__('vitamin_d3_pages.index.chart.title')}</CardTitle>
+                <CardDescription>{__('vitamin_d3_pages.index.chart.description')}</CardDescription>
             </CardHeader>
             <CardContent>
                 <ChartContainer config={chartConfig}>
@@ -99,7 +100,7 @@ const VitaminD3Chart = memo(({ chartData, total }: Readonly<Props>) => {
             </CardContent>
             <CardFooter className="border-t">
                 <p className="text-sm text-muted-foreground">
-                    Total Vitamin D3 readings: <strong>{total}</strong>
+                    {__('vitamin_d3_pages.index.chart.footer_total_label')} <strong>{total}</strong>
                 </p>
             </CardFooter>
         </Card>
