@@ -7,6 +7,7 @@ import { Field, FieldLabel } from '@/components/ui/field';
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from '@/components/ui/input-group';
 import { Spinner } from '@/components/ui/spinner';
 import type { VitaminD3 } from '@/types/application/exams/vitamin-d3';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Form } from '@inertiajs/react';
 import { Activity, Fragment, memo } from 'react';
 
@@ -15,6 +16,7 @@ type Props = {
 };
 
 const VitaminD3Form = memo<Readonly<Props>>(({ vitaminD3 }) => {
+    const { __ } = lang();
     const isEditMode = vitaminD3 && vitaminD3 !== null;
 
     const formRoute = isEditMode ? VitaminD3Controller.update.form(vitaminD3.id) : VitaminD3Controller.store.form();
@@ -30,14 +32,14 @@ const VitaminD3Form = memo<Readonly<Props>>(({ vitaminD3 }) => {
                 <Fragment>
                     <Field data-invalid={!!errors['twenty_five_hydroxyvitamin_d3']}>
                         <FieldLabel htmlFor="twenty_five_hydroxyvitamin_d3">
-                            Vitamin D3 <RequiredIndicator />
+                            {__('vitamin_d3_pages.form.vitamin_d3')} <RequiredIndicator />
                         </FieldLabel>
                         <InputGroup>
                             <InputGroupInput
                                 type="number"
                                 id="twenty_five_hydroxyvitamin_d3"
                                 name="twenty_five_hydroxyvitamin_d3"
-                                placeholder="e.g. 30"
+                                placeholder={__('vitamin_d3_pages.form.vitamin_d3_placeholder')}
                                 defaultValue={vitaminD3?.twenty_five_hydroxyvitamin_d3}
                                 min={0}
                                 step={0.01}
@@ -46,7 +48,7 @@ const VitaminD3Form = memo<Readonly<Props>>(({ vitaminD3 }) => {
                                 aria-required
                             />
                             <InputGroupAddon align="inline-end">
-                                <InputGroupText>ng/mL</InputGroupText>
+                                <InputGroupText>{__('vitamin_d3_pages.shared.unit')}</InputGroupText>
                             </InputGroupAddon>
                         </InputGroup>
                         <InputError message={errors['twenty_five_hydroxyvitamin_d3']} />
@@ -54,7 +56,7 @@ const VitaminD3Form = memo<Readonly<Props>>(({ vitaminD3 }) => {
 
                     <Field data-invalid={!!errors['report_date']}>
                         <FieldLabel htmlFor="report_date">
-                            Report Date <RequiredIndicator />
+                            {__('vitamin_d3_pages.form.report_date')} <RequiredIndicator />
                         </FieldLabel>
                         <DatePicker id="report_date" name="report_date" defaultValue={vitaminD3?.report_date} />
                         <InputError message={errors['report_date']} />
@@ -64,7 +66,7 @@ const VitaminD3Form = memo<Readonly<Props>>(({ vitaminD3 }) => {
                         <Activity mode={processing ? 'visible' : 'hidden'}>
                             <Spinner aria-hidden />
                         </Activity>
-                        Save
+                        {__('vitamin_d3_pages.form.submit')}
                     </Button>
                 </Fragment>
             )}
