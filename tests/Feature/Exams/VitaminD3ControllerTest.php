@@ -15,6 +15,7 @@ describe('tests for the "index" method of VitaminD3Controller', function () {
         $response->assertOk();
         $response->assertInertia(
             fn (AssertableInertia $page) => $page->component($componentName)
+                ->where('lang.vitamin_d3_pages.index.head_title', 'Vitamin D3 Exams')
                 ->has('vitaminD3s.data', 0)
                 ->has('chartData')
         );
@@ -72,7 +73,9 @@ describe('tests for the "create" method of VitaminD3Controller', function () {
         $response = $this->actingAs($user)->get(route('vitamin-d3.create'));
 
         $response->assertOk();
-        $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName));
+        $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
+            ->where('lang.vitamin_d3_pages.create.head_title', 'Create Vitamin D3 record')
+        );
     });
 
     it('should redirect guests to login if user is not authenticated', function () {
@@ -121,6 +124,7 @@ describe('tests for the "edit" method of VitaminD3Controller', function () {
 
         $response->assertOk();
         $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
+            ->where('lang.vitamin_d3_pages.edit.head_title', 'Edit Vitamin D3 record')
             ->has('vitaminD3', fn (AssertableInertia $item) => $item
                 ->where('twenty_five_hydroxyvitamin_d3', 31.7)
                 ->where('report_date', now()->toDateString())

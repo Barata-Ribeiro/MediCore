@@ -11,8 +11,12 @@ test('application translation keys resolve from standard language files', functi
         ->toBe('Unsupported provider. Create an account using email and password instead.')
         ->and($translator->get('flash.exams.urea_and_creatinine.destroy_successfully', [], 'en'))
         ->toBe('Urea and creatinine record deleted successfully.')
+        ->and($translator->get('vitamin_d3_pages.index.head_title', [], 'en'))
+        ->toBe('Vitamin D3 Exams')
         ->and($translator->get('flash.settings.profile.language.updated_successfully', [], 'pt_BR'))
-        ->toBe('Idioma atualizado com sucesso.');
+        ->toBe('Idioma atualizado com sucesso.')
+        ->and($translator->get('vitamin_d3_pages.index.head_title', [], 'pt_BR'))
+        ->toBe('Exames de Vitamina D3');
 });
 
 test('json translation strings still resolve alongside php language files', function () {
