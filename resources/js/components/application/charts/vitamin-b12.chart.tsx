@@ -3,7 +3,7 @@ import type { ChartConfig } from '@/components/ui/chart';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import type { ChartData } from '@/types/ui';
 import { format } from 'date-fns';
-import { memo, useMemo } from 'react';
+import { useMemo } from 'react';
 import { CartesianGrid, LabelList, Line, LineChart, XAxis } from 'recharts';
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
     total: number;
 };
 
-const VitaminB12Chart = memo(({ chartData, total }: Readonly<Props>) => {
+export default function VitaminB12Chart({ chartData, total }: Readonly<Props>) {
     const rechartsData = useMemo(() => {
         return chartData.map((row) => {
             const base: Record<string, unknown> = { date: row.x_axis_label };
@@ -104,6 +104,4 @@ const VitaminB12Chart = memo(({ chartData, total }: Readonly<Props>) => {
             </CardFooter>
         </Card>
     );
-});
-
-export default VitaminB12Chart;
+}

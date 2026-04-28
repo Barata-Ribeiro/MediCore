@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/chart';
 import type { ChartData } from '@/types';
 import { format } from 'date-fns';
-import { memo, useMemo } from 'react';
+import { useMemo } from 'react';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 
 type Props = {
@@ -17,7 +17,7 @@ type Props = {
     total: number;
 };
 
-const GlucoseChart = memo(({ chartData, total }: Readonly<Props>) => {
+export default function GlucoseChart({ chartData, total }: Readonly<Props>) {
     const rechartsData = useMemo(() => {
         return chartData.map((row) => {
             const base: Record<string, unknown> = { date: row.x_axis_label };
@@ -102,6 +102,4 @@ const GlucoseChart = memo(({ chartData, total }: Readonly<Props>) => {
             </CardFooter>
         </Card>
     );
-});
-
-export default GlucoseChart;
+}

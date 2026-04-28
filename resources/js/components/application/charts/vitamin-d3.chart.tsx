@@ -4,7 +4,7 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/
 import type { ChartData } from '@/types/ui';
 import { lang } from '@erag/lang-sync-inertia/react';
 import { format } from 'date-fns';
-import { memo, useMemo } from 'react';
+import { useMemo } from 'react';
 import { CartesianGrid, LabelList, Line, LineChart, XAxis } from 'recharts';
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
     total: number;
 };
 
-const VitaminD3Chart = memo(({ chartData, total }: Readonly<Props>) => {
+export default function VitaminD3Chart({ chartData, total }: Readonly<Props>) {
     const { __ } = lang();
 
     const rechartsData = useMemo(() => {
@@ -105,6 +105,4 @@ const VitaminD3Chart = memo(({ chartData, total }: Readonly<Props>) => {
             </CardFooter>
         </Card>
     );
-});
-
-export default VitaminD3Chart;
+}
