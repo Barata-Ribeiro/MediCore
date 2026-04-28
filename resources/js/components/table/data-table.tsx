@@ -9,6 +9,7 @@ import useIsMounted from '@/hooks/use-mounted';
 import { buildParams } from '@/lib/utils';
 import type { PaginationMeta } from '@/types/application/metadata';
 import type { RouteDefinition } from '@/wayfinder';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Link, router, usePage } from '@inertiajs/react';
 import type {
     Column,
@@ -69,6 +70,7 @@ export function DataTable<TData, TValue>({
     createRoute,
     exportables,
 }: Readonly<DataTableProps<TData, TValue>>) {
+    const { __ } = lang();
     const page = usePage();
     const isMounted = useIsMounted();
     const [path] = useState(pagination.path);
@@ -307,14 +309,14 @@ export function DataTable<TData, TValue>({
                         <Button asChild>
                             <Link
                                 href={createRoute}
-                                aria-label="Create new record of this type"
-                                title="Create new record of this type"
+                                aria-label={__('main.data_table.create_record.label')}
+                                title={__('main.data_table.create_record.label')}
                                 as="button"
                                 prefetch
                                 viewTransition
                             >
                                 <ClipboardPlusIcon aria-hidden size={16} />
-                                Create
+                                {__('main.data_table.create_record.action')}
                             </Link>
                         </Button>
                     )}
@@ -367,7 +369,7 @@ export function DataTable<TData, TValue>({
                         ) : (
                             <TableRow>
                                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    No results.
+                                    {__('main.data_table.empty_message')}
                                 </TableCell>
                             </TableRow>
                         )}
