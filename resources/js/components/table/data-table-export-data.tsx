@@ -8,6 +8,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import type { RouteDefinition } from '@/wayfinder';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { FileDownIcon, FileSpreadsheet, FileTextIcon } from 'lucide-react';
 
 interface DataTableExportDataProps {
@@ -16,20 +17,31 @@ interface DataTableExportDataProps {
 }
 
 export default function DataTableExportData({ csv, pdf }: Readonly<DataTableExportDataProps>) {
+    const { __ } = lang();
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="outline" aria-label="Choose how to export data" title="Choose how to export data">
+                <Button
+                    variant="outline"
+                    aria-label={__('main.data_table.export_record.label')}
+                    title={__('main.data_table.export_record.label')}
+                >
                     <FileDownIcon aria-hidden />
-                    Export
+                    {__('main.data_table.export_record.action')}
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-37.5">
-                <DropdownMenuLabel>Exportables</DropdownMenuLabel>
+                <DropdownMenuLabel>{__('main.data_table.export_record.dropdown_label')}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {csv && (
                     <DropdownMenuItem className="w-full" disabled={!csv} asChild>
-                        <a href={csv.url} aria-label="Export as CSV" title="Export as CSV" rel="noopener noreferrer">
+                        <a
+                            href={csv.url}
+                            aria-label={__('main.data_table.export_record.csv_label')}
+                            title={__('main.data_table.export_record.csv_label')}
+                            rel="noopener noreferrer"
+                        >
                             <FileSpreadsheet aria-hidden />
                             CSV
                         </a>
@@ -38,7 +50,12 @@ export default function DataTableExportData({ csv, pdf }: Readonly<DataTableExpo
 
                 {pdf && (
                     <DropdownMenuItem className="w-full" disabled={!pdf} asChild>
-                        <a href={pdf.url} aria-label="Export as PDF" title="Export as PDF" rel="noopener noreferrer">
+                        <a
+                            href={pdf.url}
+                            aria-label={__('main.data_table.export_record.pdf_label')}
+                            title={__('main.data_table.export_record.pdf_label')}
+                            rel="noopener noreferrer"
+                        >
                             <FileTextIcon aria-hidden /> PDF
                         </a>
                     </DropdownMenuItem>

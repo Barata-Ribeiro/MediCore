@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/ui/input-group';
 import { Spinner } from '@/components/ui/spinner';
 import { cn } from '@/lib/utils';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Form, Link } from '@inertiajs/react';
 import type { Column, Table } from '@tanstack/react-table';
 import { EraserIcon } from 'lucide-react';
@@ -24,6 +25,8 @@ export default function DataTableToolbar<TData>({
     path,
     ...props
 }: Readonly<DataTableToolbarProps<TData>>) {
+    const { __ } = lang();
+
     const columns = table.getAllColumns().filter((column) => column.getCanFilter());
 
     return (
@@ -38,7 +41,7 @@ export default function DataTableToolbar<TData>({
                 method="GET"
                 options={{ preserveScroll: true }}
                 className="inert:pointer-events-none inert:opacity-60 inert:grayscale-100"
-                onError={() => toast.error('Failed to perform search. Please try again.')}
+                onError={() => toast.error(__('main.data_table.toolbar.search.flash_error'))}
                 disableWhileProcessing
             >
                 {({ processing, errors }) => (
@@ -46,7 +49,7 @@ export default function DataTableToolbar<TData>({
                         <InputGroupInput
                             id="search"
                             name="search"
-                            placeholder="Type to search..."
+                            placeholder={__('main.data_table.toolbar.search.placeholder')}
                             required
                             aria-required
                             aria-invalid={Boolean(errors['search'])}
@@ -56,7 +59,7 @@ export default function DataTableToolbar<TData>({
                                 <Spinner aria-hidden />
                             ) : (
                                 <InputGroupButton type="submit" variant="secondary">
-                                    Search
+                                    {__('main.data_table.toolbar.search.action')}
                                 </InputGroupButton>
                             )}
                         </InputGroupAddon>
@@ -72,7 +75,7 @@ export default function DataTableToolbar<TData>({
 
             <Button variant="outline" size="icon" aria-label="Clear filters" title="Clear filters" asChild>
                 <Link href={path} as="button" prefetch>
-                    <EraserIcon />
+                    <EraserIcon aria-hidden />
                 </Link>
             </Button>
         </div>

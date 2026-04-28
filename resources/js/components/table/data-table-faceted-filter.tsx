@@ -12,6 +12,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
+import { lang } from '@erag/lang-sync-inertia/react';
 import type { Column } from '@tanstack/react-table';
 import { Check, PlusCircle, XCircle } from 'lucide-react';
 import type { KeyboardEvent, MouseEvent } from 'react';
@@ -36,6 +37,7 @@ export function DataTableFacetedFilter<TData, TValue>({
     multiple,
 }: Readonly<DataTableFacetedFilterProps<TData, TValue>>) {
     const [open, setOpen] = useState(false);
+    const { __, trans } = lang();
 
     const columnFilterValue = column?.getFilterValue();
 
@@ -93,7 +95,9 @@ export function DataTableFacetedFilter<TData, TValue>({
                     {selectedValues?.size > 0 ? (
                         <div
                             role="button"
-                            aria-label={`Clear ${title} filter`}
+                            aria-label={trans('main.data_table.toolbar.faceted_filter.clear_titled_action', {
+                                title: title ?? 'unknown',
+                            })}
                             tabIndex={0}
                             className="rounded-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none"
                             onClick={onReset}
@@ -114,7 +118,8 @@ export function DataTableFacetedFilter<TData, TValue>({
                             <div className="hidden items-center gap-1 lg:flex">
                                 {selectedValues.size > 2 ? (
                                     <Badge variant="secondary" className="rounded-sm px-1 font-normal">
-                                        {selectedValues.size} selected
+                                        {selectedValues.size}{' '}
+                                        {__('main.data_table.toolbar.faceted_filter.badge_selected_suffix')}
                                     </Badge>
                                 ) : (
                                     options
@@ -138,7 +143,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                 <Command>
                     <CommandInput placeholder={title} />
                     <CommandList className="max-h-full">
-                        <CommandEmpty>No results found.</CommandEmpty>
+                        <CommandEmpty>{__('main.data_table.toolbar.faceted_filter.empty_results')}</CommandEmpty>
                         <CommandGroup className="max-h-75 scroll-py-1 overflow-x-hidden overflow-y-auto">
                             {options.map((option) => {
                                 const isSelected = selectedValues.has(option.value);
@@ -163,7 +168,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                             <CommandSeparator />
                             <CommandGroup>
                                 <CommandItem onSelect={() => onReset()} className="justify-center text-center">
-                                    Clear filters
+                                    {__('main.data_table.toolbar.faceted_filter.clear_action')}
                                 </CommandItem>
                             </CommandGroup>
                         </Activity>

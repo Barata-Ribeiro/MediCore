@@ -2,12 +2,15 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { buildParams } from '@/lib/utils';
 import type { PaginationMeta } from '@/types/application/metadata';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { router } from '@inertiajs/react';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 
 export default function DataTablePagination<TData>({
     pagination,
 }: Readonly<{ pagination: Omit<PaginationMeta<TData[]>, 'data'> }>) {
+    const { __, trans } = lang();
+
     const goToUrl = (url?: string | null) => {
         if (!url) {
             return;
@@ -86,14 +89,18 @@ export default function DataTablePagination<TData>({
         <div className="flex flex-col items-center justify-between gap-y-3 px-2 sm:flex-row">
             {/* Pagination Info */}
             <div className="flex-1 text-sm text-muted-foreground">
-                Showing {pagination.from} to {pagination.to} of {pagination.total} results
+                {trans('main.data_table.pagination.info', {
+                    from: pagination.from,
+                    to: pagination.to,
+                    total: pagination.total,
+                })}
             </div>
 
             {/* Pagination Controls */}
             <div className="flex flex-col items-center gap-x-6 gap-y-3 sm:flex-row lg:gap-x-8">
                 {/* Per Page Select */}
                 <div className="flex items-center gap-x-2">
-                    <p className="text-sm font-medium">Rows per page</p>
+                    <p className="text-sm font-medium">{__('main.data_table.pagination.per_page_label')}</p>
                     <Select
                         value={`${pagination.per_page}`}
                         onValueChange={(value) =>
@@ -125,7 +132,7 @@ export default function DataTablePagination<TData>({
                         onClick={() => (pagination.first_page_url ? goToUrl(pagination.first_page_url) : goToPage(1))}
                         disabled={pagination.current_page === 1}
                     >
-                        <span className="sr-only">Go to first page</span>
+                        <span className="sr-only">{__('main.data_table.pagination.first_page_label')}</span>
                         <ChevronsLeft aria-hidden />
                     </Button>
                     <Button
@@ -139,7 +146,7 @@ export default function DataTablePagination<TData>({
                         }
                         disabled={!pagination.prev_page_url && pagination.current_page === 1}
                     >
-                        <span className="sr-only">Go to previous page</span>
+                        <span className="sr-only">{__('main.data_table.pagination.previous_page_label')}</span>
                         <ChevronLeft aria-hidden />
                     </Button>
 
@@ -156,7 +163,7 @@ export default function DataTablePagination<TData>({
                         }
                         disabled={!pagination.next_page_url && pagination.current_page === pagination.last_page}
                     >
-                        <span className="sr-only">Go to next page</span>
+                        <span className="sr-only">{__('main.data_table.pagination.next_page_label')}</span>
                         <ChevronRight aria-hidden />
                     </Button>
                     <Button
@@ -170,7 +177,7 @@ export default function DataTablePagination<TData>({
                         }
                         disabled={pagination.current_page === pagination.last_page}
                     >
-                        <span className="sr-only">Go to last page</span>
+                        <span className="sr-only">{__('main.data_table.pagination.last_page_label')}</span>
                         <ChevronsRight aria-hidden />
                     </Button>
                 </div>
