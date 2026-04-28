@@ -53,4 +53,10 @@ return [
         'title' => 'Configurações',
         'description' => 'Gerencie seu perfil e configurações de conta',
     ],
+    'chart_empty_state' => [
+        'title' => 'Sem Dados',
+        'description' => 'Nenhum dado disponível para exibir o gráfico. Por favor, adicione alguns dados para visualizar seus insights.',
+        'action_label' => 'Criar novo registro deste tipo',
+        'action' => 'Criar',
+    ],
 ];
