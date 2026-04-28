@@ -1,11 +1,12 @@
 import VitaminD3Chart from '@/components/application/charts/vitamin-d3.chart';
 import { EmptyChartData } from '@/components/common/empty-chart-data';
 import { DataTable } from '@/components/table/data-table';
-import { columns } from '@/pages/exams/vitamin-d3/vitamin-d3-columns';
+import { useVitaminD3Columns } from '@/pages/exams/vitamin-d3/vitamin-d3-columns';
 import { create, index } from '@/routes/vitamin-d3';
 import type { ChartData } from '@/types';
 import type { VitaminD3 } from '@/types/application/exams/vitamin-d3';
 import type { PaginationMeta } from '@/types/application/metadata';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Head, setLayoutProps, usePage } from '@inertiajs/react';
 import { Fragment } from 'react/jsx-runtime';
 
@@ -15,10 +16,13 @@ type Props = {
 };
 
 export default function Index({ vitaminD3s, chartData }: Readonly<Props>) {
+    const { __ } = lang();
+    const columns = useVitaminD3Columns();
+
     setLayoutProps({
-        title: 'Vitamin D3 Exams',
-        description: 'View and analyze Vitamin D3 results for patients',
-        breadcrumbs: [{ title: 'Vitamin D3 Exams', href: index() }],
+        title: __('vitamin_d3_pages.index.title'),
+        description: __('vitamin_d3_pages.index.description'),
+        breadcrumbs: [{ title: __('vitamin_d3_pages.index.breadcrumbs.current'), href: index() }],
     });
 
     const { url } = usePage();
@@ -28,8 +32,8 @@ export default function Index({ vitaminD3s, chartData }: Readonly<Props>) {
 
     return (
         <Fragment>
-            <Head title="Vitamin D3 Exams" />
-            <h1 className="sr-only">Vitamin D3 Exams</h1>
+            <Head title={__('vitamin_d3_pages.index.head_title')} />
+            <h1 className="sr-only">{__('vitamin_d3_pages.index.head_title')}</h1>
 
             <div className="space-y-6">
                 {chartData.length > 0 ? (

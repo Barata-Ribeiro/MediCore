@@ -53,4 +53,10 @@ return [
         'title' => 'Settings',
         'description' => 'Manage your profile and account settings',
     ],
+    'chart_empty_state' => [
+        'title' => 'No Data',
+        'description' => 'No data available to display the chart. Please add some data to visualize your insights.',
+        'action_label' => 'Create new record of this type',
+        'action' => 'Create',
+    ],
 ];

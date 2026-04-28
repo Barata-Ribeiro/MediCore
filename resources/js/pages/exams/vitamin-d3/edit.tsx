@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { edit, index } from '@/routes/vitamin-d3';
 import type { VitaminD3 } from '@/types/application/exams/vitamin-d3';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Head, Link, setLayoutProps } from '@inertiajs/react';
 import { ArrowLeftIcon } from 'lucide-react';
 import { Fragment } from 'react/jsx-runtime';
@@ -12,25 +13,34 @@ type Props = {
 };
 
 export default function Edit({ vitaminD3 }: Readonly<Props>) {
+    const { __ } = lang();
+
     setLayoutProps({
-        title: 'Edit Vitamin D3 record',
-        description: 'Update an existing Vitamin D3 result',
+        title: __('vitamin_d3_pages.edit.title'),
+        description: __('vitamin_d3_pages.edit.description'),
         breadcrumbs: [
-            { title: 'Vitamin D3', href: index() },
-            { title: 'Edit', href: edit(vitaminD3.id) },
+            { title: __('vitamin_d3_pages.edit.breadcrumbs.index'), href: index() },
+            { title: __('vitamin_d3_pages.edit.breadcrumbs.current'), href: edit(vitaminD3.id) },
         ],
     });
 
     return (
         <Fragment>
-            <Head title="Edit Vitamin D3 record" />
-            <h1 className="sr-only">Edit Vitamin D3 record</h1>
+            <Head title={__('vitamin_d3_pages.edit.head_title')} />
+            <h1 className="sr-only">{__('vitamin_d3_pages.edit.head_title')}</h1>
 
             <Card className="mx-auto w-full flex-col space-y-4">
                 <CardHeader>
-                    <Button variant="outline" size="sm" className="w-fit" title="Go Back" aria-label="Go Back" asChild>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-fit"
+                        title={__('vitamin_d3_pages.shared.back_label')}
+                        aria-label={__('vitamin_d3_pages.shared.back_label')}
+                        asChild
+                    >
                         <Link href={index()} as="button" prefetch="hover">
-                            <ArrowLeftIcon aria-hidden size={14} /> Back
+                            <ArrowLeftIcon aria-hidden size={14} /> {__('vitamin_d3_pages.shared.back')}
                         </Link>
                     </Button>
                 </CardHeader>
@@ -38,11 +48,7 @@ export default function Edit({ vitaminD3 }: Readonly<Props>) {
                     <VitaminD3Form vitaminD3={vitaminD3} />
                 </CardContent>
                 <CardFooter>
-                    <p className="text-sm text-muted-foreground">
-                        By editing a Vitamin D3 record, you can update your vitamin D levels over time and gain insights
-                        into your overall health. Regular monitoring of your vitamin D levels can help you make informed
-                        decisions about your lifestyle and healthcare.
-                    </p>
+                    <p className="text-sm text-muted-foreground">{__('vitamin_d3_pages.edit.footer')}</p>
                 </CardFooter>
             </Card>
         </Fragment>

@@ -2,30 +2,40 @@ import VitaminD3Form from '@/components/forms/exams/vitamin-d3.form';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { create, index } from '@/routes/vitamin-d3';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Head, Link, setLayoutProps } from '@inertiajs/react';
 import { ArrowLeftIcon } from 'lucide-react';
 import { Fragment } from 'react/jsx-runtime';
 
 export default function Create() {
+    const { __ } = lang();
+
     setLayoutProps({
-        title: 'Create Vitamin D3 record',
-        description: 'Register a new Vitamin D3 result for yourself',
+        title: __('vitamin_d3_pages.create.title'),
+        description: __('vitamin_d3_pages.create.description'),
         breadcrumbs: [
-            { title: 'Vitamin D3', href: index() },
-            { title: 'Create', href: create() },
+            { title: __('vitamin_d3_pages.create.breadcrumbs.index'), href: index() },
+            { title: __('vitamin_d3_pages.create.breadcrumbs.current'), href: create() },
         ],
     });
 
     return (
         <Fragment>
-            <Head title="Create Vitamin D3 record" />
-            <h1 className="sr-only">Create Vitamin D3 record</h1>
+            <Head title={__('vitamin_d3_pages.create.head_title')} />
+            <h1 className="sr-only">{__('vitamin_d3_pages.create.head_title')}</h1>
 
             <Card className="mx-auto w-full flex-col space-y-4">
                 <CardHeader>
-                    <Button variant="outline" size="sm" className="w-fit" title="Go Back" aria-label="Go Back" asChild>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-fit"
+                        title={__('vitamin_d3_pages.shared.back_label')}
+                        aria-label={__('vitamin_d3_pages.shared.back_label')}
+                        asChild
+                    >
                         <Link href={index()} as="button" prefetch="hover">
-                            <ArrowLeftIcon aria-hidden size={14} /> Back
+                            <ArrowLeftIcon aria-hidden size={14} /> {__('vitamin_d3_pages.shared.back')}
                         </Link>
                     </Button>
                 </CardHeader>
@@ -33,11 +43,7 @@ export default function Create() {
                     <VitaminD3Form />
                 </CardContent>
                 <CardFooter>
-                    <p className="text-sm text-muted-foreground">
-                        By creating a Vitamin D3 record, you can track your vitamin D levels over time and gain insights
-                        into your overall health. Regular monitoring of your vitamin D levels can help you make informed
-                        decisions about your lifestyle and healthcare.
-                    </p>
+                    <p className="text-sm text-muted-foreground">{__('vitamin_d3_pages.create.footer')}</p>
                 </CardFooter>
             </Card>
         </Fragment>

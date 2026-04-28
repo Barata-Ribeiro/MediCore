@@ -20,6 +20,8 @@ class VitaminD3Controller extends Controller
 
     public function index(QueryRequest $request)
     {
+        syncLangFiles('vitamin_d3_pages');
+
         [$vitaminD3s, $chartData] = $this->vitaminD3PageAndChartData($request);
 
         return Inertia::render('exams/vitamin-d3/index', [
@@ -30,6 +32,8 @@ class VitaminD3Controller extends Controller
 
     public function create()
     {
+        syncLangFiles('vitamin_d3_pages');
+
         return Inertia::render('exams/vitamin-d3/create');
     }
 
@@ -56,6 +60,8 @@ class VitaminD3Controller extends Controller
 
     public function edit(VitaminD3 $vitaminD3)
     {
+        syncLangFiles('vitamin_d3_pages');
+
         return Inertia::render('exams/vitamin-d3/edit', [
             'vitaminD3' => $vitaminD3,
         ]);
@@ -114,7 +120,7 @@ class VitaminD3Controller extends Controller
 
     /**
      * Validate request query inputs, apply sort/filter defaults, and fetch
-     * paginated glucose results plus chart data.
+     * paginated vitamin D3 results plus chart data.
      *
      * @return array{
      *     0: LengthAwarePaginator,
