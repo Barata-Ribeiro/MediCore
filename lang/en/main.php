@@ -59,4 +59,40 @@ return [
         'action_label' => 'Create new record of this type',
         'action' => 'Create',
     ],
+    'data_table' => [
+        'toolbar' => [
+            'search' => [
+                'flash_error' => 'Failed to perform search. Please try again.',
+                'placeholder' => 'Type to search...',
+                'action' => 'Search',
+            ],
+            'faceted_filter' => [
+                'badge_selected_suffix' => 'selected',
+                'empty_results' => 'No results found.',
+                'clear_titled_action' => 'Clear {title} filter',
+                'clear_action' => 'Clear filters',
+            ],
+            'eraser_label' => 'Clear filters',
+        ],
+        'create_record' => [
+            'label' => 'Create new record of this type',
+            'action' => 'Create',
+        ],
+        'export_record' => [
+            'label' => 'Choose how to export data',
+            'action' => 'Export',
+            'dropdown_label' => 'Exportables',
+            'csv_label' => 'Export as CSV',
+            'pdf_label' => 'Export as PDF',
+        ],
+        'empty_message' => 'No records found.',
+        'pagination' => [
+            'info' => 'Showing {from} to {to} of {total} results',
+            'per_page_label' => 'Rows per page',
+            'first_page_label' => 'Go to first page',
+            'previous_page_label' => 'Go to previous page',
+            'next_page_label' => 'Go to next page',
+            'last_page_label' => 'Go to last page',
+        ],
+    ],
 ];

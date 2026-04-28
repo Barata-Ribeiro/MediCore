@@ -59,4 +59,40 @@ return [
         'action_label' => 'Criar novo registro deste tipo',
         'action' => 'Criar',
     ],
+    'data_table' => [
+        'toolbar' => [
+            'search' => [
+                'flash_error' => 'Falha ao realizar a pesquisa. Por favor, tente novamente.',
+                'placeholder' => 'Digite para pesquisar...',
+                'action' => 'Pesquisar',
+            ],
+            'faceted_filter' => [
+                'badge_selected_suffix' => 'selecionado',
+                'empty_results' => 'Nenhum resultado encontrado.',
+                'clear_titled_action' => 'Limpar filtro {title}',
+                'clear_action' => 'Limpar filtros',
+            ],
+            'eraser_label' => 'Limpar filtros',
+        ],
+        'create_record' => [
+            'label' => 'Criar novo registro deste tipo',
+            'action' => 'Criar',
+        ],
+        'export_record' => [
+            'label' => 'Escolher como exportar os dados',
+            'action' => 'Exportar',
+            'dropdown_label' => 'Exportáveis',
+            'csv_label' => 'Exportar como CSV',
+            'pdf_label' => 'Exportar como PDF',
+        ],
+        'empty_message' => 'Nenhum registro encontrado.',
+        'pagination' => [
+            'info' => 'Mostrando {from} a {to} de {total} resultados',
+            'per_page_label' => 'Linhas por página',
+            'first_page_label' => 'Ir para a primeira página',
+            'previous_page_label' => 'Ir para a página anterior',
+            'next_page_label' => 'Ir para a próxima página',
+            'last_page_label' => 'Ir para a última página',
+        ],
+    ],
 ];
