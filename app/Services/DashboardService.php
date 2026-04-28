@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Interfaces\DashboardServiceInterface;
+use Illuminate\Database\Query\Builder;
 
 class DashboardService implements DashboardServiceInterface
 {
@@ -14,7 +15,7 @@ class DashboardService implements DashboardServiceInterface
         $data = auth()->user()
             ->with([
                 'profile',
-                'medicalFile' => fn ($q) => $q->selectRaw('medical_files.*,
+                'medicalFile' => fn (Builder $q) => $q->selectRaw('medical_files.*,
                 (SELECT COUNT(*) FROM complete_blood_counts WHERE medical_file_id = medical_files.id) AS complete_blood_counts_count,
                 (SELECT COUNT(*) FROM lipid_profiles WHERE medical_file_id = medical_files.id) AS lipid_profiles_count,
                 (SELECT COUNT(*) FROM glucoses WHERE medical_file_id = medical_files.id) AS glucoses_count,
