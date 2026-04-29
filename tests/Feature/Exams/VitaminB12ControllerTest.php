@@ -15,6 +15,7 @@ describe('tests for the "index" method of VitaminB12Controller', function () {
         $response->assertOk();
         $response->assertInertia(
             fn (AssertableInertia $page) => $page->component($componentName)
+                ->where('lang.vitamin_b12_pages.index.head_title', 'Vitamin B12 Exams')
                 ->has('vitaminB12s.data', 0)
                 ->has('chartData')
         );
@@ -43,6 +44,7 @@ describe('tests for the "index" method of VitaminB12Controller', function () {
         $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
             ->has('vitaminB12s.data', 2)
             ->has('chartData')
+            ->where('chartData.0.datasets.vitamin_b12_level.label', 'Vitamin B12')
             ->has('vitaminB12s.data.0', fn (AssertableInertia $item) => $item
                 ->where('vitamin_b12_level', 325)
                 ->where('report_date', $today)
@@ -72,7 +74,9 @@ describe('tests for the "create" method of VitaminB12Controller', function () {
         $response = $this->actingAs($user)->get(route('vitamin-b12.create'));
 
         $response->assertOk();
-        $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName));
+        $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
+            ->where('lang.vitamin_b12_pages.create.head_title', 'Create Vitamin B12 record')
+        );
     });
 
     it('should redirect guests to login if user is not authenticated', function () {
@@ -121,6 +125,7 @@ describe('tests for the "edit" method of VitaminB12Controller', function () {
 
         $response->assertOk();
         $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
+            ->where('lang.vitamin_b12_pages.edit.head_title', 'Edit Vitamin B12 record')
             ->has('vitaminB12', fn (AssertableInertia $item) => $item
                 ->where('vitamin_b12_level', 317)
                 ->where('report_date', now()->toDateString())
