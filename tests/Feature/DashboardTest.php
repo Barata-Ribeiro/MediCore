@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Inertia\Testing\AssertableInertia;
 
 test('guests are redirected to the login page', function () {
@@ -56,4 +57,24 @@ test('dashboard route uses the dashboard service data', function () {
             )
         )
     );
+});
+
+test('dashboard route does not query the users table again for the authenticated user', function () {
+    $user = User::factory()->create();
+    $this->actingAs($user);
+
+    DB::flushQueryLog();
+    DB::enableQueryLog();
+
+    $response = $this->get(route('dashboard'));
+
+    $userQueries = collect(DB::getQueryLog())
+        ->pluck('query')
+        ->filter(fn (string $query) => preg_match('/\bfrom\s+["`\[]?users["`\]]?\b/i', $query) === 1);
+
+    DB::disableQueryLog();
+
+    $response->assertSuccessful();
+
+    expect($userQueries)->toHaveCount(0);
 });
