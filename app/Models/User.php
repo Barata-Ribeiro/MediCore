@@ -50,6 +50,9 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read Collection<int, Role> $roles
  * @property-read int|null $roles_count
  * @property-read bool|null $roles_exists
+ * @property-read Collection<int, Permission> $teams
+ * @property-read int|null $teams_count
+ * @property-read bool|null $teams_exists
  *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static Builder<static>|User isSuperAdmin()
@@ -58,6 +61,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder<static>|User permission($permissions, bool $without = false)
  * @method static Builder<static>|User query()
  * @method static Builder<static>|User role($roles, ?string $guard = null, bool $without = false)
+ * @method static Builder<static>|User team($teams, bool $without = false)
  * @method static Builder<static>|User whereAvatar($value)
  * @method static Builder<static>|User whereCreatedAt($value)
  * @method static Builder<static>|User whereEmail($value)
@@ -78,6 +82,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder<static>|User whereUpdatedAt($value)
  * @method static Builder<static>|User withoutPermission($permissions)
  * @method static Builder<static>|User withoutRole($roles, ?string $guard = null)
+ * @method static Builder<static>|User withoutTeam($teams)
  *
  * @mixin \Eloquent
  */
