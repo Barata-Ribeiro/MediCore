@@ -8,6 +8,7 @@ import {
     ChartTooltipContent,
 } from '@/components/ui/chart';
 import type { ChartData } from '@/types';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { format } from 'date-fns';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 
@@ -17,6 +18,8 @@ type Props = {
 };
 
 export default function CbcCountChart({ chartData, total }: Readonly<Props>) {
+    const { __ } = lang();
+
     const rechartsData = chartData.map((row) => {
         const base: Record<string, unknown> = { date: row.x_axis_label };
 
@@ -34,8 +37,10 @@ export default function CbcCountChart({ chartData, total }: Readonly<Props>) {
 
     const firstDatasets = chartData?.[0]?.datasets ?? {};
     const chartConfig = Object.keys(firstDatasets).reduce((acc, key, idx) => {
-        const label = (firstDatasets as Record<string, { label?: string }>)[key]?.label ?? key;
-        acc[key] = { label, color: `var(--chart-${(idx % 6) + 1})` };
+        acc[key] = {
+            label: __(`complete_blood_count_pages.index.table.columns.${key}`),
+            color: `var(--chart-${(idx % 6) + 1})`,
+        };
 
         return acc;
     }, {} as ChartConfig);
@@ -43,11 +48,8 @@ export default function CbcCountChart({ chartData, total }: Readonly<Props>) {
     return (
         <Card className="mx-auto max-w-3xl">
             <CardHeader>
-                <CardTitle>Complete Blood Count</CardTitle>
-                <CardDescription>
-                    Check your last 5 complete blood count results and see how your blood cell levels have changed over
-                    time.
-                </CardDescription>
+                <CardTitle>{__('complete_blood_count_pages.index.chart.title')}</CardTitle>
+                <CardDescription>{__('complete_blood_count_pages.index.chart.description')}</CardDescription>
             </CardHeader>
             <CardContent>
                 <ChartContainer config={chartConfig}>
@@ -91,10 +93,9 @@ export default function CbcCountChart({ chartData, total }: Readonly<Props>) {
             </CardContent>
             <CardFooter className="border-t">
                 <p className="text-sm text-muted-foreground">
-                    Total complete blood count results: <strong>{total}</strong>
+                    {__('complete_blood_count_pages.index.chart.footer_total_label')} <strong>{total}</strong>
                     <br />
-                    Note: The chart displays only some of the available metrics. For a complete view of all your blood
-                    count metrics, please refer to the table below.
+                    {__('complete_blood_count_pages.index.chart.footer_note')}
                 </p>
             </CardFooter>
         </Card>
