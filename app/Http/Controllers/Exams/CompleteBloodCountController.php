@@ -8,7 +8,7 @@ use App\Http\Requests\QueryRequest;
 use App\Interfaces\Exams\CompleteBloodCountServiceInterface;
 use App\Models\Exams\CompleteBloodCount;
 use Exception;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
 use Log;
 
@@ -20,6 +20,8 @@ class CompleteBloodCountController extends Controller
 
     public function index(QueryRequest $request)
     {
+        syncLangFiles('complete_blood_count_pages');
+
         [$completeBloodCounts, $chartData] = $this->completeBloodCountPageAndChartData($request);
 
         return Inertia::render('exams/complete-blood-count/index', [
@@ -30,6 +32,8 @@ class CompleteBloodCountController extends Controller
 
     public function create()
     {
+        syncLangFiles('complete_blood_count_pages');
+
         return Inertia::render('exams/complete-blood-count/create');
     }
 
@@ -55,6 +59,8 @@ class CompleteBloodCountController extends Controller
 
     public function edit(CompleteBloodCount $completeBloodCount)
     {
+        syncLangFiles('complete_blood_count_pages');
+
         return Inertia::render('exams/complete-blood-count/edit', [
             'completeBloodCount' => $completeBloodCount,
         ]);
