@@ -2,7 +2,7 @@ import type { ChartConfig } from '@/components/ui/chart';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { normalizeString } from '@/lib/utils';
 import { lang } from '@erag/lang-sync-inertia/react';
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { Label, Pie, PieChart } from 'recharts';
 
 type Props = {
@@ -12,38 +12,34 @@ type Props = {
 const ExamsSummaryChart = memo<Readonly<Props>>(({ exams }) => {
     const { __ } = lang();
 
-    const examEntries = useMemo(() => Object.entries(exams).filter(([key]) => key !== 'total'), [exams]);
+    const examEntries = Object.entries(exams).filter(([key]) => key !== 'total');
 
-    const rechartsData = useMemo(() => {
-        return examEntries.map(([key, value]) => {
-            const examKey = key.replace(/_count$/, '');
+    const rechartsData = examEntries.map(([key, value]) => {
+        const examKey = key.replace(/_count$/, '');
 
-            return {
-                exam: examKey,
-                count: value,
-                fill: `var(--color-${examKey})`,
-            };
-        });
-    }, [examEntries]);
+        return {
+            exam: examKey,
+            count: value,
+            fill: `var(--color-${examKey})`,
+        };
+    });
 
     const totalExams = exams['total'] ?? 0;
     const hasExamData = rechartsData.some(({ count }) => count > 0);
 
-    const chartConfig = useMemo(() => {
-        return examEntries.reduce(
-            (acc, [key], index) => {
-                const examKey = key.replace(/_count$/, '');
+    const chartConfig = examEntries.reduce(
+        (acc, [key], index) => {
+            const examKey = key.replace(/_count$/, '');
 
-                acc[examKey] = {
-                    label: normalizeString(examKey),
-                    color: `var(--chart-${(index % 6) + 1})`,
-                };
+            acc[examKey] = {
+                label: normalizeString(examKey),
+                color: `var(--chart-${(index % 6) + 1})`,
+            };
 
-                return acc;
-            },
-            { count: { label: 'Exams' } } as ChartConfig,
-        );
-    }, [examEntries]) satisfies ChartConfig;
+            return acc;
+        },
+        { count: { label: 'Exams' } } as ChartConfig,
+    );
 
     const pieData = hasExamData ? rechartsData : [{ exam: 'empty', count: 1, fill: 'var(--color-border)' }];
 

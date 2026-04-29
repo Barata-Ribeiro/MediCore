@@ -8,13 +8,13 @@ import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from '@/
 import { Spinner } from '@/components/ui/spinner';
 import type { LipidProfile } from '@/types/application/exams/lipid-profile';
 import { Form } from '@inertiajs/react';
-import { Activity, Fragment, memo } from 'react';
+import { Activity, Fragment } from 'react';
 
 type Props = {
     lipidProfile?: LipidProfile;
 };
 
-const LipidProfileForm = memo(({ lipidProfile }: Readonly<Props>) => {
+export default function LipidProfileForm({ lipidProfile }: Readonly<Props>) {
     const isEditMode = lipidProfile && lipidProfile !== null;
 
     const formRoute = isEditMode
@@ -172,6 +172,4 @@ const LipidProfileForm = memo(({ lipidProfile }: Readonly<Props>) => {
             )}
         </Form>
     );
-});
-
-export default LipidProfileForm;
+}

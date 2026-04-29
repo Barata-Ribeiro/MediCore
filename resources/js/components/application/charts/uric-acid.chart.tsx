@@ -3,7 +3,6 @@ import type { ChartConfig } from '@/components/ui/chart';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import type { ChartData } from '@/types/ui';
 import { format } from 'date-fns';
-import { memo, useMemo } from 'react';
 import { CartesianGrid, LabelList, Line, LineChart, XAxis } from 'recharts';
 
 type Props = {
@@ -11,35 +10,29 @@ type Props = {
     total: number;
 };
 
-const UricAcidChart = memo(({ chartData, total }: Readonly<Props>) => {
-    const rechartsData = useMemo(() => {
-        return chartData.map((row) => {
-            const base: Record<string, unknown> = { date: row.x_axis_label };
+export default function UricAcidChart({ chartData, total }: Readonly<Props>) {
+    const rechartsData = chartData.map((row) => {
+        const base: Record<string, unknown> = { date: row.x_axis_label };
 
-            if (row.datasets && typeof row.datasets === 'object') {
-                const entries = Object.entries(row.datasets);
+        if (row.datasets && typeof row.datasets === 'object') {
+            const entries = Object.entries(row.datasets);
 
-                for (const element of entries) {
-                    const [metric, value] = element;
-                    base[metric] = (value as { data?: number }).data ?? null;
-                }
+            for (const element of entries) {
+                const [metric, value] = element;
+                base[metric] = (value as { data?: number }).data ?? null;
             }
+        }
 
-            return base;
-        });
-    }, [chartData]);
+        return base;
+    });
 
-    const chartConfig = useMemo(() => {
-        const firstDatasets = chartData?.[0]?.datasets ?? {};
-        const keys = Object.keys(firstDatasets);
+    const firstDatasets = chartData?.[0]?.datasets ?? {};
+    const chartConfig = Object.keys(firstDatasets).reduce((acc, key, idx) => {
+        const label = (firstDatasets as Record<string, { label?: string }>)[key]?.label ?? key;
+        acc[key] = { label, color: `var(--chart-${(idx % 6) + 1})` };
 
-        return keys.reduce((acc, key, idx) => {
-            const label = (firstDatasets as Record<string, { label?: string }>)[key]?.label ?? key;
-            acc[key] = { label, color: `var(--chart-${(idx % 6) + 1})` };
-
-            return acc;
-        }, {} as ChartConfig);
-    }, [chartData]) satisfies ChartConfig;
+        return acc;
+    }, {} as ChartConfig);
 
     return (
         <Card className="mx-auto max-w-3xl">
@@ -104,6 +97,4 @@ const UricAcidChart = memo(({ chartData, total }: Readonly<Props>) => {
             </CardFooter>
         </Card>
     );
-});
-
-export default UricAcidChart;
+}

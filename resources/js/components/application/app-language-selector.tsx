@@ -14,9 +14,8 @@ import { lang } from '@erag/lang-sync-inertia/react';
 import { router } from '@inertiajs/core';
 import { usePage } from '@inertiajs/react';
 import { LanguagesIcon } from 'lucide-react';
-import { memo } from 'react';
 
-const AppLanguageSelector = memo(() => {
+export default function AppLanguageSelector() {
     const { __ } = lang();
 
     const { auth } = usePage().props;
@@ -67,6 +66,4 @@ const AppLanguageSelector = memo(() => {
             </DropdownMenuContent>
         </DropdownMenu>
     );
-});
-
-export default AppLanguageSelector;
+}
