@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { edit, index } from '@/routes/lipid-profile';
 import type { LipidProfile } from '@/types/application/exams/lipid-profile';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Head, Link, setLayoutProps } from '@inertiajs/react';
 import { ArrowLeftIcon } from 'lucide-react';
 import { Fragment } from 'react/jsx-runtime';
@@ -12,16 +13,18 @@ type Props = {
 };
 
 export default function Edit({ lipidProfile }: Readonly<Props>) {
+    const { __ } = lang();
+
     setLayoutProps({
-        title: 'Edit Lipid Profile',
-        description: 'Update your lipid profile result to keep your health records accurate and up-to-date',
+        title: __('lipid_profile_pages.edit.title'),
+        description: __('lipid_profile_pages.edit.description'),
         breadcrumbs: [
             {
-                title: 'Lipid Profiles',
+                title: __('lipid_profile_pages.edit.breadcrumbs.index'),
                 href: index(),
             },
             {
-                title: 'Edit',
+                title: __('lipid_profile_pages.edit.breadcrumbs.current'),
                 href: edit(lipidProfile.id),
             },
         ],
@@ -29,14 +32,21 @@ export default function Edit({ lipidProfile }: Readonly<Props>) {
 
     return (
         <Fragment>
-            <Head title="Edit Lipid Profile" />
-            <h1 className="sr-only">Edit Lipid Profile</h1>
+            <Head title={__('lipid_profile_pages.edit.head_title')} />
+            <h1 className="sr-only">{__('lipid_profile_pages.edit.head_title')}</h1>
 
             <Card className="mx-auto w-full flex-col space-y-4">
                 <CardHeader>
-                    <Button variant="outline" size="sm" className="w-fit" title="Go Back" aria-label="Go Back" asChild>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-fit"
+                        title={__('lipid_profile_pages.shared.back_label')}
+                        aria-label={__('lipid_profile_pages.shared.back_label')}
+                        asChild
+                    >
                         <Link href={index()} as="button" prefetch="hover">
-                            <ArrowLeftIcon aria-hidden size={14} /> Back
+                            <ArrowLeftIcon aria-hidden size={14} /> {__('lipid_profile_pages.shared.back')}
                         </Link>
                     </Button>
                 </CardHeader>
@@ -44,11 +54,7 @@ export default function Edit({ lipidProfile }: Readonly<Props>) {
                     <LipidProfileForm lipidProfile={lipidProfile} />
                 </CardContent>
                 <CardFooter>
-                    <p className="text-sm text-muted-foreground">
-                        By editing a lipid profile, you can track your cholesterol levels over time and gain insights
-                        into your cardiovascular health. Regular monitoring of your lipid profile can help you make
-                        informed decisions about your lifestyle and healthcare.
-                    </p>
+                    <p className="text-sm text-muted-foreground">{__('lipid_profile_pages.edit.footer')}</p>
                 </CardFooter>
             </Card>
         </Fragment>
