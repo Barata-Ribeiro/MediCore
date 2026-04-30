@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Exams;
 
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CompleteBloodCountRequest extends FormRequest
@@ -10,7 +9,7 @@ class CompleteBloodCountRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, ValidationRule|array<mixed>|string>
+     * @return array<string, array<mixed>|string>
      */
     public function rules(): array
     {
@@ -34,7 +33,6 @@ class CompleteBloodCountRequest extends FormRequest
             'promyelocyte_count' => ['required', 'numeric', 'min:0'],
             'atypical_cell_count' => ['required', 'numeric', 'min:0'],
             'platelet_count' => ['required', 'numeric', 'min:0'],
-            'medical_file_id' => ['required', 'numeric', 'min:0'],
         ];
     }
 }

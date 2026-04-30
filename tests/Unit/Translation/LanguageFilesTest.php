@@ -15,12 +15,16 @@ test('application translation keys resolve from standard language files', functi
         ->toBe('Vitamin B12 Exams')
         ->and($translator->get('vitamin_d3_pages.index.head_title', [], 'en'))
         ->toBe('Vitamin D3 Exams')
+        ->and($translator->get('complete_blood_count_pages.index.head_title', [], 'en'))
+        ->toBe('Complete Blood Count')
         ->and($translator->get('flash.settings.profile.language.updated_successfully', [], 'pt_BR'))
         ->toBe('Idioma atualizado com sucesso.')
         ->and($translator->get('vitamin_b12_pages.index.head_title', [], 'pt_BR'))
         ->toBe('Exames de Vitamina B12')
         ->and($translator->get('vitamin_d3_pages.index.head_title', [], 'pt_BR'))
-        ->toBe('Exames de Vitamina D3');
+        ->toBe('Exames de Vitamina D3')
+        ->and($translator->get('complete_blood_count_pages.index.head_title', [], 'pt_BR'))
+        ->toBe('Hemograma Completo');
 });
 
 test('json translation strings still resolve alongside php language files', function () {

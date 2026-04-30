@@ -15,6 +15,7 @@ describe('tests for the "index" method of CompleteBloodCountController', functio
         $response->assertOk();
         $response->assertInertia(
             fn (AssertableInertia $page) => $page->component($componentName)
+                ->where('lang.complete_blood_count_pages.index.head_title', 'Complete Blood Count')
                 ->has('completeBloodCounts.data', 0)
         );
     });
@@ -110,7 +111,8 @@ describe('tests for the "create" method of CompleteBloodCountController', functi
         $response = $this->actingAs($user)->get(route('complete-blood-count.create'));
 
         $response->assertOk();
-        $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName));
+        $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
+            ->where('lang.complete_blood_count_pages.create.head_title', 'Create Complete Blood Count record'));
     });
 
     it('should redirect guests to login if user is not authenticated', function () {
@@ -145,13 +147,12 @@ describe('tests for the "store" method of CompleteBloodCountController', functio
             'atypical_cell_count' => 0,
             'platelet_count' => 200,
             'report_date' => now()->toDateString(),
-            'medical_file_id' => $user->medicalFile->id,
         ];
 
         $response = $this->actingAs($user)->post(route('complete-blood-count.store'), $data);
 
         $response->assertRedirect(route('complete-blood-count.index'));
-        $this->assertDatabaseHas('complete_blood_counts', $data);
+        $this->assertDatabaseHas('complete_blood_counts', [...$data, 'medical_file_id' => $user->medicalFile->id]);
     });
 
     it('should redirect guests to login if user is not authenticated', function () {
@@ -194,6 +195,7 @@ describe('tests for the "edit" method of CompleteBloodCountController', function
 
         $response->assertOk();
         $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
+            ->where('lang.complete_blood_count_pages.edit.head_title', 'Edit Complete Blood Count record')
             ->has('completeBloodCount', fn (AssertableInertia $item) => $item
                 ->where('hematocrit', 40)
                 ->where('hemoglobin', 14)
@@ -259,7 +261,6 @@ describe('tests for the "update" method of CompleteBloodCountController', functi
             'atypical_cell_count' => 0,
             'platelet_count' => 250,
             'report_date' => now()->subDays(30)->toDateString(),
-            'medical_file_id' => $medicalFile->id,
         ];
 
         $response = $this->actingAs($user)->put(route('complete-blood-count.update', $completeBloodCount), $updatedData);
