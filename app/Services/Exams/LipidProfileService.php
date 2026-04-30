@@ -47,11 +47,11 @@ class LipidProfileService implements LipidProfileServiceInterface
         $chartData = $chartRows->map(fn ($row) => [
             'x_axis_label' => $row->label,
             'datasets' => [
-                'total_cholesterol' => ['label' => 'Total Cholesterol', 'data' => $row->total_cholesterol],
-                'hdl_cholesterol' => ['label' => 'HDL Cholesterol', 'data' => $row->hdl_cholesterol],
-                'ldl_cholesterol' => ['label' => 'LDL Cholesterol', 'data' => $row->ldl_cholesterol],
-                'vldl_cholesterol' => ['label' => 'VLDL Cholesterol', 'data' => $row->vldl_cholesterol],
-                'triglycerides' => ['label' => 'Triglycerides', 'data' => $row->triglycerides],
+                'total_cholesterol' => ['label' => __('lipid_profile_pages.index.table.columns.total_cholesterol'), 'data' => $row->total_cholesterol],
+                'hdl_cholesterol' => ['label' => __('lipid_profile_pages.index.table.columns.hdl_cholesterol'), 'data' => $row->hdl_cholesterol],
+                'ldl_cholesterol' => ['label' => __('lipid_profile_pages.index.table.columns.ldl_cholesterol'), 'data' => $row->ldl_cholesterol],
+                'vldl_cholesterol' => ['label' => __('lipid_profile_pages.index.table.columns.vldl_cholesterol'), 'data' => $row->vldl_cholesterol],
+                'triglycerides' => ['label' => __('lipid_profile_pages.index.table.columns.triglycerides'), 'data' => $row->triglycerides],
             ],
         ])->toArray();
 
