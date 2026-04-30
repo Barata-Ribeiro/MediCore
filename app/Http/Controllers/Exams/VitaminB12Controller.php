@@ -20,6 +20,8 @@ class VitaminB12Controller extends Controller
 
     public function index(QueryRequest $request)
     {
+        syncLangFiles('vitamin_b12_pages');
+
         [$vitaminB12s, $chartData] = $this->vitaminB12PageAndChartData($request);
 
         return Inertia::render('exams/vitamin-b12/index', [
@@ -30,6 +32,8 @@ class VitaminB12Controller extends Controller
 
     public function create()
     {
+        syncLangFiles('vitamin_b12_pages');
+
         return Inertia::render('exams/vitamin-b12/create');
     }
 
@@ -56,6 +60,8 @@ class VitaminB12Controller extends Controller
 
     public function edit(VitaminB12 $vitaminB12)
     {
+        syncLangFiles('vitamin_b12_pages');
+
         return Inertia::render('exams/vitamin-b12/edit', [
             'vitaminB12' => $vitaminB12,
         ]);

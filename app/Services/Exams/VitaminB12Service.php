@@ -40,7 +40,10 @@ class VitaminB12Service implements VitaminB12ServiceInterface
         $chartData = $chartRows->map(fn ($row) => [
             'x_axis_label' => $row->label,
             'datasets' => [
-                'vitamin_b12_level' => ['label' => 'Vitamin B12 Level', 'data' => $row->vitamin_b12_level],
+                'vitamin_b12_level' => [
+                    'label' => __('main.menu.sidebar_items.exams_items.vitamin_b12'),
+                    'data' => $row->vitamin_b12_level,
+                ],
             ],
         ])->toArray();
 
