@@ -20,6 +20,8 @@ class GlucoseController extends Controller
 
     public function index(QueryRequest $request)
     {
+        syncLangFiles('glucose_pages');
+
         [$glucoses, $chartData] = $this->glucosePageAndChartData($request);
 
         return Inertia::render('exams/glucose/index', [
@@ -30,6 +32,8 @@ class GlucoseController extends Controller
 
     public function create()
     {
+        syncLangFiles('glucose_pages');
+
         return Inertia::render('exams/glucose/create');
     }
 
@@ -55,6 +59,8 @@ class GlucoseController extends Controller
 
     public function edit(Glucose $glucose)
     {
+        syncLangFiles('glucose_pages');
+
         return Inertia::render('exams/glucose/edit', [
             'glucose' => $glucose,
         ]);
