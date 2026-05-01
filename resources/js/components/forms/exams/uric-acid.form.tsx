@@ -7,6 +7,7 @@ import { Field, FieldLabel } from '@/components/ui/field';
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from '@/components/ui/input-group';
 import { Spinner } from '@/components/ui/spinner';
 import type { UricAcid } from '@/types/application/exams/uric-acid';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Form } from '@inertiajs/react';
 import { Activity, Fragment, memo } from 'react';
 
@@ -15,6 +16,7 @@ type Props = {
 };
 
 const UricAcidForm = memo<Readonly<Props>>(({ uricAcid }) => {
+    const { __ } = lang();
     const isEditMode = uricAcid && uricAcid !== null;
 
     const formRoute = isEditMode ? UricAcidController.update.form(uricAcid.id) : UricAcidController.store.form();
@@ -30,14 +32,14 @@ const UricAcidForm = memo<Readonly<Props>>(({ uricAcid }) => {
                 <Fragment>
                     <Field data-invalid={!!errors['uric_acid_level']}>
                         <FieldLabel htmlFor="uric_acid_level">
-                            Uric Acid Level <RequiredIndicator />
+                            {__('uric_acid_pages.form.uric_acid_level')} <RequiredIndicator />
                         </FieldLabel>
                         <InputGroup>
                             <InputGroupInput
                                 type="number"
                                 id="uric_acid_level"
                                 name="uric_acid_level"
-                                placeholder="e.g. 5.5"
+                                placeholder={__('uric_acid_pages.form.uric_acid_level_placeholder')}
                                 defaultValue={uricAcid?.uric_acid_level}
                                 min={0}
                                 step={0.01}
@@ -46,7 +48,7 @@ const UricAcidForm = memo<Readonly<Props>>(({ uricAcid }) => {
                                 aria-required
                             />
                             <InputGroupAddon align="inline-end">
-                                <InputGroupText>mg/dL</InputGroupText>
+                                <InputGroupText>{__('uric_acid_pages.shared.unit')}</InputGroupText>
                             </InputGroupAddon>
                         </InputGroup>
                         <InputError message={errors['uric_acid_level']} />
@@ -54,7 +56,7 @@ const UricAcidForm = memo<Readonly<Props>>(({ uricAcid }) => {
 
                     <Field data-invalid={!!errors['report_date']}>
                         <FieldLabel htmlFor="report_date">
-                            Report Date <RequiredIndicator />
+                            {__('uric_acid_pages.form.report_date')} <RequiredIndicator />
                         </FieldLabel>
                         <DatePicker id="report_date" name="report_date" defaultValue={uricAcid?.report_date} />
                         <InputError message={errors['report_date']} />
@@ -64,7 +66,7 @@ const UricAcidForm = memo<Readonly<Props>>(({ uricAcid }) => {
                         <Activity mode={processing ? 'visible' : 'hidden'}>
                             <Spinner aria-hidden />
                         </Activity>
-                        Save
+                        {__('uric_acid_pages.form.submit')}
                     </Button>
                 </Fragment>
             )}
