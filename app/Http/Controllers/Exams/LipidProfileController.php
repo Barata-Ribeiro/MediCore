@@ -20,6 +20,8 @@ class LipidProfileController extends Controller
 
     public function index(QueryRequest $request)
     {
+        syncLangFiles('lipid_profile_pages');
+
         [$lipidProfiles, $chartData] = $this->lipidProfilePageAndChartData($request);
 
         return Inertia::render('exams/lipid-profile/index', [
@@ -30,6 +32,8 @@ class LipidProfileController extends Controller
 
     public function create()
     {
+        syncLangFiles('lipid_profile_pages');
+
         return Inertia::render('exams/lipid-profile/create');
     }
 
@@ -55,6 +59,8 @@ class LipidProfileController extends Controller
 
     public function edit(LipidProfile $lipidProfile)
     {
+        syncLangFiles('lipid_profile_pages');
+
         return Inertia::render('exams/lipid-profile/edit', [
             'lipidProfile' => $lipidProfile,
         ]);

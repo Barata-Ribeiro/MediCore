@@ -70,6 +70,35 @@ describe('tests for the "index" method of LipidProfileController', function () {
         );
     });
 
+    it('should return localized chart labels for portuguese users', function () use ($componentName) {
+        $user = User::factory()->create(['locale' => 'pt_BR']);
+        $medicalFile = $user->medicalFile()->create();
+
+        $medicalFile->lipidProfiles()->create([
+            'total_cholesterol' => 180,
+            'hdl_cholesterol' => 55,
+            'ldl_cholesterol' => 95,
+            'vldl_cholesterol' => 30,
+            'triglycerides' => 150,
+            'report_date' => now()->toDateString(),
+        ]);
+
+        $response = $this->actingAs($user)
+            ->withHeader('Accept-Language', '')
+            ->get(route('lipid-profile.index'));
+
+        $response->assertOk();
+        $response->assertSee('lang="pt-BR"', false);
+        $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
+            ->where('auth.locale', 'pt_BR')
+            ->where('chartData.0.datasets.total_cholesterol.label', 'Colesterol Total')
+            ->where('chartData.0.datasets.hdl_cholesterol.label', 'Colesterol HDL')
+            ->where('chartData.0.datasets.ldl_cholesterol.label', 'Colesterol LDL')
+            ->where('chartData.0.datasets.vldl_cholesterol.label', 'Colesterol VLDL')
+            ->where('chartData.0.datasets.triglycerides.label', 'Triglicerídeos')
+        );
+    });
+
     it('should redirect guests to login if user is not authenticated', function () {
         $response = $this->actingAsGuest()->get(route('lipid-profile.index'));
 

@@ -7,6 +7,7 @@ import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from '@/components/ui/input-group';
 import { Spinner } from '@/components/ui/spinner';
 import type { LipidProfile } from '@/types/application/exams/lipid-profile';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Form } from '@inertiajs/react';
 import { Activity, Fragment } from 'react';
 
@@ -15,6 +16,7 @@ type Props = {
 };
 
 export default function LipidProfileForm({ lipidProfile }: Readonly<Props>) {
+    const { __ } = lang();
     const isEditMode = lipidProfile && lipidProfile !== null;
 
     const formRoute = isEditMode
@@ -32,14 +34,14 @@ export default function LipidProfileForm({ lipidProfile }: Readonly<Props>) {
                 <Fragment>
                     <Field data-invalid={!!errors['total_cholesterol']}>
                         <FieldLabel htmlFor="total_cholesterol">
-                            Total Cholesterol <RequiredIndicator />
+                            {__('lipid_profile_pages.form.total_cholesterol')} <RequiredIndicator />
                         </FieldLabel>
                         <InputGroup>
                             <InputGroupInput
                                 type="number"
                                 id="total_cholesterol"
                                 name="total_cholesterol"
-                                placeholder="e.g. 175"
+                                placeholder={__('lipid_profile_pages.form.total_cholesterol_placeholder')}
                                 defaultValue={lipidProfile?.total_cholesterol}
                                 min={0}
                                 step={0.01}
@@ -48,7 +50,7 @@ export default function LipidProfileForm({ lipidProfile }: Readonly<Props>) {
                                 aria-required
                             />
                             <InputGroupAddon align="inline-end">
-                                <InputGroupText>mg/dL</InputGroupText>
+                                <InputGroupText>{__('lipid_profile_pages.shared.unit')}</InputGroupText>
                             </InputGroupAddon>
                         </InputGroup>
                         <InputError message={errors['total_cholesterol']} />
@@ -57,14 +59,14 @@ export default function LipidProfileForm({ lipidProfile }: Readonly<Props>) {
                     <FieldGroup className="grid gap-4 sm:grid-cols-2">
                         <Field data-invalid={!!errors['hdl_cholesterol']}>
                             <FieldLabel htmlFor="hdl_cholesterol">
-                                HDL Cholesterol <RequiredIndicator />
+                                {__('lipid_profile_pages.form.hdl_cholesterol')} <RequiredIndicator />
                             </FieldLabel>
                             <InputGroup>
                                 <InputGroupInput
                                     type="number"
                                     id="hdl_cholesterol"
                                     name="hdl_cholesterol"
-                                    placeholder="e.g. 50"
+                                    placeholder={__('lipid_profile_pages.form.hdl_cholesterol_placeholder')}
                                     defaultValue={lipidProfile?.hdl_cholesterol}
                                     min={0}
                                     step={0.01}
@@ -73,7 +75,7 @@ export default function LipidProfileForm({ lipidProfile }: Readonly<Props>) {
                                     aria-required
                                 />
                                 <InputGroupAddon align="inline-end">
-                                    <InputGroupText>mg/dL</InputGroupText>
+                                    <InputGroupText>{__('lipid_profile_pages.shared.unit')}</InputGroupText>
                                 </InputGroupAddon>
                             </InputGroup>
                             <InputError message={errors['hdl_cholesterol']} />
@@ -81,14 +83,14 @@ export default function LipidProfileForm({ lipidProfile }: Readonly<Props>) {
 
                         <Field data-invalid={!!errors['ldl_cholesterol']}>
                             <FieldLabel htmlFor="ldl_cholesterol">
-                                LDL Cholesterol <RequiredIndicator />
+                                {__('lipid_profile_pages.form.ldl_cholesterol')} <RequiredIndicator />
                             </FieldLabel>
                             <InputGroup>
                                 <InputGroupInput
                                     type="number"
                                     id="ldl_cholesterol"
                                     name="ldl_cholesterol"
-                                    placeholder="e.g. 100"
+                                    placeholder={__('lipid_profile_pages.form.ldl_cholesterol_placeholder')}
                                     defaultValue={lipidProfile?.ldl_cholesterol}
                                     min={0}
                                     step={0.01}
@@ -97,7 +99,7 @@ export default function LipidProfileForm({ lipidProfile }: Readonly<Props>) {
                                     aria-required
                                 />
                                 <InputGroupAddon align="inline-end">
-                                    <InputGroupText>mg/dL</InputGroupText>
+                                    <InputGroupText>{__('lipid_profile_pages.shared.unit')}</InputGroupText>
                                 </InputGroupAddon>
                             </InputGroup>
                             <InputError message={errors['ldl_cholesterol']} />
@@ -107,14 +109,14 @@ export default function LipidProfileForm({ lipidProfile }: Readonly<Props>) {
                     <FieldGroup className="grid gap-4 sm:grid-cols-2">
                         <Field data-invalid={!!errors['vldl_cholesterol']}>
                             <FieldLabel htmlFor="vldl_cholesterol">
-                                VLDL Cholesterol <RequiredIndicator />
+                                {__('lipid_profile_pages.form.vldl_cholesterol')} <RequiredIndicator />
                             </FieldLabel>
                             <InputGroup>
                                 <InputGroupInput
                                     type="number"
                                     id="vldl_cholesterol"
                                     name="vldl_cholesterol"
-                                    placeholder="e.g. 25"
+                                    placeholder={__('lipid_profile_pages.form.vldl_cholesterol_placeholder')}
                                     defaultValue={lipidProfile?.vldl_cholesterol}
                                     min={0}
                                     step={0.01}
@@ -123,7 +125,7 @@ export default function LipidProfileForm({ lipidProfile }: Readonly<Props>) {
                                     aria-required
                                 />
                                 <InputGroupAddon align="inline-end">
-                                    <InputGroupText>mg/dL</InputGroupText>
+                                    <InputGroupText>{__('lipid_profile_pages.shared.unit')}</InputGroupText>
                                 </InputGroupAddon>
                             </InputGroup>
                             <InputError message={errors['vldl_cholesterol']} />
@@ -131,14 +133,14 @@ export default function LipidProfileForm({ lipidProfile }: Readonly<Props>) {
 
                         <Field data-invalid={!!errors['triglycerides']}>
                             <FieldLabel htmlFor="triglycerides">
-                                Triglycerides <RequiredIndicator />
+                                {__('lipid_profile_pages.form.triglycerides')} <RequiredIndicator />
                             </FieldLabel>
                             <InputGroup>
                                 <InputGroupInput
                                     type="number"
                                     id="triglycerides"
                                     name="triglycerides"
-                                    placeholder="e.g. 150"
+                                    placeholder={__('lipid_profile_pages.form.triglycerides_placeholder')}
                                     defaultValue={lipidProfile?.triglycerides}
                                     min={0}
                                     step={0.01}
@@ -147,7 +149,7 @@ export default function LipidProfileForm({ lipidProfile }: Readonly<Props>) {
                                     aria-required
                                 />
                                 <InputGroupAddon align="inline-end">
-                                    <InputGroupText>mg/dL</InputGroupText>
+                                    <InputGroupText>{__('lipid_profile_pages.shared.unit')}</InputGroupText>
                                 </InputGroupAddon>
                             </InputGroup>
                             <InputError message={errors['triglycerides']} />
@@ -156,7 +158,7 @@ export default function LipidProfileForm({ lipidProfile }: Readonly<Props>) {
 
                     <Field data-invalid={!!errors['report_date']}>
                         <FieldLabel htmlFor="report_date">
-                            Report Date <RequiredIndicator />
+                            {__('lipid_profile_pages.form.report_date')} <RequiredIndicator />
                         </FieldLabel>
                         <DatePicker id="report_date" name="report_date" defaultValue={lipidProfile?.report_date} />
                         <InputError message={errors['report_date']} />
@@ -166,7 +168,7 @@ export default function LipidProfileForm({ lipidProfile }: Readonly<Props>) {
                         <Activity mode={processing ? 'visible' : 'hidden'}>
                             <Spinner aria-hidden />
                         </Activity>
-                        Save
+                        {__('lipid_profile_pages.form.submit')}
                     </Button>
                 </Fragment>
             )}
