@@ -44,9 +44,9 @@ class GlucoseService implements GlucoseServiceInterface
         $chartData = $chartRows->map(fn ($row) => [
             'x_axis_label' => $row->label,
             'datasets' => [
-                'glucose_level' => ['label' => 'Glucose Level', 'data' => $row->glucose_level],
-                'glycated_hemoglobin' => ['label' => 'Glycated Hemoglobin', 'data' => $row->glycated_hemoglobin],
-                'estimated_average_glucose' => ['label' => 'Estimated Average Glucose', 'data' => $row->estimated_average_glucose],
+                'glucose_level' => ['label' => __('glucose_pages.index.table.columns.glucose_level'), 'data' => $row->glucose_level],
+                'glycated_hemoglobin' => ['label' => __('glucose_pages.index.table.columns.glycated_hemoglobin'), 'data' => $row->glycated_hemoglobin],
+                'estimated_average_glucose' => ['label' => __('glucose_pages.index.table.columns.estimated_average_glucose'), 'data' => $row->estimated_average_glucose],
             ],
         ])->toArray();
 
