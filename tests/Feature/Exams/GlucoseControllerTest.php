@@ -15,6 +15,9 @@ describe('tests for the "index" method of GlucoseController', function () {
         $response->assertOk();
         $response->assertInertia(
             fn (AssertableInertia $page) => $page->component($componentName)
+                ->where('lang.glucose_pages.index.head_title', 'Glucose Exams')
+                ->has('glucoses.data', 0)
+                ->has('chartData')
         );
     });
 
@@ -40,7 +43,9 @@ describe('tests for the "index" method of GlucoseController', function () {
 
         $response->assertOk();
         $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
+            ->where('lang.glucose_pages.index.head_title', 'Glucose Exams')
             ->has('glucoses.data', 2)
+            ->has('chartData')
             ->has('glucoses.data.0', fn (AssertableInertia $item) => $item->etc())
             ->has('glucoses.data.1', fn (AssertableInertia $item) => $item->etc())
         );
@@ -62,7 +67,9 @@ describe('tests for the "create" method of GlucoseController', function () {
         $response = $this->actingAs($user)->get(route('glucose.create'));
 
         $response->assertOk();
-        $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName));
+        $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
+            ->where('lang.glucose_pages.create.head_title', 'Create Glucose record')
+        );
     });
 
     it('should redirect guests to login if user is not authenticated', function () {
@@ -115,6 +122,7 @@ describe('tests for the "edit" method of GlucoseController', function () {
 
         $response->assertOk();
         $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
+            ->where('lang.glucose_pages.edit.head_title', 'Edit Glucose record')
             ->has('glucose', fn (AssertableInertia $item) => $item->etc()
             )
         );
