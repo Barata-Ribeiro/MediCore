@@ -2,30 +2,40 @@ import GlucoseForm from '@/components/forms/exams/glucose.form';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { create, index } from '@/routes/glucose';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Head, Link, setLayoutProps } from '@inertiajs/react';
 import { ArrowLeftIcon } from 'lucide-react';
 import { Fragment } from 'react/jsx-runtime';
 
 export default function Create() {
+    const { __ } = lang();
+
     setLayoutProps({
-        title: 'Create Glucose Result',
-        description: 'Register a new glucose result for yourself',
+        title: __('glucose_pages.create.title'),
+        description: __('glucose_pages.create.description'),
         breadcrumbs: [
-            { title: 'Glucose', href: index() },
-            { title: 'Create', href: create() },
+            { title: __('glucose_pages.create.breadcrumbs.index'), href: index() },
+            { title: __('glucose_pages.create.breadcrumbs.current'), href: create() },
         ],
     });
 
     return (
         <Fragment>
-            <Head title="Create Glucose Result" />
-            <h1 className="sr-only">Create Glucose Result</h1>
+            <Head title={__('glucose_pages.create.head_title')} />
+            <h1 className="sr-only">{__('glucose_pages.create.head_title')}</h1>
 
             <Card className="mx-auto w-full flex-col space-y-4">
                 <CardHeader>
-                    <Button variant="outline" size="sm" className="w-fit" title="Go Back" aria-label="Go Back" asChild>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-fit"
+                        title={__('glucose_pages.shared.back_label')}
+                        aria-label={__('glucose_pages.shared.back_label')}
+                        asChild
+                    >
                         <Link href={index()} as="button" prefetch="hover">
-                            <ArrowLeftIcon aria-hidden size={14} /> Back
+                            <ArrowLeftIcon aria-hidden size={14} /> {__('glucose_pages.shared.back')}
                         </Link>
                     </Button>
                 </CardHeader>
@@ -33,11 +43,7 @@ export default function Create() {
                     <GlucoseForm />
                 </CardContent>
                 <CardFooter>
-                    <p className="text-sm text-muted-foreground">
-                        By creating a glucose result, you can track your blood sugar levels over time and gain insights
-                        into your overall health. Regular monitoring of your glucose levels can help you make informed
-                        decisions about your lifestyle and healthcare.
-                    </p>
+                    <p className="text-sm text-muted-foreground">{__('glucose_pages.create.footer')}</p>
                 </CardFooter>
             </Card>
         </Fragment>
