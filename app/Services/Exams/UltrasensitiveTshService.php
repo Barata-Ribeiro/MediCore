@@ -40,7 +40,7 @@ class UltrasensitiveTshService implements UltrasensitiveTshServiceInterface
         $chartData = $chartRows->map(fn ($row) => [
             'x_axis_label' => $row->label,
             'datasets' => [
-                'tsh_level' => ['label' => 'TSH Level', 'data' => $row->tsh_level],
+                'tsh_level' => ['label' => __('ultrasensitive_tsh_pages.index.table.columns.tsh_level'), 'data' => $row->tsh_level],
             ],
         ])->toArray();
 
