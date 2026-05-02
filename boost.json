@@ -4,9 +4,12 @@
     ],
     "cloud": false,
     "guidelines": true,
-    "herd_mcp": true,
     "mcp": true,
-    "nightwatch_mcp": false,
+    "nightwatch": false,
+    "packages": [
+        "spatie/laravel-permission",
+        "fruitcake/laravel-debugbar"
+    ],
     "sail": false,
     "skills": [
         "fortify-development",
@@ -15,6 +18,8 @@
         "wayfinder-development",
         "pest-testing",
         "inertia-react-development",
-        "tailwindcss-development"
+        "tailwindcss-development",
+        "laravel-permission-development",
+        "debug-using-debugbar"
     ]
 }
