@@ -8,7 +8,6 @@ use App\Http\Requests\QueryRequest;
 use App\Interfaces\Exams\UltrasensitiveTshServiceInterface;
 use App\Models\Exams\UltrasensitiveTsh;
 use Exception;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
 use Log;
 
@@ -20,6 +19,8 @@ class UltrasensitiveTshController extends Controller
 
     public function index(QueryRequest $request)
     {
+        syncLangFiles('ultrasensitive_tsh_pages');
+
         [$ultrasensitiveTshs, $chartData] = $this->ultrasensitiveTshPageAndChartData($request);
 
         return Inertia::render('exams/ultrasensitive-tsh/index', [
@@ -30,6 +31,8 @@ class UltrasensitiveTshController extends Controller
 
     public function create()
     {
+        syncLangFiles('ultrasensitive_tsh_pages');
+
         return Inertia::render('exams/ultrasensitive-tsh/create');
     }
 
@@ -56,6 +59,8 @@ class UltrasensitiveTshController extends Controller
 
     public function edit(UltrasensitiveTsh $ultrasensitiveTsh)
     {
+        syncLangFiles('ultrasensitive_tsh_pages');
+
         return Inertia::render('exams/ultrasensitive-tsh/edit', [
             'ultrasensitiveTsh' => $ultrasensitiveTsh,
         ]);
