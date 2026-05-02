@@ -1,11 +1,12 @@
 import UricAcidChart from '@/components/application/charts/uric-acid.chart';
 import { EmptyChartData } from '@/components/common/empty-chart-data';
 import { DataTable } from '@/components/table/data-table';
-import { columns } from '@/pages/exams/uric-acid/uric-acid-columns';
+import { useUricAcidColumns } from '@/pages/exams/uric-acid/uric-acid-columns';
 import { create, index } from '@/routes/uric-acid';
 import type { ChartData } from '@/types';
 import type { UricAcid } from '@/types/application/exams/uric-acid';
 import type { PaginationMeta } from '@/types/application/metadata';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Head, setLayoutProps, usePage } from '@inertiajs/react';
 import { Fragment } from 'react/jsx-runtime';
 
@@ -15,10 +16,13 @@ type Props = {
 };
 
 export default function Index({ uricAcids, chartData }: Readonly<Props>) {
+    const { __ } = lang();
+    const columns = useUricAcidColumns();
+
     setLayoutProps({
-        title: 'Uric Acid Exams',
-        description: 'View and analyze Uric Acid results for patients',
-        breadcrumbs: [{ title: 'Uric Acid Exams', href: index() }],
+        title: __('uric_acid_pages.index.title'),
+        description: __('uric_acid_pages.index.description'),
+        breadcrumbs: [{ title: __('uric_acid_pages.index.breadcrumbs.current'), href: index() }],
     });
 
     const { url } = usePage();
@@ -28,8 +32,8 @@ export default function Index({ uricAcids, chartData }: Readonly<Props>) {
 
     return (
         <Fragment>
-            <Head title="Uric Acid Exams" />
-            <h1 className="sr-only">Uric Acid Exams</h1>
+            <Head title={__('uric_acid_pages.index.head_title')} />
+            <h1 className="sr-only">{__('uric_acid_pages.index.head_title')}</h1>
 
             <div className="space-y-6">
                 {chartData.length > 0 ? (

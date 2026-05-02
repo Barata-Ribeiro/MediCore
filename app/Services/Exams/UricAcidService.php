@@ -40,7 +40,10 @@ class UricAcidService implements UricAcidServiceInterface
         $chartData = $chartRows->map(fn ($row) => [
             'x_axis_label' => $row->label,
             'datasets' => [
-                'uric_acid_level' => ['label' => 'Uric Acid Level', 'data' => $row->uric_acid_level],
+                'uric_acid_level' => [
+                    'label' => __('uric_acid_pages.index.table.columns.uric_acid_level'),
+                    'data' => $row->uric_acid_level,
+                ],
             ],
         ])->toArray();
 

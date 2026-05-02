@@ -20,6 +20,8 @@ class UricAcidController extends Controller
 
     public function index(QueryRequest $request)
     {
+        syncLangFiles('uric_acid_pages');
+
         [$uricAcids, $chartData] = $this->uricAcidPageAndChartData($request);
 
         return Inertia::render('exams/uric-acid/index', [
@@ -30,6 +32,8 @@ class UricAcidController extends Controller
 
     public function create()
     {
+        syncLangFiles('uric_acid_pages');
+
         return Inertia::render('exams/uric-acid/create');
     }
 
@@ -55,6 +59,8 @@ class UricAcidController extends Controller
 
     public function edit(UricAcid $uricAcid)
     {
+        syncLangFiles('uric_acid_pages');
+
         return Inertia::render('exams/uric-acid/edit', [
             'uricAcid' => $uricAcid,
         ]);
@@ -114,7 +120,7 @@ class UricAcidController extends Controller
 
     /**
      * Validate request query inputs, apply sort/filter defaults, and fetch
-     * paginated glucose results plus chart data.
+     * paginated uric acid results plus chart data.
      *
      * @return array{
      *     0: LengthAwarePaginator,

@@ -15,6 +15,7 @@ describe('tests for the "index" method of UricAcidController', function () {
         $response->assertOk();
         $response->assertInertia(
             fn (AssertableInertia $page) => $page->component($componentName)
+                ->where('lang.uric_acid_pages.index.head_title', 'Uric Acid Exams')
                 ->has('uricAcids.data', 0)
                 ->has('chartData')
         );
@@ -41,6 +42,7 @@ describe('tests for the "index" method of UricAcidController', function () {
 
         $response->assertOk();
         $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
+            ->where('lang.uric_acid_pages.index.head_title', 'Uric Acid Exams')
             ->has('uricAcids.data', 2)
             ->has('chartData')
             ->has('uricAcids.data.0', fn (AssertableInertia $item) => $item
@@ -72,7 +74,9 @@ describe('tests for the "create" method of UricAcidController', function () {
         $response = $this->actingAs($user)->get(route('uric-acid.create'));
 
         $response->assertOk();
-        $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName));
+        $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
+            ->where('lang.uric_acid_pages.create.head_title', 'Create Uric Acid record')
+        );
     });
 
     it('should redirect guests to login if user is not authenticated', function () {
@@ -121,6 +125,7 @@ describe('tests for the "edit" method of UricAcidController', function () {
 
         $response->assertOk();
         $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
+            ->where('lang.uric_acid_pages.edit.head_title', 'Edit Uric Acid record')
             ->has('uricAcid', fn (AssertableInertia $item) => $item
                 ->where('uric_acid_level', 6.4)
                 ->where('report_date', now()->toDateString())
