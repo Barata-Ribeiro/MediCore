@@ -7,6 +7,7 @@ import { Field, FieldLabel } from '@/components/ui/field';
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from '@/components/ui/input-group';
 import { Spinner } from '@/components/ui/spinner';
 import type { UltrasensitiveTsh } from '@/types/application/exams/ultrasensitive-tsh';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Form } from '@inertiajs/react';
 import { Activity, Fragment, memo } from 'react';
 
@@ -15,6 +16,7 @@ type Props = {
 };
 
 const UltrasensitiveTshForm = memo<Readonly<Props>>(({ ultrasensitiveTsh }) => {
+    const { __ } = lang();
     const isEditMode = ultrasensitiveTsh && ultrasensitiveTsh !== null;
 
     const formRoute = isEditMode
@@ -32,14 +34,14 @@ const UltrasensitiveTshForm = memo<Readonly<Props>>(({ ultrasensitiveTsh }) => {
                 <Fragment>
                     <Field data-invalid={!!errors['tsh_level']}>
                         <FieldLabel htmlFor="tsh_level">
-                            Ultrasensitive TSH <RequiredIndicator />
+                            {__('ultrasensitive_tsh_pages.form.tsh_level')} <RequiredIndicator />
                         </FieldLabel>
                         <InputGroup>
                             <InputGroupInput
                                 type="number"
                                 id="tsh_level"
                                 name="tsh_level"
-                                placeholder="e.g. 2.50"
+                                placeholder={__('ultrasensitive_tsh_pages.form.tsh_level_placeholder')}
                                 defaultValue={ultrasensitiveTsh?.tsh_level}
                                 min={0}
                                 step={0.01}
@@ -48,7 +50,7 @@ const UltrasensitiveTshForm = memo<Readonly<Props>>(({ ultrasensitiveTsh }) => {
                                 aria-required
                             />
                             <InputGroupAddon align="inline-end">
-                                <InputGroupText>uIU/mL</InputGroupText>
+                                <InputGroupText>{__('ultrasensitive_tsh_pages.shared.unit')}</InputGroupText>
                             </InputGroupAddon>
                         </InputGroup>
                         <InputError message={errors['tsh_level']} />
@@ -56,7 +58,7 @@ const UltrasensitiveTshForm = memo<Readonly<Props>>(({ ultrasensitiveTsh }) => {
 
                     <Field data-invalid={!!errors['report_date']}>
                         <FieldLabel htmlFor="report_date">
-                            Report Date <RequiredIndicator />
+                            {__('ultrasensitive_tsh_pages.form.report_date')} <RequiredIndicator />
                         </FieldLabel>
                         <DatePicker id="report_date" name="report_date" defaultValue={ultrasensitiveTsh?.report_date} />
                         <InputError message={errors['report_date']} />
@@ -66,7 +68,7 @@ const UltrasensitiveTshForm = memo<Readonly<Props>>(({ ultrasensitiveTsh }) => {
                         <Activity mode={processing ? 'visible' : 'hidden'}>
                             <Spinner aria-hidden />
                         </Activity>
-                        Save
+                        {__('ultrasensitive_tsh_pages.form.submit')}
                     </Button>
                 </Fragment>
             )}

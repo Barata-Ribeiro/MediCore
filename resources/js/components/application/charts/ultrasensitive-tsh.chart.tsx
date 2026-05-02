@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import type { ChartConfig } from '@/components/ui/chart';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import type { ChartData } from '@/types/ui';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { format } from 'date-fns';
 import { CartesianGrid, LabelList, Line, LineChart, XAxis } from 'recharts';
 
@@ -11,6 +12,8 @@ type Props = {
 };
 
 export default function UltrasensitiveTshChart({ chartData, total }: Readonly<Props>) {
+    const { __ } = lang();
+
     const rechartsData = chartData.map((row) => {
         const base: Record<string, unknown> = { date: row.x_axis_label };
 
@@ -37,10 +40,8 @@ export default function UltrasensitiveTshChart({ chartData, total }: Readonly<Pr
     return (
         <Card className="mx-auto max-w-3xl">
             <CardHeader>
-                <CardTitle>Ultrasensitive TSH</CardTitle>
-                <CardDescription>
-                    Check your last 5 Ultrasensitive TSH results and see how your levels have changed over time.
-                </CardDescription>
+                <CardTitle>{__('ultrasensitive_tsh_pages.index.chart.title')}</CardTitle>
+                <CardDescription>{__('ultrasensitive_tsh_pages.index.chart.description')}</CardDescription>
             </CardHeader>
             <CardContent>
                 <ChartContainer config={chartConfig}>
@@ -83,7 +84,7 @@ export default function UltrasensitiveTshChart({ chartData, total }: Readonly<Pr
                                     offset={12}
                                     className="fill-foreground"
                                     fontSize={12}
-                                    formatter={(value) => `${value} uIU/mL`}
+                                    formatter={(value) => `${value} ${__('ultrasensitive_tsh_pages.shared.unit')}`}
                                 />
                             </Line>
                         ))}
@@ -92,7 +93,7 @@ export default function UltrasensitiveTshChart({ chartData, total }: Readonly<Pr
             </CardContent>
             <CardFooter className="border-t">
                 <p className="text-sm text-muted-foreground">
-                    Total Ultrasensitive TSH readings: <strong>{total}</strong>
+                    {__('ultrasensitive_tsh_pages.index.chart.footer_total_label')} <strong>{total}</strong>
                 </p>
             </CardFooter>
         </Card>

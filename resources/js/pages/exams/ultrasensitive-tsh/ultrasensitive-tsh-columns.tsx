@@ -13,101 +13,145 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { destroy, edit } from '@/routes/ultrasensitive-tsh';
 import type { UltrasensitiveTsh } from '@/types/application/exams/ultrasensitive-tsh';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Link } from '@inertiajs/react';
-import type { ColumnDef } from '@tanstack/react-table';
+import type { Column, ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
 import { CalendarIcon, DeleteIcon, EditIcon, EllipsisIcon } from 'lucide-react';
 import { Fragment, useState } from 'react';
 
-export const columns: ColumnDef<UltrasensitiveTsh>[] = [
-    {
-        accessorKey: 'id',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="ID" />,
-        enableSorting: true,
-        enableHiding: false,
-        size: 40,
-    },
-    {
-        accessorKey: 'report_date',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Report Date" />,
-        cell: ({ row }) => format(row.original.report_date, 'PPP'),
-        meta: {
-            label: 'Report Date',
-            variant: 'dateRange',
-            icon: CalendarIcon,
-        },
-        enableSorting: true,
-    },
-    {
-        accessorKey: 'tsh_level',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Ultrasensitive TSH" />,
-        cell: ({ row }) => `${row.original.tsh_level} uIU/mL`,
-        enableSorting: true,
-    },
-    {
-        accessorKey: 'created_at',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Created At" />,
-        cell: ({ row }) => format(row.original.created_at, 'PPpp'),
-        meta: {
-            label: 'Created At',
-            variant: 'dateRange',
-            icon: CalendarIcon,
-        },
-        enableSorting: true,
-    },
-    {
-        id: 'actions',
-        cell: function Cell({ row }) {
-            const [open, setOpen] = useState(false);
+function TableColumnHeader({ column, title }: Readonly<{ column: Column<UltrasensitiveTsh, unknown>; title: string }>) {
+    return <DataTableColumnHeader column={column} title={title} />;
+}
 
-            const valuesToCopy = `Report Date: ${format(row.original.report_date, 'PPP')}, Ultrasensitive TSH: ${row.original.tsh_level} uIU/mL, Created At: ${format(row.original.created_at, 'PPP p')}`;
+function UltrasensitiveTshValueCell({ value }: Readonly<{ value: number }>) {
+    const { __ } = lang();
 
-            return (
-                <Fragment>
-                    <DropdownMenu modal={false}>
-                        <DropdownMenuTrigger asChild>
-                            <Button
-                                aria-label="Open menu"
-                                variant="ghost"
-                                className="flex size-8 p-0 data-[state=open]:bg-muted"
-                            >
-                                <EllipsisIcon aria-hidden size={16} />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-40">
-                            <DropdownMenuLabel>Copy Fields</DropdownMenuLabel>
-                            <DropdownMenuGroup>
-                                <DropdownMenuItem asChild>
-                                    <DropdownMenuCopyButton content={valuesToCopy}>Copy Values</DropdownMenuCopyButton>
-                                </DropdownMenuItem>
-                            </DropdownMenuGroup>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuGroup>
-                                <DropdownMenuItem asChild>
-                                    <Link className="block w-full" href={edit(row.original.id)} as="button">
-                                        <EditIcon aria-hidden size={14} /> Edit
-                                    </Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem variant="destructive" onSelect={() => setOpen(true)}>
-                                    <DeleteIcon aria-hidden size={14} /> Delete
-                                </DropdownMenuItem>
-                            </DropdownMenuGroup>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+    return `${value} ${__('ultrasensitive_tsh_pages.shared.unit')}`;
+}
 
-                    <ActionConfirmationDialog
-                        title="Delete Record"
-                        description="Are you sure you want to delete this record? This action cannot be undone."
-                        open={open}
-                        setOpen={setOpen}
-                        method={'delete'}
-                        route={destroy(row.original.id)}
-                    />
-                </Fragment>
-            );
+function ActionsCell({ ultrasensitiveTsh }: Readonly<{ ultrasensitiveTsh: UltrasensitiveTsh }>) {
+    const { __, trans } = lang();
+    const [open, setOpen] = useState(false);
+
+    const valuesToCopy = trans('ultrasensitive_tsh_pages.index.table.copy_values_content', {
+        report_date: format(ultrasensitiveTsh.report_date, 'PPP'),
+        tsh_level: ultrasensitiveTsh.tsh_level,
+        unit: __('ultrasensitive_tsh_pages.shared.unit'),
+        created_at: format(ultrasensitiveTsh.created_at, 'PPP p'),
+    });
+
+    return (
+        <Fragment>
+            <DropdownMenu modal={false}>
+                <DropdownMenuTrigger asChild>
+                    <Button
+                        aria-label={__('ultrasensitive_tsh_pages.index.table.menu.open_label')}
+                        variant="ghost"
+                        className="flex size-8 p-0 data-[state=open]:bg-muted"
+                    >
+                        <EllipsisIcon aria-hidden size={16} />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-40">
+                    <DropdownMenuLabel>{__('ultrasensitive_tsh_pages.index.table.menu.copy_fields')}</DropdownMenuLabel>
+                    <DropdownMenuGroup>
+                        <DropdownMenuItem asChild>
+                            <DropdownMenuCopyButton content={valuesToCopy}>
+                                {__('ultrasensitive_tsh_pages.index.table.menu.copy_values')}
+                            </DropdownMenuCopyButton>
+                        </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuLabel>{__('ultrasensitive_tsh_pages.index.table.menu.actions')}</DropdownMenuLabel>
+                    <DropdownMenuGroup>
+                        <DropdownMenuItem asChild>
+                            <Link className="block w-full" href={edit(ultrasensitiveTsh.id)} as="button">
+                                <EditIcon aria-hidden size={14} />{' '}
+                                {__('ultrasensitive_tsh_pages.index.table.menu.edit')}
+                            </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem variant="destructive" onSelect={() => setOpen(true)}>
+                            <DeleteIcon aria-hidden size={14} />{' '}
+                            {__('ultrasensitive_tsh_pages.index.table.menu.delete')}
+                        </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                </DropdownMenuContent>
+            </DropdownMenu>
+
+            <ActionConfirmationDialog
+                title={__('ultrasensitive_tsh_pages.index.table.delete_dialog.title')}
+                description={__('ultrasensitive_tsh_pages.index.table.delete_dialog.description')}
+                open={open}
+                setOpen={setOpen}
+                method="delete"
+                route={destroy(ultrasensitiveTsh.id)}
+            />
+        </Fragment>
+    );
+}
+
+export function useUltrasensitiveTshColumns(): ColumnDef<UltrasensitiveTsh>[] {
+    const { __ } = lang();
+
+    return [
+        {
+            accessorKey: 'id',
+            header: ({ column }) => (
+                <TableColumnHeader column={column} title={__('ultrasensitive_tsh_pages.index.table.columns.id')} />
+            ),
+            enableSorting: true,
+            enableHiding: false,
+            size: 40,
         },
-        size: 40,
-        enableHiding: false,
-    },
-];
+        {
+            accessorKey: 'report_date',
+            header: ({ column }) => (
+                <TableColumnHeader
+                    column={column}
+                    title={__('ultrasensitive_tsh_pages.index.table.columns.report_date')}
+                />
+            ),
+            cell: ({ row }) => format(row.original.report_date, 'PPP'),
+            meta: {
+                label: __('ultrasensitive_tsh_pages.index.table.columns.report_date'),
+                variant: 'dateRange',
+                icon: CalendarIcon,
+            },
+            enableSorting: true,
+        },
+        {
+            accessorKey: 'tsh_level',
+            header: ({ column }) => (
+                <TableColumnHeader
+                    column={column}
+                    title={__('ultrasensitive_tsh_pages.index.table.columns.tsh_level')}
+                />
+            ),
+            cell: ({ row }) => <UltrasensitiveTshValueCell value={row.original.tsh_level} />,
+            enableSorting: true,
+        },
+        {
+            accessorKey: 'created_at',
+            header: ({ column }) => (
+                <TableColumnHeader
+                    column={column}
+                    title={__('ultrasensitive_tsh_pages.index.table.columns.created_at')}
+                />
+            ),
+            cell: ({ row }) => format(row.original.created_at, 'PPpp'),
+            meta: {
+                label: __('ultrasensitive_tsh_pages.index.table.columns.created_at'),
+                variant: 'dateRange',
+                icon: CalendarIcon,
+            },
+            enableSorting: true,
+        },
+        {
+            id: 'actions',
+            cell: ({ row }) => <ActionsCell ultrasensitiveTsh={row.original} />,
+            size: 40,
+            enableHiding: false,
+        },
+    ];
+}
