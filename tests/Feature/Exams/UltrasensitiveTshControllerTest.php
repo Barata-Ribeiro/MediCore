@@ -15,6 +15,7 @@ describe('tests for the "index" method of UltrasensitiveTshController', function
         $response->assertOk();
         $response->assertInertia(
             fn (AssertableInertia $page) => $page->component($componentName)
+                ->where('lang.ultrasensitive_tsh_pages.index.head_title', 'Ultrasensitive TSH Exams')
                 ->has('ultrasensitiveTshs.data', 0)
                 ->has('chartData')
         );
@@ -72,7 +73,9 @@ describe('tests for the "create" method of UltrasensitiveTshController', functio
         $response = $this->actingAs($user)->get(route('ultrasensitive-tsh.create'));
 
         $response->assertOk();
-        $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName));
+        $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
+            ->where('lang.ultrasensitive_tsh_pages.create.head_title', 'Create Ultrasensitive TSH record')
+        );
     });
 
     it('should redirect guests to login if user is not authenticated', function () {
@@ -121,6 +124,7 @@ describe('tests for the "edit" method of UltrasensitiveTshController', function 
 
         $response->assertOk();
         $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
+            ->where('lang.ultrasensitive_tsh_pages.edit.head_title', 'Edit Ultrasensitive TSH record')
             ->has('ultrasensitiveTsh', fn (AssertableInertia $item) => $item
                 ->where('tsh_level', 3.17)
                 ->where('report_date', now()->toDateString())

@@ -1,11 +1,12 @@
 import UltrasensitiveTshChart from '@/components/application/charts/ultrasensitive-tsh.chart';
 import { EmptyChartData } from '@/components/common/empty-chart-data';
 import { DataTable } from '@/components/table/data-table';
-import { columns } from '@/pages/exams/ultrasensitive-tsh/ultrasensitive-tsh-columns';
+import { useUltrasensitiveTshColumns } from '@/pages/exams/ultrasensitive-tsh/ultrasensitive-tsh-columns';
 import { create, index } from '@/routes/ultrasensitive-tsh';
 import type { ChartData } from '@/types';
 import type { UltrasensitiveTsh } from '@/types/application/exams/ultrasensitive-tsh';
 import type { PaginationMeta } from '@/types/application/metadata';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Head, setLayoutProps, usePage } from '@inertiajs/react';
 import { Fragment } from 'react/jsx-runtime';
 
@@ -15,10 +16,13 @@ type Props = {
 };
 
 export default function Index({ ultrasensitiveTshs, chartData }: Readonly<Props>) {
+    const { __ } = lang();
+    const columns = useUltrasensitiveTshColumns();
+
     setLayoutProps({
-        title: 'Ultrasensitive TSH Exams',
-        description: 'View and analyze Ultrasensitive TSH results for patients',
-        breadcrumbs: [{ title: 'Ultrasensitive TSH Exams', href: index() }],
+        title: __('ultrasensitive_tsh_pages.index.title'),
+        description: __('ultrasensitive_tsh_pages.index.description'),
+        breadcrumbs: [{ title: __('ultrasensitive_tsh_pages.index.breadcrumbs.current'), href: index() }],
     });
 
     const { url } = usePage();
@@ -28,8 +32,8 @@ export default function Index({ ultrasensitiveTshs, chartData }: Readonly<Props>
 
     return (
         <Fragment>
-            <Head title="Ultrasensitive TSH Exams" />
-            <h1 className="sr-only">Ultrasensitive TSH Exams</h1>
+            <Head title={__('ultrasensitive_tsh_pages.index.head_title')} />
+            <h1 className="sr-only">{__('ultrasensitive_tsh_pages.index.head_title')}</h1>
 
             <div className="space-y-6">
                 {chartData.length > 0 ? (
