@@ -20,6 +20,8 @@ class UreaAndCreatinineController extends Controller
 
     public function index(QueryRequest $request)
     {
+        syncLangFiles('urea_and_creatinine_pages');
+
         [$ureaAndCreatinines, $chartData] = $this->ureaAndCreatininePageAndChartData($request);
 
         return Inertia::render('exams/urea-and-creatinine/index', [
@@ -30,6 +32,8 @@ class UreaAndCreatinineController extends Controller
 
     public function create()
     {
+        syncLangFiles('urea_and_creatinine_pages');
+
         return Inertia::render('exams/urea-and-creatinine/create');
     }
 
@@ -55,6 +59,8 @@ class UreaAndCreatinineController extends Controller
 
     public function edit(UreaAndCreatinine $ureaAndCreatinine)
     {
+        syncLangFiles('urea_and_creatinine_pages');
+
         return Inertia::render('exams/urea-and-creatinine/edit', [
             'ureaAndCreatinine' => $ureaAndCreatinine,
         ]);
