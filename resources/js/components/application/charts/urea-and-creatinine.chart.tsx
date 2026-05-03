@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import type { ChartConfig } from '@/components/ui/chart';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import type { ChartData } from '@/types/ui';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { format } from 'date-fns';
 import { CartesianGrid, LabelList, Line, LineChart, XAxis } from 'recharts';
 
@@ -11,6 +12,8 @@ type Props = {
 };
 
 export default function UreaAndCreatinineChart({ chartData, total }: Readonly<Props>) {
+    const { __ } = lang();
+
     const rechartsData = chartData.map((row) => {
         const base: Record<string, unknown> = { date: row.x_axis_label };
 
@@ -37,10 +40,8 @@ export default function UreaAndCreatinineChart({ chartData, total }: Readonly<Pr
     return (
         <Card className="mx-auto max-w-3xl">
             <CardHeader>
-                <CardTitle>Urea and Creatinine</CardTitle>
-                <CardDescription>
-                    Check your last 5 Urea and Creatinine results and see how your levels have changed over time.
-                </CardDescription>
+                <CardTitle>{__('urea_and_creatinine_pages.index.chart.title')}</CardTitle>
+                <CardDescription>{__('urea_and_creatinine_pages.index.chart.description')}</CardDescription>
             </CardHeader>
             <CardContent>
                 <ChartContainer config={chartConfig}>
@@ -83,7 +84,11 @@ export default function UreaAndCreatinineChart({ chartData, total }: Readonly<Pr
                                     offset={12}
                                     className="fill-foreground"
                                     fontSize={12}
-                                    formatter={(value) => `${value} ng/mL`}
+                                    formatter={(value) =>
+                                        key === 'urea_to_creatinine_ratio'
+                                            ? `${value}`
+                                            : `${value} ${__('urea_and_creatinine_pages.shared.unit')}`
+                                    }
                                 />
                             </Line>
                         ))}
@@ -92,7 +97,7 @@ export default function UreaAndCreatinineChart({ chartData, total }: Readonly<Pr
             </CardContent>
             <CardFooter className="border-t">
                 <p className="text-sm text-muted-foreground">
-                    Total Urea and Creatinine readings: <strong>{total}</strong>
+                    {__('urea_and_creatinine_pages.index.chart.footer_total_label')} <strong>{total}</strong>
                 </p>
             </CardFooter>
         </Card>
