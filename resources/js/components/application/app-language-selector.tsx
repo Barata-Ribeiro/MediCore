@@ -33,8 +33,15 @@ export default function AppLanguageSelector() {
         router.visit(endpoint.url, {
             method: endpoint.method,
             data: { locale: nextLocale },
+            fresh: true,
+            onSuccess: () => {
+                router.flushAll();
+            },
+            onError: () => {
+                router.flushAll();
+            },
             preserveScroll: true,
-            preserveState: true,
+            preserveState: false,
         });
     };
 
