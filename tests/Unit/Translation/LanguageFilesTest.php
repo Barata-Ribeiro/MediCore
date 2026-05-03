@@ -23,6 +23,8 @@ test('application translation keys resolve from standard language files', functi
         ->toBe('Complete Blood Count')
         ->and($translator->get('uric_acid_pages.index.head_title', [], 'en'))
         ->toBe('Uric Acid Exams')
+        ->and($translator->get('urea_and_creatinine_pages.index.head_title', [], 'en'))
+        ->toBe('Urea and Creatinine Exams')
         ->and($translator->get('flash.settings.profile.language.updated_successfully', [], 'pt_BR'))
         ->toBe('Idioma atualizado com sucesso.')
         ->and($translator->get('glucose_pages.index.head_title', [], 'pt_BR'))
@@ -36,7 +38,9 @@ test('application translation keys resolve from standard language files', functi
         ->and($translator->get('complete_blood_count_pages.index.head_title', [], 'pt_BR'))
         ->toBe('Hemograma Completo')
         ->and($translator->get('uric_acid_pages.index.head_title', [], 'pt_BR'))
-        ->toBe('Exames de Ácido Úrico');
+        ->toBe('Exames de Ácido Úrico')
+        ->and($translator->get('urea_and_creatinine_pages.index.head_title', [], 'pt_BR'))
+        ->toBe('Exames de Ureia e Creatinina');
 });
 
 test('json translation strings still resolve alongside php language files', function () {
