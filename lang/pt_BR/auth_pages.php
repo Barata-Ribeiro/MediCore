@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'confirm_password_page' => [
         'head_title' => 'Confirmar senha',

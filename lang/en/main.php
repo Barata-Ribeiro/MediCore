@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'menu' => [
         'sidebar_group_label' => 'Platform',

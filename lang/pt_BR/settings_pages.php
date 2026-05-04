@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'appearance_page' => [
         'head_title' => 'Configurações de aparência',
