@@ -13,107 +13,159 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { destroy, edit } from '@/routes/urea-and-creatinine';
 import type { UreaAndCreatinine } from '@/types/application/exams/urea-and-creatinine';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Link } from '@inertiajs/react';
-import type { ColumnDef } from '@tanstack/react-table';
+import type { Column, ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns/format';
 import { CalendarIcon, DeleteIcon, EditIcon, EllipsisIcon } from 'lucide-react';
 import { Fragment, useState } from 'react';
 
-export const columns: ColumnDef<UreaAndCreatinine>[] = [
-    {
-        accessorKey: 'id',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="ID" />,
-        enableSorting: true,
-        enableHiding: false,
-        size: 40,
-    },
-    {
-        accessorKey: 'report_date',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Report Date" />,
-        cell: ({ row }) => format(row.original.report_date, 'PPP'),
-        meta: {
-            label: 'Report Date',
-            variant: 'dateRange',
-            icon: CalendarIcon,
-        },
-        enableSorting: true,
-    },
-    {
-        accessorKey: 'urea_level',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Urea" />,
-        cell: ({ row }) => `${row.original.urea_level} mg/dL`,
-        enableSorting: true,
-    },
-    {
-        accessorKey: 'creatinine_level',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Creatinine" />,
-        cell: ({ row }) => `${row.original.creatinine_level} mg/dL`,
-        enableSorting: true,
-    },
-    {
-        accessorKey: 'created_at',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Created At" />,
-        cell: ({ row }) => format(row.original.created_at, 'PPpp'),
-        meta: {
-            label: 'Created At',
-            variant: 'dateRange',
-            icon: CalendarIcon,
-        },
-        enableSorting: true,
-    },
-    {
-        id: 'actions',
-        cell: function Cell({ row }) {
-            const [open, setOpen] = useState(false);
+function TableColumnHeader({ column, title }: Readonly<{ column: Column<UreaAndCreatinine, unknown>; title: string }>) {
+    return <DataTableColumnHeader column={column} title={title} />;
+}
 
-            const valuesToCopy = `Report Date: ${format(row.original.report_date, 'PPP')}, Urea: ${row.original.urea_level} mg/dL, Creatinine: ${row.original.creatinine_level} mg/dL, Created At: ${format(row.original.created_at, 'PPP p')}`;
+function UreaAndCreatinineValueCell({ value }: Readonly<{ value: number }>) {
+    const { __ } = lang();
 
-            return (
-                <Fragment>
-                    <DropdownMenu modal={false}>
-                        <DropdownMenuTrigger asChild>
-                            <Button
-                                aria-label="Open menu"
-                                variant="ghost"
-                                className="flex size-8 p-0 data-[state=open]:bg-muted"
-                            >
-                                <EllipsisIcon aria-hidden size={16} />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-40">
-                            <DropdownMenuLabel>Copy Fields</DropdownMenuLabel>
-                            <DropdownMenuGroup>
-                                <DropdownMenuItem asChild>
-                                    <DropdownMenuCopyButton content={valuesToCopy}>Copy Values</DropdownMenuCopyButton>
-                                </DropdownMenuItem>
-                            </DropdownMenuGroup>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuGroup>
-                                <DropdownMenuItem asChild>
-                                    <Link className="block w-full" href={edit(row.original.id)} as="button">
-                                        <EditIcon aria-hidden size={14} /> Edit
-                                    </Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem variant="destructive" onSelect={() => setOpen(true)}>
-                                    <DeleteIcon aria-hidden size={14} /> Delete
-                                </DropdownMenuItem>
-                            </DropdownMenuGroup>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+    return `${value} ${__('urea_and_creatinine_pages.shared.unit')}`;
+}
 
-                    <ActionConfirmationDialog
-                        title="Delete Record"
-                        description="Are you sure you want to delete this record? This action cannot be undone."
-                        open={open}
-                        setOpen={setOpen}
-                        method={'delete'}
-                        route={destroy(row.original.id)}
-                    />
-                </Fragment>
-            );
+function ActionsCell({ ureaAndCreatinine }: Readonly<{ ureaAndCreatinine: UreaAndCreatinine }>) {
+    const { __, trans } = lang();
+    const [open, setOpen] = useState(false);
+
+    const valuesToCopy = trans('urea_and_creatinine_pages.index.table.copy_values_content', {
+        report_date: format(ureaAndCreatinine.report_date, 'PPP'),
+        urea_level: ureaAndCreatinine.urea_level,
+        creatinine_level: ureaAndCreatinine.creatinine_level,
+        unit: __('urea_and_creatinine_pages.shared.unit'),
+        created_at: format(ureaAndCreatinine.created_at, 'PPP p'),
+    });
+
+    return (
+        <Fragment>
+            <DropdownMenu modal={false}>
+                <DropdownMenuTrigger asChild>
+                    <Button
+                        aria-label={__('urea_and_creatinine_pages.index.table.menu.open_label')}
+                        variant="ghost"
+                        className="flex size-8 p-0 data-[state=open]:bg-muted"
+                    >
+                        <EllipsisIcon aria-hidden size={16} />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-40">
+                    <DropdownMenuLabel>
+                        {__('urea_and_creatinine_pages.index.table.menu.copy_fields')}
+                    </DropdownMenuLabel>
+                    <DropdownMenuGroup>
+                        <DropdownMenuItem asChild>
+                            <DropdownMenuCopyButton content={valuesToCopy}>
+                                {__('urea_and_creatinine_pages.index.table.menu.copy_values')}
+                            </DropdownMenuCopyButton>
+                        </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuLabel>{__('urea_and_creatinine_pages.index.table.menu.actions')}</DropdownMenuLabel>
+                    <DropdownMenuGroup>
+                        <DropdownMenuItem asChild>
+                            <Link className="block w-full" href={edit(ureaAndCreatinine.id)} as="button">
+                                <EditIcon aria-hidden size={14} />{' '}
+                                {__('urea_and_creatinine_pages.index.table.menu.edit')}
+                            </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem variant="destructive" onSelect={() => setOpen(true)}>
+                            <DeleteIcon aria-hidden size={14} />{' '}
+                            {__('urea_and_creatinine_pages.index.table.menu.delete')}
+                        </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                </DropdownMenuContent>
+            </DropdownMenu>
+
+            <ActionConfirmationDialog
+                title={__('urea_and_creatinine_pages.index.table.delete_dialog.title')}
+                description={__('urea_and_creatinine_pages.index.table.delete_dialog.description')}
+                open={open}
+                setOpen={setOpen}
+                method="delete"
+                route={destroy(ureaAndCreatinine.id)}
+            />
+        </Fragment>
+    );
+}
+
+export function useUreaAndCreatinineColumns(): ColumnDef<UreaAndCreatinine>[] {
+    const { __ } = lang();
+
+    return [
+        {
+            accessorKey: 'id',
+            header: ({ column }) => (
+                <TableColumnHeader column={column} title={__('urea_and_creatinine_pages.index.table.columns.id')} />
+            ),
+            enableSorting: true,
+            enableHiding: false,
+            size: 40,
         },
-        size: 40,
-        enableHiding: false,
-    },
-];
+        {
+            accessorKey: 'report_date',
+            header: ({ column }) => (
+                <TableColumnHeader
+                    column={column}
+                    title={__('urea_and_creatinine_pages.index.table.columns.report_date')}
+                />
+            ),
+            cell: ({ row }) => format(row.original.report_date, 'PPP'),
+            meta: {
+                label: __('urea_and_creatinine_pages.index.table.columns.report_date'),
+                variant: 'dateRange',
+                icon: CalendarIcon,
+            },
+            enableSorting: true,
+        },
+        {
+            accessorKey: 'urea_level',
+            header: ({ column }) => (
+                <TableColumnHeader
+                    column={column}
+                    title={__('urea_and_creatinine_pages.index.table.columns.urea_level')}
+                />
+            ),
+            cell: ({ row }) => <UreaAndCreatinineValueCell value={row.original.urea_level} />,
+            enableSorting: true,
+        },
+        {
+            accessorKey: 'creatinine_level',
+            header: ({ column }) => (
+                <TableColumnHeader
+                    column={column}
+                    title={__('urea_and_creatinine_pages.index.table.columns.creatinine_level')}
+                />
+            ),
+            cell: ({ row }) => <UreaAndCreatinineValueCell value={row.original.creatinine_level} />,
+            enableSorting: true,
+        },
+        {
+            accessorKey: 'created_at',
+            header: ({ column }) => (
+                <TableColumnHeader
+                    column={column}
+                    title={__('urea_and_creatinine_pages.index.table.columns.created_at')}
+                />
+            ),
+            cell: ({ row }) => format(row.original.created_at, 'PPpp'),
+            meta: {
+                label: __('urea_and_creatinine_pages.index.table.columns.created_at'),
+                variant: 'dateRange',
+                icon: CalendarIcon,
+            },
+            enableSorting: true,
+        },
+        {
+            id: 'actions',
+            cell: ({ row }) => <ActionsCell ureaAndCreatinine={row.original} />,
+            size: 40,
+            enableHiding: false,
+        },
+    ];
+}

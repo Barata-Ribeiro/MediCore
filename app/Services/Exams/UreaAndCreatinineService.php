@@ -40,9 +40,18 @@ class UreaAndCreatinineService implements UreaAndCreatinineServiceInterface
         $chartData = $chartRows->map(fn ($row) => [
             'x_axis_label' => $row->label,
             'datasets' => [
-                'urea_level' => ['label' => 'Urea Level', 'data' => $row->urea_level],
-                'creatinine_level' => ['label' => 'Creatinine Level', 'data' => $row->creatinine_level],
-                'urea_to_creatinine_ratio' => ['label' => 'Urea to Creatinine Ratio', 'data' => $row->urea_to_creatinine_ratio],
+                'urea_level' => [
+                    'label' => __('urea_and_creatinine_pages.index.table.columns.urea_level'),
+                    'data' => $row->urea_level,
+                ],
+                'creatinine_level' => [
+                    'label' => __('urea_and_creatinine_pages.index.table.columns.creatinine_level'),
+                    'data' => $row->creatinine_level,
+                ],
+                'urea_to_creatinine_ratio' => [
+                    'label' => __('urea_and_creatinine_pages.index.chart.datasets.urea_to_creatinine_ratio'),
+                    'data' => $row->urea_to_creatinine_ratio,
+                ],
             ],
         ])->toArray();
 

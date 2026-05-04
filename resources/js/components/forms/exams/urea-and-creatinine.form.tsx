@@ -7,6 +7,7 @@ import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from '@/components/ui/input-group';
 import { Spinner } from '@/components/ui/spinner';
 import type { UreaAndCreatinine } from '@/types/application/exams/urea-and-creatinine';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Form } from '@inertiajs/react';
 import { Activity, Fragment, memo } from 'react';
 
@@ -15,6 +16,7 @@ type Props = {
 };
 
 const UreaAndCreatinineForm = memo<Readonly<Props>>(({ ureaAndCreatinine }) => {
+    const { __ } = lang();
     const isEditMode = ureaAndCreatinine && ureaAndCreatinine !== null;
 
     const formRoute = isEditMode
@@ -33,14 +35,14 @@ const UreaAndCreatinineForm = memo<Readonly<Props>>(({ ureaAndCreatinine }) => {
                     <FieldGroup className="grid gap-4 sm:grid-cols-2">
                         <Field data-invalid={!!errors['urea_level']}>
                             <FieldLabel htmlFor="urea_level">
-                                Urea Level <RequiredIndicator />
+                                {__('urea_and_creatinine_pages.form.urea_level')} <RequiredIndicator />
                             </FieldLabel>
                             <InputGroup>
                                 <InputGroupInput
                                     type="number"
                                     id="urea_level"
                                     name="urea_level"
-                                    placeholder="e.g. 40"
+                                    placeholder={__('urea_and_creatinine_pages.form.urea_level_placeholder')}
                                     defaultValue={ureaAndCreatinine?.urea_level}
                                     min={0}
                                     step={0.01}
@@ -49,7 +51,7 @@ const UreaAndCreatinineForm = memo<Readonly<Props>>(({ ureaAndCreatinine }) => {
                                     aria-required
                                 />
                                 <InputGroupAddon align="inline-end">
-                                    <InputGroupText>mg/dL</InputGroupText>
+                                    <InputGroupText>{__('urea_and_creatinine_pages.shared.unit')}</InputGroupText>
                                 </InputGroupAddon>
                             </InputGroup>
                             <InputError message={errors['urea_level']} />
@@ -57,14 +59,14 @@ const UreaAndCreatinineForm = memo<Readonly<Props>>(({ ureaAndCreatinine }) => {
 
                         <Field data-invalid={!!errors['creatinine_level']}>
                             <FieldLabel htmlFor="creatinine_level">
-                                Creatinine Level <RequiredIndicator />
+                                {__('urea_and_creatinine_pages.form.creatinine_level')} <RequiredIndicator />
                             </FieldLabel>
                             <InputGroup>
                                 <InputGroupInput
                                     type="number"
                                     id="creatinine_level"
                                     name="creatinine_level"
-                                    placeholder="e.g. 1.2"
+                                    placeholder={__('urea_and_creatinine_pages.form.creatinine_level_placeholder')}
                                     defaultValue={ureaAndCreatinine?.creatinine_level}
                                     min={0}
                                     step={0.01}
@@ -73,7 +75,7 @@ const UreaAndCreatinineForm = memo<Readonly<Props>>(({ ureaAndCreatinine }) => {
                                     aria-required
                                 />
                                 <InputGroupAddon align="inline-end">
-                                    <InputGroupText>mg/dL</InputGroupText>
+                                    <InputGroupText>{__('urea_and_creatinine_pages.shared.unit')}</InputGroupText>
                                 </InputGroupAddon>
                             </InputGroup>
                             <InputError message={errors['creatinine_level']} />
@@ -82,7 +84,7 @@ const UreaAndCreatinineForm = memo<Readonly<Props>>(({ ureaAndCreatinine }) => {
 
                     <Field data-invalid={!!errors['report_date']}>
                         <FieldLabel htmlFor="report_date">
-                            Report Date <RequiredIndicator />
+                            {__('urea_and_creatinine_pages.form.report_date')} <RequiredIndicator />
                         </FieldLabel>
                         <DatePicker id="report_date" name="report_date" defaultValue={ureaAndCreatinine?.report_date} />
                         <InputError message={errors['report_date']} />
@@ -92,7 +94,7 @@ const UreaAndCreatinineForm = memo<Readonly<Props>>(({ ureaAndCreatinine }) => {
                         <Activity mode={processing ? 'visible' : 'hidden'}>
                             <Spinner aria-hidden />
                         </Activity>
-                        Save
+                        {__('urea_and_creatinine_pages.form.submit')}
                     </Button>
                 </Fragment>
             )}

@@ -15,6 +15,7 @@ describe('tests for the "index" method of UreaAndCreatinineController', function
         $response->assertOk();
         $response->assertInertia(
             fn (AssertableInertia $page) => $page->component($componentName)
+                ->where('lang.urea_and_creatinine_pages.index.head_title', 'Urea and Creatinine Exams')
                 ->has('ureaAndCreatinines.data', 0)
                 ->has('chartData')
         );
@@ -43,8 +44,12 @@ describe('tests for the "index" method of UreaAndCreatinineController', function
 
         $response->assertOk();
         $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
+            ->where('lang.urea_and_creatinine_pages.index.head_title', 'Urea and Creatinine Exams')
             ->has('ureaAndCreatinines.data', 2)
             ->has('chartData')
+            ->where('chartData.0.datasets.urea_level.label', 'Urea Level')
+            ->where('chartData.0.datasets.creatinine_level.label', 'Creatinine Level')
+            ->where('chartData.0.datasets.urea_to_creatinine_ratio.label', 'Urea to Creatinine Ratio')
             ->has('ureaAndCreatinines.data.0', fn (AssertableInertia $item) => $item
                 ->where('urea_level', 32.5)
                 ->where('creatinine_level', 1.1)
@@ -76,7 +81,9 @@ describe('tests for the "create" method of UreaAndCreatinineController', functio
         $response = $this->actingAs($user)->get(route('urea-and-creatinine.create'));
 
         $response->assertOk();
-        $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName));
+        $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
+            ->where('lang.urea_and_creatinine_pages.create.head_title', 'Create Urea and Creatinine record')
+        );
     });
 
     it('should redirect guests to login if user is not authenticated', function () {
@@ -127,6 +134,7 @@ describe('tests for the "edit" method of UreaAndCreatinineController', function 
 
         $response->assertOk();
         $response->assertInertia(fn (AssertableInertia $page) => $page->component($componentName)
+            ->where('lang.urea_and_creatinine_pages.edit.head_title', 'Edit Urea and Creatinine record')
             ->has('ureaAndCreatinine', fn (AssertableInertia $item) => $item
                 ->where('urea_level', 30.7)
                 ->where('creatinine_level', 1)
