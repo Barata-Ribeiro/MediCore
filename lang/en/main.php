@@ -68,6 +68,10 @@ return [
             'clear' => 'Clear sorting',
             'hide' => 'Hide column',
         ],
+        'column_visibility' => [
+            'action' => 'View',
+            'label' => 'Toggle columns',
+        ],
         'toolbar' => [
             'search' => [
                 'flash_error' => 'Failed to perform search. Please try again.',

@@ -68,6 +68,10 @@ return [
             'clear' => 'Limpar ordenação',
             'hide' => 'Ocultar coluna',
         ],
+        'column_visibility' => [
+            'action' => 'Visualizar',
+            'label' => 'Alternar colunas',
+        ],
         'toolbar' => [
             'search' => [
                 'flash_error' => 'Falha ao realizar a pesquisa. Por favor, tente novamente.',
