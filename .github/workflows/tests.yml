@@ -55,7 +55,7 @@ jobs:
         run: php artisan key:generate
 
       - name: Build Assets
-        run: pnpm run build
+        run: pnpm run build:ssr
 
       - name: Tests
-        run: ./vendor/bin/pest
+        run: composer test
