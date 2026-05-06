@@ -8,6 +8,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { normalizeString } from '@/lib/utils';
+import { lang } from '@erag/lang-sync-inertia/react';
 import type { Table } from '@tanstack/react-table';
 import { Settings2 } from 'lucide-react';
 
@@ -16,16 +17,18 @@ export default function DataTableColumnVisibility<TData>({
 }: Readonly<{
     table: Table<TData>;
 }>) {
+    const { __ } = lang();
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="outline">
                     <Settings2 aria-hidden />
-                    View
+                    {__('main.data_table.column_visibility.action')}
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-37.5">
-                <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+                <DropdownMenuLabel>{__('main.data_table.column_visibility.label')}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {table
                     .getAllColumns()

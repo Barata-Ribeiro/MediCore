@@ -7,6 +7,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
+import { lang } from '@erag/lang-sync-inertia/react';
 import type { Column } from '@tanstack/react-table';
 import { ArrowDown, ArrowUp, ChevronsUpDown, EyeOffIcon } from 'lucide-react';
 import type { ComponentProps } from 'react';
@@ -23,6 +24,8 @@ export default function DataTableColumnHeader<TData, TValue>({
     className,
     ...props
 }: Readonly<DataTableColumnHeaderProps<TData, TValue>>) {
+    const { __ } = lang();
+
     if (!column.getCanSort() && !column.getCanHide()) {
         return <div className={cn(className)}>{title}</div>;
     }
@@ -55,7 +58,7 @@ export default function DataTableColumnHeader<TData, TValue>({
                         onClick={() => column.toggleSorting(false)}
                     >
                         {columnSortIndicator['asc']}
-                        Asc
+                        {__('main.data_table.column_header.asc')}
                     </DropdownMenuCheckboxItem>
                     <DropdownMenuCheckboxItem
                         className="relative pr-8 pl-2 [&_svg]:text-muted-foreground [&>span:first-child]:right-2 [&>span:first-child]:left-auto"
@@ -63,14 +66,14 @@ export default function DataTableColumnHeader<TData, TValue>({
                         onClick={() => column.toggleSorting(true)}
                     >
                         {columnSortIndicator['desc']}
-                        Desc
+                        {__('main.data_table.column_header.desc')}
                     </DropdownMenuCheckboxItem>
                     <DropdownMenuItem
                         className="pl-2 [&_svg]:text-muted-foreground"
                         onClick={() => column.clearSorting()}
                     >
                         {columnSortIndicator['default']}
-                        Clear
+                        {__('main.data_table.column_header.clear')}
                     </DropdownMenuItem>
                 </Activity>
 
@@ -85,7 +88,7 @@ export default function DataTableColumnHeader<TData, TValue>({
                         onClick={() => column.toggleVisibility(false)}
                     >
                         <EyeOffIcon aria-hidden />
-                        Hide
+                        {__('main.data_table.column_header.hide')}
                     </DropdownMenuCheckboxItem>
                 </Activity>
             </DropdownMenuContent>

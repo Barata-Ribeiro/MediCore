@@ -75,7 +75,7 @@ test('locale can be updated', function () {
         ->patch(route('locale.update'), ['locale' => 'pt_BR'])
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
-            ->component('dashboard')
+            ->component('settings/profile')
             ->where('auth.locale', 'pt_BR')
             ->hasFlash('toast.type', 'success')
             ->hasFlash('toast.message', 'Idioma atualizado com sucesso.')

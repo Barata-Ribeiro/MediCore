@@ -1,7 +1,5 @@
 import type { Appearance } from '@/hooks/use-appearance';
 import { useAppearance } from '@/hooks/use-appearance';
-import { useIsomorphicLayoutEffect } from '@/hooks/use-isomorphic-layout-effect';
-import useIsMounted from '@/hooks/use-mounted';
 import { cn } from '@/lib/utils';
 import { lang } from '@erag/lang-sync-inertia/react';
 import type { LucideIcon } from 'lucide-react';
@@ -15,7 +13,6 @@ type AppearanceTab = {
 };
 
 export default function AppearanceToggleTab({ className = '', ...props }: Readonly<HTMLAttributes<HTMLDivElement>>) {
-    const isMounted = useIsMounted();
     const { __ } = lang();
 
     const { appearance, updateAppearance } = useAppearance();
@@ -25,12 +22,6 @@ export default function AppearanceToggleTab({ className = '', ...props }: Readon
         { value: 'dark', icon: Moon, label_path: 'main.appearance_dropdown.dark' },
         { value: 'system', icon: Monitor, label_path: 'main.appearance_dropdown.system' },
     ];
-
-    useIsomorphicLayoutEffect(() => {
-        if (!isMounted) {
-            return;
-        }
-    }, [appearance, isMounted]);
 
     return (
         <div

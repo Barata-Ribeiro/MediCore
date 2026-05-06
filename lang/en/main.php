@@ -62,6 +62,16 @@ return [
         'action' => 'Create',
     ],
     'data_table' => [
+        'column_header' => [
+            'asc' => 'Ascending',
+            'desc' => 'Descending',
+            'clear' => 'Clear sorting',
+            'hide' => 'Hide column',
+        ],
+        'column_visibility' => [
+            'action' => 'View',
+            'label' => 'Toggle columns',
+        ],
         'toolbar' => [
             'search' => [
                 'flash_error' => 'Failed to perform search. Please try again.',

@@ -102,7 +102,7 @@ class ProfileController extends Controller
 
             Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.settings.profile.language.updated_successfully')]);
 
-            return to_route('dashboard');
+            return back();
         } catch (Exception $e) {
             Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.settings.profile.language.failed_update')]);
             Log::error('Failed to update locale', ['user_id' => $request->user()->id, 'error' => $e->getMessage()]);

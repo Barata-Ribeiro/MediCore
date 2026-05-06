@@ -62,6 +62,16 @@ return [
         'action' => 'Criar',
     ],
     'data_table' => [
+        'column_header' => [
+            'asc' => 'Ascendente',
+            'desc' => 'Descendente',
+            'clear' => 'Limpar ordenação',
+            'hide' => 'Ocultar coluna',
+        ],
+        'column_visibility' => [
+            'action' => 'Visualizar',
+            'label' => 'Alternar colunas',
+        ],
         'toolbar' => [
             'search' => [
                 'flash_error' => 'Falha ao realizar a pesquisa. Por favor, tente novamente.',
