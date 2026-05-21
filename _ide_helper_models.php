@@ -368,6 +368,9 @@ namespace App\Models{
  * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read bool|null $notifications_exists
+ * @property-read Collection<int, \Laravel\Passkeys\Passkey> $passkeys
+ * @property-read int|null $passkeys_count
+ * @property-read bool|null $passkeys_exists
  * @property-read Collection<int, Permission> $permissions
  * @property-read int|null $permissions_count
  * @property-read bool|null $permissions_exists
@@ -409,6 +412,6 @@ namespace App\Models{
  * @method static Builder<static>|User withoutTeam($teams)
  * @mixin \Eloquent
  */
-	class User extends \Eloquent {}
+	class User extends \Eloquent implements \Laravel\Fortify\Contracts\PasskeyUser, \Laravel\Passkeys\Contracts\PasskeyUser {}
 }
 
