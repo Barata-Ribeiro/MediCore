@@ -24,6 +24,8 @@ use App\Services\Exams\VitaminD3Service;
 use App\Translation\Translator;
 use Carbon\CarbonImmutable;
 use Gate;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
@@ -125,7 +127,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Date::use(CarbonImmutable::class);
 
+        Model::shouldBeStrict();
         DB::prohibitDestructiveCommands(app()->isProduction());
+        Vite::prefetch(concurrency: 3);
+        JsonResource::withoutWrapping();
 
         Password::defaults(fn (): ?Password => app()->isProduction()
             ? Password::min(12)
@@ -136,8 +141,6 @@ class AppServiceProvider extends ServiceProvider
                 ->uncompromised()
             : null,
         );
-
-        Vite::prefetch(concurrency: 3);
 
         Gate::before(fn ($user, $ability) => $user->hasRole('super-admin') ? true : null);
     }

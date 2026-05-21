@@ -1,4 +1,5 @@
 import InputError from '@/components/helpers/input-error';
+import PasskeyVerify from '@/components/helpers/passkey/passkey-verify';
 import PasswordInput from '@/components/helpers/password-input';
 import TextLink from '@/components/helpers/text-link';
 import { Button } from '@/components/ui/button';
@@ -33,6 +34,8 @@ export default function Login({ status, canResetPassword, canRegister }: Readonl
     return (
         <Fragment>
             <Head title={__('auth_pages.login_page.head_title')} />
+
+            <PasskeyVerify />
 
             <Form
                 {...store.form()}

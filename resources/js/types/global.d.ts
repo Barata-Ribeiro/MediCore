@@ -1,6 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import type { Auth } from '@/types/auth';
+import '@inertiajs/core';
+import '@tanstack/react-table';
+
+declare module 'react' {
+    interface InputHTMLAttributes<T> {
+        passwordrules?: string;
+    }
+}
 
 declare module '@inertiajs/core' {
     export interface InertiaConfig {

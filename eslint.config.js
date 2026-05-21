@@ -22,7 +22,7 @@ export default [
     ...typescript.configs.recommended,
     {
         ...react.configs.flat.recommended,
-        ...react.configs.flat['jsx-runtime'], // Required for React 17+
+        ...react.configs.flat['jsx-runtime'],
         languageOptions: {
             globals: {
                 ...globals.browser,
@@ -80,6 +80,7 @@ export default [
             '@stylistic': stylistic,
         },
         rules: {
+            '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: false }],
             '@stylistic/padding-line-between-statements': ['error', ...paddingAroundControl],
         },
     },

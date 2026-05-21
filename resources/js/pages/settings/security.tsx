@@ -1,33 +1,26 @@
 import SecurityController from '@/actions/App/Http/Controllers/Settings/SecurityController';
 import Heading from '@/components/common/heading';
 import InputError from '@/components/helpers/input-error';
+import type { Props as ManagePasskeysProps } from '@/components/helpers/manage-passkeys';
+import ManagePasskeys from '@/components/helpers/manage-passkeys';
+import type { Props as ManageTwoFactorProps } from '@/components/helpers/manage-two-factor';
+import ManageTwoFactor from '@/components/helpers/manage-two-factor';
 import PasswordInput from '@/components/helpers/password-input';
-import TwoFactorRecoveryCodes from '@/components/helpers/two-factor-recovery-codes';
-import TwoFactorSetupModal from '@/components/helpers/two-factor-setup-modal';
 import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Spinner } from '@/components/ui/spinner';
-import { useIsomorphicLayoutEffect } from '@/hooks/use-isomorphic-layout-effect';
-import { useTwoFactorAuth } from '@/hooks/use-two-factor-auth';
 import { edit } from '@/routes/security';
-import { disable, enable } from '@/routes/two-factor';
 import { lang } from '@erag/lang-sync-inertia/react';
 import { Transition } from '@headlessui/react';
 import { Form, Head, setLayoutProps } from '@inertiajs/react';
-import { ShieldCheckIcon } from 'lucide-react';
-import { Activity, Fragment, useRef, useState } from 'react';
+import { Activity, Fragment, useRef } from 'react';
 
 type Props = {
-    canManageTwoFactor?: boolean;
-    requiresConfirmation?: boolean;
-    twoFactorEnabled?: boolean;
-};
+    passwordRules: string;
+} & ManagePasskeysProps &
+    ManageTwoFactorProps;
 
-export default function Security({
-    canManageTwoFactor = false,
-    requiresConfirmation = false,
-    twoFactorEnabled = false,
-}: Readonly<Props>) {
+export default function Security(props: Readonly<Props>) {
     const { __ } = lang();
     const passwordInput = useRef<HTMLInputElement>(null);
     const currentPasswordInput = useRef<HTMLInputElement>(null);
@@ -35,28 +28,6 @@ export default function Security({
     setLayoutProps({
         breadcrumbs: [{ title: __('settings_pages.security_page.head_title'), href: edit() }],
     });
-
-    const {
-        qrCodeSvg,
-        hasSetupData,
-        manualSetupKey,
-        clearSetupData,
-        clearTwoFactorAuthData,
-        fetchSetupData,
-        recoveryCodesList,
-        fetchRecoveryCodes,
-        errors,
-    } = useTwoFactorAuth();
-    const [showSetupModal, setShowSetupModal] = useState<boolean>(false);
-    const prevTwoFactorEnabled = useRef(twoFactorEnabled);
-
-    useIsomorphicLayoutEffect(() => {
-        if (prevTwoFactorEnabled.current && !twoFactorEnabled) {
-            clearTwoFactorAuthData();
-        }
-
-        prevTwoFactorEnabled.current = twoFactorEnabled;
-    }, [twoFactorEnabled, clearTwoFactorAuthData]);
 
     return (
         <Fragment>
@@ -174,83 +145,13 @@ export default function Security({
                 </Form>
             </div>
 
-            <Activity mode={canManageTwoFactor ? 'visible' : 'hidden'}>
-                <div className="space-y-6">
-                    <Heading
-                        variant="small"
-                        title="Two-factor authentication"
-                        description="Manage your two-factor authentication settings"
-                    />
-                    {twoFactorEnabled ? (
-                        <div className="flex flex-col items-start justify-start space-y-4">
-                            <p className="text-sm text-muted-foreground">
-                                {__(
-                                    'settings_pages.security_page.two_factor_authentication_section.two_factor_authentication_enabled',
-                                )}
-                            </p>
+            <ManageTwoFactor
+                canManageTwoFactor={props.canManageTwoFactor}
+                requiresConfirmation={props.requiresConfirmation}
+                twoFactorEnabled={props.twoFactorEnabled}
+            />
 
-                            <div className="relative inline">
-                                <Form {...disable.form()}>
-                                    {({ processing }) => (
-                                        <Button variant="destructive" type="submit" disabled={processing}>
-                                            {__(
-                                                'settings_pages.security_page.two_factor_authentication_section.two_factor_authentication_enabled_button',
-                                            )}
-                                        </Button>
-                                    )}
-                                </Form>
-                            </div>
-
-                            <TwoFactorRecoveryCodes
-                                recoveryCodesList={recoveryCodesList}
-                                fetchRecoveryCodes={fetchRecoveryCodes}
-                                errors={errors}
-                            />
-                        </div>
-                    ) : (
-                        <div className="flex flex-col items-start justify-start space-y-4">
-                            <p className="text-sm text-muted-foreground">
-                                {__(
-                                    'settings_pages.security_page.two_factor_authentication_section.two_factor_authentication_disabled',
-                                )}
-                            </p>
-
-                            <div>
-                                {hasSetupData ? (
-                                    <Button onClick={() => setShowSetupModal(true)}>
-                                        <ShieldCheckIcon aria-hidden />
-                                        {__(
-                                            'settings_pages.security_page.two_factor_authentication_section.two_factor_authentication_has_setup_data',
-                                        )}
-                                    </Button>
-                                ) : (
-                                    <Form {...enable.form()} onSuccess={() => setShowSetupModal(true)}>
-                                        {({ processing }) => (
-                                            <Button type="submit" disabled={processing}>
-                                                {__(
-                                                    'settings_pages.security_page.two_factor_authentication_section.two_factor_authentication_disabled_button',
-                                                )}
-                                            </Button>
-                                        )}
-                                    </Form>
-                                )}
-                            </div>
-                        </div>
-                    )}
-
-                    <TwoFactorSetupModal
-                        isOpen={showSetupModal}
-                        onClose={() => setShowSetupModal(false)}
-                        requiresConfirmation={requiresConfirmation}
-                        twoFactorEnabled={twoFactorEnabled}
-                        qrCodeSvg={qrCodeSvg}
-                        manualSetupKey={manualSetupKey}
-                        clearSetupData={clearSetupData}
-                        fetchSetupData={fetchSetupData}
-                        errors={errors}
-                    />
-                </div>
-            </Activity>
+            <ManagePasskeys canManagePasskeys={props.canManagePasskeys} passkeys={props.passkeys} />
         </Fragment>
     );
 }

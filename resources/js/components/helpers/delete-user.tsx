@@ -13,37 +13,43 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { Form } from '@inertiajs/react';
 import { useRef } from 'react';
 
 export default function DeleteUser() {
+    const { __ } = lang();
     const passwordInput = useRef<HTMLInputElement>(null);
 
     return (
         <div className="space-y-6">
             <Heading
                 variant="small"
-                title="Delete account"
-                description="Delete your account and all of its resources"
+                title={__('settings_pages.profile_page.delete_account_section.title')}
+                description={__('settings_pages.profile_page.delete_account_section.description')}
             />
             <div className="space-y-4 rounded-lg border border-red-100 bg-red-50 p-4 dark:border-red-200/10 dark:bg-red-700/10">
                 <div className="relative space-y-0.5 text-red-600 dark:text-red-100">
-                    <p className="font-medium">Warning</p>
-                    <p className="text-sm">Please proceed with caution, this cannot be undone.</p>
+                    <p className="font-medium">
+                        {__('settings_pages.profile_page.delete_account_section.warning_title')}
+                    </p>
+                    <p className="text-sm">
+                        {__('settings_pages.profile_page.delete_account_section.warning_description')}
+                    </p>
                 </div>
 
                 <Dialog>
                     <DialogTrigger asChild>
                         <Button type="button" variant="destructive" data-test="delete-user-button">
-                            Delete account
+                            {__('settings_pages.profile_page.delete_account_section.form.submit')}
                         </Button>
                     </DialogTrigger>
                     <DialogContent>
-                        <DialogTitle>Are you sure you want to delete your account?</DialogTitle>
+                        <DialogTitle>
+                            {__('settings_pages.profile_page.delete_account_section.modal.title')}
+                        </DialogTitle>
                         <DialogDescription>
-                            Once your account is deleted, all of its resources and data will also be permanently
-                            deleted. Please enter your password to confirm you would like to permanently delete your
-                            account.
+                            {__('settings_pages.profile_page.delete_account_section.modal.description')}
                         </DialogDescription>
 
                         <Form
@@ -58,14 +64,16 @@ export default function DeleteUser() {
                                 <>
                                     <Field data-invalid={!!errors['password']}>
                                         <FieldLabel htmlFor="password" className="sr-only">
-                                            Password
+                                            {__('settings_pages.profile_page.delete_account_section.form.password')}
                                         </FieldLabel>
 
                                         <PasswordInput
                                             id="password"
                                             name="password"
                                             ref={passwordInput}
-                                            placeholder="Password"
+                                            placeholder={__(
+                                                'settings_pages.profile_page.delete_account_section.form.password_placeholder',
+                                            )}
                                             autoComplete="current-password"
                                             aria-invalid={!!errors['password']}
                                         />
@@ -80,7 +88,7 @@ export default function DeleteUser() {
                                                 variant="secondary"
                                                 onClick={() => resetAndClearErrors()}
                                             >
-                                                Cancel
+                                                {__('settings_pages.profile_page.delete_account_section.form.cancel')}
                                             </Button>
                                         </DialogClose>
 
@@ -89,7 +97,7 @@ export default function DeleteUser() {
                                             variant="destructive"
                                             data-test="confirm-delete-user-button"
                                         >
-                                            Delete account
+                                            {__('settings_pages.profile_page.delete_account_section.form.submit')}
                                         </Button>
                                     </DialogFooter>
                                 </>
