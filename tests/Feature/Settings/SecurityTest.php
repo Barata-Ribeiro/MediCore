@@ -25,7 +25,7 @@ test('security page is displayed', function () {
         );
 });
 
-test('security page requires password confirmation when enabled', function () {
+test('security page remains accessible when two factor password confirmation is enabled', function () {
     $this->skipUnlessFortifyFeature(Features::twoFactorAuthentication());
 
     $user = User::factory()->create();
@@ -35,10 +35,15 @@ test('security page requires password confirmation when enabled', function () {
         'confirmPassword' => true,
     ]);
 
-    $response = $this->actingAs($user)
-        ->get(route('security.edit'));
-
-    $response->assertRedirect(route('password.confirm'));
+    $this->actingAs($user)
+        ->get(route('security.edit'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('settings/security')
+            ->where('canManageTwoFactor', true)
+            ->where('requiresConfirmation', true)
+            ->where('twoFactorEnabled', false),
+        );
 });
 
 test('security page does not require password confirmation when disabled', function () {
