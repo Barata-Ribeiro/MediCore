@@ -85,6 +85,22 @@ return [
                 'success_message' => 'Personal information updated successfully',
             ],
         ],
+        'delete_account_section' => [
+            'title' => 'Delete account',
+            'description' => 'Delete your account and all of its resources',
+            'warning_title' => 'Warning',
+            'warning_description' => 'Please proceed with caution, this cannot be undone.',
+            'modal' => [
+                'title' => 'Are you sure you want to delete your account?',
+                'description' => 'Once your account is deleted, all of its resources and data will also be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.',
+            ],
+            'form' => [
+                'password' => 'Password',
+                'password_placeholder' => 'Password',
+                'cancel' => 'Cancel',
+                'submit' => 'Delete account',
+            ],
+        ],
     ],
     'security_page' => [
         'head_title' => 'Security settings',

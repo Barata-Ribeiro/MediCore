@@ -85,6 +85,22 @@ return [
                 'success_message' => 'Informações pessoais atualizadas com sucesso',
             ],
         ],
+        'delete_account_section' => [
+            'title' => 'Excluir conta',
+            'description' => 'Exclua sua conta e todos os seus recursos',
+            'warning_title' => 'Aviso',
+            'warning_description' => 'Por favor, proceda com cuidado, isso não pode ser desfeito.',
+            'modal' => [
+                'title' => 'Tem certeza de que deseja excluir sua conta?',
+                'description' => 'Depois que sua conta for excluída, todos os seus recursos e dados também serão excluídos permanentemente. Insira sua senha para confirmar que deseja excluir sua conta permanentemente.',
+            ],
+            'form' => [
+                'password' => 'Senha',
+                'password_placeholder' => 'Senha',
+                'cancel' => 'Cancelar',
+                'submit' => 'Excluir conta',
+            ],
+        ],
     ],
     'security_page' => [
         'head_title' => 'Configurações de segurança',
