@@ -1,7 +1,9 @@
 import InputError from '@/components/helpers/input-error';
 import { Button } from '@/components/ui/button';
+import { Field } from '@/components/ui/field';
 import { Separator } from '@/components/ui/separator';
 import { Spinner } from '@/components/ui/spinner';
+import { dashboard } from '@/routes';
 import type { UrlMethodPair } from '@inertiajs/core';
 import { router } from '@inertiajs/react';
 import { usePasskeyVerify } from '@laravel/passkeys/react';
@@ -26,7 +28,7 @@ export default function PasskeyVerify({ routes, label, loadingLabel, separator }
             },
         }),
         onSuccess: (response) => {
-            router.visit(response.redirect ?? '/dashboard');
+            router.visit(response.redirect ?? dashboard());
         },
     });
 
@@ -36,13 +38,13 @@ export default function PasskeyVerify({ routes, label, loadingLabel, separator }
 
     return (
         <>
-            <div className="grid gap-2">
+            <Field data-invalid={!!error}>
                 <Button type="button" variant="outline" className="w-full" onClick={verify} disabled={isLoading}>
-                    {isLoading ? <Spinner /> : <KeyRound className="h-4 w-4" />}
+                    {isLoading ? <Spinner aria-hidden /> : <KeyRound aria-hidden className="size-4" />}
                     {isLoading ? (loadingLabel ?? 'Authenticating...') : (label ?? 'Sign in with passkey')}
                 </Button>
                 {error && <InputError message={error} className="text-center" />}
-            </div>
+            </Field>
 
             <div className="relative my-6">
                 <div className="absolute inset-0 flex items-center">

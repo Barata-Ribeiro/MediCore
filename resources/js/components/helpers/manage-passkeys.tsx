@@ -2,6 +2,7 @@ import { destroy } from '@/actions/Laravel/Passkeys/Http/Controllers/PasskeyRegi
 import Heading from '@/components/common/heading';
 import PasskeyItem from '@/components/helpers/passkey/passkey-item';
 import PasskeyRegistration from '@/components/helpers/passkey/passkey-register';
+import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty';
 
 import type { Passkey } from '@/types/auth';
 import { router } from '@inertiajs/react';
@@ -14,13 +15,15 @@ export type Props = {
 
 const EmptyState = () => {
     return (
-        <div className="p-8 text-center">
-            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-muted">
-                <KeyRound aria-hidden className="size-7 text-muted-foreground" />
-            </div>
-            <p className="font-medium">No passkeys yet</p>
-            <p className="mt-1 text-sm text-muted-foreground">Add a passkey to sign in without a password</p>
-        </div>
+        <Empty>
+            <EmptyHeader>
+                <EmptyMedia variant="icon">
+                    <KeyRound aria-hidden className="size-7 text-muted-foreground" />
+                </EmptyMedia>
+                <EmptyTitle>No Passkeys</EmptyTitle>
+                <EmptyDescription>Add a passkey to sign in without a password</EmptyDescription>
+            </EmptyHeader>
+        </Empty>
     );
 };
 

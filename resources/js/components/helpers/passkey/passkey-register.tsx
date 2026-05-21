@@ -1,9 +1,11 @@
 import InputError from '@/components/helpers/input-error';
 import { Button } from '@/components/ui/button';
+import { Field, FieldDescription } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Spinner } from '@/components/ui/spinner';
 import { usePasskeyRegister } from '@laravel/passkeys/react';
-import { useState } from 'react';
+import { Activity, useState } from 'react';
 
 type Props = {
     onSuccess: () => void;
@@ -60,7 +62,7 @@ export default function PasskeyRegistration({ onSuccess }: Readonly<Props>) {
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-border bg-muted/50 p-4">
-            <div className="grid gap-2">
+            <Field data-invalid={!!error}>
                 <Label htmlFor="passkey-name">Passkey name</Label>
                 <Input
                     id="passkey-name"
@@ -71,13 +73,21 @@ export default function PasskeyRegistration({ onSuccess }: Readonly<Props>) {
                     className="mt-1 block w-full border-foreground/20"
                     autoFocus
                 />
-                <p className="text-xs text-muted-foreground">A name helps you identify this passkey later.</p>
-            </div>
 
-            {error && <InputError message={error} />}
+                {error ? (
+                    <InputError message={error} />
+                ) : (
+                    <FieldDescription className="text-xs text-muted-foreground">
+                        A name helps you identify this passkey later.
+                    </FieldDescription>
+                )}
+            </Field>
 
             <div className="flex gap-2">
                 <Button type="submit" disabled={isLoading || !name.trim()}>
+                    <Activity mode={isLoading ? 'visible' : 'hidden'}>
+                        <Spinner aria-hidden />
+                    </Activity>
                     {isLoading ? 'Registering...' : 'Register passkey'}
                 </Button>
                 <Button type="button" variant="ghost" onClick={handleCancel}>
