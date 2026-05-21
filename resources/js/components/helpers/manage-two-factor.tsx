@@ -51,8 +51,8 @@ export default function ManageTwoFactor(props: Readonly<Props>) {
         <div className="space-y-6">
             <Heading
                 variant="small"
-                title="Two-factor authentication"
-                description="Manage your two-factor authentication settings"
+                title={__('settings_pages.security_page.two_factor_authentication_section.title')}
+                description={__('settings_pages.security_page.two_factor_authentication_section.description')}
             />
             {twoFactorEnabled ? (
                 <div className="flex flex-col items-start justify-start space-y-4">
