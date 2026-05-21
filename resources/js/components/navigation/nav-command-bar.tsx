@@ -16,8 +16,8 @@ import { edit as editAppearance } from '@/routes/appearance';
 import { edit } from '@/routes/profile';
 import { edit as editSecurity } from '@/routes/security';
 import { lang } from '@erag/lang-sync-inertia/react';
-import type { UrlMethodPair } from '@inertiajs/core';
-import { router } from '@inertiajs/core';
+import type { InertiaLinkProps } from '@inertiajs/react';
+import { router } from '@inertiajs/react';
 import { formatForDisplay, useHotkey } from '@tanstack/react-hotkeys';
 import { KeyRoundIcon, SearchIcon, SunMoonIcon, UserIcon } from 'lucide-react';
 import { useCallback, useState } from 'react';
@@ -26,7 +26,7 @@ export default function NavCommandBar() {
     const [open, setOpen] = useState(false);
     const { __ } = lang();
 
-    const handleRouteChange = useCallback((href: NonNullable<string | UrlMethodPair | undefined>) => {
+    const handleRouteChange = useCallback((href: NonNullable<InertiaLinkProps['href']>) => {
         return () => {
             if (typeof href === 'string') {
                 router.get(href, { viewTransition: true });

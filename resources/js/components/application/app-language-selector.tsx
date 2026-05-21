@@ -11,8 +11,7 @@ import {
 import { update } from '@/routes/locale';
 import type { AppLocale } from '@/types/auth';
 import { lang } from '@erag/lang-sync-inertia/react';
-import { router } from '@inertiajs/core';
-import { usePage } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 import { LanguagesIcon } from 'lucide-react';
 
 export default function AppLanguageSelector() {
