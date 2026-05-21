@@ -4,6 +4,7 @@ import { Field, FieldDescription } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { usePasskeyRegister } from '@laravel/passkeys/react';
 import { Activity, useState } from 'react';
 
@@ -12,8 +13,9 @@ type Props = {
 };
 
 export default function PasskeyRegistration({ onSuccess }: Readonly<Props>) {
+    const { __ } = lang();
     const [name, setName] = useState(() => {
-        const ua = navigator.userAgent;
+        const ua = typeof navigator === 'undefined' ? '' : navigator.userAgent;
 
         const browser = ['Chrome', 'Firefox', 'Safari', 'Edge', 'Opera'].find((browser) =>
             new RegExp(browser).test(ua),
@@ -21,7 +23,9 @@ export default function PasskeyRegistration({ onSuccess }: Readonly<Props>) {
 
         const os = ['iPhone', 'iPad', 'Android', 'Mac', 'Windows'].find((os) => new RegExp(os).test(ua));
 
-        return [browser, os].filter(Boolean).join(' on ') || '';
+        return [browser, os]
+            .filter(Boolean)
+            .join(` ${__('settings_pages.security_page.passkeys_section.form.generated_name_connector')} `);
     });
 
     const [showForm, setShowForm] = useState(false);
@@ -49,13 +53,17 @@ export default function PasskeyRegistration({ onSuccess }: Readonly<Props>) {
     };
 
     if (!isSupported) {
-        return <div className="text-sm text-muted-foreground">Passkeys are not supported in this browser.</div>;
+        return (
+            <div className="text-sm text-muted-foreground">
+                {__('settings_pages.security_page.passkeys_section.form.unsupported')}
+            </div>
+        );
     }
 
     if (!showForm) {
         return (
             <Button variant="outline" onClick={() => setShowForm(true)}>
-                Add passkey
+                {__('settings_pages.security_page.passkeys_section.form.add_button')}
             </Button>
         );
     }
@@ -63,13 +71,13 @@ export default function PasskeyRegistration({ onSuccess }: Readonly<Props>) {
     return (
         <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-border bg-muted/50 p-4">
             <Field data-invalid={!!error}>
-                <Label htmlFor="passkey-name">Passkey name</Label>
+                <Label htmlFor="passkey-name">{__('settings_pages.security_page.passkeys_section.form.name')}</Label>
                 <Input
                     id="passkey-name"
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="e.g., MacBook Pro, iPhone"
+                    placeholder={__('settings_pages.security_page.passkeys_section.form.name_placeholder')}
                     className="mt-1 block w-full border-foreground/20"
                     autoFocus
                 />
@@ -78,7 +86,7 @@ export default function PasskeyRegistration({ onSuccess }: Readonly<Props>) {
                     <InputError message={error} />
                 ) : (
                     <FieldDescription className="text-xs text-muted-foreground">
-                        A name helps you identify this passkey later.
+                        {__('settings_pages.security_page.passkeys_section.form.name_description')}
                     </FieldDescription>
                 )}
             </Field>
@@ -88,10 +96,12 @@ export default function PasskeyRegistration({ onSuccess }: Readonly<Props>) {
                     <Activity mode={isLoading ? 'visible' : 'hidden'}>
                         <Spinner aria-hidden />
                     </Activity>
-                    {isLoading ? 'Registering...' : 'Register passkey'}
+                    {isLoading
+                        ? __('settings_pages.security_page.passkeys_section.form.submit_loading')
+                        : __('settings_pages.security_page.passkeys_section.form.submit')}
                 </Button>
                 <Button type="button" variant="ghost" onClick={handleCancel}>
-                    Cancel
+                    {__('settings_pages.security_page.passkeys_section.form.cancel')}
                 </Button>
             </div>
         </form>

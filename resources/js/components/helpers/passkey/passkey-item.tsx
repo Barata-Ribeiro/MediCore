@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/dialog';
 import { Spinner } from '@/components/ui/spinner';
 import type { Passkey } from '@/types/auth';
+import { lang } from '@erag/lang-sync-inertia/react';
 import { KeyRound, Trash2 } from 'lucide-react';
 import { Activity, useState } from 'react';
 
@@ -20,6 +21,7 @@ type Props = {
 };
 
 export default function PasskeyItem({ passkey, onDelete }: Readonly<Props>) {
+    const { __ } = lang();
     const [isDeleting, setIsDeleting] = useState(false);
 
     const handleDelete = () => {
@@ -43,11 +45,15 @@ export default function PasskeyItem({ passkey, onDelete }: Readonly<Props>) {
                         )}
                     </div>
                     <p className="text-sm text-muted-foreground">
-                        Added {passkey.created_at_diff}
+                        {__('settings_pages.security_page.passkeys_section.added', {
+                            time: passkey.created_at_diff,
+                        })}
                         {passkey.last_used_at_diff && (
                             <>
                                 <span className="mx-1 text-muted-foreground/50">/</span>
-                                Last used {passkey.last_used_at_diff}
+                                {__('settings_pages.security_page.passkeys_section.last_used', {
+                                    time: passkey.last_used_at_diff,
+                                })}
                             </>
                         )}
                     </p>
@@ -58,24 +64,31 @@ export default function PasskeyItem({ passkey, onDelete }: Readonly<Props>) {
                 <DialogTrigger asChild>
                     <Button variant="destructive" size="sm">
                         <Trash2 aria-hidden className="size-4" />
-                        <span className="sr-only">Remove</span>
+                        <span className="sr-only">
+                            {__('settings_pages.security_page.passkeys_section.remove_sr_label')}
+                        </span>
                     </Button>
                 </DialogTrigger>
                 <DialogContent>
-                    <DialogTitle>Remove passkey</DialogTitle>
+                    <DialogTitle>{__('settings_pages.security_page.passkeys_section.remove_modal.title')}</DialogTitle>
                     <DialogDescription>
-                        Are you sure you want to remove the "{passkey.name}" passkey? You will no longer be able to use
-                        it to sign in.
+                        {__('settings_pages.security_page.passkeys_section.remove_modal.description', {
+                            name: passkey.name,
+                        })}
                     </DialogDescription>
                     <DialogFooter className="gap-2">
                         <DialogClose asChild>
-                            <Button variant="secondary">Cancel</Button>
+                            <Button variant="secondary">
+                                {__('settings_pages.security_page.passkeys_section.remove_modal.cancel')}
+                            </Button>
                         </DialogClose>
                         <Button variant="destructive" onClick={handleDelete} disabled={isDeleting}>
                             <Activity mode={isDeleting ? 'visible' : 'hidden'}>
                                 <Spinner aria-hidden />
                             </Activity>
-                            {isDeleting ? 'Removing...' : 'Remove passkey'}
+                            {isDeleting
+                                ? __('settings_pages.security_page.passkeys_section.remove_modal.submit_loading')
+                                : __('settings_pages.security_page.passkeys_section.remove_modal.submit')}
                         </Button>
                     </DialogFooter>
                 </DialogContent>
