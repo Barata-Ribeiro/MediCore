@@ -42,9 +42,10 @@ class ProfileController extends Controller
         $user = $request->user();
 
         $validated = $request->validated();
+        $userAttributes = array_intersect_key($validated, array_flip($user->getFillable()));
 
         try {
-            $user->fill($validated);
+            $user->fill($userAttributes);
 
             if ($user->isDirty('email')) {
                 $user->email_verified_at = null;
