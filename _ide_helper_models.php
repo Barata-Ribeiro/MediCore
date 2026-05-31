@@ -368,7 +368,7 @@ namespace App\Models{
  * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read bool|null $notifications_exists
- * @property-read Collection<int, \Laravel\Passkeys\Passkey> $passkeys
+ * @property-read Collection<int, Passkey> $passkeys
  * @property-read int|null $passkeys_count
  * @property-read bool|null $passkeys_exists
  * @property-read Collection<int, Permission> $permissions

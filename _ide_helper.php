@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 13.11.2.
+ * Generated for Laravel 13.12.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -13423,11 +13423,11 @@ namespace Illuminate\Support\Facades {
         /**
          * Delete all of the jobs from the queue.
          *
-         * @param string $queue
+         * @param string|null $queue
          * @return int
          * @static
          */
-        public static function clear($queue)
+        public static function clear($queue = null)
         {
             /** @var \Illuminate\Queue\DatabaseQueue $instance */
             return $instance->clear($queue);
@@ -15922,10 +15922,6 @@ namespace Illuminate\Support\Facades {
          * being the original client, and each successive proxy that passed the request
          * adding the IP address where it received the request from.
          *
-         * If your reverse proxy uses a different header name than "X-Forwarded-For",
-         * ("Client-Ip" for instance), configure it via the $trustedHeaderSet
-         * argument of the Request::setTrustedProxies() method instead.
-         *
          * @see getClientIps()
          * @see https://wikipedia.org/wiki/X-Forwarded-For
          * @static
@@ -18145,6 +18141,7 @@ namespace Illuminate\Support\Facades {
      * @method static \Illuminate\Console\Scheduling\PendingEventAttributes skip(\Closure|bool $callback)
      * @method static \Illuminate\Console\Scheduling\PendingEventAttributes name(string $description)
      * @method static \Illuminate\Console\Scheduling\PendingEventAttributes description(string $description)
+     * @method static \Illuminate\Console\Scheduling\PendingEventAttributes withAttributes(array $attributes)
      * @method static \Illuminate\Console\Scheduling\PendingEventAttributes cron(string $expression)
      * @method static \Illuminate\Console\Scheduling\PendingEventAttributes between(string $startTime, string $endTime)
      * @method static \Illuminate\Console\Scheduling\PendingEventAttributes unlessBetween(string $startTime, string $endTime)
