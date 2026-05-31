@@ -19,11 +19,29 @@ export default defineConfig({
         tailwindcss(),
         wayfinder({ formVariants: true }),
     ],
+    build: {
+        target: 'esnext',
+        minify: 'oxc',
+        chunkSizeWarningLimit: 1000,
+        rolldownOptions: {
+            output: {
+                entryFileNames: '[hash].js',
+                chunkFileNames: `[hash].js`,
+                assetFileNames: `[hash].[ext]`,
+            },
+        },
+        cssCodeSplit: true,
+        sourcemap: false,
+        assetsInlineLimit: 4096,
+    },
     server: {
         host: 'medicore.test',
         port: 5173,
         hmr: {
             host: 'medicore.test',
+            overlay: false,
         },
+        watch: {            usePolling: false,        },
     },
+    assetsInclude: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.webp'],
 });
