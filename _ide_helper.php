@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 13.12.0.
+ * Generated for Laravel 13.13.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -3889,6 +3889,19 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Bus\Dispatcher $instance */
             return $instance->dispatchNow($command, $handler);
+        }
+
+        /**
+         * Dispatch multiple commands in bulk to their appropriate handlers on the queue.
+         *
+         * @param iterable $jobs
+         * @return void
+         * @static
+         */
+        public static function bulk($jobs)
+        {
+            /** @var \Illuminate\Bus\Dispatcher $instance */
+            $instance->bulk($jobs);
         }
 
         /**
@@ -18345,6 +18358,19 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Console\Scheduling\Schedule $instance */
             return $instance->useCache($store);
+        }
+
+        /**
+         * Indicate that the scheduler should not poll for pause or interrupt signals.
+         *
+         * This prevents the scheduler from hitting the application cache to determine if it needs to pause or interrupt.
+         *
+         * @return void
+         * @static
+         */
+        public static function withoutInterruptionPolling()
+        {
+            \Illuminate\Console\Scheduling\Schedule::withoutInterruptionPolling();
         }
 
         /**
