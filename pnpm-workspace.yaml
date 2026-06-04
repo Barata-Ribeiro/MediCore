@@ -1,17 +1,12 @@
 packages:
-    - '.'
+  - '.'
 allowBuilds:
-    msw: true
-    'unrs-resolver': true
-minimumReleaseAgeExclude:
-    - '@inertiajs/core@3.3.0'
-    - '@inertiajs/react@3.3.0'
-    - '@inertiajs/vite@3.3.0'
-    - vite@8.0.14
-    - '@eslint/plugin-kit@0.7.2'
-    - date-fns@4.4.0
-    - eslint@10.4.1
+  msw: true
+  'unrs-resolver': true
 publicHoistPattern:
-    - '@inertiajs/core'
+  - '@inertiajs/core'
 overrides:
-    'eslint-plugin-react>eslint': '^9.7'
+  'eslint-plugin-react>eslint': '^9.7'
+minimumReleaseAgeExclude:
+  - '@rollup/rollup-linux-x64-gnu@4.61.1'
+  - '@rollup/rollup-win32-x64-msvc@4.61.1'
