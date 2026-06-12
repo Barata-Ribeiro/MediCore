@@ -13,3 +13,6 @@ minimumReleaseAgeExclude:
   - '@inertiajs/core@3.3.1'
   - '@inertiajs/react@3.3.1'
   - '@inertiajs/vite@3.3.1'
+  - '@inertiajs/core@3.4.0'
+  - '@inertiajs/react@3.4.0'
+  - '@inertiajs/vite@3.4.0'
