@@ -1,8 +1,7 @@
-import { useInterval } from '@/hooks/use-interval';
-import { format } from 'date-fns';
+import RealClock from '@/components/common/real-clock';
 import { ClockIcon } from 'lucide-react';
 import type { ReactNode } from 'react';
-import { Fragment, useRef } from 'react';
+import { Fragment } from 'react';
 
 type Props = {
     title: string;
@@ -11,17 +10,6 @@ type Props = {
 };
 
 export default function ExamsLayout({ title, description, children }: Readonly<Props>) {
-    const currentTimeRef = useRef<HTMLSpanElement>(null);
-
-    useInterval(() => {
-        if (!currentTimeRef.current) {
-            return;
-        }
-
-        const now = new Date();
-        currentTimeRef.current.textContent = format(now, 'dd/MM/yyyy HH:mm');
-    }, 60000);
-
     return (
         <Fragment>
             <div className="relative h-96 bg-linear-to-r from-chart-5 to-chart-1" />
@@ -38,9 +26,10 @@ export default function ExamsLayout({ title, description, children }: Readonly<P
 
                     <div className="inline-flex items-center gap-x-1">
                         <ClockIcon aria-hidden size={16} />
-                        <span ref={currentTimeRef} className="text-sm text-muted-foreground dark:text-muted">
-                            {format(new Date(), 'dd/MM/yyyy HH:mm')}
-                        </span>
+                        <RealClock
+                            className="text-sm text-muted-foreground dark:text-muted"
+                            aria-label="Current time"
+                        />
                     </div>
                 </div>
             </header>
