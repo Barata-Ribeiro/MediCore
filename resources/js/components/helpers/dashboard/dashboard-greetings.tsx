@@ -8,7 +8,7 @@ export default function DashboardGreetings() {
     const { auth, date } = usePage().props;
 
     return (
-        <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-primary via-primary/90 to-accent p-6 text-white sm:p-8">
+        <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-primary-foreground via-primary-foreground/90 to-accent-foreground p-6 text-white sm:p-8">
             <div
                 className="pointer-events-none absolute inset-0 opacity-10"
                 style={{
@@ -25,7 +25,10 @@ export default function DashboardGreetings() {
                     <p className="mt-1 text-sm text-white/70">{__('dashboard.greeting.message')}</p>
                 </div>
 
-                <time dateTime={date.now} className="hidden items-center gap-x-1 text-sm text-white/70 sm:inline-flex">
+                <time
+                    dateTime={date.now}
+                    className="hidden items-center gap-x-1 text-sm text-white/70 capitalize sm:inline-flex"
+                >
                     <CalendarDaysIcon className="size-4" aria-hidden /> {date.displayDate}
                 </time>
             </div>
