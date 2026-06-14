@@ -20,16 +20,13 @@ export default function ExamsLayout({ title, description, children }: Readonly<P
                     className="flex flex-wrap items-center justify-between gap-8 rounded-xl border border-chart-5 p-6 shadow-lg backdrop-blur-2xl dark:border-chart-5"
                 >
                     <div>
-                        <h1 className="text-2xl font-bold">{title}</h1>
-                        <p className="mt-2 text-muted-foreground dark:text-muted">{description}</p>
+                        <h1 className="text-2xl font-bold text-background dark:text-foreground">{title}</h1>
+                        <p className="mt-2 text-muted dark:text-muted-foreground">{description}</p>
                     </div>
 
-                    <div className="inline-flex items-center gap-x-1">
-                        <ClockIcon aria-hidden size={16} />
-                        <RealClock
-                            className="text-sm text-muted-foreground dark:text-muted"
-                            aria-label="Current time"
-                        />
+                    <div className="inline-flex items-center gap-x-1 text-muted dark:text-chart-1">
+                        <ClockIcon aria-hidden />
+                        <RealClock className="text-sm" aria-label="Current time" />
                     </div>
                 </div>
             </header>
