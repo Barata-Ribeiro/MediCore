@@ -2,6 +2,7 @@
 
 namespace App\Interfaces\Exams;
 
+use App\Models\Exams\VitaminD3;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 interface VitaminD3ServiceInterface
@@ -9,8 +10,9 @@ interface VitaminD3ServiceInterface
     /**
      * Fetch paginated data and chart data for this exam type based on the provided parameters.
      *
+     * @param  array<string, mixed>|null  $filters
      * @return array{
-     *     0: LengthAwarePaginator,
+     *     0: LengthAwarePaginator<int, VitaminD3>,
      *     1: array<string, mixed>
      * }
      */
