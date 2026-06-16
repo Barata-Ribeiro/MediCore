@@ -59,9 +59,12 @@ class UreaAndCreatinine extends Model
         return $this->urea_level / $this->creatinine_level;
     }
 
+    /**
+     * @return BelongsTo<MedicalFile, $this>
+     */
     public function medicalFile(): BelongsTo
     {
-        return $this->belongsTo(MedicalFile::class);
+        return $this->belongsTo(MedicalFile::class, 'medical_file_id', 'id');
     }
 
     /**

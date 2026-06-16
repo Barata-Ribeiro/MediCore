@@ -119,6 +119,8 @@ class MedicalFile extends Model
 
     /**
      * Scope a query to only include users with a specific blood type.
+     *
+     * @param  Builder<self>  $query
      */
     #[Scope]
     protected function bloodType(Builder $query, BloodType $bloodType): void
@@ -126,6 +128,9 @@ class MedicalFile extends Model
         $query->where('blood_type', $bloodType->value);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -133,41 +138,65 @@ class MedicalFile extends Model
 
     // Exams
 
+    /**
+     * @return HasMany<CompleteBloodCount, $this>
+     */
     public function completeBloodCounts(): HasMany
     {
         return $this->hasMany(CompleteBloodCount::class);
     }
 
+    /**
+     * @return HasMany<Glucose, $this>
+     */
     public function glucoses(): HasMany
     {
         return $this->hasMany(Glucose::class);
     }
 
+    /**
+     * @return HasMany<LipidProfile, $this>
+     */
     public function lipidProfiles(): HasMany
     {
         return $this->hasMany(LipidProfile::class);
     }
 
+    /**
+     * @return HasMany<UltrasensitiveTsh, $this>
+     */
     public function ultrasensitiveTshs(): HasMany
     {
         return $this->hasMany(UltrasensitiveTsh::class);
     }
 
+    /**
+     * @return HasMany<UreaAndCreatinine, $this>
+     */
     public function ureaAndCreatinines(): HasMany
     {
         return $this->hasMany(UreaAndCreatinine::class);
     }
 
+    /**
+     * @return HasMany<UricAcid, $this>
+     */
     public function uricAcids(): HasMany
     {
         return $this->hasMany(UricAcid::class);
     }
 
+    /**
+     * @return HasMany<VitaminB12, $this>
+     */
     public function vitaminB12s(): HasMany
     {
         return $this->hasMany(VitaminB12::class);
     }
 
+    /**
+     * @return HasMany<VitaminD3, $this>
+     */
     public function vitaminD3s(): HasMany
     {
         return $this->hasMany(VitaminD3::class);

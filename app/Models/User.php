@@ -115,6 +115,8 @@ class User extends Authenticatable implements PasskeyUser
 
     /**
      * Scope a query to only include super admin users.
+     *
+     * @param  Builder<self>  $query
      */
     #[Scope]
     protected function isSuperAdmin(Builder $query): void
@@ -122,11 +124,17 @@ class User extends Authenticatable implements PasskeyUser
         $query->whereHas('roles', fn ($q): Builder => $q->where('name', 'super-admin'));
     }
 
+    /**
+     * @return HasOne<Profile, $this>
+     */
     public function profile(): HasOne
     {
         return $this->hasOne(Profile::class);
     }
 
+    /**
+     * @return HasOne<MedicalFile, $this>
+     */
     public function medicalFile(): HasOne
     {
         return $this->hasOne(MedicalFile::class);
