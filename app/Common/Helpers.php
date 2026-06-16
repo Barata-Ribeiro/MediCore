@@ -30,7 +30,7 @@ class Helpers
      */
     public static function buildBooleanQuery(string $query): string
     {
-        $query = trim(preg_replace('/\s+/', ' ', $query ?? ''));
+        $query = trim(preg_replace('/\s+/', ' ', $query));
 
         if (empty($query)) {
             return '';
@@ -38,7 +38,7 @@ class Helpers
 
         // Tokenize while preserving quoted phrases: "foo bar" baz -> ["foo bar", "baz"]
         preg_match_all('/"[^"]*"|\S+/u', $query, $matches);
-        $tokens = $matches[0] ?? [];
+        $tokens = $matches[0];
 
         $booleanParts = [];
 
@@ -62,8 +62,12 @@ class Helpers
 
             // Split on internal separators so it matches indexed terms.
             $token = preg_replace('/(?<=\pL|\pN)[\-_\.\/:]+(?=\pL|\pN)/u', ' ', $token);
+            $parts = preg_split('/\s+/u', $token, -1, PREG_SPLIT_NO_EMPTY);
+            if (! \is_array($parts)) {
+                $parts = [];
+            }
 
-            foreach (preg_split('/\s+/u', $token, -1, PREG_SPLIT_NO_EMPTY) as $part) {
+            foreach ($parts as $part) {
                 $part = preg_replace('/[+\-<>()~"*]/u', '', $part);
                 $part = preg_replace('/[^\pL\pN_]+/u', '', $part);
 
@@ -91,10 +95,8 @@ class Helpers
      *    representing the start and end dates respectively. Unset or
      *    unparseable values are normalized to null.
      *
-     * @param  array|mixed|string  $inputRange  Date range input (array or string)
+     * @param  array<int, string|null>|string|null  $inputRange  Date range input (array or string)
      * @return array{0:?string,1:?string} Normalized two-element array [start, end]
-     *
-     * @throws \InvalidArgumentException If the input type or format is unsupported or cannot be parsed
      */
     public static function getDateRange(array|string|null $inputRange): array
     {
