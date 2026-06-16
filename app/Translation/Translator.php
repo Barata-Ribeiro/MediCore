@@ -10,9 +10,11 @@ use function is_array;
 class Translator extends BaseTranslator
 {
     /**
-     * @return array|string|null
+     * Summary of get
+     *
+     * @param  array<string, mixed>  $replace
      */
-    public function get($key, array $replace = [], $locale = null, $fallback = true)
+    public function get($key, array $replace = [], $locale = null, $fallback = true): string
     {
         $results = parent::get($key, $replace, $locale, $fallback);
 

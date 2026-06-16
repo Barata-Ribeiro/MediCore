@@ -5,15 +5,20 @@ namespace App\Services\Exams;
 use App\Common\Helpers;
 use App\Interfaces\Exams\LipidProfileServiceInterface;
 use App\Models\Exams\LipidProfile;
-use Concurrency;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class LipidProfileService implements LipidProfileServiceInterface
 {
     /**
-     * {@inheritDoc}
+     * Fetch paginated data and chart data for this exam type based on the provided parameters.
+     *
+     * @param  array<string, mixed>|null  $filters
+     * @return array{0: LengthAwarePaginator<int, LipidProfile>, 1: array<string, mixed>}
      */
     public function getLipidProfileData(?int $perPage, ?string $sortBy, ?string $sortDir, ?string $search, ?array $filters): array
     {
+        $filters ??= [];
         $createdAtRange = $filters['created_at'] ?? [];
         $reportDateRange = $filters['report_date'] ?? [];
 
@@ -32,10 +37,20 @@ class LipidProfileService implements LipidProfileServiceInterface
                     ->orWhereLike('vldl_cholesterol', "%{$search}%")
                     ->orWhereLike('triglycerides', "%{$search}%");
             }))
-            ->orderBy($sortBy, $sortDir)
+            ->orderBy($sortBy ?? 'created_at', $sortDir === 'desc' ? 'desc' : 'asc')
             ->paginate($perPage)
             ->withQueryString();
 
+        /**
+         * @var Collection<int, object{
+         *     label: string,
+         *     total_cholesterol: float|int|null,
+         *     hdl_cholesterol: float|int|null,
+         *     ldl_cholesterol: float|int|null,
+         *     vldl_cholesterol: float|int|null,
+         *     triglycerides: float|int|null
+         * }> $chartRows
+         */
         $chartRows = LipidProfile::query()
             ->selectRaw('DATE(report_date) as label, AVG(total_cholesterol) as total_cholesterol, AVG(hdl_cholesterol) as hdl_cholesterol, AVG(ldl_cholesterol) as ldl_cholesterol, AVG(vldl_cholesterol) as vldl_cholesterol, AVG(triglycerides) as triglycerides')
             ->where('medical_file_id', auth()->user()->medicalFile->id)
@@ -44,7 +59,7 @@ class LipidProfileService implements LipidProfileServiceInterface
             ->limit(5)
             ->get();
 
-        $chartData = $chartRows->map(fn ($row) => [
+        $chartData = $chartRows->map(fn (object $row): array => [
             'x_axis_label' => $row->label,
             'datasets' => [
                 'total_cholesterol' => ['label' => __('lipid_profile_pages.index.table.columns.total_cholesterol'), 'data' => $row->total_cholesterol],
@@ -55,13 +70,6 @@ class LipidProfileService implements LipidProfileServiceInterface
             ],
         ])->toArray();
 
-        if (app()->environment('testing')) {
-            return [$lipidProfiles, $chartData];
-        }
-
-        return Concurrency::run([
-            fn () => $lipidProfiles,
-            fn () => $chartData,
-        ]);
+        return [$lipidProfiles, $chartData];
     }
 }

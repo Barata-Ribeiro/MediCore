@@ -19,11 +19,17 @@ class HandleInertiaRequests extends Middleware
      */
     protected $rootView = 'app';
 
+    /**
+     * @var list<string>
+     */
     protected array $authRoutes = [
         'login', 'register', 'password.request', 'password.reset',
         'password.confirm', 'verification.notice', 'two-factor.login',
     ];
 
+    /**
+     * @var list<string>
+     */
     protected array $settingsRoutes = [
         'profile.edit', 'security.edit', 'appearance.edit', 'medical-file.edit',
     ];

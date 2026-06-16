@@ -72,6 +72,9 @@ class Profile extends Model
         return Carbon::parse($this->birth_date)->age;
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

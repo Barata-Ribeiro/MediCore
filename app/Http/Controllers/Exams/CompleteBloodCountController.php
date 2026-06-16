@@ -8,8 +8,10 @@ use App\Http\Requests\QueryRequest;
 use App\Interfaces\Exams\CompleteBloodCountServiceInterface;
 use App\Models\Exams\CompleteBloodCount;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
+use Inertia\Response;
 use Log;
 
 use function in_array;
@@ -18,7 +20,7 @@ class CompleteBloodCountController extends Controller
 {
     public function __construct(private CompleteBloodCountServiceInterface $completeBloodCountService) {}
 
-    public function index(QueryRequest $request)
+    public function index(QueryRequest $request): Response
     {
         syncLangFiles('complete_blood_count_pages');
 
@@ -30,14 +32,14 @@ class CompleteBloodCountController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(): Response
     {
         syncLangFiles('complete_blood_count_pages');
 
         return Inertia::render('exams/complete-blood-count/create');
     }
 
-    public function store(CompleteBloodCountRequest $request)
+    public function store(CompleteBloodCountRequest $request): RedirectResponse
     {
         $user = $request->user();
 
@@ -57,7 +59,7 @@ class CompleteBloodCountController extends Controller
         }
     }
 
-    public function edit(CompleteBloodCount $completeBloodCount)
+    public function edit(CompleteBloodCount $completeBloodCount): Response
     {
         syncLangFiles('complete_blood_count_pages');
 
@@ -66,7 +68,7 @@ class CompleteBloodCountController extends Controller
         ]);
     }
 
-    public function update(CompleteBloodCountRequest $request, CompleteBloodCount $completeBloodCount)
+    public function update(CompleteBloodCountRequest $request, CompleteBloodCount $completeBloodCount): RedirectResponse
     {
         $user = $request->user();
 
@@ -92,7 +94,7 @@ class CompleteBloodCountController extends Controller
         }
     }
 
-    public function destroy(CompleteBloodCount $completeBloodCount)
+    public function destroy(CompleteBloodCount $completeBloodCount): RedirectResponse
     {
         $user = request()->user();
 
@@ -121,7 +123,7 @@ class CompleteBloodCountController extends Controller
      * paginated complete blood count results plus chart data.
      *
      * @return array{
-     *     0: LengthAwarePaginator,
+     *     0: LengthAwarePaginator<int, CompleteBloodCount>,
      *     1: array<string, mixed>
      * }
      */

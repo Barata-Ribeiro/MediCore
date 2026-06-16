@@ -48,8 +48,10 @@ class SocialAuthController extends Controller
 
         try {
             $socialUser = Socialite::driver($provider)->user();
+            $providerToken = $socialUser->token ?? null;
+            $providerRefreshToken = $socialUser->refreshToken ?? null;
 
-            $user = DB::transaction(function () use ($provider, $socialUser): User {
+            $user = DB::transaction(function () use ($provider, $socialUser, $providerToken, $providerRefreshToken): User {
                 $user = User::query()
                     ->where(fn ($q) => $q->where('provider_name', $provider)->where('provider_id', $socialUser->getId()))
                     ->orWhere('email', $socialUser->getEmail())
@@ -61,8 +63,8 @@ class SocialAuthController extends Controller
                     'email' => $socialUser->getEmail(),
                     'provider_name' => $provider,
                     'provider_id' => $socialUser->getId(),
-                    'provider_token' => $socialUser->token,
-                    'provider_refresh_token' => $socialUser->refreshToken ?? null,
+                    'provider_token' => $providerToken,
+                    'provider_refresh_token' => $providerRefreshToken,
                     'registration_domain' => request()->getHost(),
                 ];
 

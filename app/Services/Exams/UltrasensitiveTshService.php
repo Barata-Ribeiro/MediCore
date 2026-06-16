@@ -5,15 +5,20 @@ namespace App\Services\Exams;
 use App\Common\Helpers;
 use App\Interfaces\Exams\UltrasensitiveTshServiceInterface;
 use App\Models\Exams\UltrasensitiveTsh;
-use Concurrency;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class UltrasensitiveTshService implements UltrasensitiveTshServiceInterface
 {
     /**
-     * {@inheritDoc}
+     * Fetch paginated data and chart data for this exam type based on the provided parameters.
+     *
+     * @param  array<string, mixed>|null  $filters
+     * @return array{0: LengthAwarePaginator<int, UltrasensitiveTsh>, 1: array<string, mixed>}
      */
     public function getUltrasensitiveTshsData(?int $perPage, ?string $sortBy, ?string $sortDir, ?string $search, ?array $filters): array
     {
+        $filters ??= [];
         $createdAtRange = $filters['created_at'] ?? [];
         $reportDateRange = $filters['report_date'] ?? [];
 
@@ -25,10 +30,16 @@ class UltrasensitiveTshService implements UltrasensitiveTshServiceInterface
             ->when($createdAtRange, fn ($q) => $q->whereBetween('created_at', [$createdAtStart, $createdAtEnd]))
             ->when($reportDateRange, fn ($q) => $q->whereBetween('report_date', [$reportDateStart, $reportDateEnd]))
             ->when($search, fn ($q) => $q->whereLike('tsh_level', "%{$search}%"))
-            ->orderBy($sortBy, $sortDir)
+            ->orderBy($sortBy ?? 'created_at', $sortDir === 'desc' ? 'desc' : 'asc')
             ->paginate($perPage)
             ->withQueryString();
 
+        /**
+         * @var Collection<int, object{
+         *     label: string,
+         *     tsh_level: float|int|null
+         * }> $chartRows
+         */
         $chartRows = UltrasensitiveTsh::query()
             ->selectRaw('DATE(report_date) as label, AVG(tsh_level) as tsh_level')
             ->where('medical_file_id', auth()->user()->medicalFile->id)
@@ -37,20 +48,13 @@ class UltrasensitiveTshService implements UltrasensitiveTshServiceInterface
             ->limit(5)
             ->get();
 
-        $chartData = $chartRows->map(fn ($row) => [
+        $chartData = $chartRows->map(fn (object $row): array => [
             'x_axis_label' => $row->label,
             'datasets' => [
                 'tsh_level' => ['label' => __('ultrasensitive_tsh_pages.index.table.columns.tsh_level'), 'data' => $row->tsh_level],
             ],
         ])->toArray();
 
-        if (app()->environment('testing')) {
-            return [$ultrasensitiveTshs, $chartData];
-        }
-
-        return Concurrency::run([
-            fn () => $ultrasensitiveTshs,
-            fn () => $chartData,
-        ]);
+        return [$ultrasensitiveTshs, $chartData];
     }
 }

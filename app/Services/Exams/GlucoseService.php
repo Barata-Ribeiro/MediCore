@@ -5,15 +5,20 @@ namespace App\Services\Exams;
 use App\Common\Helpers;
 use App\Interfaces\Exams\GlucoseServiceInterface;
 use App\Models\Exams\Glucose;
-use Concurrency;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class GlucoseService implements GlucoseServiceInterface
 {
     /**
-     * {@inheritDoc}
+     * Fetch paginated data and chart data for this exam type based on the provided parameters.
+     *
+     * @param  array<string, mixed>|null  $filters
+     * @return array{0: LengthAwarePaginator<int, Glucose>, 1: array<string, mixed>}
      */
     public function getGlucosePageAndChartData(?int $perPage, ?string $sortBy, ?string $sortDir, ?string $search, ?array $filters): array
     {
+        $filters ??= [];
         $createdAtRange = $filters['created_at'] ?? [];
         $reportDateRange = $filters['report_date'] ?? [];
 
@@ -29,10 +34,18 @@ class GlucoseService implements GlucoseServiceInterface
                     ->orWhereLike('glycated_hemoglobin', "%{$search}%")
                     ->orWhereLike('estimated_average_glucose', "%{$search}%");
             }))
-            ->orderBy($sortBy, $sortDir)
+            ->orderBy($sortBy ?? 'created_at', $sortDir === 'desc' ? 'desc' : 'asc')
             ->paginate($perPage)
             ->withQueryString();
 
+        /**
+         * @var Collection<int, object{
+         *     label: string,
+         *     glucose_level: float|int|null,
+         *     glycated_hemoglobin: float|int|null,
+         *     estimated_average_glucose: float|int|null
+         * }> $chartRows
+         */
         $chartRows = Glucose::query()
             ->selectRaw('DATE(report_date) as label, AVG(glucose_level) as glucose_level, AVG(glycated_hemoglobin) as glycated_hemoglobin, AVG(estimated_average_glucose) as estimated_average_glucose')
             ->where('medical_file_id', auth()->user()->medicalFile->id)
@@ -41,7 +54,7 @@ class GlucoseService implements GlucoseServiceInterface
             ->limit(5)
             ->get();
 
-        $chartData = $chartRows->map(fn ($row) => [
+        $chartData = $chartRows->map(fn (object $row): array => [
             'x_axis_label' => $row->label,
             'datasets' => [
                 'glucose_level' => ['label' => __('glucose_pages.index.table.columns.glucose_level'), 'data' => $row->glucose_level],
@@ -50,13 +63,6 @@ class GlucoseService implements GlucoseServiceInterface
             ],
         ])->toArray();
 
-        if (app()->environment('testing')) {
-            return [$glucoses, $chartData];
-        }
-
-        return Concurrency::run([
-            fn () => $glucoses,
-            fn () => $chartData,
-        ]);
+        return [$glucoses, $chartData];
     }
 }

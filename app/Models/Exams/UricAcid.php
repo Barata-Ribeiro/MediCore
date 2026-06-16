@@ -45,9 +45,12 @@ class UricAcid extends Model
         'report_date' => 'date:Y-m-d',
     ];
 
+    /**
+     * @return BelongsTo<MedicalFile, $this>
+     */
     public function medicalFile(): BelongsTo
     {
-        return $this->belongsTo(MedicalFile::class);
+        return $this->belongsTo(MedicalFile::class, 'medical_file_id', 'id');
     }
 
     /**

@@ -5,15 +5,20 @@ namespace App\Services\Exams;
 use App\Common\Helpers;
 use App\Interfaces\Exams\CompleteBloodCountServiceInterface;
 use App\Models\Exams\CompleteBloodCount;
-use Concurrency;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class CompleteBloodCountService implements CompleteBloodCountServiceInterface
 {
     /**
-     * {@inheritDoc}
+     * Fetch paginated data and chart data for this exam type based on the provided parameters.
+     *
+     * @param  array<string, mixed>|null  $filters
+     * @return array{0: LengthAwarePaginator<int, CompleteBloodCount>, 1: array<string, mixed>}
      */
     public function getCompleteBloodCountData(?int $perPage, ?string $sortBy, ?string $sortDir, ?string $search, ?array $filters): array
     {
+        $filters ??= [];
         $createdAtRange = $filters['created_at'] ?? [];
         $reportDateRange = $filters['report_date'] ?? [];
 
@@ -45,10 +50,20 @@ class CompleteBloodCountService implements CompleteBloodCountServiceInterface
                     ->orWhereLike('atypical_cell_count', "%{$search}%")
                     ->orWhereLike('platelet_count', "%{$search}%");
             }))
-            ->orderBy($sortBy, $sortDir)
+            ->orderBy($sortBy ?? 'created_at', $sortDir === 'desc' ? 'desc' : 'asc')
             ->paginate($perPage)
             ->withQueryString();
 
+        /**
+         * @var Collection<int, object{
+         *     label: string,
+         *     hematocrit: float|int|null,
+         *     hemoglobin: float|int|null,
+         *     red_blood_cell_count: float|int|null,
+         *     leukocyte_count: float|int|null,
+         *     platelet_count: float|int|null
+         * }> $chartRows
+         */
         $chartRows = CompleteBloodCount::query()
             ->selectRaw('DATE(report_date) as label, AVG(hematocrit) as hematocrit, AVG(hemoglobin) as hemoglobin, AVG(red_blood_cell_count) as red_blood_cell_count, AVG(leukocyte_count) as leukocyte_count, AVG(platelet_count) as platelet_count')
             ->where('medical_file_id', auth()->user()->medicalFile->id)
@@ -57,7 +72,7 @@ class CompleteBloodCountService implements CompleteBloodCountServiceInterface
             ->limit(5)
             ->get();
 
-        $chartData = $chartRows->map(fn ($row) => [
+        $chartData = $chartRows->map(fn (object $row): array => [
             'x_axis_label' => $row->label,
             'datasets' => [
                 'hematocrit' => ['label' => 'Hematocrit', 'data' => $row->hematocrit],
@@ -68,13 +83,6 @@ class CompleteBloodCountService implements CompleteBloodCountServiceInterface
             ],
         ])->toArray();
 
-        if (app()->environment('testing')) {
-            return [$completeBloodCounts, $chartData];
-        }
-
-        return Concurrency::run([
-            fn () => $completeBloodCounts,
-            fn () => $chartData,
-        ]);
+        return [$completeBloodCounts, $chartData];
     }
 }
