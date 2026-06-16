@@ -9,7 +9,9 @@ use App\Interfaces\Exams\LipidProfileServiceInterface;
 use App\Models\Exams\LipidProfile;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
+use Inertia\Response;
 use Log;
 
 use function in_array;
@@ -18,7 +20,7 @@ class LipidProfileController extends Controller
 {
     public function __construct(private LipidProfileServiceInterface $lipidProfileService) {}
 
-    public function index(QueryRequest $request)
+    public function index(QueryRequest $request): Response
     {
         syncLangFiles('lipid_profile_pages');
 
@@ -30,14 +32,14 @@ class LipidProfileController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(): Response
     {
         syncLangFiles('lipid_profile_pages');
 
         return Inertia::render('exams/lipid-profile/create');
     }
 
-    public function store(LipidProfileRequest $request)
+    public function store(LipidProfileRequest $request): RedirectResponse
     {
         $user = $request->user();
 
@@ -57,7 +59,7 @@ class LipidProfileController extends Controller
         }
     }
 
-    public function edit(LipidProfile $lipidProfile)
+    public function edit(LipidProfile $lipidProfile): Response
     {
         syncLangFiles('lipid_profile_pages');
 
@@ -66,7 +68,7 @@ class LipidProfileController extends Controller
         ]);
     }
 
-    public function update(LipidProfileRequest $request, LipidProfile $lipidProfile)
+    public function update(LipidProfileRequest $request, LipidProfile $lipidProfile): RedirectResponse
     {
         $user = $request->user();
 
@@ -92,7 +94,7 @@ class LipidProfileController extends Controller
         }
     }
 
-    public function destroy(LipidProfile $lipidProfile)
+    public function destroy(LipidProfile $lipidProfile): RedirectResponse
     {
         $user = request()->user();
 
@@ -121,7 +123,7 @@ class LipidProfileController extends Controller
      * paginated lipid profile results plus chart data.
      *
      * @return array{
-     *     0: LengthAwarePaginator,
+     *     0: LengthAwarePaginator<int, LipidProfile>,
      *     1: array<string, mixed>
      * }
      */

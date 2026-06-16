@@ -8,8 +8,10 @@ use App\Http\Requests\QueryRequest;
 use App\Interfaces\Exams\UricAcidServiceInterface;
 use App\Models\Exams\UricAcid;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
+use Inertia\Response;
 use Log;
 
 use function in_array;
@@ -18,7 +20,7 @@ class UricAcidController extends Controller
 {
     public function __construct(private UricAcidServiceInterface $uricAcidService) {}
 
-    public function index(QueryRequest $request)
+    public function index(QueryRequest $request): Response
     {
         syncLangFiles('uric_acid_pages');
 
@@ -30,14 +32,14 @@ class UricAcidController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(): Response
     {
         syncLangFiles('uric_acid_pages');
 
         return Inertia::render('exams/uric-acid/create');
     }
 
-    public function store(UricAcidRequest $request)
+    public function store(UricAcidRequest $request): RedirectResponse
     {
         $user = $request->user();
 
@@ -57,7 +59,7 @@ class UricAcidController extends Controller
         }
     }
 
-    public function edit(UricAcid $uricAcid)
+    public function edit(UricAcid $uricAcid): Response
     {
         syncLangFiles('uric_acid_pages');
 
@@ -66,7 +68,7 @@ class UricAcidController extends Controller
         ]);
     }
 
-    public function update(UricAcidRequest $request, UricAcid $uricAcid)
+    public function update(UricAcidRequest $request, UricAcid $uricAcid): RedirectResponse
     {
         $user = $request->user();
 
@@ -93,7 +95,7 @@ class UricAcidController extends Controller
         }
     }
 
-    public function destroy(UricAcid $uricAcid)
+    public function destroy(UricAcid $uricAcid): RedirectResponse
     {
         $user = request()->user();
 
@@ -123,7 +125,7 @@ class UricAcidController extends Controller
      * paginated uric acid results plus chart data.
      *
      * @return array{
-     *     0: LengthAwarePaginator,
+     *     0: LengthAwarePaginator<int, UricAcid>,
      *     1: array<string, mixed>
      * }
      */

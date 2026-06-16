@@ -8,8 +8,10 @@ use App\Http\Requests\QueryRequest;
 use App\Interfaces\Exams\VitaminB12ServiceInterface;
 use App\Models\Exams\VitaminB12;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
+use Inertia\Response;
 use Log;
 
 use function in_array;
@@ -18,7 +20,7 @@ class VitaminB12Controller extends Controller
 {
     public function __construct(private VitaminB12ServiceInterface $vitaminB12Service) {}
 
-    public function index(QueryRequest $request)
+    public function index(QueryRequest $request): Response
     {
         syncLangFiles('vitamin_b12_pages');
 
@@ -30,14 +32,14 @@ class VitaminB12Controller extends Controller
         ]);
     }
 
-    public function create()
+    public function create(): Response
     {
         syncLangFiles('vitamin_b12_pages');
 
         return Inertia::render('exams/vitamin-b12/create');
     }
 
-    public function store(VitaminB12Request $request)
+    public function store(VitaminB12Request $request): RedirectResponse
     {
         $user = $request->user();
 
@@ -58,7 +60,7 @@ class VitaminB12Controller extends Controller
         }
     }
 
-    public function edit(VitaminB12 $vitaminB12)
+    public function edit(VitaminB12 $vitaminB12): Response
     {
         syncLangFiles('vitamin_b12_pages');
 
@@ -67,7 +69,7 @@ class VitaminB12Controller extends Controller
         ]);
     }
 
-    public function update(VitaminB12Request $request, VitaminB12 $vitaminB12)
+    public function update(VitaminB12Request $request, VitaminB12 $vitaminB12): RedirectResponse
     {
         $user = $request->user();
 
@@ -94,7 +96,7 @@ class VitaminB12Controller extends Controller
 
     }
 
-    public function destroy(VitaminB12 $vitaminB12)
+    public function destroy(VitaminB12 $vitaminB12): RedirectResponse
     {
         $user = auth()->user();
 
@@ -123,7 +125,7 @@ class VitaminB12Controller extends Controller
      * paginated glucose results plus chart data.
      *
      * @return array{
-     *     0: LengthAwarePaginator,
+     *     0: LengthAwarePaginator<int, VitaminB12>,
      *     1: array<string, mixed>
      * }
      */

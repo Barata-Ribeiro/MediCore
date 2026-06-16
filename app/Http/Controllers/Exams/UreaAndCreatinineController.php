@@ -8,8 +8,10 @@ use App\Http\Requests\QueryRequest;
 use App\Interfaces\Exams\UreaAndCreatinineServiceInterface;
 use App\Models\Exams\UreaAndCreatinine;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
+use Inertia\Response;
 use Log;
 
 use function in_array;
@@ -18,7 +20,7 @@ class UreaAndCreatinineController extends Controller
 {
     public function __construct(private UreaAndCreatinineServiceInterface $ureaAndCreatinineService) {}
 
-    public function index(QueryRequest $request)
+    public function index(QueryRequest $request): Response
     {
         syncLangFiles('urea_and_creatinine_pages');
 
@@ -30,14 +32,14 @@ class UreaAndCreatinineController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(): Response
     {
         syncLangFiles('urea_and_creatinine_pages');
 
         return Inertia::render('exams/urea-and-creatinine/create');
     }
 
-    public function store(UreaAndCreatinineRequest $request)
+    public function store(UreaAndCreatinineRequest $request): RedirectResponse
     {
         $user = $request->user();
 
@@ -57,7 +59,7 @@ class UreaAndCreatinineController extends Controller
         }
     }
 
-    public function edit(UreaAndCreatinine $ureaAndCreatinine)
+    public function edit(UreaAndCreatinine $ureaAndCreatinine): Response
     {
         syncLangFiles('urea_and_creatinine_pages');
 
@@ -66,7 +68,7 @@ class UreaAndCreatinineController extends Controller
         ]);
     }
 
-    public function update(UreaAndCreatinineRequest $request, UreaAndCreatinine $ureaAndCreatinine)
+    public function update(UreaAndCreatinineRequest $request, UreaAndCreatinine $ureaAndCreatinine): RedirectResponse
     {
         $user = $request->user();
 
@@ -92,7 +94,7 @@ class UreaAndCreatinineController extends Controller
         }
     }
 
-    public function destroy(UreaAndCreatinine $ureaAndCreatinine)
+    public function destroy(UreaAndCreatinine $ureaAndCreatinine): RedirectResponse
     {
         $user = request()->user();
 
@@ -121,7 +123,7 @@ class UreaAndCreatinineController extends Controller
      * paginated glucose results plus chart data.
      *
      * @return array{
-     *     0: LengthAwarePaginator,
+     *     0: LengthAwarePaginator<int, UreaAndCreatinine>,
      *     1: array<string, mixed>
      * }
      */

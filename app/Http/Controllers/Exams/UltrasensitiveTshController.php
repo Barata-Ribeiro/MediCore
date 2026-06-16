@@ -8,7 +8,10 @@ use App\Http\Requests\QueryRequest;
 use App\Interfaces\Exams\UltrasensitiveTshServiceInterface;
 use App\Models\Exams\UltrasensitiveTsh;
 use Exception;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
+use Inertia\Response;
 use Log;
 
 use function in_array;
@@ -17,7 +20,7 @@ class UltrasensitiveTshController extends Controller
 {
     public function __construct(private UltrasensitiveTshServiceInterface $ultrasensitiveTshService) {}
 
-    public function index(QueryRequest $request)
+    public function index(QueryRequest $request): Response
     {
         syncLangFiles('ultrasensitive_tsh_pages');
 
@@ -29,14 +32,14 @@ class UltrasensitiveTshController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(): Response
     {
         syncLangFiles('ultrasensitive_tsh_pages');
 
         return Inertia::render('exams/ultrasensitive-tsh/create');
     }
 
-    public function store(UltrasensitiveTshRequest $request)
+    public function store(UltrasensitiveTshRequest $request): RedirectResponse
     {
         $user = $request->user();
 
@@ -57,7 +60,7 @@ class UltrasensitiveTshController extends Controller
         }
     }
 
-    public function edit(UltrasensitiveTsh $ultrasensitiveTsh)
+    public function edit(UltrasensitiveTsh $ultrasensitiveTsh): Response
     {
         syncLangFiles('ultrasensitive_tsh_pages');
 
@@ -66,7 +69,7 @@ class UltrasensitiveTshController extends Controller
         ]);
     }
 
-    public function update(UltrasensitiveTshRequest $request, UltrasensitiveTsh $ultrasensitiveTsh)
+    public function update(UltrasensitiveTshRequest $request, UltrasensitiveTsh $ultrasensitiveTsh): RedirectResponse
     {
         $validated = $request->validated();
 
@@ -91,7 +94,7 @@ class UltrasensitiveTshController extends Controller
         }
     }
 
-    public function destroy(UltrasensitiveTsh $ultrasensitiveTsh)
+    public function destroy(UltrasensitiveTsh $ultrasensitiveTsh): RedirectResponse
     {
         if ($ultrasensitiveTsh->medicalFile->user_id !== request()->user()->id) {
             Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.ultrasensitive_tsh.destroy_unauthorized')]);
@@ -119,7 +122,7 @@ class UltrasensitiveTshController extends Controller
      * paginated glucose results plus chart data.
      *
      * @return array{
-     *     0: LengthAwarePaginator,
+     *     0: LengthAwarePaginator<int, UltrasensitiveTsh>,
      *     1: array<string, mixed>
      * }
      */

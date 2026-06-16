@@ -8,8 +8,10 @@ use App\Http\Requests\QueryRequest;
 use App\Interfaces\Exams\GlucoseServiceInterface;
 use App\Models\Exams\Glucose;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
+use Inertia\Response;
 use Log;
 
 use function in_array;
@@ -18,7 +20,7 @@ class GlucoseController extends Controller
 {
     public function __construct(private GlucoseServiceInterface $glucoseService) {}
 
-    public function index(QueryRequest $request)
+    public function index(QueryRequest $request): Response
     {
         syncLangFiles('glucose_pages');
 
@@ -30,14 +32,14 @@ class GlucoseController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(): Response
     {
         syncLangFiles('glucose_pages');
 
         return Inertia::render('exams/glucose/create');
     }
 
-    public function store(GlucoseRequest $request)
+    public function store(GlucoseRequest $request): RedirectResponse
     {
         $user = $request->user();
 
@@ -57,7 +59,7 @@ class GlucoseController extends Controller
         }
     }
 
-    public function edit(Glucose $glucose)
+    public function edit(Glucose $glucose): Response
     {
         syncLangFiles('glucose_pages');
 
@@ -66,7 +68,7 @@ class GlucoseController extends Controller
         ]);
     }
 
-    public function update(GlucoseRequest $request, Glucose $glucose)
+    public function update(GlucoseRequest $request, Glucose $glucose): RedirectResponse
     {
         $user = $request->user();
 
@@ -92,7 +94,7 @@ class GlucoseController extends Controller
         }
     }
 
-    public function destroy(Glucose $glucose)
+    public function destroy(Glucose $glucose): RedirectResponse
     {
         $user = auth()->user();
 
@@ -121,7 +123,7 @@ class GlucoseController extends Controller
      * paginated glucose results plus chart data.
      *
      * @return array{
-     *     0: LengthAwarePaginator,
+     *     0: LengthAwarePaginator<int, Glucose>,
      *     1: array<string, mixed>
      * }
      */

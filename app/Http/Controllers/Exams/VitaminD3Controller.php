@@ -8,8 +8,10 @@ use App\Http\Requests\QueryRequest;
 use App\Interfaces\Exams\VitaminD3ServiceInterface;
 use App\Models\Exams\VitaminD3;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
+use Inertia\Response;
 use Log;
 
 use function in_array;
@@ -18,7 +20,7 @@ class VitaminD3Controller extends Controller
 {
     public function __construct(private VitaminD3ServiceInterface $vitaminD3Service) {}
 
-    public function index(QueryRequest $request)
+    public function index(QueryRequest $request): Response
     {
         syncLangFiles('vitamin_d3_pages');
 
@@ -30,14 +32,14 @@ class VitaminD3Controller extends Controller
         ]);
     }
 
-    public function create()
+    public function create(): Response
     {
         syncLangFiles('vitamin_d3_pages');
 
         return Inertia::render('exams/vitamin-d3/create');
     }
 
-    public function store(VitaminD3Request $request)
+    public function store(VitaminD3Request $request): RedirectResponse
     {
         $user = $request->user();
 
@@ -58,7 +60,7 @@ class VitaminD3Controller extends Controller
         }
     }
 
-    public function edit(VitaminD3 $vitaminD3)
+    public function edit(VitaminD3 $vitaminD3): Response
     {
         syncLangFiles('vitamin_d3_pages');
 
@@ -67,7 +69,7 @@ class VitaminD3Controller extends Controller
         ]);
     }
 
-    public function update(VitaminD3Request $request, VitaminD3 $vitaminD3)
+    public function update(VitaminD3Request $request, VitaminD3 $vitaminD3): RedirectResponse
     {
         $user = $request->user();
 
@@ -94,7 +96,7 @@ class VitaminD3Controller extends Controller
 
     }
 
-    public function destroy(VitaminD3 $vitaminD3)
+    public function destroy(VitaminD3 $vitaminD3): RedirectResponse
     {
         $user = auth()->user();
 
@@ -123,7 +125,7 @@ class VitaminD3Controller extends Controller
      * paginated vitamin D3 results plus chart data.
      *
      * @return array{
-     *     0: LengthAwarePaginator,
+     *     0: LengthAwarePaginator<int, VitaminD3>,
      *     1: array<string, mixed>
      * }
      */
