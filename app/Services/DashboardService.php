@@ -24,13 +24,13 @@ class DashboardService implements DashboardServiceInterface
         ]);
 
         $medicalFile = $user?->medicalFile;
-        $completeBloodCountCount = $medicalFile?->complete_blood_counts_count ?? 0;
-        $glucoseCount = $medicalFile?->glucoses_count ?? 0;
-        $lipidProfileCount = $medicalFile?->lipid_profiles_count ?? 0;
-        $ultrasensitiveTshCount = $medicalFile?->ultrasensitive_tshs_count ?? 0;
-        $ureaAndCreatinineCount = $medicalFile?->urea_and_creatinines_count ?? 0;
-        $vitaminD3Count = $medicalFile?->vitamin_d3s_count ?? 0;
-        $vitaminB12Count = $medicalFile?->vitamin_b12s_count ?? 0;
+        $completeBloodCountCount = $medicalFile ? $medicalFile->complete_blood_counts_count : 0;
+        $glucoseCount = $medicalFile ? $medicalFile->glucoses_count : 0;
+        $lipidProfileCount = $medicalFile ? $medicalFile->lipid_profiles_count : 0;
+        $ultrasensitiveTshCount = $medicalFile ? $medicalFile->ultrasensitive_tshs_count : 0;
+        $ureaAndCreatinineCount = $medicalFile ? $medicalFile->urea_and_creatinines_count : 0;
+        $vitaminD3Count = $medicalFile ? $medicalFile->vitamin_d3s_count : 0;
+        $vitaminB12Count = $medicalFile ? $medicalFile->vitamin_b12s_count : 0;
 
         $totalCount = $lipidProfileCount + $completeBloodCountCount + $glucoseCount + $vitaminD3Count + $vitaminB12Count + $ultrasensitiveTshCount + $ureaAndCreatinineCount;
 
