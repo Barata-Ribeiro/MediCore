@@ -7,6 +7,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
+use Illuminate\Http\Request;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Spatie\Permission\Middleware\RoleMiddleware;
 use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
@@ -34,11 +35,5 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->renderable(function (Throwable $e) {
-            if (request()->wantsJson()) {
-                return response()->json([
-                    'message' => $e->getMessage(),
-                ], status: 500);
-            }
-        });
+        $exceptions->shouldRenderJsonWhen(fn (Request $request) => $request->is('api/*') || $request->wantsJson() || $request->expectsJson());
     })->create();
