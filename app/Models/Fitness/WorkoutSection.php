@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Table('workout_sections')]
 #[Fillable(['name', 'order', 'workout_id'])]
@@ -31,5 +32,15 @@ class WorkoutSection extends Model
     public function workout(): BelongsTo
     {
         return $this->belongsTo(Workout::class);
+    }
+
+    /**
+     * Get the exercises for the workout section.
+     *
+     * @return HasMany<WorkoutExercise, $this>
+     */
+    public function exercises(): HasMany
+    {
+        return $this->hasMany(WorkoutExercise::class)->orderBy('order');
     }
 }
