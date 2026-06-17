@@ -25,6 +25,8 @@ return new class extends Migration
             $table->integer('rest_seconds')->nullable()->comment('Rest time in seconds between sets');
             $table->text('notes')->nullable()->comment('Additional notes for the exercise, e.g., "Use a spotter", "Focus on form", etc.');
             $table->timestamps();
+
+            $table->index(['workout_section_id', 'order']);
         });
     }
 

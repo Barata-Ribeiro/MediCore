@@ -18,6 +18,8 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreignId('workout_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+
+            $table->unique(['workout_id', 'order']);
         });
     }
 
