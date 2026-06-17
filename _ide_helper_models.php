@@ -244,6 +244,161 @@ namespace App\Models\Exams{
 	class VitaminD3 extends \Eloquent {}
 }
 
+namespace App\Models\Fitness{
+/**
+ * @property int $id
+ * @property string $name The name of the exercise, e.g. "Bench Press", "Squat", etc.
+ * @property string|null $description A detailed description of how to perform the exercise, including proper form and technique.
+ * @property string|null $video_url A URL to a video demonstrating the exercise, if available.
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property-read Collection<int, \App\Models\Fitness\MuscleGroup> $muscleGroups
+ * @property-read int|null $muscle_groups_count
+ * @property-read bool|null $muscle_groups_exists
+ * @property-read Collection<int, \App\Models\Fitness\WorkoutExercise> $workoutExercises
+ * @property-read int|null $workout_exercises_count
+ * @property-read bool|null $workout_exercises_exists
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise whereVideoUrl($value)
+ * @mixin \Eloquent
+ */
+	class Exercise extends \Eloquent {}
+}
+
+namespace App\Models\Fitness{
+/**
+ * @property int $id
+ * @property string $name The name of the muscle group, e.g. "Pectorals", "Quadriceps", etc.
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property-read Collection<int, \App\Models\Fitness\Exercise> $exercises
+ * @property-read int|null $exercises_count
+ * @property-read bool|null $exercises_exists
+ * @property-read Collection<int, \App\Models\Fitness\WorkoutExercise> $workoutExercises
+ * @property-read int|null $workout_exercises_count
+ * @property-read bool|null $workout_exercises_exists
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MuscleGroup newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MuscleGroup newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MuscleGroup query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MuscleGroup whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MuscleGroup whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MuscleGroup whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MuscleGroup whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
+	class MuscleGroup extends \Eloquent {}
+}
+
+namespace App\Models\Fitness{
+/**
+ * @property int $id
+ * @property \Carbon\CarbonImmutable|null $filled_at The date when the workout was filled out
+ * @property \Carbon\CarbonImmutable|null $next_change_at The date when the workout should be changed next
+ * @property string|null $goal The goal of the workout, e.g. "lose weight", "build muscle", etc.
+ * @property string|null $method The method of the workout, e.g. "A/B split", "full body", etc.
+ * @property int|null $rest_between_sets The rest time between sets in seconds
+ * @property int|null $rest_between_exercises The rest time between exercises in seconds
+ * @property bool $is_active Whether the workout is active or not
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property int $user_id
+ * @property-read Collection<int, \App\Models\Fitness\WorkoutSection> $sections
+ * @property-read int|null $sections_count
+ * @property-read bool|null $sections_exists
+ * @property-read User $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workout newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workout newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workout query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workout whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workout whereFilledAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workout whereGoal($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workout whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workout whereIsActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workout whereMethod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workout whereNextChangeAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workout whereRestBetweenExercises($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workout whereRestBetweenSets($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workout whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workout whereUserId($value)
+ * @mixin \Eloquent
+ */
+	class Workout extends \Eloquent {}
+}
+
+namespace App\Models\Fitness{
+/**
+ * @property int $id
+ * @property int $workout_section_id
+ * @property int $exercise_id
+ * @property int|null $muscle_group_id
+ * @property string|null $code Code of the exercise, e.g., "A1", "B2"
+ * @property int $order The order of the exercise in the workout section
+ * @property int $sets Number of sets
+ * @property int $reps Reps, e.g., "8-12", "AMRAP", "Failure", etc.
+ * @property float|null $load Load, default unit is kg
+ * @property string $load_unit Unit of the load, e.g., "kg", "lbs", "bodyweight", etc.
+ * @property int|null $rest_seconds Rest time in seconds between sets
+ * @property string|null $notes Additional notes for the exercise, e.g., "Use a spotter", "Focus on form", etc.
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property-read \App\Models\Fitness\Exercise $exercise
+ * @property-read \App\Models\Fitness\MuscleGroup|null $muscleGroup
+ * @property-read \App\Models\Fitness\WorkoutSection $section
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise whereExerciseId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise whereLoad($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise whereLoadUnit($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise whereMuscleGroupId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise whereNotes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise whereOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise whereReps($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise whereRestSeconds($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise whereSets($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise whereWorkoutSectionId($value)
+ * @mixin \Eloquent
+ */
+	class WorkoutExercise extends \Eloquent {}
+}
+
+namespace App\Models\Fitness{
+/**
+ * @property int $id
+ * @property string $name The name of the workout section, e.g. "Superior", "Inferior", "Day A", etc.
+ * @property int $order The order of the workout section in the workout
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property int $workout_id
+ * @property-read Collection<int, \App\Models\Fitness\WorkoutExercise> $exercises
+ * @property-read int|null $exercises_count
+ * @property-read bool|null $exercises_exists
+ * @property-read \App\Models\Fitness\Workout $workout
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutSection newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutSection newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutSection query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutSection whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutSection whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutSection whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutSection whereOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutSection whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutSection whereWorkoutId($value)
+ * @mixin \Eloquent
+ */
+	class WorkoutSection extends \Eloquent {}
+}
+
 namespace App\Models{
 /**
  * @property int $id
@@ -381,6 +536,9 @@ namespace App\Models{
  * @property-read Collection<int, Permission> $teams
  * @property-read int|null $teams_count
  * @property-read bool|null $teams_exists
+ * @property-read Collection<int, Workout> $workouts
+ * @property-read int|null $workouts_count
+ * @property-read bool|null $workouts_exists
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static Builder<static>|User isSuperAdmin()
  * @method static Builder<static>|User newModelQuery()

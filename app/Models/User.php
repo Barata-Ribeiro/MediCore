@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Fitness\Workout;
 use Carbon\CarbonImmutable;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
@@ -59,6 +61,9 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read Collection<int, Permission> $teams
  * @property-read int|null $teams_count
  * @property-read bool|null $teams_exists
+ * @property-read Collection<int, Workout> $workouts
+ * @property-read int|null $workouts_count
+ * @property-read bool|null $workouts_exists
  *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static Builder<static>|User isSuperAdmin()
@@ -138,5 +143,15 @@ class User extends Authenticatable implements PasskeyUser
     public function medicalFile(): HasOne
     {
         return $this->hasOne(MedicalFile::class);
+    }
+
+    /**
+     * Get the workouts for the user.
+     *
+     * @return HasMany<Workout, $this>
+     */
+    public function workouts(): HasMany
+    {
+        return $this->hasMany(Workout::class);
     }
 }
