@@ -39,7 +39,7 @@ class MuscleGroup extends Model
     /**
      * Get the exercises that belong to the muscle group.
      *
-     * @return BelongsToMany<Exercise, MuscleGroup, TPivotModel>
+     * @return BelongsToMany<Exercise, $this, TPivotModel>
      */
     public function exercises(): BelongsToMany
     {
@@ -49,7 +49,7 @@ class MuscleGroup extends Model
     /**
      * Get the workout exercises that belong to the muscle group.
      *
-     * @return HasMany<WorkoutExercise, MuscleGroup>
+     * @return HasMany<WorkoutExercise, $this>
      */
     public function workoutExercises(): HasMany
     {

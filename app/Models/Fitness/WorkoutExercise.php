@@ -73,7 +73,7 @@ class WorkoutExercise extends Model
     /**
      * Get the workout section that owns the exercise.
      *
-     * @return BelongsTo<WorkoutSection, WorkoutExercise>
+     * @return BelongsTo<WorkoutSection, $this>
      */
     public function section(): BelongsTo
     {
@@ -83,7 +83,7 @@ class WorkoutExercise extends Model
     /**
      * Get the exercise that owns the workout exercise.
      *
-     * @return BelongsTo<Exercise, WorkoutExercise>
+     * @return BelongsTo<Exercise, $this>
      */
     public function exercise(): BelongsTo
     {
@@ -93,7 +93,7 @@ class WorkoutExercise extends Model
     /**
      * Get the muscle group that owns the workout exercise.
      *
-     * @return BelongsTo<MuscleGroup, WorkoutExercise>
+     * @return BelongsTo<MuscleGroup, $this>
      */
     public function muscleGroup(): BelongsTo
     {
