@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $code Code of the exercise, e.g., "A1", "B2"
  * @property int $order The order of the exercise in the workout section
  * @property int $sets Number of sets
- * @property int $reps Reps, e.g., "8-12", "AMRAP", "Failure", etc.
+ * @property string $reps Reps, e.g., "8-12", "AMRAP", "Failure", etc.
  * @property float|null $load Load, default unit is kg
  * @property string $load_unit Unit of the load, e.g., "kg", "lbs", "bodyweight", etc.
  * @property int|null $rest_seconds Rest time in seconds between sets
@@ -52,6 +52,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class WorkoutExercise extends Model
 {
     /**
+     * The model's default values for attributes.
+     *
+     * @var array<string, mixed>
+     */
+    protected $attributes = [
+        'order' => 0,
+        'sets' => 3,
+        'reps' => '8-12',
+        'load_unit' => 'kg',
+    ];
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
@@ -64,7 +76,6 @@ class WorkoutExercise extends Model
             'muscle_group_id' => 'integer',
             'order' => 'integer',
             'sets' => 'integer',
-            'reps' => 'integer',
             'load' => 'float',
             'rest_seconds' => 'integer',
         ];

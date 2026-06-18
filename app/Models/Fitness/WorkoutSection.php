@@ -39,15 +39,20 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class WorkoutSection extends Model
 {
     /**
+     * The model's default values for attributes.
+     *
+     * @var array<string, mixed>
+     */
+    protected $attributes = ['order' => 0];
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
      */
     protected function casts(): array
     {
-        return [
-            'order' => 'integer',
-        ];
+        return ['order' => 'integer'];
     }
 
     /**
@@ -67,6 +72,6 @@ class WorkoutSection extends Model
      */
     public function exercises(): HasMany
     {
-        return $this->hasMany(WorkoutExercise::class)->orderBy('order');
+        return $this->hasMany(WorkoutExercise::class)->orderBy(['order']);
     }
 }

@@ -50,6 +50,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Workout extends Model
 {
     /**
+     * The model's default values for attributes.
+     *
+     * @var array<string, mixed>
+     */
+    protected $attributes = ['is_active' => true];
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
@@ -57,8 +64,8 @@ class Workout extends Model
     protected function casts(): array
     {
         return [
-            'filled_at' => 'date',
-            'next_change_at' => 'date',
+            'filled_at' => 'immutable_date',
+            'next_change_at' => 'immutable_date',
             'is_active' => 'boolean',
         ];
     }
@@ -76,6 +83,6 @@ class Workout extends Model
      */
     public function sections(): HasMany
     {
-        return $this->hasMany(WorkoutSection::class)->orderBy('order');
+        return $this->hasMany(WorkoutSection::class)->orderBy(['order']);
     }
 }
