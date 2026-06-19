@@ -85,6 +85,18 @@ return [
             'destroy_failed' => 'Ocorreu um erro ao excluir o registro de vitamina D3. Por favor, tente novamente.',
         ],
     ],
+    'workout' => [
+        'store_successfully' => 'Treino criado com sucesso.',
+        'store_failed' => 'Ocorreu um erro ao criar o treino. Por favor, tente novamente.',
+        'show_unauthorized' => 'Você não está autorizado a visualizar este treino.',
+        'edit_unauthorized' => 'Você não está autorizado a editar este treino.',
+        'update_unauthorized' => 'Você não está autorizado a atualizar este treino.',
+        'update_successfully' => 'Treino atualizado com sucesso.',
+        'update_failed' => 'Ocorreu um erro ao atualizar o treino. Por favor, tente novamente.',
+        'destroy_unauthorized' => 'Você não está autorizado a excluir este treino.',
+        'destroy_successfully' => 'Treino excluído com sucesso.',
+        'destroy_failed' => 'Ocorreu um erro ao excluir o treino. Por favor, tente novamente.',
+    ],
     'settings' => [
         'medical_file' => [
             'updated_successfully' => 'Arquivo médico atualizado com sucesso.',
