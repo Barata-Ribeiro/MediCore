@@ -3449,7 +3449,9 @@ namespace PHPSTORM_META {
 'uric-acid.show','uric-acid.edit','uric-acid.update','uric-acid.destroy','vitamin-b12.index',
 'vitamin-b12.create','vitamin-b12.store','vitamin-b12.show','vitamin-b12.edit','vitamin-b12.update',
 'vitamin-b12.destroy','vitamin-d3.index','vitamin-d3.create','vitamin-d3.store','vitamin-d3.show',
-'vitamin-d3.edit','vitamin-d3.update','vitamin-d3.destroy','storage.local','storage.local.upload',);
+'vitamin-d3.edit','vitamin-d3.update','vitamin-d3.destroy','workouts.index','workouts.create',
+'workouts.store','workouts.show','workouts.edit','workouts.update','workouts.destroy',
+'storage.local','storage.local.upload',);
         registerArgumentsSet('views', 
 'app','laravel-exceptions-renderer::components.badge','laravel-exceptions-renderer::components.empty-state','laravel-exceptions-renderer::components.file-with-line','laravel-exceptions-renderer::components.formatted-source',
 'laravel-exceptions-renderer::components.frame','laravel-exceptions-renderer::components.frame-code','laravel-exceptions-renderer::components.header','laravel-exceptions-renderer::components.http-method','laravel-exceptions-renderer::components.icons.alert',
@@ -3548,7 +3550,9 @@ namespace PHPSTORM_META {
 'flash.exams.vitamin_b12.store_successfully','flash.exams.vitamin_b12.store_failed','flash.exams.vitamin_b12.update_unauthorized','flash.exams.vitamin_b12.update_successfully','flash.exams.vitamin_b12.update_failed',
 'flash.exams.vitamin_b12.destroy_unauthorized','flash.exams.vitamin_b12.destroy_successfully','flash.exams.vitamin_b12.destroy_failed','flash.exams.vitamin_d3.store_successfully','flash.exams.vitamin_d3.store_failed',
 'flash.exams.vitamin_d3.update_unauthorized','flash.exams.vitamin_d3.update_successfully','flash.exams.vitamin_d3.update_failed','flash.exams.vitamin_d3.destroy_unauthorized','flash.exams.vitamin_d3.destroy_successfully',
-'flash.exams.vitamin_d3.destroy_failed','flash.settings.medical_file.updated_successfully','flash.settings.medical_file.failed_update','flash.settings.profile.update.updated_successfully','flash.settings.profile.update.failed_update',
+'flash.exams.vitamin_d3.destroy_failed','flash.workout.store_successfully','flash.workout.store_failed','flash.workout.show_unauthorized','flash.workout.edit_unauthorized',
+'flash.workout.update_unauthorized','flash.workout.update_successfully','flash.workout.update_failed','flash.workout.destroy_unauthorized','flash.workout.destroy_successfully',
+'flash.workout.destroy_failed','flash.settings.medical_file.updated_successfully','flash.settings.medical_file.failed_update','flash.settings.profile.update.updated_successfully','flash.settings.profile.update.failed_update',
 'flash.settings.profile.language.updated_successfully','flash.settings.profile.language.failed_update','flash.settings.profile.destroy.deleted_successfully','flash.settings.profile.destroy.failed_delete','flash.settings.security.update.updated_successfully',
 'flash.settings.security.update.failed_update','flash.social_auth.unsupported_provider','flash.social_auth.failed_redirect','flash.social_auth.unsupported_provider_retry','flash.social_auth.successful_auth',
 'flash.social_auth.failed_auth','glucose_pages.shared.unit','glucose_pages.shared.percentage_unit','glucose_pages.shared.back','glucose_pages.shared.back_label',
