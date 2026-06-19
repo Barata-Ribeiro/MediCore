@@ -250,8 +250,8 @@ namespace App\Models\Fitness{
  * @property string $name The name of the exercise, e.g. "Bench Press", "Squat", etc.
  * @property string|null $description A detailed description of how to perform the exercise, including proper form and technique.
  * @property string|null $video_url A URL to a video demonstrating the exercise, if available.
- * @property \Carbon\CarbonImmutable|null $created_at
- * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
  * @property-read Collection<int, \App\Models\Fitness\MuscleGroup> $muscleGroups
  * @property-read int|null $muscle_groups_count
  * @property-read bool|null $muscle_groups_exists
@@ -276,8 +276,8 @@ namespace App\Models\Fitness{
 /**
  * @property int $id
  * @property string $name The name of the muscle group, e.g. "Pectorals", "Quadriceps", etc.
- * @property \Carbon\CarbonImmutable|null $created_at
- * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
  * @property-read Collection<int, \App\Models\Fitness\Exercise> $exercises
  * @property-read int|null $exercises_count
  * @property-read bool|null $exercises_exists
@@ -299,15 +299,15 @@ namespace App\Models\Fitness{
 namespace App\Models\Fitness{
 /**
  * @property int $id
- * @property \Carbon\CarbonImmutable|null $filled_at The date when the workout was filled out
- * @property \Carbon\CarbonImmutable|null $next_change_at The date when the workout should be changed next
+ * @property CarbonImmutable|null $filled_at The date when the workout was filled out
+ * @property CarbonImmutable|null $next_change_at The date when the workout should be changed next
  * @property string|null $goal The goal of the workout, e.g. "lose weight", "build muscle", etc.
  * @property string|null $method The method of the workout, e.g. "A/B split", "full body", etc.
  * @property int|null $rest_between_sets The rest time between sets in seconds
  * @property int|null $rest_between_exercises The rest time between exercises in seconds
  * @property bool $is_active Whether the workout is active or not
- * @property \Carbon\CarbonImmutable|null $created_at
- * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
  * @property int $user_id
  * @property-read Collection<int, \App\Models\Fitness\WorkoutSection> $sections
  * @property-read int|null $sections_count
@@ -341,13 +341,13 @@ namespace App\Models\Fitness{
  * @property string|null $code Code of the exercise, e.g., "A1", "B2"
  * @property int $order The order of the exercise in the workout section
  * @property int $sets Number of sets
- * @property int $reps Reps, e.g., "8-12", "AMRAP", "Failure", etc.
+ * @property string $reps Reps, e.g., "8-12", "AMRAP", "Failure", etc.
  * @property float|null $load Load, default unit is kg
  * @property string $load_unit Unit of the load, e.g., "kg", "lbs", "bodyweight", etc.
  * @property int|null $rest_seconds Rest time in seconds between sets
  * @property string|null $notes Additional notes for the exercise, e.g., "Use a spotter", "Focus on form", etc.
- * @property \Carbon\CarbonImmutable|null $created_at
- * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
  * @property-read \App\Models\Fitness\Exercise $exercise
  * @property-read \App\Models\Fitness\MuscleGroup|null $muscleGroup
  * @property-read \App\Models\Fitness\WorkoutSection $section
@@ -378,8 +378,8 @@ namespace App\Models\Fitness{
  * @property int $id
  * @property string $name The name of the workout section, e.g. "Superior", "Inferior", "Day A", etc.
  * @property int $order The order of the workout section in the workout
- * @property \Carbon\CarbonImmutable|null $created_at
- * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
  * @property int $workout_id
  * @property-read Collection<int, \App\Models\Fitness\WorkoutExercise> $exercises
  * @property-read int|null $exercises_count
