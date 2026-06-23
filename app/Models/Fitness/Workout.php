@@ -83,6 +83,6 @@ class Workout extends Model
      */
     public function sections(): HasMany
     {
-        return $this->hasMany(WorkoutSection::class)->orderBy(['order']);
+        return $this->hasMany(WorkoutSection::class)->orderBy('order');
     }
 }

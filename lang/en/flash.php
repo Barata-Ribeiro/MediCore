@@ -85,6 +85,18 @@ return [
             'destroy_failed' => 'An error occurred while deleting the vitamin D3 record. Please try again.',
         ],
     ],
+    'workout' => [
+        'store_successfully' => 'Workout created successfully.',
+        'store_failed' => 'An error occurred while creating the workout. Please try again.',
+        'show_unauthorized' => 'You are not authorized to view this workout.',
+        'edit_unauthorized' => 'You are not authorized to edit this workout.',
+        'update_unauthorized' => 'You are not authorized to update this workout.',
+        'update_successfully' => 'Workout updated successfully.',
+        'update_failed' => 'An error occurred while updating the workout. Please try again.',
+        'destroy_unauthorized' => 'You are not authorized to delete this workout.',
+        'destroy_successfully' => 'Workout deleted successfully.',
+        'destroy_failed' => 'An error occurred while deleting the workout. Please try again.',
+    ],
     'settings' => [
         'medical_file' => [
             'updated_successfully' => 'Medical file updated successfully.',
