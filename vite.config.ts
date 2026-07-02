@@ -28,6 +28,7 @@ export default defineConfig({
                 entryFileNames: '[hash].js',
                 chunkFileNames: `[hash].js`,
                 assetFileNames: `[hash].[ext]`,
+                minify: true,
             },
         },
         cssCodeSplit: true,
@@ -41,7 +42,7 @@ export default defineConfig({
             host: 'medicore.test',
             overlay: false,
         },
-        watch: {            usePolling: false,        },
+        watch: { usePolling: false },
     },
-    assetsInclude: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.webp'],
+    assetsInclude: ['**/*.{woff,woff2,eot,ttf,otf,svg,png,jpg,jpeg,gif,webp,avif}'],
 });
