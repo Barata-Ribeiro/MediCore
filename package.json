@@ -1,11 +1,12 @@
 {
     "$schema": "https://www.schemastore.org/package.json",
+    "name": "MediCore",
     "private": true,
     "type": "module",
     "author": {
         "name": "João Mendes Jorge Barata Ribeiro",
         "email": "jmj@barataribeiro.com",
-        "url": "https://github.barataribeiro.com/"
+        "url": "https://barataribeiro.com/"
     },
     "license": "GPL-3.0-only",
     "bugs": {
@@ -13,7 +14,8 @@
         "email": "jmj@barataribeiro.com"
     },
     "scripts": {
-        "build": "vite build && vite build --ssr",
+        "build": "vite build",
+        "build:ssr": "vite build && vite build --ssr",
         "dev": "vite",
         "format": "prettier --write resources/",
         "format:check": "prettier --check resources/",
