@@ -1,7 +1,6 @@
 import AlertError from '@/components/helpers/alert-error';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useIsomorphicLayoutEffect } from '@/hooks/use-isomorphic-layout-effect';
 import { regenerateRecoveryCodes } from '@/routes/two-factor';
 import { lang } from '@erag/lang-sync-inertia/react';
 import { Form } from '@inertiajs/react';
@@ -10,7 +9,7 @@ import { useCallback, useRef, useState } from 'react';
 
 type Props = {
     recoveryCodesList: string[];
-    fetchRecoveryCodes: () => Promise<void>;
+    fetchRecoveryCodes: () => Promise<boolean>;
     errors: string[];
 };
 
@@ -22,7 +21,11 @@ export default function TwoFactorRecoveryCodes({ recoveryCodesList, fetchRecover
 
     const toggleCodesVisibility = useCallback(async () => {
         if (!codesAreVisible && !recoveryCodesList.length) {
-            await fetchRecoveryCodes();
+            const loaded = await fetchRecoveryCodes();
+
+            if (!loaded) {
+                return;
+            }
         }
 
         setCodesAreVisible(!codesAreVisible);
@@ -36,12 +39,6 @@ export default function TwoFactorRecoveryCodes({ recoveryCodesList, fetchRecover
             });
         }
     }, [codesAreVisible, recoveryCodesList.length, fetchRecoveryCodes]);
-
-    useIsomorphicLayoutEffect(() => {
-        if (!recoveryCodesList.length) {
-            fetchRecoveryCodes();
-        }
-    }, [recoveryCodesList.length, fetchRecoveryCodes]);
 
     const RecoveryCodeIconComponent = codesAreVisible ? EyeOff : Eye;
 
