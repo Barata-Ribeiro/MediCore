@@ -33,6 +33,7 @@ use Illuminate\Validation\Rules\Password;
 use Inertia\ExceptionResponse;
 use Inertia\Inertia;
 use Laravel\Fortify\Http\Requests\VerifyEmailRequest as FortifyVerifyEmailRequest;
+use URL;
 use Vite;
 
 use function in_array;
@@ -131,6 +132,10 @@ class AppServiceProvider extends ServiceProvider
         DB::prohibitDestructiveCommands(app()->isProduction());
         Vite::prefetch(concurrency: 3);
         JsonResource::withoutWrapping();
+
+        if (app()->isProduction()) {
+            URL::forceScheme('https');
+        }
 
         Password::defaults(fn (): ?Password => app()->isProduction()
             ? Password::min(12)

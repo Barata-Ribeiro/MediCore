@@ -1,11 +1,12 @@
 {
     "$schema": "https://www.schemastore.org/package.json",
+    "name": "MediCore",
     "private": true,
     "type": "module",
     "author": {
         "name": "João Mendes Jorge Barata Ribeiro",
         "email": "jmj@barataribeiro.com",
-        "url": "https://github.barataribeiro.com/"
+        "url": "https://barataribeiro.com/"
     },
     "license": "GPL-3.0-only",
     "bugs": {
