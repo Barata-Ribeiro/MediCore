@@ -452,6 +452,9 @@ namespace App\Models{
  * @property-read Collection<int, LipidProfile> $lipidProfiles
  * @property-read int|null $lipid_profiles_count
  * @property-read bool|null $lipid_profiles_exists
+ * @property-read Collection<int, TotalProteinsAndFractions> $totalProteinsAndFractions
+ * @property-read int|null $total_proteins_and_fractions_count
+ * @property-read bool|null $total_proteins_and_fractions_exists
  * @property-read Collection<int, UltrasensitiveTsh> $ultrasensitiveTshs
  * @property-read int|null $ultrasensitive_tshs_count
  * @property-read bool|null $ultrasensitive_tshs_exists
