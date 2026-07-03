@@ -7,6 +7,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { useAppearance } from '@/hooks/use-appearance';
 import { useClipboard } from '@/hooks/use-clipboard';
 import { useIsomorphicLayoutEffect } from '@/hooks/use-isomorphic-layout-effect';
+import useIsMounted from '@/hooks/use-mounted';
 import { OTP_MAX_LENGTH } from '@/hooks/use-two-factor-auth';
 import { confirm } from '@/routes/two-factor';
 import { lang } from '@erag/lang-sync-inertia/react';
@@ -87,7 +88,7 @@ function TwoFactorSetupStep({
                     <div className="relative flex w-full items-center justify-center">
                         <div className="absolute inset-0 top-1/2 h-px w-full bg-border" />
                         <span className="relative bg-card px-2 py-1">
-                            {__('settings_pages.two_factor_setup_modal.setup_step_message_end')}
+                            {__('settings_pages.security_page.two_factor_setup_modal.setup_step_message_end')}
                         </span>
                     </div>
 
@@ -168,10 +169,10 @@ function TwoFactorVerificationStep({ onClose, onBack }: Readonly<{ onClose: () =
                             onClick={onBack}
                             disabled={processing}
                         >
-                            {__('settings_pages.two_factor_setup_modal.form.back')}
+                            {__('settings_pages.security_page.two_factor_setup_modal.form.back')}
                         </Button>
                         <Button type="submit" className="flex-1" disabled={processing || code.length < OTP_MAX_LENGTH}>
-                            {__('settings_pages.two_factor_setup_modal.form.confirm')}
+                            {__('settings_pages.security_page.two_factor_setup_modal.form.confirm')}
                         </Button>
                     </div>
                 </div>
@@ -210,8 +211,9 @@ export default function TwoFactorSetupModal({
     errors,
 }: Readonly<Props>) {
     const { __ } = lang();
+    const isMounted = useIsMounted();
+    const fetchSetupDataRef = useRef(fetchSetupData);
     const [showVerificationStep, setShowVerificationStep] = useState<boolean>(false);
-
     const [modalConfig, setModalConfig] = useState<TwoFactorSetupModalProps>({
         title: '',
         description: '',
@@ -237,38 +239,43 @@ export default function TwoFactorSetupModal({
 
         handleClose();
     };
-
-    const fetchSetupDataRef = useRef(fetchSetupData);
-
     useIsomorphicLayoutEffect(() => {
+        if (!isMounted) {
+            return;
+        }
+
         fetchSetupDataRef.current = fetchSetupData;
     }, [fetchSetupData]);
 
     useIsomorphicLayoutEffect(() => {
+        if (!isMounted) {
+            return;
+        }
+
         if (isOpen && !qrCodeSvg) {
             fetchSetupDataRef.current();
         }
 
         if (twoFactorEnabled) {
             setModalConfig({
-                title: __('settings_pages.two_factor_setup_modal.enabled.title'),
-                description: __('settings_pages.two_factor_setup_modal.enabled.description'),
-                buttonText: __('settings_pages.two_factor_setup_modal.enabled.button'),
+                title: __('settings_pages.security_page.two_factor_setup_modal.enabled.title'),
+                description: __('settings_pages.security_page.two_factor_setup_modal.enabled.description'),
+                buttonText: __('settings_pages.security_page.two_factor_setup_modal.enabled.button'),
             });
         } else if (showVerificationStep) {
             setModalConfig({
-                title: __('settings_pages.two_factor_setup_modal.verification.title'),
-                description: __('settings_pages.two_factor_setup_modal.verification.description'),
-                buttonText: __('settings_pages.two_factor_setup_modal.verification.button'),
+                title: __('settings_pages.security_page.two_factor_setup_modal.verification.title'),
+                description: __('settings_pages.security_page.two_factor_setup_modal.verification.description'),
+                buttonText: __('settings_pages.security_page.two_factor_setup_modal.verification.button'),
             });
         } else {
             setModalConfig({
-                title: __('settings_pages.two_factor_setup_modal.disabled.title'),
-                description: __('settings_pages.two_factor_setup_modal.disabled.description'),
-                buttonText: __('settings_pages.two_factor_setup_modal.disabled.button'),
+                title: __('settings_pages.security_page.two_factor_setup_modal.disabled.title'),
+                description: __('settings_pages.security_page.two_factor_setup_modal.disabled.description'),
+                buttonText: __('settings_pages.security_page.two_factor_setup_modal.disabled.button'),
             });
         }
-    }, [isOpen, qrCodeSvg, twoFactorEnabled, showVerificationStep]);
+    }, [__, isMounted, isOpen, qrCodeSvg, showVerificationStep, twoFactorEnabled]);
 
     return (
         <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
