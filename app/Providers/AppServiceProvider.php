@@ -7,6 +7,7 @@ use App\Interfaces\DashboardServiceInterface;
 use App\Interfaces\Exams\CompleteBloodCountServiceInterface;
 use App\Interfaces\Exams\GlucoseServiceInterface;
 use App\Interfaces\Exams\LipidProfileServiceInterface;
+use App\Interfaces\Exams\TotalProteinsAndFractionsServiceInterface;
 use App\Interfaces\Exams\UltrasensitiveTshServiceInterface;
 use App\Interfaces\Exams\UreaAndCreatinineServiceInterface;
 use App\Interfaces\Exams\UricAcidServiceInterface;
@@ -16,6 +17,7 @@ use App\Services\DashboardService;
 use App\Services\Exams\CompleteBloodCountService;
 use App\Services\Exams\GlucoseService;
 use App\Services\Exams\LipidProfileService;
+use App\Services\Exams\TotalProteinsAndFractionsService;
 use App\Services\Exams\UltrasensitiveTshService;
 use App\Services\Exams\UreaAndCreatinineService;
 use App\Services\Exams\UricAcidService;
@@ -95,6 +97,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             UricAcidServiceInterface::class,
             UricAcidService::class
+        );
+
+        $this->app->bind(
+            TotalProteinsAndFractionsServiceInterface::class,
+            TotalProteinsAndFractionsService::class
         );
     }
 
