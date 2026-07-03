@@ -7,7 +7,11 @@ use App\Http\Requests\QueryRequest;
 use App\Interfaces\Exams\TotalProteinsAndFractionsServiceInterface;
 use App\Models\Exams\TotalProteinsAndFractions;
 use Illuminate\Http\Request;
-use Response;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Inertia\Inertia;
+use Inertia\Response;
+
+use function in_array;
 
 class TotalProteinsAndFractionsController extends Controller
 {
@@ -18,7 +22,14 @@ class TotalProteinsAndFractionsController extends Controller
      */
     public function index(QueryRequest $request): Response
     {
-        //
+        syncLangFiles('total_proteins_and_fractions_pages');
+
+        [$totalProteinsAndFractions, $chartData] = $this->totalProteinsAndFractionsPageAndChartData($request);
+
+        return Inertia::render('exams/total-proteins-and-fractions/index', [
+            'totalProteinsAndFractions' => $totalProteinsAndFractions,
+            'chartData' => $chartData,
+        ]);
     }
 
     /**
@@ -67,5 +78,38 @@ class TotalProteinsAndFractionsController extends Controller
     public function destroy(TotalProteinsAndFractions $totalProteinsAndFractions)
     {
         //
+    }
+
+    /**
+     * Validate request query inputs, apply sort/filter defaults, and fetch
+     * paginated total proteins and fractions results plus chart data.
+     *
+     * @return array{
+     *     0: LengthAwarePaginator<int, TotalProteinsAndFractions>,
+     *     1: array<string, mixed>
+     * }
+     */
+    private function totalProteinsAndFractionsPageAndChartData(QueryRequest $request): array
+    {
+        $validated = $request->validated();
+
+        $perPage = $validated['per_page'] ?? 10;
+        $sortBy = $validated['sort_by'] ?? 'id';
+        $sortDir = $validated['sort_dir'] ?? 'asc';
+        $search = trim($validated['search'] ?? '');
+        $filters = $validated['filters'] ?? [];
+
+        $allowedSorts = ['id', 'total_proteins', 'albumin', 'globulin', 'albumin_globulin_ratio', 'created_at'];
+        if (! in_array($sortBy, $allowedSorts)) {
+            $sortBy = 'id';
+        }
+
+        return $this->totalProteinsAndFractionsService->getTotalProteinsAndFractionsData(
+            perPage: $perPage,
+            sortBy: $sortBy,
+            sortDir: $sortDir,
+            search: $search,
+            filters: $filters
+        );
     }
 }
