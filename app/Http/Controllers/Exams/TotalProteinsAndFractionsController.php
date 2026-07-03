@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Exams;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Exams\TotalProteinsAndFractionsRequest;
 use App\Http\Requests\QueryRequest;
 use App\Interfaces\Exams\TotalProteinsAndFractionsServiceInterface;
 use App\Models\Exams\TotalProteinsAndFractions;
+use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
 use Inertia\Response;
+use Log;
 
 use function in_array;
 
@@ -37,23 +41,32 @@ class TotalProteinsAndFractionsController extends Controller
      */
     public function create()
     {
-        //
+        syncLangFiles('total_proteins_and_fractions_pages');
+
+        return Inertia::render('exams/total-proteins-and-fractions/create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TotalProteinsAndFractionsRequest $request): RedirectResponse
     {
-        //
-    }
+        $user = $request->user();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(TotalProteinsAndFractions $totalProteinsAndFractions)
-    {
-        //
+        $validated = $request->validated();
+
+        try {
+            $user->medicalFile->totalProteinsAndFractions()->create($validated);
+
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exams.total_proteins_and_fractions.store_successfully')]);
+
+            return to_route('total-proteins-and-fractions.index');
+        } catch (Exception $e) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.total_proteins_and_fractions.store_failed')]);
+            Log::error('Error creating Total Proteins and Fractions record', ['user_id' => $request->user()->id, 'error' => $e->getMessage()]);
+
+            return back()->withInput();
+        }
     }
 
     /**
