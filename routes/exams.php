@@ -3,6 +3,7 @@
 use App\Http\Controllers\Exams\CompleteBloodCountController;
 use App\Http\Controllers\Exams\GlucoseController;
 use App\Http\Controllers\Exams\LipidProfileController;
+use App\Http\Controllers\Exams\TotalProteinsAndFractionsController;
 use App\Http\Controllers\Exams\UltrasensitiveTshController;
 use App\Http\Controllers\Exams\UreaAndCreatinineController;
 use App\Http\Controllers\Exams\UricAcidController;
@@ -14,6 +15,7 @@ Route::middleware(['auth', 'verified'])->prefix('exams')->group(function () {
     Route::resource('complete-blood-count', CompleteBloodCountController::class);
     Route::resource('glucose', GlucoseController::class);
     Route::resource('lipid-profile', LipidProfileController::class);
+    Route::resource('total_proteins_and_fractions', TotalProteinsAndFractionsController::class);
     Route::resource('ultrasensitive-tsh', UltrasensitiveTshController::class);
     Route::resource('urea-and-creatinine', UreaAndCreatinineController::class);
     Route::resource('uric-acid', UricAcidController::class);
