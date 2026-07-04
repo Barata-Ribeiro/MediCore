@@ -129,6 +129,34 @@ namespace App\Models\Exams{
 namespace App\Models\Exams{
 /**
  * @property int $id
+ * @property float $total_proteins Total Proteins level
+ * @property float $albumin Albumin level
+ * @property float $globulin Globulin level
+ * @property CarbonImmutable $report_date Date of the Vitamin B12 report
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
+ * @property int $medical_file_id
+ * @property-read float|int|null $albumin_globulin_ratio
+ * @property-read MedicalFile $medicalFile
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions whereAlbumin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions whereGlobulin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions whereMedicalFileId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions whereReportDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions whereTotalProteins($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
+	class TotalProteinsAndFractions extends \Eloquent {}
+}
+
+namespace App\Models\Exams{
+/**
+ * @property int $id
  * @property float $tsh_level Ultrasensitive TSH level
  * @property CarbonImmutable $report_date Date of the Urea and Creatinine report
  * @property CarbonImmutable|null $created_at
@@ -424,6 +452,9 @@ namespace App\Models{
  * @property-read Collection<int, LipidProfile> $lipidProfiles
  * @property-read int|null $lipid_profiles_count
  * @property-read bool|null $lipid_profiles_exists
+ * @property-read Collection<int, TotalProteinsAndFractions> $totalProteinsAndFractions
+ * @property-read int|null $total_proteins_and_fractions_count
+ * @property-read bool|null $total_proteins_and_fractions_exists
  * @property-read Collection<int, UltrasensitiveTsh> $ultrasensitiveTshs
  * @property-read int|null $ultrasensitive_tshs_count
  * @property-read bool|null $ultrasensitive_tshs_exists
