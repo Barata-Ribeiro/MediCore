@@ -35,11 +35,14 @@ class TotalProteinsAndFractionsService implements TotalProteinsAndFractionsServi
         /**
          * @var Collection<int, object{
          *     label: string,
-         *    total_proteins: float|int|null
+         *     total_proteins: float|int|null,
+         *     albumin: float|int|null,
+         *     globulin: float|int|null,
+         *     albumin_globulin_ratio: float|int|null
          * }> $chartRows
          */
         $chartRows = TotalProteinsAndFractions::query()
-            ->selectRaw('DATE(report_date) as label, AVG(total_proteins) as total_proteins')
+            ->selectRaw('DATE(report_date) as label, AVG(total_proteins) as total_proteins, AVG(albumin) as albumin, AVG(globulin) as globulin, AVG(albumin_globulin_ratio) as albumin_globulin_ratio')
             ->where('medical_file_id', auth()->user()->medicalFile->id)
             ->groupBy('label')
             ->orderBy('label')
@@ -49,10 +52,10 @@ class TotalProteinsAndFractionsService implements TotalProteinsAndFractionsServi
         $chartData = $chartRows->map(fn (object $row): array => [
             'x_axis_label' => $row->label,
             'datasets' => [
-                'total_proteins' => ['label' => 'Total Proteins', 'data' => $row->total_proteins],
-                'albumin' => ['label' => 'Albumin', 'data' => $row->albumin],
-                'globulin' => ['label' => 'Globulin', 'data' => $row->globulin],
-                'albumin_globulin_ratio' => ['label' => 'Albumin/Globulin Ratio', 'data' => $row->albumin_globulin_ratio],
+                'total_proteins' => ['label' => __('total_proteins_and_fractions_pages.index.table.columns.total_proteins'), 'data' => $row->total_proteins],
+                'albumin' => ['label' => __('total_proteins_and_fractions_pages.index.table.columns.albumin'), 'data' => $row->albumin],
+                'globulin' => ['label' => __('total_proteins_and_fractions_pages.index.table.columns.globulin'), 'data' => $row->globulin],
+                'albumin_globulin_ratio' => ['label' => __('total_proteins_and_fractions_pages.index.table.columns.albumin_globulin_ratio'), 'data' => $row->albumin_globulin_ratio],
             ],
         ])->toArray();
 
