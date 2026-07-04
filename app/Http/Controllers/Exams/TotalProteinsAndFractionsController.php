@@ -60,7 +60,7 @@ class TotalProteinsAndFractionsController extends Controller
 
             Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exams.total_proteins_and_fractions.store_successfully')]);
 
-            return to_route('total-proteins-and-fractions.index');
+            return to_route('total_proteins_and_fractions.index');
         } catch (Exception $e) {
             Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.total_proteins_and_fractions.store_failed')]);
             Log::error('Error creating Total Proteins and Fractions record', ['user_id' => $request->user()->id, 'error' => $e->getMessage()]);
@@ -101,7 +101,7 @@ class TotalProteinsAndFractionsController extends Controller
 
             Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exams.total_proteins_and_fractions.update_successfully')]);
 
-            return to_route('total-proteins-and-fractions.index');
+            return to_route('total_proteins_and_fractions.index');
         } catch (Exception $e) {
             Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.total_proteins_and_fractions.update_failed')]);
             Log::error('Error updating Total Proteins and Fractions record', ['user_id' => $request->user()->id, 'error' => $e->getMessage()]);
@@ -128,7 +128,7 @@ class TotalProteinsAndFractionsController extends Controller
 
             Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exams.total_proteins_and_fractions.destroy_successfully')]);
 
-            return to_route('total-proteins-and-fractions.index');
+            return to_route('total_proteins_and_fractions.index');
         } catch (Exception $e) {
             Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.total_proteins_and_fractions.destroy_failed')]);
             Log::error('Error deleting Total Proteins and Fractions record', ['user_id' => $user->id, 'error' => $e->getMessage()]);
