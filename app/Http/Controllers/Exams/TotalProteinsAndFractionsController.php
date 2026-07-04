@@ -39,7 +39,7 @@ class TotalProteinsAndFractionsController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response
     {
         syncLangFiles('total_proteins_and_fractions_pages');
 
@@ -72,25 +72,69 @@ class TotalProteinsAndFractionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(TotalProteinsAndFractions $totalProteinsAndFractions)
+    public function edit(TotalProteinsAndFractions $totalProteinsAndFractions): Response
     {
-        //
+        syncLangFiles('total_proteins_and_fractions_pages');
+
+        return Inertia::render('exams/total-proteins-and-fractions/edit', [
+            'totalProteinsAndFractions' => $totalProteinsAndFractions,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TotalProteinsAndFractions $totalProteinsAndFractions)
+    public function update(TotalProteinsAndFractionsRequest $request, TotalProteinsAndFractions $totalProteinsAndFractions): RedirectResponse
     {
-        //
+        $user = $request->user();
+
+        if ($totalProteinsAndFractions->medicalFile->user_id !== $user->id) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.total_proteins_and_fractions.update_unauthorized')]);
+
+            return back();
+        }
+
+        $validated = $request->validated();
+
+        try {
+            $totalProteinsAndFractions->update($validated);
+
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exams.total_proteins_and_fractions.update_successfully')]);
+
+            return to_route('total-proteins-and-fractions.index');
+        } catch (Exception $e) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.total_proteins_and_fractions.update_failed')]);
+            Log::error('Error updating Total Proteins and Fractions record', ['user_id' => $request->user()->id, 'error' => $e->getMessage()]);
+
+            return back()->withInput();
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TotalProteinsAndFractions $totalProteinsAndFractions)
+    public function destroy(TotalProteinsAndFractions $totalProteinsAndFractions): RedirectResponse
     {
-        //
+        $user = auth()->user();
+
+        if ($totalProteinsAndFractions->medicalFile->user_id !== $user->id) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.total_proteins_and_fractions.destroy_unauthorized')]);
+
+            return back();
+        }
+
+        try {
+            $totalProteinsAndFractions->delete();
+
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exams.total_proteins_and_fractions.destroy_successfully')]);
+
+            return to_route('total-proteins-and-fractions.index');
+        } catch (Exception $e) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.total_proteins_and_fractions.destroy_failed')]);
+            Log::error('Error deleting Total Proteins and Fractions record', ['user_id' => $user->id, 'error' => $e->getMessage()]);
+
+            return back();
+        }
     }
 
     /**
