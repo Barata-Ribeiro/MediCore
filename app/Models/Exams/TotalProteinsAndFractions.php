@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
  * @property int $medical_file_id
- * @property-read float|int|null $albumin_globulin_ratio
+ * @property-read float|null $albumin_globulin_ratio
  * @property-read MedicalFile $medicalFile
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions newModelQuery()
@@ -52,8 +52,6 @@ class TotalProteinsAndFractions extends Model
 
     /**
      * Get the albumin to globulin ratio.
-     *
-     * @return float|int|null
      */
     public function getAlbuminGlobulinRatioAttribute(): ?float
     {
