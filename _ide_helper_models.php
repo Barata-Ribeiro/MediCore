@@ -136,7 +136,7 @@ namespace App\Models\Exams{
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
  * @property int $medical_file_id
- * @property-read float|int|null $albumin_globulin_ratio
+ * @property-read float|null $albumin_globulin_ratio
  * @property-read MedicalFile $medicalFile
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions newQuery()
