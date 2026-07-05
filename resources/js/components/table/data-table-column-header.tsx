@@ -50,7 +50,7 @@ export default function DataTableColumnHeader<TData, TValue>({
                 <span>{title}</span>
                 {columnSortDir ? columnSortIndicator[columnSortDir] : columnSortIndicator['default']}
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-28">
+            <DropdownMenuContent align="end" className="w-full">
                 <Activity mode={column.getCanSort() ? 'visible' : 'hidden'}>
                     <DropdownMenuCheckboxItem
                         className="relative pr-8 pl-2 [&_svg]:text-muted-foreground [&>span:first-child]:right-2 [&>span:first-child]:left-auto"
@@ -82,14 +82,13 @@ export default function DataTableColumnHeader<TData, TValue>({
                 </Activity>
 
                 <Activity mode={column.getCanHide() ? 'visible' : 'hidden'}>
-                    <DropdownMenuCheckboxItem
-                        className="relative pr-8 pl-2 [&_svg]:text-muted-foreground [&>span:first-child]:right-2 [&>span:first-child]:left-auto"
-                        checked={!column.getIsVisible()}
+                    <DropdownMenuItem
+                        className="pl-2 [&_svg]:text-muted-foreground"
                         onClick={() => column.toggleVisibility(false)}
                     >
                         <EyeOffIcon aria-hidden />
                         {__('main.data_table.column_header.hide')}
-                    </DropdownMenuCheckboxItem>
+                    </DropdownMenuItem>
                 </Activity>
             </DropdownMenuContent>
         </DropdownMenu>
