@@ -7,7 +7,7 @@ import type { ChartData } from '@/types';
 import type { VitaminD3 } from '@/types/application/exams/vitamin-d3';
 import type { PaginationMeta } from '@/types/application/metadata';
 import { lang } from '@erag/lang-sync-inertia/react';
-import { Head, setLayoutProps, usePage } from '@inertiajs/react';
+import { Head, setLayoutProps } from '@inertiajs/react';
 import { Fragment } from 'react/jsx-runtime';
 
 type Props = {
@@ -25,10 +25,7 @@ export default function Index({ vitaminD3s, chartData }: Readonly<Props>) {
         breadcrumbs: [{ title: __('vitamin_d3_pages.index.breadcrumbs.current'), href: index() }],
     });
 
-    const { url } = usePage();
     const { data, ...pagination } = vitaminD3s;
-
-    console.log({ url, data, pagination, chartData });
 
     return (
         <Fragment>

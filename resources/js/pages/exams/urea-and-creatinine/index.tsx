@@ -7,7 +7,7 @@ import type { ChartData } from '@/types';
 import type { UreaAndCreatinine } from '@/types/application/exams/urea-and-creatinine';
 import type { PaginationMeta } from '@/types/application/metadata';
 import { lang } from '@erag/lang-sync-inertia/react';
-import { Head, setLayoutProps, usePage } from '@inertiajs/react';
+import { Head, setLayoutProps } from '@inertiajs/react';
 import { Fragment } from 'react/jsx-runtime';
 
 type Props = {
@@ -25,10 +25,7 @@ export default function Index({ ureaAndCreatinines, chartData }: Readonly<Props>
         breadcrumbs: [{ title: __('urea_and_creatinine_pages.index.breadcrumbs.current'), href: index() }],
     });
 
-    const { url } = usePage();
     const { data, ...pagination } = ureaAndCreatinines;
-
-    console.log({ url, data, pagination, chartData });
 
     return (
         <Fragment>
