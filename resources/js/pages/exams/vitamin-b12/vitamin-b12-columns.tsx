@@ -121,6 +121,9 @@ export function useVitaminB12Columns(): ColumnDef<VitaminB12>[] {
                 <TableColumnHeader column={column} title={__('vitamin_b12_pages.index.table.columns.vitamin_b12')} />
             ),
             cell: ({ row }) => <VitaminB12ValueCell value={row.original.vitamin_b12_level} />,
+            meta: {
+                label: __('vitamin_b12_pages.index.table.columns.vitamin_b12'),
+            },
             enableSorting: true,
         },
         {

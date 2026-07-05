@@ -121,6 +121,9 @@ export function useVitaminD3Columns(): ColumnDef<VitaminD3>[] {
                 <TableColumnHeader column={column} title={__('vitamin_d3_pages.index.table.columns.vitamin_d3')} />
             ),
             cell: ({ row }) => <VitaminD3ValueCell value={row.original.twenty_five_hydroxyvitamin_d3} />,
+            meta: {
+                label: __('vitamin_d3_pages.index.table.columns.vitamin_d3'),
+            },
             enableSorting: true,
         },
         {

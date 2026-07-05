@@ -34,6 +34,22 @@ interface DataTableProps<TData, TValue> {
 
 type FilterValue = string | string[] | null;
 
+function getSearchParams(pageUrl?: string): URLSearchParams {
+    if (pageUrl) {
+        try {
+            return new URL(pageUrl, 'http://localhost').searchParams;
+        } catch {
+            return new URLSearchParams();
+        }
+    }
+
+    if (globalThis.window !== undefined) {
+        return new URLSearchParams(globalThis.window.location.search);
+    }
+
+    return new URLSearchParams();
+}
+
 function getCommonPinningStyles<TData>({
     column,
     withBorder = false,
@@ -97,15 +113,7 @@ export function DataTable<TData, TValue>({
         });
     });
 
-    const params = useMemo(() => {
-        try {
-            const urlObj = new URL(page.url ?? globalThis.location.href, globalThis.location.origin);
-
-            return new URLSearchParams(urlObj.search);
-        } catch {
-            return new URLSearchParams(globalThis.location.search);
-        }
-    }, [page.url]);
+    const params = useMemo(() => getSearchParams(page.url), [page.url]);
 
     const [sorting, setSorting] = useState<SortingState>(() => {
         const sort_by = params.get('sort_by');

@@ -7,7 +7,7 @@ import type { ChartData } from '@/types';
 import type { CompleteBloodCount } from '@/types/application/exams/complete-blood-count';
 import type { PaginationMeta } from '@/types/application/metadata';
 import { lang } from '@erag/lang-sync-inertia/react';
-import { Head, setLayoutProps, usePage } from '@inertiajs/react';
+import { Head, setLayoutProps } from '@inertiajs/react';
 import { Fragment } from 'react/jsx-runtime';
 
 type Props = {
@@ -25,10 +25,7 @@ export default function Index({ completeBloodCounts, chartData }: Readonly<Props
         breadcrumbs: [{ title: __('complete_blood_count_pages.index.breadcrumbs.current'), href: index() }],
     });
 
-    const { url } = usePage();
     const { data, ...pagination } = completeBloodCounts;
-
-    console.log({ url, data, pagination, chartData });
 
     return (
         <Fragment>

@@ -132,6 +132,9 @@ export function useUreaAndCreatinineColumns(): ColumnDef<UreaAndCreatinine>[] {
                 />
             ),
             cell: ({ row }) => <UreaAndCreatinineValueCell value={row.original.urea_level} />,
+            meta: {
+                label: __('urea_and_creatinine_pages.index.table.columns.urea_level'),
+            },
             enableSorting: true,
         },
         {
@@ -143,6 +146,9 @@ export function useUreaAndCreatinineColumns(): ColumnDef<UreaAndCreatinine>[] {
                 />
             ),
             cell: ({ row }) => <UreaAndCreatinineValueCell value={row.original.creatinine_level} />,
+            meta: {
+                label: __('urea_and_creatinine_pages.index.table.columns.creatinine_level'),
+            },
             enableSorting: true,
         },
         {

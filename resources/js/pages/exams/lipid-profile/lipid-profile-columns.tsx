@@ -132,6 +132,9 @@ export function useLipidProfileColumns(): ColumnDef<LipidProfile>[] {
                 />
             ),
             cell: ({ row }) => <LipidValueCell value={row.original.total_cholesterol} />,
+            meta: {
+                label: __('lipid_profile_pages.index.table.columns.total_cholesterol'),
+            },
             enableSorting: true,
         },
         {
@@ -143,6 +146,9 @@ export function useLipidProfileColumns(): ColumnDef<LipidProfile>[] {
                 />
             ),
             cell: ({ row }) => <LipidValueCell value={row.original.hdl_cholesterol} />,
+            meta: {
+                label: __('lipid_profile_pages.index.table.columns.hdl_cholesterol'),
+            },
             enableSorting: true,
         },
         {
@@ -154,6 +160,9 @@ export function useLipidProfileColumns(): ColumnDef<LipidProfile>[] {
                 />
             ),
             cell: ({ row }) => <LipidValueCell value={row.original.ldl_cholesterol} />,
+            meta: {
+                label: __('lipid_profile_pages.index.table.columns.ldl_cholesterol'),
+            },
             enableSorting: true,
         },
         {
@@ -165,6 +174,9 @@ export function useLipidProfileColumns(): ColumnDef<LipidProfile>[] {
                 />
             ),
             cell: ({ row }) => <LipidValueCell value={row.original.vldl_cholesterol} />,
+            meta: {
+                label: __('lipid_profile_pages.index.table.columns.vldl_cholesterol'),
+            },
             enableSorting: true,
         },
         {
@@ -176,6 +188,9 @@ export function useLipidProfileColumns(): ColumnDef<LipidProfile>[] {
                 />
             ),
             cell: ({ row }) => <LipidValueCell value={row.original.triglycerides} />,
+            meta: {
+                label: __('lipid_profile_pages.index.table.columns.triglycerides'),
+            },
             enableSorting: true,
         },
         {

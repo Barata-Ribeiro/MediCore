@@ -130,6 +130,9 @@ export function useGlucoseColumns(): ColumnDef<Glucose>[] {
                 <TableColumnHeader column={column} title={__('glucose_pages.index.table.columns.glucose_level')} />
             ),
             cell: ({ row }) => <GlucoseValueCell value={row.original.glucose_level} />,
+            meta: {
+                label: __('glucose_pages.index.table.columns.glucose_level'),
+            },
             enableSorting: true,
         },
         {
@@ -141,6 +144,9 @@ export function useGlucoseColumns(): ColumnDef<Glucose>[] {
                 />
             ),
             cell: ({ row }) => <PercentageValueCell value={row.original.glycated_hemoglobin} />,
+            meta: {
+                label: __('glucose_pages.index.table.columns.glycated_hemoglobin'),
+            },
             enableSorting: true,
         },
         {
@@ -152,6 +158,9 @@ export function useGlucoseColumns(): ColumnDef<Glucose>[] {
                 />
             ),
             cell: ({ row }) => <GlucoseValueCell value={row.original.estimated_average_glucose} />,
+            meta: {
+                label: __('glucose_pages.index.table.columns.estimated_average_glucose'),
+            },
             enableSorting: true,
         },
         {

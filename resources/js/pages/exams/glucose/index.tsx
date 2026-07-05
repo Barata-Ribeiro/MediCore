@@ -7,7 +7,7 @@ import type { ChartData } from '@/types';
 import type { Glucose } from '@/types/application/exams/glucose';
 import type { PaginationMeta } from '@/types/application/metadata';
 import { lang } from '@erag/lang-sync-inertia/react';
-import { Head, setLayoutProps, usePage } from '@inertiajs/react';
+import { Head, setLayoutProps } from '@inertiajs/react';
 import { Fragment } from 'react/jsx-runtime';
 
 type Props = {
@@ -25,10 +25,7 @@ export default function Index({ glucoses, chartData }: Readonly<Props>) {
         breadcrumbs: [{ title: __('glucose_pages.index.breadcrumbs.current'), href: index() }],
     });
 
-    const { url } = usePage();
     const { data, ...pagination } = glucoses;
-
-    console.log({ url, data, pagination, chartData });
 
     return (
         <Fragment>
