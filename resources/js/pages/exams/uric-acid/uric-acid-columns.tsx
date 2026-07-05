@@ -121,6 +121,9 @@ export function useUricAcidColumns(): ColumnDef<UricAcid>[] {
                 <TableColumnHeader column={column} title={__('uric_acid_pages.index.table.columns.uric_acid_level')} />
             ),
             cell: ({ row }) => <UricAcidValueCell value={row.original.uric_acid_level} />,
+            meta: {
+                label: __('uric_acid_pages.index.table.columns.uric_acid_level'),
+            },
             enableSorting: true,
         },
         {

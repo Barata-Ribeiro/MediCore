@@ -129,6 +129,9 @@ export function useUltrasensitiveTshColumns(): ColumnDef<UltrasensitiveTsh>[] {
                 />
             ),
             cell: ({ row }) => <UltrasensitiveTshValueCell value={row.original.tsh_level} />,
+            meta: {
+                label: __('ultrasensitive_tsh_pages.index.table.columns.tsh_level'),
+            },
             enableSorting: true,
         },
         {
