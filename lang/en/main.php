@@ -73,6 +73,8 @@ return [
         'column_visibility' => [
             'action' => 'View',
             'label' => 'Toggle columns',
+            'search' => 'Search columns...',
+            'no_columns' => 'No columns found or available.',
         ],
         'toolbar' => [
             'search' => [

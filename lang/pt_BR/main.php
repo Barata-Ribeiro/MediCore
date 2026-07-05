@@ -73,6 +73,8 @@ return [
         'column_visibility' => [
             'action' => 'Visualizar',
             'label' => 'Alternar colunas',
+            'search' => 'Pesquisar colunas...',
+            'no_columns' => 'Nenhuma coluna encontrada ou disponível.',
         ],
         'toolbar' => [
             'search' => [
