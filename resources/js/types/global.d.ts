@@ -34,13 +34,15 @@ declare module '@tanstack/react-table' {
         options?: Option[];
         range?: [number, number];
         unit?: string;
-        icon?: React.FC<React.SVGProps<SVGSVGElement>>;
+        icon?: React.ComponentType<React.ComponentProps<'svg'>>;
     }
 }
 
 export interface Option {
     label: string;
     value: string;
+    count?: number;
+    icon?: React.ComponentType<React.ComponentProps<'svg'>>;
 }
 
 export type FilterVariant = 'text' | 'number' | 'range' | 'date' | 'dateRange' | 'boolean' | 'select' | 'multiSelect';
