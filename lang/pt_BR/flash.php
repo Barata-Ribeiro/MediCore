@@ -34,6 +34,16 @@ return [
             'destroy_successfully' => 'Registro de perfil lipídico excluído com sucesso.',
             'destroy_failed' => 'Ocorreu um erro ao excluir o registro de perfil lipídico. Por favor, tente novamente.',
         ],
+        'total_proteins_and_fractions' => [
+            'store_successfully' => 'Registro de proteínas totais e frações criado com sucesso.',
+            'store_failed' => 'Ocorreu um erro ao criar o registro de proteínas totais e frações. Por favor, tente novamente.',
+            'update_unauthorized' => 'Você não está autorizado a atualizar este registro de proteínas totais e frações.',
+            'update_successfully' => 'Registro de proteínas totais e frações atualizado com sucesso.',
+            'update_failed' => 'Ocorreu um erro ao atualizar o registro de proteínas totais e frações. Por favor, tente novamente.',
+            'destroy_unauthorized' => 'Você não está autorizado a excluir este registro de proteínas totais e frações.',
+            'destroy_successfully' => 'Registro de proteínas totais e frações excluído com sucesso.',
+            'destroy_failed' => 'Ocorreu um erro ao excluir o registro de proteínas totais e frações. Por favor, tente novamente.',
+        ],
         'ultrasensitive_tsh' => [
             'store_successfully' => 'Registro de TSH ultrassensível criado com sucesso.',
             'store_failed' => 'Ocorreu um erro ao criar o registro de TSH ultrassensível. Por favor, tente novamente.',

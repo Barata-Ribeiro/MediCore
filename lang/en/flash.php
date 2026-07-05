@@ -34,6 +34,16 @@ return [
             'destroy_successfully' => 'Lipid profile record deleted successfully.',
             'destroy_failed' => 'An error occurred while deleting the lipid profile record. Please try again.',
         ],
+        'total_proteins_and_fractions' => [
+            'store_successfully' => 'Total proteins and fractions record created successfully.',
+            'store_failed' => 'An error occurred while creating the total proteins and fractions record. Please try again.',
+            'update_unauthorized' => 'You are not authorized to update this total proteins and fractions record.',
+            'update_successfully' => 'Total proteins and fractions record updated successfully.',
+            'update_failed' => 'An error occurred while updating the total proteins and fractions record. Please try again.',
+            'destroy_unauthorized' => 'You are not authorized to delete this total proteins and fractions record.',
+            'destroy_successfully' => 'Total proteins and fractions record deleted successfully.',
+            'destroy_failed' => 'An error occurred while deleting the total proteins and fractions record. Please try again.',
+        ],
         'ultrasensitive_tsh' => [
             'store_successfully' => 'Ultrasensitive TSH record created successfully.',
             'store_failed' => 'An error occurred while creating the ultrasensitive TSH record. Please try again.',
