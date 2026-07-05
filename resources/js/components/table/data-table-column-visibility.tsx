@@ -7,7 +7,6 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { normalizeString } from '@/lib/utils';
 import { lang } from '@erag/lang-sync-inertia/react';
 import type { Table } from '@tanstack/react-table';
 import { Settings2 } from 'lucide-react';
@@ -27,27 +26,21 @@ export default function DataTableColumnVisibility<TData>({
                     {__('main.data_table.column_visibility.action')}
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-37.5">
+            <DropdownMenuContent align="end" className="w-full">
                 <DropdownMenuLabel>{__('main.data_table.column_visibility.label')}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {table
                     .getAllColumns()
                     .filter((column) => column.accessorFn !== undefined && column.getCanHide())
-                    .map((column) => {
-                        const parts = column.id.split('.');
-                        const rawLabel = parts.length > 1 ? (parts.at(-1) ?? parts[0]) : column.id;
-                        const label = normalizeString(rawLabel ?? column.id);
-
-                        return (
-                            <DropdownMenuCheckboxItem
-                                key={column.id}
-                                checked={column.getIsVisible()}
-                                onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                            >
-                                {label}
-                            </DropdownMenuCheckboxItem>
-                        );
-                    })}
+                    .map((column) => (
+                        <DropdownMenuCheckboxItem
+                            key={column.id}
+                            checked={column.getIsVisible()}
+                            onCheckedChange={(value) => column.toggleVisibility(value === true)}
+                        >
+                            {column.columnDef.meta?.label}
+                        </DropdownMenuCheckboxItem>
+                    ))}
             </DropdownMenuContent>
         </DropdownMenu>
     );
