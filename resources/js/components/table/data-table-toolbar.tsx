@@ -1,6 +1,7 @@
 import DataTableColumnVisibility from '@/components/table/data-table-column-visibility';
 import { DataTableDateFilter } from '@/components/table/data-table-date-filter';
 import { DataTableFacetedFilter } from '@/components/table/data-table-faceted-filter';
+import { DataTableSliderFilter } from '@/components/table/data-table-slider-filter';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/ui/input-group';
@@ -96,7 +97,14 @@ function DataTableToolbarFilter<TData>({ column }: DataTableToolbarFilterProps<T
 
         switch (columnMeta.variant) {
             case 'text':
-                return null; // Text filters will not be implemented in the toolbar
+                return (
+                    <Input
+                        placeholder={columnMeta.placeholder ?? columnMeta.label}
+                        value={(column.getFilterValue() as string) ?? ''}
+                        onChange={(event) => column.setFilterValue(event.target.value)}
+                        className="h-8 w-40 lg:w-56"
+                    />
+                );
 
             case 'number':
                 return (
@@ -118,7 +126,7 @@ function DataTableToolbarFilter<TData>({ column }: DataTableToolbarFilterProps<T
                 );
 
             case 'range':
-                return null; // Range filters will not be implemented in the toolbar
+                return <DataTableSliderFilter column={column} title={columnMeta.label ?? column.id} />;
 
             case 'date':
             case 'dateRange':
