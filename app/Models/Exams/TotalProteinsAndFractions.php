@@ -55,7 +55,7 @@ class TotalProteinsAndFractions extends Model
      */
     public function getAlbuminGlobulinRatioAttribute(): ?float
     {
-        if ($this->globulin == 0 || $this->globulin === null || $this->albumin === null || $this->albumin == 0) {
+        if ($this->globulin === null || $this->albumin === null || $this->globulin <= 0 || $this->albumin <= 0) {
             return null;
         }
 
