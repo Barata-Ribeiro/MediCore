@@ -87,5 +87,5 @@
         "lightningcss-linux-x64-gnu": "^1.32.0",
         "lightningcss-win32-x64-msvc": "^1.32.0"
     },
-    "packageManager": "pnpm@11.11.0"
+    "packageManager": "pnpm@11.12.0"
 }
