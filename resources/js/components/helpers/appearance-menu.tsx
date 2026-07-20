@@ -47,16 +47,18 @@ export default function AppearanceMenu() {
 
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button
-                    variant="outline"
-                    size="icon"
-                    aria-label={__('main.appearance_dropdown.title')}
-                    title={__('main.appearance_dropdown.title')}
-                >
-                    <ActiveIcon aria-hidden className="size-4" />
-                </Button>
-            </DropdownMenuTrigger>
+            <DropdownMenuTrigger
+                render={
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        aria-label={__('main.appearance_dropdown.title')}
+                        title={__('main.appearance_dropdown.title')}
+                    >
+                        <ActiveIcon aria-hidden className="size-4" />
+                    </Button>
+                }
+            />
             <DropdownMenuContent>
                 <DropdownMenuGroup>
                     <DropdownMenuLabel>{__('main.appearance_dropdown.title')}</DropdownMenuLabel>

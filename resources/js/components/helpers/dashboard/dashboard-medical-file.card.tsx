@@ -28,11 +28,15 @@ const DashboardMedicalFileCard = memo<Readonly<Props>>(({ medicalFile }) => {
                     <EmptyDescription>{__('dashboard.medical_file_card.empty.message')}</EmptyDescription>
                 </EmptyHeader>
                 <EmptyContent>
-                    <Button variant="outline" size="sm" asChild>
-                        <Link href={editMedicalFile()} as="button" prefetch="hover">
-                            {__('dashboard.medical_file_card.empty.action')}
-                        </Link>
-                    </Button>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        render={
+                            <Link href={editMedicalFile()} as="button" prefetch="hover">
+                                {__('dashboard.medical_file_card.empty.action')}
+                            </Link>
+                        }
+                    />
                 </EmptyContent>
             </Empty>
         );
@@ -79,11 +83,15 @@ const DashboardMedicalFileCard = memo<Readonly<Props>>(({ medicalFile }) => {
                     {format(new Date(medicalFile.updated_at), 'MMMM dd, yyyy')}
                 </time>
 
-                <Button variant="secondary" size="sm" asChild>
-                    <Link href={editMedicalFile()} as="button" prefetch="hover">
-                        {__('dashboard.medical_file_card.card.edit_action')}
-                    </Link>
-                </Button>
+                <Button
+                    variant="secondary"
+                    size="sm"
+                    render={
+                        <Link href={editMedicalFile()} as="button" prefetch="hover">
+                            {__('dashboard.medical_file_card.card.edit_action')}
+                        </Link>
+                    }
+                />
             </CardFooter>
         </Card>
     );

@@ -35,14 +35,14 @@ export function NavFooter({
                     {items.map((item) => (
                         <SidebarMenuItem key={item.title_path}>
                             <SidebarMenuButton
-                                asChild
                                 className="text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100"
-                            >
-                                <a href={toUrl(item.href)} target="_blank" rel="noopener noreferrer">
-                                    {item.icon && <item.icon aria-hidden className="size-5" />}
-                                    <span>{__(item.title_path)}</span>
-                                </a>
-                            </SidebarMenuButton>
+                                render={
+                                    <a href={toUrl(item.href)} target="_blank" rel="noopener noreferrer">
+                                        {item.icon && <item.icon aria-hidden className="size-5" />}
+                                        <span>{__(item.title_path)}</span>
+                                    </a>
+                                }
+                            />
                         </SidebarMenuItem>
                     ))}
                 </SidebarMenu>

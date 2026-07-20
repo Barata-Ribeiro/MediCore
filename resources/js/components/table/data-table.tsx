@@ -314,19 +314,21 @@ export function DataTable<TData, TValue>({
 
                 <ButtonGroup>
                     {createRoute && (
-                        <Button asChild>
-                            <Link
-                                href={createRoute}
-                                aria-label={__('main.data_table.create_record.label')}
-                                title={__('main.data_table.create_record.label')}
-                                as="button"
-                                prefetch
-                                viewTransition
-                            >
-                                <ClipboardPlusIcon aria-hidden size={16} />
-                                {__('main.data_table.create_record.action')}
-                            </Link>
-                        </Button>
+                        <Button
+                            render={
+                                <Link
+                                    href={createRoute}
+                                    aria-label={__('main.data_table.create_record.label')}
+                                    title={__('main.data_table.create_record.label')}
+                                    as="button"
+                                    prefetch
+                                    viewTransition
+                                >
+                                    <ClipboardPlusIcon aria-hidden size={16} />
+                                    {__('main.data_table.create_record.action')}
+                                </Link>
+                            }
+                        />
                     )}
 
                     {exportables && (exportables.csvRoute || exportables.pdfRoute) && (

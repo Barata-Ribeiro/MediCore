@@ -43,12 +43,12 @@ export default function Edit({ completeBloodCount }: Readonly<Props>) {
                         className="w-fit"
                         title={__('complete_blood_count_pages.shared.back_label')}
                         aria-label={__('complete_blood_count_pages.shared.back_label')}
-                        asChild
-                    >
-                        <Link href={index()} as="button" prefetch="hover">
-                            <ArrowLeftIcon aria-hidden size={14} /> {__('complete_blood_count_pages.shared.back')}
-                        </Link>
-                    </Button>
+                        render={
+                            <Link href={index()} as="button" prefetch="hover">
+                                <ArrowLeftIcon aria-hidden size={14} /> {__('complete_blood_count_pages.shared.back')}
+                            </Link>
+                        }
+                    />
                 </CardHeader>
                 <CardContent>
                     <CbcCountForm cbcCount={completeBloodCount} />

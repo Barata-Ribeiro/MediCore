@@ -37,12 +37,12 @@ export default function Edit({ ureaAndCreatinine }: Readonly<Props>) {
                         className="w-fit"
                         title={__('urea_and_creatinine_pages.shared.back_label')}
                         aria-label={__('urea_and_creatinine_pages.shared.back_label')}
-                        asChild
-                    >
-                        <Link href={index()} as="button" prefetch="hover">
-                            <ArrowLeftIcon aria-hidden size={14} /> {__('urea_and_creatinine_pages.shared.back')}
-                        </Link>
-                    </Button>
+                        render={
+                            <Link href={index()} as="button" prefetch="hover">
+                                <ArrowLeftIcon aria-hidden size={14} /> {__('urea_and_creatinine_pages.shared.back')}
+                            </Link>
+                        }
+                    />
                 </CardHeader>
                 <CardContent>
                     <UreaAndCreatinineForm ureaAndCreatinine={ureaAndCreatinine} />

@@ -186,25 +186,27 @@ export function DataTableDateFilter<TData>({ column, title, multiple }: Readonly
 
     return (
         <Popover>
-            <PopoverTrigger asChild>
-                <Button variant="outline">
-                    {hasValue ? (
-                        <div
-                            role="button"
-                            aria-label={`Clear ${title} filter`}
-                            tabIndex={0}
-                            onClick={onReset}
-                            onKeyDown={onResetKeyDown}
-                            className="rounded-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none"
-                        >
-                            <XCircle aria-hidden />
-                        </div>
-                    ) : (
-                        <CalendarIcon aria-hidden />
-                    )}
-                    {label}
-                </Button>
-            </PopoverTrigger>
+            <PopoverTrigger
+                render={
+                    <Button variant="outline">
+                        {hasValue ? (
+                            <div
+                                role="button"
+                                aria-label={`Clear ${title} filter`}
+                                tabIndex={0}
+                                onClick={onReset}
+                                onKeyDown={onResetKeyDown}
+                                className="rounded-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none"
+                            >
+                                <XCircle aria-hidden />
+                            </div>
+                        ) : (
+                            <CalendarIcon aria-hidden />
+                        )}
+                        {label}
+                    </Button>
+                }
+            />
             <PopoverContent className="w-auto p-0" align="start">
                 {multiple ? (
                     <Calendar

@@ -43,12 +43,12 @@ export default function Edit({ lipidProfile }: Readonly<Props>) {
                         className="w-fit"
                         title={__('lipid_profile_pages.shared.back_label')}
                         aria-label={__('lipid_profile_pages.shared.back_label')}
-                        asChild
-                    >
-                        <Link href={index()} as="button" prefetch="hover">
-                            <ArrowLeftIcon aria-hidden size={14} /> {__('lipid_profile_pages.shared.back')}
-                        </Link>
-                    </Button>
+                        render={
+                            <Link href={index()} as="button" prefetch="hover">
+                                <ArrowLeftIcon aria-hidden size={14} /> {__('lipid_profile_pages.shared.back')}
+                            </Link>
+                        }
+                    />
                 </CardHeader>
                 <CardContent>
                     <LipidProfileForm lipidProfile={lipidProfile} />

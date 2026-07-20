@@ -99,11 +99,15 @@ const DashboardBMICard = memo<Readonly<Props>>(({ bmi, height, weight }) => {
                     <EmptyDescription>{__('dashboard.bmi_card.empty.message')}</EmptyDescription>
                 </EmptyHeader>
                 <EmptyContent>
-                    <Button variant="outline" size="sm" asChild>
-                        <Link href={editMedicalFile()} as="button" prefetch="hover">
-                            {__('dashboard.bmi_card.empty.action')}
-                        </Link>
-                    </Button>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        render={
+                            <Link href={editMedicalFile()} as="button" prefetch="hover">
+                                {__('dashboard.bmi_card.empty.action')}
+                            </Link>
+                        }
+                    />
                 </EmptyContent>
             </Empty>
         );
@@ -160,11 +164,16 @@ const DashboardBMICard = memo<Readonly<Props>>(({ bmi, height, weight }) => {
             </CardContent>
 
             <CardFooter className="mt-auto border-t">
-                <Button variant="secondary" size="sm" className="ml-auto" asChild>
-                    <Link href={editMedicalFile()} as="button" prefetch="hover">
-                        {__('dashboard.bmi_card.card.action')}
-                    </Link>
-                </Button>
+                <Button
+                    variant="secondary"
+                    size="sm"
+                    className="ml-auto"
+                    render={
+                        <Link href={editMedicalFile()} as="button" prefetch="hover">
+                            {__('dashboard.bmi_card.card.action')}
+                        </Link>
+                    }
+                />
             </CardFooter>
         </Card>
     );
