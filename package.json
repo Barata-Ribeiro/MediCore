@@ -43,13 +43,13 @@
         "prettier": "^3.9.5",
         "prettier-plugin-tailwindcss": "^0.8.1",
         "typescript": "^6",
-        "typescript-eslint": "^8.64.0"
+        "typescript-eslint": "^8.65.0"
     },
     "dependencies": {
         "@base-ui/react": "^1.6.0",
         "@erag/lang-sync-inertia": "^3.0.0",
-        "@fontsource-variable/outfit": "^5.2.8",
-        "@fontsource-variable/roboto": "^5.2.10",
+        "@fontsource-variable/outfit": "^5.3.0",
+        "@fontsource-variable/roboto": "^5.3.0",
         "@headlessui/react": "^2.2.10",
         "@inertiajs/react": "^3.6.1",
         "@inertiajs/vite": "^3.6.1",
@@ -88,8 +88,8 @@
         "@rollup/rollup-win32-x64-msvc": "4.62.2",
         "@tailwindcss/oxide-linux-x64-gnu": "^4.3.3",
         "@tailwindcss/oxide-win32-x64-msvc": "^4.3.3",
-        "lightningcss-linux-x64-gnu": "^1.32.0",
-        "lightningcss-win32-x64-msvc": "^1.32.0"
+        "lightningcss-linux-x64-gnu": "^1.33.0",
+        "lightningcss-win32-x64-msvc": "^1.33.0"
     },
-    "packageManager": "pnpm@11.13.1"
+    "packageManager": "pnpm@11.15.1"
 }
