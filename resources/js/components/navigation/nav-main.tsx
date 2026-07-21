@@ -28,15 +28,15 @@ export function NavMain({ items = [] }: Readonly<{ items: NavItem[] }>) {
                         return (
                             <SidebarMenuItem key={item.title_path}>
                                 <SidebarMenuButton
-                                    asChild
                                     isActive={isCurrentUrl(item.href)}
                                     tooltip={{ children: __(item.title_path) }}
-                                >
-                                    <Link href={item.href} prefetch>
-                                        {item.icon && <item.icon aria-hidden />}
-                                        <span>{__(item.title_path)}</span>
-                                    </Link>
-                                </SidebarMenuButton>
+                                    render={
+                                        <Link href={item.href} prefetch>
+                                            {item.icon && <item.icon aria-hidden />}
+                                            <span>{__(item.title_path)}</span>
+                                        </Link>
+                                    }
+                                />
                             </SidebarMenuItem>
                         );
                     }
@@ -44,33 +44,38 @@ export function NavMain({ items = [] }: Readonly<{ items: NavItem[] }>) {
                     return (
                         <Collapsible
                             key={item.title_path}
-                            asChild
                             defaultOpen={item.isActive}
                             className="group/collapsible"
-                        >
-                            <SidebarMenuItem>
-                                <CollapsibleTrigger asChild>
-                                    <SidebarMenuButton tooltip={__(item.title_path)}>
-                                        {item.icon && <item.icon />}
-                                        <span>{__(item.title_path)}</span>
-                                        <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                                    </SidebarMenuButton>
-                                </CollapsibleTrigger>
-                                <CollapsibleContent>
-                                    <SidebarMenuSub>
-                                        {item.items?.map((subItem) => (
-                                            <SidebarMenuSubItem key={subItem.title_path}>
-                                                <SidebarMenuSubButton isActive={isCurrentUrl(subItem.href)} asChild>
-                                                    <Link href={subItem.href} prefetch>
-                                                        <span>{__(subItem.title_path)}</span>
-                                                    </Link>
-                                                </SidebarMenuSubButton>
-                                            </SidebarMenuSubItem>
-                                        ))}
-                                    </SidebarMenuSub>
-                                </CollapsibleContent>
-                            </SidebarMenuItem>
-                        </Collapsible>
+                            render={
+                                <SidebarMenuItem>
+                                    <CollapsibleTrigger
+                                        render={
+                                            <SidebarMenuButton tooltip={__(item.title_path)}>
+                                                {item.icon && <item.icon />}
+                                                <span>{__(item.title_path)}</span>
+                                                <ChevronRight className="ml-auto transition-transform duration-200 group-aria-expanded/collapsible:rotate-90" />
+                                            </SidebarMenuButton>
+                                        }
+                                    />
+                                    <CollapsibleContent>
+                                        <SidebarMenuSub>
+                                            {item.items?.map((subItem) => (
+                                                <SidebarMenuSubItem key={subItem.title_path}>
+                                                    <SidebarMenuSubButton
+                                                        isActive={isCurrentUrl(subItem.href)}
+                                                        render={
+                                                            <Link href={subItem.href} prefetch>
+                                                                <span>{__(subItem.title_path)}</span>
+                                                            </Link>
+                                                        }
+                                                    />
+                                                </SidebarMenuSubItem>
+                                            ))}
+                                        </SidebarMenuSub>
+                                    </CollapsibleContent>
+                                </SidebarMenuItem>
+                            }
+                        />
                     );
                 })}
             </SidebarMenu>

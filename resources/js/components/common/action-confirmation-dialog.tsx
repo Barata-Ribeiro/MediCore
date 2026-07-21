@@ -34,11 +34,13 @@ export default function ActionConfirmationDialog(props: Readonly<Props>) {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel onClick={() => setOpen(false)}>Cancel</AlertDialogCancel>
-                    <AlertDialogAction asChild>
-                        <Link href={route} method={method} as="button">
-                            Confirm
-                        </Link>
-                    </AlertDialogAction>
+                    <AlertDialogAction
+                        render={
+                            <Link href={route} method={method} as="button">
+                                Confirm
+                            </Link>
+                        }
+                    />
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

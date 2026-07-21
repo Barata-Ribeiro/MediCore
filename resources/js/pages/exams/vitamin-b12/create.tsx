@@ -32,12 +32,12 @@ export default function Create() {
                         className="w-fit"
                         title={__('vitamin_b12_pages.shared.back_label')}
                         aria-label={__('vitamin_b12_pages.shared.back_label')}
-                        asChild
-                    >
-                        <Link href={index()} as="button" prefetch="hover">
-                            <ArrowLeftIcon aria-hidden size={14} /> {__('vitamin_b12_pages.shared.back')}
-                        </Link>
-                    </Button>
+                        render={
+                            <Link href={index()} as="button" prefetch="hover">
+                                <ArrowLeftIcon aria-hidden size={14} /> {__('vitamin_b12_pages.shared.back')}
+                            </Link>
+                        }
+                    />
                 </CardHeader>
                 <CardContent>
                     <VitaminB12Form />

@@ -27,12 +27,12 @@ export function EmptyChartData({ createRoute }: Readonly<Props>) {
                     size="sm"
                     aria-label={__('main.chart_empty_state.action_label')}
                     title={__('main.chart_empty_state.action_label')}
-                    asChild
-                >
-                    <Link href={createRoute} as="button" prefetch viewTransition>
-                        <ClipboardPlusIcon aria-hidden size={16} /> {__('main.chart_empty_state.action')}
-                    </Link>
-                </Button>
+                    render={
+                        <Link href={createRoute} as="button" prefetch viewTransition>
+                            <ClipboardPlusIcon aria-hidden size={16} /> {__('main.chart_empty_state.action')}
+                        </Link>
+                    }
+                />
             </EmptyContent>
         </Empty>
     );

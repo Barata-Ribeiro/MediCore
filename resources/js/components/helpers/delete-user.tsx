@@ -39,11 +39,13 @@ export default function DeleteUser() {
                 </div>
 
                 <Dialog>
-                    <DialogTrigger asChild>
-                        <Button type="button" variant="destructive" data-test="delete-user-button">
-                            {__('settings_pages.profile_page.delete_account_section.form.submit')}
-                        </Button>
-                    </DialogTrigger>
+                    <DialogTrigger
+                        render={
+                            <Button type="button" variant="destructive" data-test="delete-user-button">
+                                {__('settings_pages.profile_page.delete_account_section.form.submit')}
+                            </Button>
+                        }
+                    />
                     <DialogContent>
                         <DialogTitle>
                             {__('settings_pages.profile_page.delete_account_section.modal.title')}
@@ -82,15 +84,19 @@ export default function DeleteUser() {
                                     </Field>
 
                                     <DialogFooter className="gap-2">
-                                        <DialogClose asChild>
-                                            <Button
-                                                type="button"
-                                                variant="secondary"
-                                                onClick={() => resetAndClearErrors()}
-                                            >
-                                                {__('settings_pages.profile_page.delete_account_section.form.cancel')}
-                                            </Button>
-                                        </DialogClose>
+                                        <DialogClose
+                                            render={
+                                                <Button
+                                                    type="button"
+                                                    variant="secondary"
+                                                    onClick={() => resetAndClearErrors()}
+                                                >
+                                                    {__(
+                                                        'settings_pages.profile_page.delete_account_section.form.cancel',
+                                                    )}
+                                                </Button>
+                                            }
+                                        />
 
                                         <Button
                                             type="submit"

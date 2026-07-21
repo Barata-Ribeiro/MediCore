@@ -46,12 +46,14 @@ export default function AppLanguageSelector() {
 
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="w-full justify-start">
-                    <LanguagesIcon aria-hidden className="size-4" />
-                    <span>{currentLocale === 'en' ? '🇺🇸 English' : '🇧🇷 Português (Brasil)'}</span>
-                </Button>
-            </DropdownMenuTrigger>
+            <DropdownMenuTrigger
+                render={
+                    <Button variant="outline" className="w-full justify-start">
+                        <LanguagesIcon aria-hidden className="size-4" />
+                        <span>{currentLocale === 'en' ? '🇺🇸 English' : '🇧🇷 Português (Brasil)'}</span>
+                    </Button>
+                }
+            />
             <DropdownMenuContent>
                 <DropdownMenuLabel>{__('settings_pages.profile_page.app_language.selector_label')}</DropdownMenuLabel>
                 <DropdownMenuSeparator />

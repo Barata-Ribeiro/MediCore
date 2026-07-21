@@ -32,11 +32,15 @@ const DashboardProfileCard = memo<Readonly<Props>>(({ profile }) => {
                     <EmptyDescription>{__('dashboard.profile_card.empty.message')}</EmptyDescription>
                 </EmptyHeader>
                 <EmptyContent>
-                    <Button variant="outline" size="sm" asChild>
-                        <Link href={editProfile()} as="button" prefetch="hover">
-                            {__('dashboard.profile_card.empty.action')}
-                        </Link>
-                    </Button>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        render={
+                            <Link href={editProfile()} as="button" prefetch="hover">
+                                {__('dashboard.profile_card.empty.action')}
+                            </Link>
+                        }
+                    />
                 </EmptyContent>
             </Empty>
         );
@@ -104,11 +108,15 @@ const DashboardProfileCard = memo<Readonly<Props>>(({ profile }) => {
                     {format(new Date(profile.updated_at), 'MMMM dd, yyyy')}
                 </time>
 
-                <Button variant="secondary" size="sm" asChild>
-                    <Link href={editProfile()} as="button" prefetch="hover">
-                        {__('dashboard.profile_card.card.edit_action')}
-                    </Link>
-                </Button>
+                <Button
+                    variant="secondary"
+                    size="sm"
+                    render={
+                        <Link href={editProfile()} as="button" prefetch="hover">
+                            {__('dashboard.profile_card.card.edit_action')}
+                        </Link>
+                    }
+                />
             </CardFooter>
         </Card>
     );

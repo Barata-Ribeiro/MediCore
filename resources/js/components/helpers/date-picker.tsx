@@ -27,11 +27,13 @@ export default function DatePicker({ id, name, defaultValue }: Readonly<Props>) 
             />
 
             <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger asChild>
-                    <Button variant="outline" id={id} className="justify-start font-normal">
-                        {date ? date.toLocaleDateString() : 'Select date'}
-                    </Button>
-                </PopoverTrigger>
+                <PopoverTrigger
+                    render={
+                        <Button variant="outline" id={id} className="justify-start font-normal">
+                            {date ? date.toLocaleDateString() : 'Select date'}
+                        </Button>
+                    }
+                />
                 <PopoverContent className="w-auto overflow-hidden p-0" align="start">
                     <Calendar
                         mode="single"

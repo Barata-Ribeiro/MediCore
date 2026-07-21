@@ -45,12 +45,16 @@ export default function ErrorPage({ status }: Readonly<Props>) {
                     <h1 className="text-2xl font-semibold tracking-tight text-muted sm:text-4xl">{title}</h1>
                     <p className="mt-6 text-lg leading-8 text-muted-foreground">{description}</p>
 
-                    <Button variant="secondary" className="mt-10" asChild>
-                        <Link href={dashboard()} as="button" viewTransition prefetch="hover">
-                            <ArrowLeftFromLineIcon aria-hidden />
-                            Go to dashboard
-                        </Link>
-                    </Button>
+                    <Button
+                        variant="secondary"
+                        className="mt-10"
+                        render={
+                            <Link href={dashboard()} as="button" viewTransition prefetch="hover">
+                                <ArrowLeftFromLineIcon aria-hidden />
+                                Go to dashboard
+                            </Link>
+                        }
+                    />
                 </div>
             </div>
         </main>

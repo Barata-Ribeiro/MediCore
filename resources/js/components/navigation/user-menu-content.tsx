@@ -37,26 +37,31 @@ export function UserMenuContent({ user }: Readonly<Props>) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-                <DropdownMenuItem asChild>
-                    <Link className="block w-full" href={edit()} prefetch onClick={cleanup}>
-                        <SettingsIcon aria-hidden className="mr-2" />
-                        {__('main.menu.user_dropdown.settings')}
-                    </Link>
-                </DropdownMenuItem>
+                <DropdownMenuItem
+                    render={
+                        <Link className="block w-full" href={edit()} prefetch onClick={cleanup}>
+                            <SettingsIcon aria-hidden className="mr-2" />
+                            {__('main.menu.user_dropdown.settings')}
+                        </Link>
+                    }
+                />
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem variant="destructive" asChild>
-                <Link
-                    className="block w-full"
-                    href={logout()}
-                    as="button"
-                    onClick={handleLogout}
-                    data-test="logout-button"
-                >
-                    <LogOutIcon aria-hidden className="mr-2" />
-                    {__('main.menu.user_dropdown.logout')}
-                </Link>
-            </DropdownMenuItem>
+            <DropdownMenuItem
+                variant="destructive"
+                render={
+                    <Link
+                        className="block w-full"
+                        href={logout()}
+                        as="button"
+                        onClick={handleLogout}
+                        data-test="logout-button"
+                    >
+                        <LogOutIcon aria-hidden className="mr-2" />
+                        {__('main.menu.user_dropdown.logout')}
+                    </Link>
+                }
+            />
         </Fragment>
     );
 }

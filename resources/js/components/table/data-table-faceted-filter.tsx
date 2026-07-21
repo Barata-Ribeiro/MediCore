@@ -90,55 +90,57 @@ export function DataTableFacetedFilter<TData, TValue>({
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-                <Button variant="outline">
-                    {selectedValues?.size > 0 ? (
-                        <div
-                            role="button"
-                            aria-label={trans('main.data_table.toolbar.faceted_filter.clear_titled_action', {
-                                title: title ?? 'unknown',
-                            })}
-                            tabIndex={0}
-                            className="rounded-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none"
-                            onClick={onReset}
-                            onKeyDown={onResetKeyDown}
-                        >
-                            <XCircle aria-hidden />
-                        </div>
-                    ) : (
-                        <PlusCircle aria-hidden />
-                    )}
-                    {title}
-                    {selectedValues?.size > 0 && (
-                        <Fragment>
-                            <Separator orientation="vertical" className="mx-0.5 data-[orientation=vertical]:h-4" />
-                            <Badge variant="secondary" className="rounded-sm px-1 font-normal lg:hidden">
-                                {selectedValues.size}
-                            </Badge>
-                            <div className="hidden items-center gap-1 lg:flex">
-                                {selectedValues.size > 2 ? (
-                                    <Badge variant="secondary" className="rounded-sm px-1 font-normal">
-                                        {selectedValues.size}{' '}
-                                        {__('main.data_table.toolbar.faceted_filter.badge_selected_suffix')}
-                                    </Badge>
-                                ) : (
-                                    options
-                                        .filter((option) => selectedValues.has(option.value))
-                                        .map((option) => (
-                                            <Badge
-                                                variant="secondary"
-                                                key={option.value}
-                                                className="rounded-sm px-1 font-normal"
-                                            >
-                                                {option.label}
-                                            </Badge>
-                                        ))
-                                )}
+            <PopoverTrigger
+                render={
+                    <Button variant="outline">
+                        {selectedValues?.size > 0 ? (
+                            <div
+                                role="button"
+                                aria-label={trans('main.data_table.toolbar.faceted_filter.clear_titled_action', {
+                                    title: title ?? 'unknown',
+                                })}
+                                tabIndex={0}
+                                className="rounded-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none"
+                                onClick={onReset}
+                                onKeyDown={onResetKeyDown}
+                            >
+                                <XCircle aria-hidden />
                             </div>
-                        </Fragment>
-                    )}
-                </Button>
-            </PopoverTrigger>
+                        ) : (
+                            <PlusCircle aria-hidden />
+                        )}
+                        {title}
+                        {selectedValues?.size > 0 && (
+                            <Fragment>
+                                <Separator orientation="vertical" className="mx-0.5 data-[orientation=vertical]:h-4" />
+                                <Badge variant="secondary" className="rounded-sm px-1 font-normal lg:hidden">
+                                    {selectedValues.size}
+                                </Badge>
+                                <div className="hidden items-center gap-1 lg:flex">
+                                    {selectedValues.size > 2 ? (
+                                        <Badge variant="secondary" className="rounded-sm px-1 font-normal">
+                                            {selectedValues.size}{' '}
+                                            {__('main.data_table.toolbar.faceted_filter.badge_selected_suffix')}
+                                        </Badge>
+                                    ) : (
+                                        options
+                                            .filter((option) => selectedValues.has(option.value))
+                                            .map((option) => (
+                                                <Badge
+                                                    variant="secondary"
+                                                    key={option.value}
+                                                    className="rounded-sm px-1 font-normal"
+                                                >
+                                                    {option.label}
+                                                </Badge>
+                                            ))
+                                    )}
+                                </div>
+                            </Fragment>
+                        )}
+                    </Button>
+                }
+            />
             <PopoverContent className="w-50 p-0" align="start">
                 <Command>
                     <CommandInput placeholder={title} />

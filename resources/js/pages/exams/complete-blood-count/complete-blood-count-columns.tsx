@@ -57,35 +57,41 @@ function ActionsCell({ completeBloodCount }: Readonly<{ completeBloodCount: Comp
     return (
         <Fragment>
             <DropdownMenu modal={false}>
-                <DropdownMenuTrigger asChild>
-                    <Button
-                        aria-label={__('complete_blood_count_pages.index.table.menu.open_label')}
-                        variant="ghost"
-                        className="flex size-8 p-0 data-[state=open]:bg-muted"
-                    >
-                        <EllipsisIcon aria-hidden size={16} />
-                    </Button>
-                </DropdownMenuTrigger>
+                <DropdownMenuTrigger
+                    render={
+                        <Button
+                            aria-label={__('complete_blood_count_pages.index.table.menu.open_label')}
+                            variant="ghost"
+                            className="flex size-8 p-0 aria-expanded:bg-muted"
+                        >
+                            <EllipsisIcon aria-hidden size={16} />
+                        </Button>
+                    }
+                />
                 <DropdownMenuContent align="end" className="w-40">
                     <DropdownMenuLabel>
                         {__('complete_blood_count_pages.index.table.menu.copy_fields')}
                     </DropdownMenuLabel>
                     <DropdownMenuGroup>
-                        <DropdownMenuItem asChild>
-                            <DropdownMenuCopyButton content={valuesToCopy}>
-                                {__('complete_blood_count_pages.index.table.menu.copy_values')}
-                            </DropdownMenuCopyButton>
-                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                            render={
+                                <DropdownMenuCopyButton content={valuesToCopy}>
+                                    {__('complete_blood_count_pages.index.table.menu.copy_values')}
+                                </DropdownMenuCopyButton>
+                            }
+                        />
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
                     <DropdownMenuLabel>{__('complete_blood_count_pages.index.table.menu.actions')}</DropdownMenuLabel>
                     <DropdownMenuGroup>
-                        <DropdownMenuItem asChild>
-                            <Link className="block w-full" href={edit(completeBloodCount.id)} as="button">
-                                <EditIcon aria-hidden size={14} />{' '}
-                                {__('complete_blood_count_pages.index.table.menu.edit')}
-                            </Link>
-                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                            render={
+                                <Link className="block w-full" href={edit(completeBloodCount.id)} as="button">
+                                    <EditIcon aria-hidden size={14} />{' '}
+                                    {__('complete_blood_count_pages.index.table.menu.edit')}
+                                </Link>
+                            }
+                        />
                         <DropdownMenuItem variant="destructive" onSelect={() => setOpen(true)}>
                             <DeleteIcon aria-hidden size={14} />{' '}
                             {__('complete_blood_count_pages.index.table.menu.delete')}

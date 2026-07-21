@@ -61,14 +61,16 @@ export default function PasskeyItem({ passkey, onDelete }: Readonly<Props>) {
             </div>
 
             <Dialog>
-                <DialogTrigger asChild>
-                    <Button variant="destructive" size="sm">
-                        <Trash2 aria-hidden className="size-4" />
-                        <span className="sr-only">
-                            {__('settings_pages.security_page.passkeys_section.remove_sr_label')}
-                        </span>
-                    </Button>
-                </DialogTrigger>
+                <DialogTrigger
+                    render={
+                        <Button variant="destructive" size="sm">
+                            <Trash2 aria-hidden className="size-4" />
+                            <span className="sr-only">
+                                {__('settings_pages.security_page.passkeys_section.remove_sr_label')}
+                            </span>
+                        </Button>
+                    }
+                />
                 <DialogContent>
                     <DialogTitle>{__('settings_pages.security_page.passkeys_section.remove_modal.title')}</DialogTitle>
                     <DialogDescription>
@@ -77,11 +79,13 @@ export default function PasskeyItem({ passkey, onDelete }: Readonly<Props>) {
                         })}
                     </DialogDescription>
                     <DialogFooter className="gap-2">
-                        <DialogClose asChild>
-                            <Button variant="secondary">
-                                {__('settings_pages.security_page.passkeys_section.remove_modal.cancel')}
-                            </Button>
-                        </DialogClose>
+                        <DialogClose
+                            render={
+                                <Button variant="secondary">
+                                    {__('settings_pages.security_page.passkeys_section.remove_modal.cancel')}
+                                </Button>
+                            }
+                        />
                         <Button variant="destructive" onClick={handleDelete} disabled={isDeleting}>
                             <Activity mode={isDeleting ? 'visible' : 'hidden'}>
                                 <Spinner aria-hidden />

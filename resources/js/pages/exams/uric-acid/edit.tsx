@@ -37,12 +37,12 @@ export default function Edit({ uricAcid }: Readonly<Props>) {
                         className="w-fit"
                         title={__('uric_acid_pages.shared.back_label')}
                         aria-label={__('uric_acid_pages.shared.back_label')}
-                        asChild
-                    >
-                        <Link href={index()} as="button" prefetch="hover">
-                            <ArrowLeftIcon aria-hidden size={14} /> {__('uric_acid_pages.shared.back')}
-                        </Link>
-                    </Button>
+                        render={
+                            <Link href={index()} as="button" prefetch="hover">
+                                <ArrowLeftIcon aria-hidden size={14} /> {__('uric_acid_pages.shared.back')}
+                            </Link>
+                        }
+                    />
                 </CardHeader>
                 <CardContent>
                     <UricAcidForm uricAcid={uricAcid} />

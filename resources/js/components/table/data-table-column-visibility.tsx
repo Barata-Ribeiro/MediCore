@@ -28,18 +28,20 @@ export default function DataTableViewOptions<TData>({
 
     return (
         <Popover>
-            <PopoverTrigger asChild>
-                <Button
-                    aria-label={__('main.data_table.column_visibility.label')}
-                    role="combobox"
-                    variant="outline"
-                    className="ml-auto hidden h-8 lg:flex"
-                    disabled={disabled}
-                >
-                    <Settings2 aria-hidden />
-                    {__('main.data_table.column_visibility.action')}
-                </Button>
-            </PopoverTrigger>
+            <PopoverTrigger
+                render={
+                    <Button
+                        aria-label={__('main.data_table.column_visibility.label')}
+                        role="combobox"
+                        variant="outline"
+                        className="ml-auto hidden h-8 lg:flex"
+                        disabled={disabled}
+                    >
+                        <Settings2 aria-hidden />
+                        {__('main.data_table.column_visibility.action')}
+                    </Button>
+                }
+            />
             <PopoverContent className={cn('w-44 p-0', className)} {...props}>
                 <Command>
                     <CommandInput placeholder={__('main.data_table.column_visibility.search')} />

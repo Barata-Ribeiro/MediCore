@@ -74,11 +74,17 @@ export default function DataTableToolbar<TData>({
 
             <DataTableColumnVisibility table={table} />
 
-            <Button variant="outline" size="icon" aria-label="Clear filters" title="Clear filters" asChild>
-                <Link href={path} as="button" prefetch>
-                    <EraserIcon aria-hidden />
-                </Link>
-            </Button>
+            <Button
+                variant="outline"
+                size="icon"
+                aria-label="Clear filters"
+                title="Clear filters"
+                render={
+                    <Link href={path} as="button" prefetch>
+                        <EraserIcon aria-hidden />
+                    </Link>
+                }
+            />
         </div>
     );
 }
