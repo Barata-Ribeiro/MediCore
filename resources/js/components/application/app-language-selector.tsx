@@ -55,9 +55,11 @@ export default function AppLanguageSelector() {
                 }
             />
             <DropdownMenuContent>
-                <DropdownMenuLabel>{__('settings_pages.profile_page.app_language.selector_label')}</DropdownMenuLabel>
-                <DropdownMenuSeparator />
                 <DropdownMenuRadioGroup value={currentLocale} onValueChange={handleLocaleChange}>
+                    <DropdownMenuLabel>
+                        {__('settings_pages.profile_page.app_language.selector_label')}
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
                     <DropdownMenuRadioItem value="en">
                         <span className="flex items-center gap-2">
                             <span>🇺🇸</span>

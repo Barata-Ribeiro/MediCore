@@ -51,12 +51,11 @@ export default function SettingsLayout({ children }: Readonly<PropsWithChildren>
                                 key={`${toUrl(item.href)}-${index}`}
                                 size="sm"
                                 variant="ghost"
-                                className={cn('w-full justify-start', {
-                                    'bg-muted': isCurrentOrParentUrl(item.href),
-                                })}
+                                nativeButton
+                                className={cn('w-full justify-start', { 'bg-muted': isCurrentOrParentUrl(item.href) })}
                                 render={
-                                    <Link href={item.href}>
-                                        {item.icon && <item.icon className="h-4 w-4" />}
+                                    <Link href={item.href} as="button" prefetch="hover">
+                                        {item.icon && <item.icon aria-hidden className="size-4" />}
                                         {__(item.title_path)}
                                     </Link>
                                 }

@@ -12,7 +12,6 @@ import type { User } from '@/types';
 import { lang } from '@erag/lang-sync-inertia/react';
 import { Link, router } from '@inertiajs/react';
 import { LogOutIcon, SettingsIcon } from 'lucide-react';
-import { Fragment } from 'react/jsx-runtime';
 
 type Props = {
     user: User;
@@ -29,31 +28,30 @@ export function UserMenuContent({ user }: Readonly<Props>) {
     };
 
     return (
-        <Fragment>
+        <DropdownMenuGroup>
             <DropdownMenuLabel className="p-0 font-normal">
                 <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                     <UserInfo user={user} showEmail={true} />
                 </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-                <DropdownMenuItem
-                    render={
-                        <Link className="block w-full" href={edit()} prefetch onClick={cleanup}>
-                            <SettingsIcon aria-hidden className="mr-2" />
-                            {__('main.menu.user_dropdown.settings')}
-                        </Link>
-                    }
-                />
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
+            <DropdownMenuItem
+                nativeButton
+                render={
+                    <Link className="block w-full" href={edit()} onClick={cleanup} as="button" prefetch="click">
+                        <SettingsIcon aria-hidden className="mr-2" />
+                        {__('main.menu.user_dropdown.settings')}
+                    </Link>
+                }
+            />
             <DropdownMenuItem
                 variant="destructive"
+                nativeButton
                 render={
                     <Link
+                        as="button"
                         className="block w-full"
                         href={logout()}
-                        as="button"
                         onClick={handleLogout}
                         data-test="logout-button"
                     >
@@ -62,6 +60,6 @@ export function UserMenuContent({ user }: Readonly<Props>) {
                     </Link>
                 }
             />
-        </Fragment>
+        </DropdownMenuGroup>
     );
 }
