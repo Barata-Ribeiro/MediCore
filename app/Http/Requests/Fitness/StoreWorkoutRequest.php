@@ -4,6 +4,10 @@ namespace App\Http\Requests\Fitness;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Validator;
+
+use function is_array;
 
 class StoreWorkoutRequest extends FormRequest
 {
@@ -44,5 +48,60 @@ class StoreWorkoutRequest extends FormRequest
             'sections.*.exercises.*.rest_seconds' => ['nullable', 'integer', 'min:0'],
             'sections.*.exercises.*.notes' => ['nullable', 'string'],
         ];
+    }
+
+    /**
+     * Configure the validator instance.
+     *
+     * @return array<int, callable(Validator): void>
+     */
+    public function after(): array
+    {
+        return [function (Validator $validator): void {
+            $sections = $this->input('sections', []);
+
+            if (! is_array($sections)) {
+                return;
+            }
+
+            foreach ($sections as $sectionIndex => $sectionPayload) {
+                if (! is_array($sectionPayload)) {
+                    continue;
+                }
+
+                $exercises = $sectionPayload['exercises'] ?? [];
+
+                if (! is_array($exercises)) {
+                    continue;
+                }
+
+                foreach ($exercises as $exerciseIndex => $exercisePayload) {
+                    if (! is_array($exercisePayload)) {
+                        continue;
+                    }
+
+                    $exerciseId = $exercisePayload['exercise_id'] ?? null;
+                    $muscleGroupId = $exercisePayload['muscle_group_id'] ?? null;
+
+                    if (! is_numeric($exerciseId) || ! is_numeric($muscleGroupId)) {
+                        continue;
+                    }
+
+                    $isLinked = DB::table('exercise_muscle_groups')
+                        ->where('exercise_id', (int) $exerciseId)
+                        ->where('muscle_group_id', (int) $muscleGroupId)
+                        ->exists();
+
+                    if ($isLinked) {
+                        continue;
+                    }
+
+                    $validator->errors()->add(
+                        "sections.$sectionIndex.exercises.$exerciseIndex.muscle_group_id",
+                        __('validation.workout_muscle_group_mismatch'),
+                    );
+                }
+            }
+        }];
     }
 }
