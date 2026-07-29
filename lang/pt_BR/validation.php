@@ -168,6 +168,7 @@ return [
     'url' => 'O campo :attribute tem um formato inválido.',
     'ulid' => 'O campo :attribute deve ser um ULID válido.',
     'uuid' => 'O campo :attribute deve ser um UUID válido.',
+    'workout_muscle_group_mismatch' => 'O grupo muscular selecionado não pertence ao exercício selecionado.',
 
     /*
     |--------------------------------------------------------------------------

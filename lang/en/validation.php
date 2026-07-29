@@ -168,6 +168,7 @@ return [
     'url' => 'The :attribute field must be a valid URL.',
     'ulid' => 'The :attribute field must be a valid ULID.',
     'uuid' => 'The :attribute field must be a valid UUID.',
+    'workout_muscle_group_mismatch' => 'The selected muscle group does not belong to the selected exercise.',
 
     /*
     |--------------------------------------------------------------------------
