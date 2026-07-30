@@ -26,6 +26,8 @@ class WorkoutController extends Controller
 {
     public function index(): Response
     {
+        syncLangFiles('workout_pages');
+
         $workouts = Workout::query()
             ->whereBelongsTo(auth()->user())
             ->with([
@@ -46,6 +48,8 @@ class WorkoutController extends Controller
                         'notes',
                     ])
                     ->orderBy('order'),
+                'sections.exercises.exercise' => fn ($query) => $query->select(['id', 'name']),
+                'sections.exercises.muscleGroup' => fn ($query) => $query->select(['id', 'name']),
             ])
             ->orderByDesc('created_at')
             ->paginate(10)
@@ -58,6 +62,8 @@ class WorkoutController extends Controller
 
     public function create(): Response
     {
+        syncLangFiles('workout_pages');
+
         return Inertia::render('fitness/workout/create', [
             'formOptions' => $this->formOptions(),
         ]);
@@ -89,6 +95,8 @@ class WorkoutController extends Controller
 
     public function show(Workout $workout): Response|RedirectResponse
     {
+        syncLangFiles('workout_pages');
+
         if ($workout->user_id !== auth()->id()) {
             Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.workout.show_unauthorized')]);
 
@@ -98,6 +106,8 @@ class WorkoutController extends Controller
         $workout->load([
             'sections' => fn ($query) => $query->orderBy('order'),
             'sections.exercises' => fn ($query) => $query->orderBy('order'),
+            'sections.exercises.exercise' => fn ($query) => $query->select(['id', 'name']),
+            'sections.exercises.muscleGroup' => fn ($query) => $query->select(['id', 'name']),
         ]);
 
         return Inertia::render('fitness/workout/show', [
@@ -107,6 +117,8 @@ class WorkoutController extends Controller
 
     public function edit(Workout $workout): Response|RedirectResponse
     {
+        syncLangFiles('workout_pages');
+
         if ($workout->user_id !== auth()->id()) {
             Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.workout.edit_unauthorized')]);
 
@@ -116,6 +128,8 @@ class WorkoutController extends Controller
         $workout->load([
             'sections' => fn ($query) => $query->orderBy('order'),
             'sections.exercises' => fn ($query) => $query->orderBy('order'),
+            'sections.exercises.exercise' => fn ($query) => $query->select(['id', 'name']),
+            'sections.exercises.muscleGroup' => fn ($query) => $query->select(['id', 'name']),
         ]);
 
         return Inertia::render('fitness/workout/edit', [
@@ -286,7 +300,11 @@ class WorkoutController extends Controller
     private function formOptions(): array
     {
         return [
-            'exercises' => Exercise::query()->select(['id', 'name'])->orderBy('name')->get(),
+            'exercises' => Exercise::query()
+                ->select(['id', 'name'])
+                ->with(['muscleGroups' => fn ($query) => $query->select(['muscle_groups.id', 'name'])->orderBy('name')])
+                ->orderBy('name')
+                ->get(),
             'muscleGroups' => MuscleGroup::query()->select(['id', 'name'])->orderBy('name')->get(),
         ];
     }
