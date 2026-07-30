@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Fitness;
 
-use Illuminate\Contracts\Validation\ValidationRule;
+use App\Models\Fitness\Exercise;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
 
 use function is_array;
@@ -19,7 +19,7 @@ class StoreWorkoutRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, ValidationRule|array<mixed>|string>
+     * @return array<string, array<mixed>|string>
      */
     public function rules(): array
     {
@@ -37,8 +37,16 @@ class StoreWorkoutRequest extends FormRequest
             'sections.*.order' => ['required', 'integer', 'min:0'],
 
             'sections.*.exercises' => ['sometimes', 'array'],
-            'sections.*.exercises.*.exercise_id' => ['required', 'integer', 'exists:exercises,id'],
-            'sections.*.exercises.*.muscle_group_id' => ['nullable', 'integer', 'exists:muscle_groups,id'],
+            'sections.*.exercises.*.exercise_id' => [
+                'required',
+                'integer',
+                Rule::exists('exercises', 'id')->where('user_id', $this->user()?->id),
+            ],
+            'sections.*.exercises.*.muscle_group_id' => [
+                'nullable',
+                'integer',
+                Rule::exists('muscle_groups', 'id')->where('user_id', $this->user()?->id),
+            ],
             'sections.*.exercises.*.code' => ['nullable', 'string', 'max:10'],
             'sections.*.exercises.*.order' => ['required', 'integer', 'min:0'],
             'sections.*.exercises.*.sets' => ['required', 'integer', 'min:1'],
@@ -87,9 +95,10 @@ class StoreWorkoutRequest extends FormRequest
                         continue;
                     }
 
-                    $isLinked = DB::table('exercise_muscle_groups')
-                        ->where('exercise_id', (int) $exerciseId)
-                        ->where('muscle_group_id', (int) $muscleGroupId)
+                    $isLinked = Exercise::query()
+                        ->whereBelongsTo($this->user())
+                        ->whereKey((int) $exerciseId)
+                        ->whereHas('muscleGroups', fn ($query) => $query->whereKey((int) $muscleGroupId))
                         ->exists();
 
                     if ($isLinked) {
