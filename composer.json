@@ -11,7 +11,7 @@
     "require": {
         "php": "^8.5",
         "erag/laravel-lang-sync-inertia": "^2.3",
-        "inertiajs/inertia-laravel": "^3.1",
+        "inertiajs/inertia-laravel": "^3.2",
         "laravel/fortify": "^1.37",
         "laravel/framework": "^13.23",
         "laravel/socialite": "^5.29",
@@ -27,7 +27,7 @@
         "laravel/boost": "*",
         "laravel/pail": "^1.2",
         "laravel/pao": "^1.1",
-        "laravel/pint": "^1.29",
+        "laravel/pint": "^1.30",
         "laravel/sail": "^1.64",
         "lucascudo/laravel-pt-br-localization": "^3.0",
         "mockery/mockery": "^1.6",
