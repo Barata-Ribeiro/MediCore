@@ -107,6 +107,26 @@ return [
         'destroy_successfully' => 'Treino excluído com sucesso.',
         'destroy_failed' => 'Ocorreu um erro ao excluir o treino. Por favor, tente novamente.',
     ],
+    'exercise' => [
+        'store_successfully' => 'Exercício criado com sucesso.',
+        'store_failed' => 'Ocorreu um erro ao criar o exercício. Por favor, tente novamente.',
+        'update_unauthorized' => 'Você não está autorizado a atualizar este exercício.',
+        'update_successfully' => 'Exercício atualizado com sucesso.',
+        'update_failed' => 'Ocorreu um erro ao atualizar o exercício. Por favor, tente novamente.',
+        'destroy_unauthorized' => 'Você não está autorizado a excluir este exercício.',
+        'destroy_successfully' => 'Exercício excluído com sucesso.',
+        'destroy_failed' => 'Ocorreu um erro ao excluir o exercício. Por favor, tente novamente.',
+    ],
+    'muscle_group' => [
+        'store_successfully' => 'Grupo muscular criado com sucesso.',
+        'store_failed' => 'Ocorreu um erro ao criar o grupo muscular. Por favor, tente novamente.',
+        'update_unauthorized' => 'Você não está autorizado a atualizar este grupo muscular.',
+        'update_successfully' => 'Grupo muscular atualizado com sucesso.',
+        'update_failed' => 'Ocorreu um erro ao atualizar o grupo muscular. Por favor, tente novamente.',
+        'destroy_unauthorized' => 'Você não está autorizado a excluir este grupo muscular.',
+        'destroy_successfully' => 'Grupo muscular excluído com sucesso.',
+        'destroy_failed' => 'Ocorreu um erro ao excluir o grupo muscular. Por favor, tente novamente.',
+    ],
     'settings' => [
         'medical_file' => [
             'updated_successfully' => 'Arquivo médico atualizado com sucesso.',

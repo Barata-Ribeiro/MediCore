@@ -9,6 +9,7 @@ return [
             'dashboard' => 'Painel',
             'medical_file' => 'Prontuário',
             'exams' => 'Exames',
+            'fitness' => 'Treinos',
             'exams_items' => [
                 'complete_blood_count' => 'Hemograma Completo',
                 'glucose' => 'Glicose',
@@ -19,6 +20,11 @@ return [
                 'uric_acid' => 'Ácido Úrico',
                 'vitamin_b12' => 'Vitamina B12',
                 'vitamin_d3' => 'Vitamina D3',
+            ],
+            'fitness_items' => [
+                'workouts' => 'Treinos',
+                'exercises' => 'Exercícios',
+                'muscle_groups' => 'Grupos Musculares',
             ],
             'footer_items' => [
                 'repository' => 'Repositório',
