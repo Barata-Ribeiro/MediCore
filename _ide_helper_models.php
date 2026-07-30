@@ -283,6 +283,7 @@ namespace App\Models\Fitness{
  * @property-read Collection<int, \App\Models\Fitness\MuscleGroup> $muscleGroups
  * @property-read int|null $muscle_groups_count
  * @property-read bool|null $muscle_groups_exists
+ * @property-read User|null $user
  * @property-read Collection<int, \App\Models\Fitness\WorkoutExercise> $workoutExercises
  * @property-read int|null $workout_exercises_count
  * @property-read bool|null $workout_exercises_exists
@@ -309,6 +310,7 @@ namespace App\Models\Fitness{
  * @property-read Collection<int, \App\Models\Fitness\Exercise> $exercises
  * @property-read int|null $exercises_count
  * @property-read bool|null $exercises_exists
+ * @property-read User|null $user
  * @property-read Collection<int, \App\Models\Fitness\WorkoutExercise> $workoutExercises
  * @property-read int|null $workout_exercises_count
  * @property-read bool|null $workout_exercises_exists
@@ -550,7 +552,13 @@ namespace App\Models{
  * @property string|null $provider_refresh_token
  * @property string|null $avatar
  * @property string $locale
+ * @property-read Collection<int, Exercise> $exercises
+ * @property-read int|null $exercises_count
+ * @property-read bool|null $exercises_exists
  * @property-read \App\Models\MedicalFile|null $medicalFile
+ * @property-read Collection<int, MuscleGroup> $muscleGroups
+ * @property-read int|null $muscle_groups_count
+ * @property-read bool|null $muscle_groups_exists
  * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read bool|null $notifications_exists
