@@ -85,6 +85,7 @@ export default function Index({ exercises, muscleGroups }: Readonly<Props>) {
     return (
         <Fragment>
             <Head title={__('exercise_pages.index.head_title')} />
+            <h1 className="sr-only">{__('exercise_pages.index.head_title')}</h1>
 
             <div className="space-y-6">
                 <Card>

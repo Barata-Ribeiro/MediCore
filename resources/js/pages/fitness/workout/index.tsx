@@ -27,6 +27,7 @@ export default function Index({ workouts }: Readonly<WorkoutIndexProps>) {
     return (
         <Fragment>
             <Head title={__('workout_pages.index.head_title')} />
+            <h1 className="sr-only">{__('workout_pages.index.head_title')}</h1>
 
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between gap-4">
