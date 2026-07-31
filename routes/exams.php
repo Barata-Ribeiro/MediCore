@@ -15,7 +15,7 @@ Route::middleware(['auth', 'verified'])->prefix('exams')->group(function () {
     Route::resource('complete-blood-count', CompleteBloodCountController::class);
     Route::resource('glucose', GlucoseController::class);
     Route::resource('lipid-profile', LipidProfileController::class);
-    Route::resource('total_proteins_and_fractions', TotalProteinsAndFractionsController::class);
+    Route::resource('total-proteins-and-fractions', TotalProteinsAndFractionsController::class);
     Route::resource('ultrasensitive-tsh', UltrasensitiveTshController::class);
     Route::resource('urea-and-creatinine', UreaAndCreatinineController::class);
     Route::resource('uric-acid', UricAcidController::class);
