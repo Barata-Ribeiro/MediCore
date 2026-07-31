@@ -42,7 +42,7 @@ class TotalProteinsAndFractionsService implements TotalProteinsAndFractionsServi
          * }> $chartRows
          */
         $chartRows = TotalProteinsAndFractions::query()
-            ->selectRaw('DATE(report_date) as label, AVG(total_proteins) as total_proteins, AVG(albumin) as albumin, AVG(globulin) as globulin, AVG(albumin_globulin_ratio) as albumin_globulin_ratio')
+            ->selectRaw('DATE(report_date) as label, AVG(total_proteins) as total_proteins, AVG(albumin) as albumin, AVG(globulin) as globulin')
             ->where('medical_file_id', auth()->user()->medicalFile->id)
             ->groupBy('label')
             ->orderBy('label')
