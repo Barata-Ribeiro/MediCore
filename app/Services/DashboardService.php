@@ -16,6 +16,7 @@ class DashboardService implements DashboardServiceInterface
             'medicalFile' => fn ($q) => $q->selectRaw('medical_files.*,
                 (SELECT COUNT(*) FROM complete_blood_counts WHERE medical_file_id = medical_files.id) AS complete_blood_counts_count,
                 (SELECT COUNT(*) FROM lipid_profiles WHERE medical_file_id = medical_files.id) AS lipid_profiles_count,
+                (SELECT COUNT(*) FROM total_proteins_and_fractions WHERE medical_file_id = medical_files.id) AS total_proteins_and_fractions_count,
                 (SELECT COUNT(*) FROM glucoses WHERE medical_file_id = medical_files.id) AS glucoses_count,
                 (SELECT COUNT(*) FROM ultrasensitive_tshs WHERE medical_file_id = medical_files.id) AS ultrasensitive_tshs_count,
                 (SELECT COUNT(*) FROM urea_and_creatinines WHERE medical_file_id = medical_files.id) AS urea_and_creatinines_count,
@@ -27,17 +28,19 @@ class DashboardService implements DashboardServiceInterface
         $completeBloodCountCount = $medicalFile ? $medicalFile->complete_blood_counts_count : 0;
         $glucoseCount = $medicalFile ? $medicalFile->glucoses_count : 0;
         $lipidProfileCount = $medicalFile ? $medicalFile->lipid_profiles_count : 0;
+        $totalProteinsAndFractionsCount = $medicalFile ? $medicalFile->total_proteins_and_fractions_count : 0;
         $ultrasensitiveTshCount = $medicalFile ? $medicalFile->ultrasensitive_tshs_count : 0;
         $ureaAndCreatinineCount = $medicalFile ? $medicalFile->urea_and_creatinines_count : 0;
         $vitaminD3Count = $medicalFile ? $medicalFile->vitamin_d3s_count : 0;
         $vitaminB12Count = $medicalFile ? $medicalFile->vitamin_b12s_count : 0;
 
-        $totalCount = $lipidProfileCount + $completeBloodCountCount + $glucoseCount + $vitaminD3Count + $vitaminB12Count + $ultrasensitiveTshCount + $ureaAndCreatinineCount;
+        $totalCount = $lipidProfileCount + $completeBloodCountCount + $glucoseCount + $vitaminD3Count + $vitaminB12Count + $ultrasensitiveTshCount + $ureaAndCreatinineCount + $totalProteinsAndFractionsCount;
 
         $medicalFile?->makeHidden([
             'complete_blood_counts_count',
             'glucoses_count',
             'lipid_profiles_count',
+            'total_proteins_and_fractions_count',
             'ultrasensitive_tshs_count',
             'urea_and_creatinines_count',
             'vitamin_d3s_count',
@@ -51,6 +54,7 @@ class DashboardService implements DashboardServiceInterface
                 'cbc_count' => $completeBloodCountCount,
                 'glucoses_count' => $glucoseCount,
                 'lipid_profiles_count' => $lipidProfileCount,
+                'total_proteins_and_fractions_count' => $totalProteinsAndFractionsCount,
                 'ultrasensitive_tshs_count' => $ultrasensitiveTshCount,
                 'urea_and_creatinines_count' => $ureaAndCreatinineCount,
                 'vitamin_d3s_count' => $vitaminD3Count,
