@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Fitness\Exercise;
+use App\Models\Fitness\MuscleGroup;
 use App\Models\Fitness\Workout;
 use Carbon\CarbonImmutable;
 use Database\Factories\UserFactory;
@@ -44,7 +46,13 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $provider_refresh_token
  * @property string|null $avatar
  * @property string $locale
+ * @property-read Collection<int, Exercise> $exercises
+ * @property-read int|null $exercises_count
+ * @property-read bool|null $exercises_exists
  * @property-read MedicalFile|null $medicalFile
+ * @property-read Collection<int, MuscleGroup> $muscleGroups
+ * @property-read int|null $muscle_groups_count
+ * @property-read bool|null $muscle_groups_exists
  * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read bool|null $notifications_exists
@@ -153,5 +161,25 @@ class User extends Authenticatable implements PasskeyUser
     public function workouts(): HasMany
     {
         return $this->hasMany(Workout::class);
+    }
+
+    /**
+     * Get the exercises for the user.
+     *
+     * @return HasMany<Exercise, $this>
+     */
+    public function exercises(): HasMany
+    {
+        return $this->hasMany(Exercise::class);
+    }
+
+    /**
+     * Get the muscle groups for the user.
+     *
+     * @return HasMany<MuscleGroup, $this>
+     */
+    public function muscleGroups(): HasMany
+    {
+        return $this->hasMany(MuscleGroup::class);
     }
 }

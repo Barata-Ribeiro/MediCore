@@ -2,11 +2,13 @@
 
 namespace App\Models\Fitness;
 
+use App\Models\User;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -18,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read Collection<int, Exercise> $exercises
  * @property-read int|null $exercises_count
  * @property-read bool|null $exercises_exists
+ * @property-read User|null $user
  * @property-read Collection<int, WorkoutExercise> $workoutExercises
  * @property-read int|null $workout_exercises_count
  * @property-read bool|null $workout_exercises_exists
@@ -33,9 +36,19 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @mixin \Eloquent
  */
 #[Table('muscle_groups')]
-#[Fillable(['name'])]
+#[Fillable(['name', 'user_id'])]
 class MuscleGroup extends Model
 {
+    /**
+     * Get the user that owns the muscle group.
+     *
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     /**
      * Get the exercises that belong to the muscle group.
      *

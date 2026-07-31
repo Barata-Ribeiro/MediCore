@@ -1,14 +1,24 @@
 import { dashboard } from '@/routes';
 import { index as cbcIndex } from '@/routes/complete-blood-count';
+import { index as exercisesIndex } from '@/routes/exercises';
 import { index as glucoseIndex } from '@/routes/glucose';
 import { index as lipidProfileIndex } from '@/routes/lipid-profile';
 import { edit } from '@/routes/medical-file';
+import { index as muscleGroupsIndex } from '@/routes/muscle-groups';
 import { index as ultrasensitiveTshIndex } from '@/routes/ultrasensitive-tsh';
 import { index as ureaAndCreatinineIndex } from '@/routes/urea-and-creatinine';
 import { index as vitaminB12Index } from '@/routes/vitamin-b12';
 import { index as vitaminD3Index } from '@/routes/vitamin-d3';
+import { index as workoutsIndex } from '@/routes/workouts';
 import type { NavItem } from '@/types';
-import { BriefcaseBusinessIcon, FileTextIcon, FolderGit2Icon, LayoutGridIcon, MicroscopeIcon } from 'lucide-react';
+import {
+    BriefcaseBusinessIcon,
+    DumbbellIcon,
+    FileTextIcon,
+    FolderGit2Icon,
+    LayoutGridIcon,
+    MicroscopeIcon,
+} from 'lucide-react';
 
 const mainNavItems: NavItem[] = [
     {
@@ -53,6 +63,25 @@ const mainNavItems: NavItem[] = [
             {
                 title_path: 'main.menu.sidebar_items.exams_items.vitamin_d3',
                 href: vitaminD3Index(),
+            },
+        ],
+    },
+    {
+        title_path: 'main.menu.sidebar_items.fitness',
+        href: '#',
+        icon: DumbbellIcon,
+        items: [
+            {
+                title_path: 'main.menu.sidebar_items.fitness_items.workouts',
+                href: workoutsIndex(),
+            },
+            {
+                title_path: 'main.menu.sidebar_items.fitness_items.exercises',
+                href: exercisesIndex(),
+            },
+            {
+                title_path: 'main.menu.sidebar_items.fitness_items.muscle_groups',
+                href: muscleGroupsIndex(),
             },
         ],
     },

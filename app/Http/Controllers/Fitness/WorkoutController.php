@@ -299,13 +299,16 @@ class WorkoutController extends Controller
      */
     private function formOptions(): array
     {
+        $user = auth()->user();
+
         return [
             'exercises' => Exercise::query()
+                ->whereBelongsTo($user)
                 ->select(['id', 'name'])
                 ->with(['muscleGroups' => fn ($query) => $query->select(['muscle_groups.id', 'name'])->orderBy('name')])
                 ->orderBy('name')
                 ->get(),
-            'muscleGroups' => MuscleGroup::query()->select(['id', 'name'])->orderBy('name')->get(),
+            'muscleGroups' => MuscleGroup::query()->whereBelongsTo($user)->select(['id', 'name'])->orderBy('name')->get(),
         ];
     }
 }

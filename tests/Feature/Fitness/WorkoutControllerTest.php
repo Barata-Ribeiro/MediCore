@@ -74,11 +74,15 @@ describe('tests for the "create" method of WorkoutController', function () {
     $componentName = 'fitness/workout/create';
 
     it('should return the create view with form options for authenticated users', function () use ($componentName) {
-        $exercise = Exercise::create(['name' => 'Bench Press']);
-        $muscleGroup = MuscleGroup::create(['name' => 'Pectorals']);
+        $user = User::factory()->create();
+        $otherUser = User::factory()->create();
+
+        $exercise = Exercise::create(['name' => 'Bench Press', 'user_id' => $user->id]);
+        $muscleGroup = MuscleGroup::create(['name' => 'Pectorals', 'user_id' => $user->id]);
         $exercise->muscleGroups()->attach($muscleGroup->id);
 
-        $user = User::factory()->create();
+        Exercise::create(['name' => 'Other exercise', 'user_id' => $otherUser->id]);
+        MuscleGroup::create(['name' => 'Other group', 'user_id' => $otherUser->id]);
 
         $response = $this->actingAs($user)->get(route('workouts.create'));
 
@@ -100,8 +104,8 @@ describe('tests for the "create" method of WorkoutController', function () {
 describe('tests for the "store" method of WorkoutController', function () {
     it('should store workout with sections and exercises and redirect to index', function () {
         $user = User::factory()->create();
-        $exercise = Exercise::create(['name' => 'Bench Press']);
-        $muscleGroup = MuscleGroup::create(['name' => 'Pectorals']);
+        $exercise = Exercise::create(['name' => 'Bench Press', 'user_id' => $user->id]);
+        $muscleGroup = MuscleGroup::create(['name' => 'Pectorals', 'user_id' => $user->id]);
         $exercise->muscleGroups()->attach($muscleGroup->id);
 
         $payload = workoutPayload($exercise, $muscleGroup);
@@ -145,9 +149,9 @@ describe('tests for the "store" method of WorkoutController', function () {
 
     it('should reject muscle groups not linked to the selected exercise', function () {
         $user = User::factory()->create();
-        $exercise = Exercise::create(['name' => 'Bench Press']);
-        $linkedMuscleGroup = MuscleGroup::create(['name' => 'Pectorals']);
-        $mismatchedMuscleGroup = MuscleGroup::create(['name' => 'Quadriceps']);
+        $exercise = Exercise::create(['name' => 'Bench Press', 'user_id' => $user->id]);
+        $linkedMuscleGroup = MuscleGroup::create(['name' => 'Pectorals', 'user_id' => $user->id]);
+        $mismatchedMuscleGroup = MuscleGroup::create(['name' => 'Quadriceps', 'user_id' => $user->id]);
 
         $exercise->muscleGroups()->attach($linkedMuscleGroup->id);
 
@@ -163,6 +167,23 @@ describe('tests for the "store" method of WorkoutController', function () {
             'user_id' => $user->id,
             'goal' => 'Build muscle',
         ]);
+    });
+
+    it('should reject exercises from another user catalog', function () {
+        $user = User::factory()->create();
+        $otherUser = User::factory()->create();
+
+        $exercise = Exercise::create(['name' => 'Bench Press', 'user_id' => $otherUser->id]);
+        $muscleGroup = MuscleGroup::create(['name' => 'Pectorals', 'user_id' => $otherUser->id]);
+        $exercise->muscleGroups()->attach($muscleGroup->id);
+
+        $payload = workoutPayload($exercise, $muscleGroup);
+
+        $response = $this->actingAs($user)->post(route('workouts.store'), $payload);
+
+        $response
+            ->assertSessionHasErrors('sections.0.exercises.0.exercise_id')
+            ->assertRedirect();
     });
 });
 
@@ -199,8 +220,8 @@ describe('tests for the "edit" method of WorkoutController', function () {
     it('should return edit view for workout owner', function () use ($componentName) {
         $user = User::factory()->create();
         $workout = $user->workouts()->create(['goal' => 'Maintain']);
-        $exercise = Exercise::create(['name' => 'Squat']);
-        $muscleGroup = MuscleGroup::create(['name' => 'Quadriceps']);
+        $exercise = Exercise::create(['name' => 'Squat', 'user_id' => $user->id]);
+        $muscleGroup = MuscleGroup::create(['name' => 'Quadriceps', 'user_id' => $user->id]);
         $exercise->muscleGroups()->attach($muscleGroup->id);
 
         $response = $this->actingAs($user)->get(route('workouts.edit', $workout));
@@ -228,9 +249,9 @@ describe('tests for the "edit" method of WorkoutController', function () {
 describe('tests for the "update" method of WorkoutController', function () {
     it('should update workout and synchronize nested sections and exercises', function () {
         $user = User::factory()->create();
-        $exerciseA = Exercise::create(['name' => 'Bench Press']);
-        $exerciseB = Exercise::create(['name' => 'Squat']);
-        $muscleGroup = MuscleGroup::create(['name' => 'Pectorals']);
+        $exerciseA = Exercise::create(['name' => 'Bench Press', 'user_id' => $user->id]);
+        $exerciseB = Exercise::create(['name' => 'Squat', 'user_id' => $user->id]);
+        $muscleGroup = MuscleGroup::create(['name' => 'Pectorals', 'user_id' => $user->id]);
         $exerciseA->muscleGroups()->attach($muscleGroup->id);
         $exerciseB->muscleGroups()->attach($muscleGroup->id);
 
@@ -327,7 +348,7 @@ describe('tests for the "update" method of WorkoutController', function () {
 describe('tests for the "destroy" method of WorkoutController', function () {
     it('should delete workout and related sections and exercises and redirect to index', function () {
         $user = User::factory()->create();
-        $exercise = Exercise::create(['name' => 'Deadlift']);
+        $exercise = Exercise::create(['name' => 'Deadlift', 'user_id' => $user->id]);
 
         $workout = $user->workouts()->create(['goal' => 'Delete me']);
         $section = $workout->sections()->create(['name' => 'Section', 'order' => 1]);

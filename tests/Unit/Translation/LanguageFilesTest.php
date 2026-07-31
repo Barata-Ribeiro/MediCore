@@ -31,6 +31,10 @@ test('application translation keys resolve from standard language files', functi
         ->toBe('Uric Acid Exams')
         ->and($translator->get('urea_and_creatinine_pages.index.head_title', [], 'en'))
         ->toBe('Urea and Creatinine Exams')
+        ->and($translator->get('exercise_pages.index.head_title', [], 'en'))
+        ->toBe('Exercises')
+        ->and($translator->get('muscle_group_pages.index.head_title', [], 'en'))
+        ->toBe('Muscle Groups')
         ->and($translator->get('flash.settings.profile.language.updated_successfully', [], 'pt_BR'))
         ->toBe('Idioma atualizado com sucesso.')
         ->and($translator->get('auth_pages.login_page.form.passkey_button', [], 'pt_BR'))
@@ -52,7 +56,11 @@ test('application translation keys resolve from standard language files', functi
         ->and($translator->get('uric_acid_pages.index.head_title', [], 'pt_BR'))
         ->toBe('Exames de Ácido Úrico')
         ->and($translator->get('urea_and_creatinine_pages.index.head_title', [], 'pt_BR'))
-        ->toBe('Exames de Ureia e Creatinina');
+        ->toBe('Exames de Ureia e Creatinina')
+        ->and($translator->get('exercise_pages.index.head_title', [], 'pt_BR'))
+        ->toBe('Exercicios')
+        ->and($translator->get('muscle_group_pages.index.head_title', [], 'pt_BR'))
+        ->toBe('Grupos Musculares');
 });
 
 test('json translation strings still resolve alongside php language files', function () {

@@ -9,6 +9,7 @@ return [
             'dashboard' => 'Dashboard',
             'medical_file' => 'Medical File',
             'exams' => 'Exams',
+            'fitness' => 'Fitness',
             'exams_items' => [
                 'complete_blood_count' => 'Complete Blood Count',
                 'glucose' => 'Glucose',
@@ -19,6 +20,11 @@ return [
                 'uric_acid' => 'Uric Acid',
                 'vitamin_b12' => 'Vitamin B12',
                 'vitamin_d3' => 'Vitamin D3',
+            ],
+            'fitness_items' => [
+                'workouts' => 'Workouts',
+                'exercises' => 'Exercises',
+                'muscle_groups' => 'Muscle Groups',
             ],
             'footer_items' => [
                 'repository' => 'Repository',

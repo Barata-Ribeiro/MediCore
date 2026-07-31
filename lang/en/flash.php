@@ -107,6 +107,26 @@ return [
         'destroy_successfully' => 'Workout deleted successfully.',
         'destroy_failed' => 'An error occurred while deleting the workout. Please try again.',
     ],
+    'exercise' => [
+        'store_successfully' => 'Exercise created successfully.',
+        'store_failed' => 'An error occurred while creating the exercise. Please try again.',
+        'update_unauthorized' => 'You are not authorized to update this exercise.',
+        'update_successfully' => 'Exercise updated successfully.',
+        'update_failed' => 'An error occurred while updating the exercise. Please try again.',
+        'destroy_unauthorized' => 'You are not authorized to delete this exercise.',
+        'destroy_successfully' => 'Exercise deleted successfully.',
+        'destroy_failed' => 'An error occurred while deleting the exercise. Please try again.',
+    ],
+    'muscle_group' => [
+        'store_successfully' => 'Muscle group created successfully.',
+        'store_failed' => 'An error occurred while creating the muscle group. Please try again.',
+        'update_unauthorized' => 'You are not authorized to update this muscle group.',
+        'update_successfully' => 'Muscle group updated successfully.',
+        'update_failed' => 'An error occurred while updating the muscle group. Please try again.',
+        'destroy_unauthorized' => 'You are not authorized to delete this muscle group.',
+        'destroy_successfully' => 'Muscle group deleted successfully.',
+        'destroy_failed' => 'An error occurred while deleting the muscle group. Please try again.',
+    ],
     'settings' => [
         'medical_file' => [
             'updated_successfully' => 'Medical file updated successfully.',
