@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string|null $video_url A URL to a video demonstrating the exercise, if available.
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
+ * @property int|null $user_id
  * @property-read Collection<int, MuscleGroup> $muscleGroups
  * @property-read int|null $muscle_groups_count
  * @property-read bool|null $muscle_groups_exists
@@ -35,6 +36,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise whereVideoUrl($value)
  *
  * @mixin \Eloquent

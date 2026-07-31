@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $name The name of the muscle group, e.g. "Pectorals", "Quadriceps", etc.
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
+ * @property int|null $user_id
  * @property-read Collection<int, Exercise> $exercises
  * @property-read int|null $exercises_count
  * @property-read bool|null $exercises_exists
@@ -32,6 +33,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|MuscleGroup whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|MuscleGroup whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|MuscleGroup whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MuscleGroup whereUserId($value)
  *
  * @mixin \Eloquent
  */
