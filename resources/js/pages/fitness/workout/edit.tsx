@@ -28,6 +28,7 @@ export default function Edit({ workout, formOptions }: Readonly<WorkoutEditProps
     return (
         <Fragment>
             <Head title={__('workout_pages.edit.head_title')} />
+            <h1 className="sr-only">{__('workout_pages.edit.head_title')}</h1>
 
             <Card>
                 <CardHeader className="space-y-4">

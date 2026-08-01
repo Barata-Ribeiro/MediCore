@@ -4,6 +4,7 @@ import { initializeTheme } from '@/hooks/use-appearance';
 import AppLayout from '@/layouts/app-layout';
 import AuthLayout from '@/layouts/auth-layout';
 import ExamsLayout from '@/layouts/exams/layout';
+import FitnessLayout from '@/layouts/fitness/layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import { createInertiaApp } from '@inertiajs/react';
 
@@ -22,6 +23,8 @@ createInertiaApp({
                 return [AppLayout, SettingsLayout];
             case name.startsWith('exams/'):
                 return [AppLayout, ExamsLayout];
+            case name.startsWith('fitness/'):
+                return [AppLayout, FitnessLayout];
             default:
                 return AppLayout;
         }

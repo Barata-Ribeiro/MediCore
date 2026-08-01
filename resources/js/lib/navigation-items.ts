@@ -5,6 +5,7 @@ import { index as glucoseIndex } from '@/routes/glucose';
 import { index as lipidProfileIndex } from '@/routes/lipid-profile';
 import { edit } from '@/routes/medical-file';
 import { index as muscleGroupsIndex } from '@/routes/muscle-groups';
+import { index as totalProteinsAndFractionsIndex } from '@/routes/total-proteins-and-fractions';
 import { index as ultrasensitiveTshIndex } from '@/routes/ultrasensitive-tsh';
 import { index as ureaAndCreatinineIndex } from '@/routes/urea-and-creatinine';
 import { index as vitaminB12Index } from '@/routes/vitamin-b12';
@@ -47,6 +48,10 @@ const mainNavItems: NavItem[] = [
             {
                 title_path: 'main.menu.sidebar_items.exams_items.lipid_profile',
                 href: lipidProfileIndex(),
+            },
+            {
+                title_path: 'main.menu.sidebar_items.exams_items.total_proteins_and_fractions',
+                href: totalProteinsAndFractionsIndex(),
             },
             {
                 title_path: 'main.menu.sidebar_items.exams_items.ultrasensitive_tsh',

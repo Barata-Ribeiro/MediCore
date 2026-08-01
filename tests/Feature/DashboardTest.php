@@ -41,6 +41,7 @@ test('dashboard route uses the dashboard service data', function () {
             ->missing('data.medicalFile.complete_blood_counts_count')
             ->missing('data.medicalFile.glucoses_count')
             ->missing('data.medicalFile.lipid_profiles_count')
+            ->missing('data.medicalFile.total_proteins_and_fractions_count')
             ->missing('data.medicalFile.ultrasensitive_tshs_count')
             ->missing('data.medicalFile.urea_and_creatinines_count')
             ->missing('data.medicalFile.vitamin_d3s_count')
@@ -48,6 +49,7 @@ test('dashboard route uses the dashboard service data', function () {
             ->has('exams', fn (AssertableInertia $exams) => $exams
                 ->has('cbc_count')
                 ->has('lipid_profiles_count')
+                ->has('total_proteins_and_fractions_count')
                 ->has('glucoses_count')
                 ->has('ultrasensitive_tshs_count')
                 ->has('urea_and_creatinines_count')

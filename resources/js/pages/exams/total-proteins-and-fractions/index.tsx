@@ -2,7 +2,7 @@ import TotalProteinsAndFractionsChart from '@/components/application/charts/tota
 import { EmptyChartData } from '@/components/common/empty-chart-data';
 import { DataTable } from '@/components/table/data-table';
 import { useTotalProteinsAndFractionsColumns } from '@/pages/exams/total-proteins-and-fractions/tp-and-fractions-columns';
-import { create, index } from '@/routes/total_proteins_and_fractions';
+import { create, index } from '@/routes/total-proteins-and-fractions';
 import type { ChartData } from '@/types';
 import type { TotalProteinsAndFractions } from '@/types/application/exams/total-proteins-and-fractions';
 import type { PaginationMeta } from '@/types/application/metadata';

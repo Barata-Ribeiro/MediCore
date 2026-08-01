@@ -58,7 +58,7 @@ test('application translation keys resolve from standard language files', functi
         ->and($translator->get('urea_and_creatinine_pages.index.head_title', [], 'pt_BR'))
         ->toBe('Exames de Ureia e Creatinina')
         ->and($translator->get('exercise_pages.index.head_title', [], 'pt_BR'))
-        ->toBe('Exercicios')
+        ->toBe('Exercícios')
         ->and($translator->get('muscle_group_pages.index.head_title', [], 'pt_BR'))
         ->toBe('Grupos Musculares');
 });

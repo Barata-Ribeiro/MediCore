@@ -30,6 +30,7 @@ export default function Show({ workout }: Readonly<WorkoutShowProps>) {
     return (
         <Fragment>
             <Head title={__('workout_pages.show.head_title')} />
+            <h1 className="sr-only">{__('workout_pages.show.head_title')}</h1>
 
             <Card>
                 <CardHeader className="space-y-4">
