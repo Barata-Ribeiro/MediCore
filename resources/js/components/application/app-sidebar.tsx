@@ -17,7 +17,7 @@ import { Link } from '@inertiajs/react';
 
 export function AppSidebar() {
     return (
-        <Sidebar collapsible="icon" variant="floating">
+        <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
