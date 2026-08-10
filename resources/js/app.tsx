@@ -6,12 +6,14 @@ import AuthLayout from '@/layouts/auth-layout';
 import ExamsLayout from '@/layouts/exams/layout';
 import FitnessLayout from '@/layouts/fitness/layout';
 import SettingsLayout from '@/layouts/settings/layout';
+import { cn } from '@/lib/utils';
 import { createInertiaApp } from '@inertiajs/react';
-import { ModalStackProvider } from '@inertiaui/modal-react';
+import { ModalStackProvider, putConfig } from '@inertiaui/modal-react';
 
 const appName = import.meta.env['VITE_APP_NAME'] ?? 'Laravel';
 
 createInertiaApp({
+    strictMode: true,
     title: (title) => `${title} - ${appName}`,
     layout: (name) => {
         switch (true) {
@@ -30,7 +32,6 @@ createInertiaApp({
                 return AppLayout;
         }
     },
-    strictMode: true,
     withApp(app) {
         return (
             <TooltipProvider delay={0}>
@@ -50,3 +51,28 @@ createInertiaApp({
 
 // This will set light / dark mode on load...
 initializeTheme();
+
+// Modal configuration
+putConfig({
+    type: 'modal',
+    navigate: false,
+    useNativeDialog: false,
+    modal: {
+        closeButton: true,
+        closeExplicitly: true,
+        closeOnClickOutside: true,
+        maxWidth: 'full',
+        paddingClasses: 'p-4 sm:p-6',
+        panelClasses: cn('rounded-none bg-background shadow-lg'),
+        position: 'center',
+    },
+    slideover: {
+        closeButton: true,
+        closeExplicitly: true,
+        closeOnClickOutside: true,
+        maxWidth: 'md',
+        paddingClasses: 'p-4 sm:p-6',
+        panelClasses: cn('min-h-screen rounded-none bg-background'),
+        position: 'right',
+    },
+});
