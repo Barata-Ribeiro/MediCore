@@ -12,6 +12,7 @@
         "php": "^8.5",
         "erag/laravel-lang-sync-inertia": "^2.3",
         "inertiajs/inertia-laravel": "^3.3",
+        "inertiaui/modal": "3.0.0",
         "laravel/fortify": "^1.37",
         "laravel/framework": "^13.24",
         "laravel/socialite": "^5.29",
