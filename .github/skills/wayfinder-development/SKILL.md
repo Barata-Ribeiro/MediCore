@@ -67,6 +67,16 @@ Use Wayfinder with the `<Form>` component:
 <Form {...store.form()}><input name="title" /></Form>
 ```
 
+<!-- Wayfinder Form (Vue) -->
+```vue
+<Form v-bind="store.form()"><input name="title" /></Form>
+```
+
+<!-- Wayfinder Form (Svelte) -->
+```svelte
+<Form {...store.form()}><input name="title" /></Form>
+```
+
 ## Verification
 
 1. Run `php artisan wayfinder:generate` to regenerate routes if Vite plugin isn't installed
