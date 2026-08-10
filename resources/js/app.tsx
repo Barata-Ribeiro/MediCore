@@ -7,6 +7,7 @@ import ExamsLayout from '@/layouts/exams/layout';
 import FitnessLayout from '@/layouts/fitness/layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import { createInertiaApp } from '@inertiajs/react';
+import { ModalStackProvider } from '@inertiaui/modal-react';
 
 const appName = import.meta.env['VITE_APP_NAME'] ?? 'Laravel';
 
@@ -33,7 +34,7 @@ createInertiaApp({
     withApp(app) {
         return (
             <TooltipProvider delay={0}>
-                {app}
+                <ModalStackProvider>{app}</ModalStackProvider>
                 <Toaster duration={8000} position="top-right" richColors closeButton />
             </TooltipProvider>
         );
