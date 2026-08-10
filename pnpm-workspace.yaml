@@ -80,3 +80,4 @@ minimumReleaseAgeExclude:
     - '@vitejs/plugin-react@6.0.5'
     - '@base-ui/react@1.7.0'
     - '@base-ui/utils@0.3.2'
+    - sonner@2.0.8
