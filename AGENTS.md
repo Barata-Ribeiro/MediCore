@@ -212,4 +212,11 @@ Use Wayfinder to generate TypeScript functions for Laravel routes. Import from `
 Vue components must have a single root element.
 - IMPORTANT: Activate `inertia-vue-development` when working with Inertia Vue client-side patterns.
 
+=== inertiaui/modal/core rules ===
+
+## Inertia Modal
+
+- `inertiaui/modal` opens any Laravel route in a Modal or Slideover without changing existing routes or controllers. Supports React and Vue.
+- Always activate the `inertia-modal-development` skill when working with modal routes, `ModalLink` components, `Modal` components, the `Inertia::modal()` method, modal configuration, or any code that uses `@inertiaui/modal-vue` or `@inertiaui/modal-react`.
+
 </laravel-boost-guidelines>

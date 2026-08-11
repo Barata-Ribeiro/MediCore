@@ -9,7 +9,8 @@
     "packages": [
         "erag/laravel-lang-sync-inertia",
         "spatie/laravel-permission",
-        "fruitcake/laravel-debugbar"
+        "fruitcake/laravel-debugbar",
+        "inertiaui/modal"
     ],
     "sail": false,
     "skills": [
@@ -22,6 +23,7 @@
         "inertia-react-development",
         "tailwindcss-development",
         "laravel-lang-sync-inertia",
+        "inertia-modal-development",
         "laravel-permission-development",
         "debug-using-debugbar"
     ]
