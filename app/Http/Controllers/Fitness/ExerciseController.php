@@ -32,6 +32,17 @@ class ExerciseController extends Controller
         ]);
     }
 
+    public function create(): Response
+    {
+        syncLangFiles('exercise_pages');
+
+        $user = auth()->user();
+
+        return Inertia::render('fitness/exercise/create', [
+            'muscleGroups' => $user->muscleGroups()->select(['id', 'name'])->orderBy('name')->get(),
+        ]);
+    }
+
     public function store(StoreExerciseRequest $request): RedirectResponse
     {
         $validated = $request->validated();
