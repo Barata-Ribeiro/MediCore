@@ -28,7 +28,6 @@ class ExerciseController extends Controller
 
         return Inertia::render('fitness/exercise/index', [
             'exercises' => $exercises,
-            'muscleGroups' => $user->muscleGroups()->select(['id', 'name'])->orderBy('name')->get(),
         ]);
     }
 
@@ -39,6 +38,18 @@ class ExerciseController extends Controller
         $user = auth()->user();
 
         return Inertia::render('fitness/exercise/create', [
+            'muscleGroups' => $user->muscleGroups()->select(['id', 'name'])->orderBy('name')->get(),
+        ]);
+    }
+
+    public function edit(Exercise $exercise): Response
+    {
+        syncLangFiles('exercise_pages');
+
+        $user = auth()->user();
+
+        return Inertia::render('fitness/exercise/edit', [
+            'exercise' => $exercise->load(['muscleGroups' => fn ($query) => $query->select(['muscle_groups.id', 'name'])->orderBy('name')]),
             'muscleGroups' => $user->muscleGroups()->select(['id', 'name'])->orderBy('name')->get(),
         ]);
     }
