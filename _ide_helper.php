@@ -14180,17 +14180,21 @@ namespace Illuminate\Support\Facades {
      */
     class Redirect {
         /**
-         * Create a new redirect response to the previous location.
+         * Create a new redirect response to the previous location or a modal base URL.
+         *
+         * This method overrides the parent's 'back' method to handle modal-specific redirects.
+         * If a modal base URL is present in the request header, it redirects to that URL.
+         * Otherwise, it falls back to the parent's behavior.
          *
          * @param int $status
          * @param array $headers
-         * @param mixed $fallback
+         * @param bool $fallback
          * @return \Illuminate\Http\RedirectResponse
          * @static
          */
         public static function back($status = 302, $headers = [], $fallback = false)
         {
-            /** @var \Illuminate\Routing\Redirector $instance */
+            /** @var \InertiaUI\Modal\Redirector $instance */
             return $instance->back($status, $headers, $fallback);
         }
 
@@ -14204,7 +14208,8 @@ namespace Illuminate\Support\Facades {
          */
         public static function refresh($status = 302, $headers = [])
         {
-            /** @var \Illuminate\Routing\Redirector $instance */
+            //Method inherited from \Illuminate\Routing\Redirector 
+            /** @var \InertiaUI\Modal\Redirector $instance */
             return $instance->refresh($status, $headers);
         }
 
@@ -14220,7 +14225,8 @@ namespace Illuminate\Support\Facades {
          */
         public static function guest($path, $status = 302, $headers = [], $secure = null)
         {
-            /** @var \Illuminate\Routing\Redirector $instance */
+            //Method inherited from \Illuminate\Routing\Redirector 
+            /** @var \InertiaUI\Modal\Redirector $instance */
             return $instance->guest($path, $status, $headers, $secure);
         }
 
@@ -14236,7 +14242,8 @@ namespace Illuminate\Support\Facades {
          */
         public static function intended($default = '/', $status = 302, $headers = [], $secure = null)
         {
-            /** @var \Illuminate\Routing\Redirector $instance */
+            //Method inherited from \Illuminate\Routing\Redirector 
+            /** @var \InertiaUI\Modal\Redirector $instance */
             return $instance->intended($default, $status, $headers, $secure);
         }
 
@@ -14252,7 +14259,8 @@ namespace Illuminate\Support\Facades {
          */
         public static function to($path, $status = 302, $headers = [], $secure = null)
         {
-            /** @var \Illuminate\Routing\Redirector $instance */
+            //Method inherited from \Illuminate\Routing\Redirector 
+            /** @var \InertiaUI\Modal\Redirector $instance */
             return $instance->to($path, $status, $headers, $secure);
         }
 
@@ -14267,7 +14275,8 @@ namespace Illuminate\Support\Facades {
          */
         public static function away($path, $status = 302, $headers = [])
         {
-            /** @var \Illuminate\Routing\Redirector $instance */
+            //Method inherited from \Illuminate\Routing\Redirector 
+            /** @var \InertiaUI\Modal\Redirector $instance */
             return $instance->away($path, $status, $headers);
         }
 
@@ -14282,7 +14291,8 @@ namespace Illuminate\Support\Facades {
          */
         public static function secure($path, $status = 302, $headers = [])
         {
-            /** @var \Illuminate\Routing\Redirector $instance */
+            //Method inherited from \Illuminate\Routing\Redirector 
+            /** @var \InertiaUI\Modal\Redirector $instance */
             return $instance->secure($path, $status, $headers);
         }
 
@@ -14298,7 +14308,8 @@ namespace Illuminate\Support\Facades {
          */
         public static function route($route, $parameters = [], $status = 302, $headers = [])
         {
-            /** @var \Illuminate\Routing\Redirector $instance */
+            //Method inherited from \Illuminate\Routing\Redirector 
+            /** @var \InertiaUI\Modal\Redirector $instance */
             return $instance->route($route, $parameters, $status, $headers);
         }
 
@@ -14315,7 +14326,8 @@ namespace Illuminate\Support\Facades {
          */
         public static function signedRoute($route, $parameters = [], $expiration = null, $status = 302, $headers = [])
         {
-            /** @var \Illuminate\Routing\Redirector $instance */
+            //Method inherited from \Illuminate\Routing\Redirector 
+            /** @var \InertiaUI\Modal\Redirector $instance */
             return $instance->signedRoute($route, $parameters, $expiration, $status, $headers);
         }
 
@@ -14332,7 +14344,8 @@ namespace Illuminate\Support\Facades {
          */
         public static function temporarySignedRoute($route, $expiration, $parameters = [], $status = 302, $headers = [])
         {
-            /** @var \Illuminate\Routing\Redirector $instance */
+            //Method inherited from \Illuminate\Routing\Redirector 
+            /** @var \InertiaUI\Modal\Redirector $instance */
             return $instance->temporarySignedRoute($route, $expiration, $parameters, $status, $headers);
         }
 
@@ -14348,7 +14361,8 @@ namespace Illuminate\Support\Facades {
          */
         public static function action($action, $parameters = [], $status = 302, $headers = [])
         {
-            /** @var \Illuminate\Routing\Redirector $instance */
+            //Method inherited from \Illuminate\Routing\Redirector 
+            /** @var \InertiaUI\Modal\Redirector $instance */
             return $instance->action($action, $parameters, $status, $headers);
         }
 
@@ -14360,7 +14374,8 @@ namespace Illuminate\Support\Facades {
          */
         public static function getUrlGenerator()
         {
-            /** @var \Illuminate\Routing\Redirector $instance */
+            //Method inherited from \Illuminate\Routing\Redirector 
+            /** @var \InertiaUI\Modal\Redirector $instance */
             return $instance->getUrlGenerator();
         }
 
@@ -14373,7 +14388,8 @@ namespace Illuminate\Support\Facades {
          */
         public static function setSession($session)
         {
-            /** @var \Illuminate\Routing\Redirector $instance */
+            //Method inherited from \Illuminate\Routing\Redirector 
+            /** @var \InertiaUI\Modal\Redirector $instance */
             $instance->setSession($session);
         }
 
@@ -14385,7 +14401,8 @@ namespace Illuminate\Support\Facades {
          */
         public static function getIntendedUrl()
         {
-            /** @var \Illuminate\Routing\Redirector $instance */
+            //Method inherited from \Illuminate\Routing\Redirector 
+            /** @var \InertiaUI\Modal\Redirector $instance */
             return $instance->getIntendedUrl();
         }
 
@@ -14393,12 +14410,13 @@ namespace Illuminate\Support\Facades {
          * Set the "intended" URL in the session.
          *
          * @param string $url
-         * @return \Illuminate\Routing\Redirector
+         * @return \InertiaUI\Modal\Redirector
          * @static
          */
         public static function setIntendedUrl($url)
         {
-            /** @var \Illuminate\Routing\Redirector $instance */
+            //Method inherited from \Illuminate\Routing\Redirector 
+            /** @var \InertiaUI\Modal\Redirector $instance */
             return $instance->setIntendedUrl($url);
         }
 
@@ -14413,7 +14431,8 @@ namespace Illuminate\Support\Facades {
          */
         public static function macro($name, $macro)
         {
-            \Illuminate\Routing\Redirector::macro($name, $macro);
+            //Method inherited from \Illuminate\Routing\Redirector 
+            \InertiaUI\Modal\Redirector::macro($name, $macro);
         }
 
         /**
@@ -14427,7 +14446,8 @@ namespace Illuminate\Support\Facades {
          */
         public static function mixin($mixin, $replace = true)
         {
-            \Illuminate\Routing\Redirector::mixin($mixin, $replace);
+            //Method inherited from \Illuminate\Routing\Redirector 
+            \InertiaUI\Modal\Redirector::mixin($mixin, $replace);
         }
 
         /**
@@ -14439,7 +14459,8 @@ namespace Illuminate\Support\Facades {
          */
         public static function hasMacro($name)
         {
-            return \Illuminate\Routing\Redirector::hasMacro($name);
+            //Method inherited from \Illuminate\Routing\Redirector 
+            return \InertiaUI\Modal\Redirector::hasMacro($name);
         }
 
         /**
@@ -14450,7 +14471,8 @@ namespace Illuminate\Support\Facades {
          */
         public static function flushMacros()
         {
-            \Illuminate\Routing\Redirector::flushMacros();
+            //Method inherited from \Illuminate\Routing\Redirector 
+            \InertiaUI\Modal\Redirector::flushMacros();
         }
 
             }
@@ -18572,6 +18594,17 @@ namespace Illuminate\Support\Facades {
         public static function inertia($uri, $component, $props = [])
         {
             return \Illuminate\Routing\Router::inertia($uri, $component, $props);
+        }
+
+        /**
+         * @see \InertiaUI\Modal\ModalServiceProvider::boot()
+         * @param mixed $request
+         * @return void
+         * @static
+         */
+        public static function setCurrentRequest($request)
+        {
+            \Illuminate\Routing\Router::setCurrentRequest($request);
         }
 
             }
@@ -25103,6 +25136,17 @@ namespace Illuminate\Routing {
             return \Illuminate\Routing\Router::inertia($uri, $component, $props);
         }
 
+        /**
+         * @see \InertiaUI\Modal\ModalServiceProvider::boot()
+         * @param mixed $request
+         * @return void
+         * @static
+         */
+        public static function setCurrentRequest($request)
+        {
+            \Illuminate\Routing\Router::setCurrentRequest($request);
+        }
+
             }
     /**
      */
@@ -25194,6 +25238,39 @@ namespace Illuminate\Testing {
         public static function assertInertiaFlashMissing($key)
         {
             return \Illuminate\Testing\TestResponse::assertInertiaFlashMissing($key);
+        }
+
+            }
+    }
+
+namespace Inertia {
+    /**
+     */
+    class ResponseFactory {
+        /**
+         * @see \InertiaUI\Modal\ModalServiceProvider::boot()
+         * @param mixed $component
+         * @param mixed $props
+         * @return \InertiaUI\Modal\Modal
+         * @static
+         */
+        public static function modal($component, $props = [])
+        {
+            return \Inertia\ResponseFactory::modal($component, $props);
+        }
+
+            }
+    /**
+     */
+    class Response {
+        /**
+         * @see \InertiaUI\Modal\ModalServiceProvider::boot()
+         * @return array
+         * @static
+         */
+        public static function toArray()
+        {
+            return \Inertia\Response::toArray();
         }
 
             }
