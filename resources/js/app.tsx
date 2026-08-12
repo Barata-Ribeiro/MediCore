@@ -56,14 +56,16 @@ initializeTheme();
 putConfig({
     type: 'modal',
     navigate: false,
-    useNativeDialog: false,
+    useNativeDialog: true,
     modal: {
-        closeButton: true,
+        closeButton: false,
         closeExplicitly: true,
         closeOnClickOutside: true,
         maxWidth: 'full',
-        paddingClasses: 'p-4 sm:p-6',
-        panelClasses: cn('rounded-none bg-background shadow-lg'),
+        paddingClasses: 'py-(--card-spacing)',
+        panelClasses: cn(
+            'group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-[min(var(--radius-4xl),24px)] bg-card text-sm text-card-foreground shadow-sm ring-1 ring-foreground/5 [--card-spacing:--spacing(5)] has-[>img:first-child]:pt-0 dark:ring-foreground/10 *:[img:first-child]:rounded-t-[min(var(--radius-4xl),24px)] *:[img:last-child]:rounded-b-[min(var(--radius-4xl),24px)]',
+        ),
         position: 'center',
     },
     slideover: {
