@@ -43,7 +43,7 @@
         "prettier": "^3.9.6",
         "prettier-plugin-tailwindcss": "^0.8.1",
         "typescript": "^6.0.3",
-        "typescript-eslint": "^8.66.0"
+        "typescript-eslint": "^8.67.0"
     },
     "dependencies": {
         "@base-ui/react": "^1.7.0",
@@ -53,7 +53,7 @@
         "@headlessui/react": "^2.2.10",
         "@inertiajs/react": "^3.6.1",
         "@inertiajs/vite": "^3.6.1",
-        "@inertiaui/modal-react": "file:vendor\\inertiaui\\modal\\react",
+        "@inertiaui/modal-react": "^3.1.2",
         "@laravel/passkeys": "^0.2.0",
         "@shadcn/react": "^0.3.0",
         "@tailwindcss/vite": "^4.3.3",
