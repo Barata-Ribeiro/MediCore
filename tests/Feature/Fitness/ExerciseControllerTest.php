@@ -48,6 +48,35 @@ describe('tests for ExerciseController', function () {
         ]);
     });
 
+    it('returns the create view with muscle groups for authenticated users', function () {
+        $user = User::factory()->create();
+        MuscleGroup::create(['name' => 'Pectorals', 'user_id' => $user->id]);
+
+        $response = $this->actingAs($user)->get(route('exercises.create'));
+
+        $response->assertOk();
+        $response->assertInertia(fn (AssertableInertia $page) => $page
+            ->component('fitness/exercise/create')
+            ->has('muscleGroups', 1)
+        );
+    });
+
+    it('returns the edit view with exercise and muscle groups for authenticated users', function () {
+        $user = User::factory()->create();
+        $muscleGroup = MuscleGroup::create(['name' => 'Pectorals', 'user_id' => $user->id]);
+        $exercise = Exercise::create(['name' => 'Bench Press', 'user_id' => $user->id]);
+        $exercise->muscleGroups()->attach($muscleGroup->id);
+
+        $response = $this->actingAs($user)->get(route('exercises.edit', $exercise));
+
+        $response->assertOk();
+        $response->assertInertia(fn (AssertableInertia $page) => $page
+            ->component('fitness/exercise/edit')
+            ->where('exercise.id', $exercise->id)
+            ->has('muscleGroups', 1)
+        );
+    });
+
     it('blocks storing exercise with muscle group from another user', function () {
         $user = User::factory()->create();
         $otherUser = User::factory()->create();
