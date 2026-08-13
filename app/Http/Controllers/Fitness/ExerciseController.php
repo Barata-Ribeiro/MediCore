@@ -42,11 +42,17 @@ class ExerciseController extends Controller
         ]);
     }
 
-    public function edit(Exercise $exercise): Response
+    public function edit(Exercise $exercise): RedirectResponse|Response
     {
         syncLangFiles('exercise_pages');
 
         $user = auth()->user();
+
+        if ($exercise->user_id !== $user->id) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exercise.edit_unauthorized')]);
+
+            return back();
+        }
 
         return Inertia::render('fitness/exercise/edit', [
             'exercise' => $exercise->load(['muscleGroups' => fn ($query) => $query->select(['muscle_groups.id', 'name'])->orderBy('name')]),
