@@ -3565,8 +3565,10 @@ namespace PHPSTORM_META {
 'vitamin-b12.destroy','vitamin-d3.index','vitamin-d3.create','vitamin-d3.store','vitamin-d3.show',
 'vitamin-d3.edit','vitamin-d3.update','vitamin-d3.destroy','workouts.index','workouts.create',
 'workouts.store','workouts.show','workouts.edit','workouts.update','workouts.destroy',
-'exercises.index','exercises.store','exercises.update','exercises.destroy','muscle-groups.index',
-'muscle-groups.store','muscle-groups.update','muscle-groups.destroy','storage.local','storage.local.upload',);
+'exercises.index','exercises.create','exercises.store','exercises.show','exercises.edit',
+'exercises.update','exercises.destroy','muscle-groups.index','muscle-groups.create','muscle-groups.store',
+'muscle-groups.show','muscle-groups.edit','muscle-groups.update','muscle-groups.destroy','storage.local',
+'storage.local.upload',);
         registerArgumentsSet('views', 
 'app','laravel-exceptions-renderer::components.badge','laravel-exceptions-renderer::components.empty-state','laravel-exceptions-renderer::components.file-with-line','laravel-exceptions-renderer::components.formatted-source',
 'laravel-exceptions-renderer::components.frame','laravel-exceptions-renderer::components.frame-code','laravel-exceptions-renderer::components.header','laravel-exceptions-renderer::components.http-method','laravel-exceptions-renderer::components.icons.alert',
