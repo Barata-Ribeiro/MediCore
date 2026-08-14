@@ -29,6 +29,13 @@ class MuscleGroupController extends Controller
         ]);
     }
 
+    public function create(): Response
+    {
+        syncLangFiles('muscle_group_pages');
+
+        return Inertia::render('fitness/muscle-group/create');
+    }
+
     public function store(StoreMuscleGroupRequest $request): RedirectResponse
     {
         $validated = $request->validated();
@@ -46,6 +53,23 @@ class MuscleGroupController extends Controller
 
             return back()->withInput();
         }
+    }
+
+    public function edit(MuscleGroup $muscleGroup): RedirectResponse|Response
+    {
+        syncLangFiles('muscle_group_pages');
+
+        $user = auth()->user();
+
+        if ($muscleGroup->user_id !== $user->id) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.muscle_group.edit_unauthorized')]);
+
+            return back();
+        }
+
+        return Inertia::render('fitness/muscle-group/edit', [
+            'muscleGroup' => $muscleGroup,
+        ]);
     }
 
     public function update(UpdateMuscleGroupRequest $request, MuscleGroup $muscleGroup): RedirectResponse
