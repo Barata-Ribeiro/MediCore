@@ -9,5 +9,7 @@ export interface CatalogExercise {
     name: string;
     description: string | null;
     video_url: string | null;
+    created_at: string;
+    muscle_group_name?: string | null;
     muscle_groups: CatalogMuscleGroup[];
 }
