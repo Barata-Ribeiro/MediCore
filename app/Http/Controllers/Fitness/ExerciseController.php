@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Fitness;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Fitness\StoreExerciseRequest;
 use App\Http\Requests\Fitness\UpdateExerciseRequest;
+use App\Http\Requests\QueryRequest;
+use App\Interfaces\Fitness\ExerciseServiceInterface;
 use App\Models\Fitness\Exercise;
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -12,19 +14,36 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Log;
 
+use function in_array;
+
 class ExerciseController extends Controller
 {
-    public function index(): Response
+    public function __construct(private ExerciseServiceInterface $exerciseService) {}
+
+    public function index(QueryRequest $request): Response
     {
         syncLangFiles('exercise_pages');
 
-        $user = auth()->user();
+        $validated = $request->validated();
 
-        $exercises = Exercise::query()
-            ->whereBelongsTo($user)
-            ->with(['muscleGroups' => fn ($query) => $query->select(['muscle_groups.id', 'name'])->orderBy('name')])
-            ->orderBy('name')
-            ->get();
+        $perPage = $validated['per_page'] ?? 10;
+        $sortBy = $validated['sort_by'] ?? 'id';
+        $sortDir = $validated['sort_dir'] ?? 'asc';
+        $search = trim($validated['search'] ?? '');
+        $filters = $validated['filters'] ?? [];
+
+        $allowedSorts = ['id', 'name', 'muscle_group_name', 'created_at', 'updated_at'];
+        if (! in_array($sortBy, $allowedSorts)) {
+            $sortBy = 'id';
+        }
+
+        $exercises = $this->exerciseService->getExercisesData(
+            perPage: $perPage,
+            sortBy: $sortBy,
+            sortDir: $sortDir,
+            search: $search,
+            filters: $filters,
+        );
 
         return Inertia::render('fitness/exercise/index', [
             'exercises' => $exercises,
