@@ -103,6 +103,11 @@ class AppServiceProvider extends ServiceProvider
             TotalProteinsAndFractionsServiceInterface::class,
             TotalProteinsAndFractionsService::class
         );
+
+		$this->app->bind(
+			\App\Interfaces\Fitness\ExerciseServiceInterface::class,
+			\App\Services\Fitness\ExerciseService::class
+		);
     }
 
     /**
