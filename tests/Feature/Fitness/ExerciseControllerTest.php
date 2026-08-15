@@ -22,7 +22,40 @@ describe('tests for ExerciseController', function () {
         $response->assertOk();
         $response->assertInertia(fn (AssertableInertia $page) => $page
             ->component('fitness/exercise/index')
-            ->has('exercises', 1)
+            ->has('exercises.data', 1)
+        );
+    });
+
+    it('paginates, searches, and sorts exercises by muscle group name', function () {
+        $user = User::factory()->create();
+        $shoulders = MuscleGroup::create(['name' => 'Shoulders', 'user_id' => $user->id]);
+        $back = MuscleGroup::create(['name' => 'Back', 'user_id' => $user->id]);
+
+        $press = Exercise::create(['name' => 'Overhead Press', 'user_id' => $user->id]);
+        $row = Exercise::create(['name' => 'Barbell Row', 'user_id' => $user->id]);
+        $press->muscleGroups()->attach($shoulders);
+        $row->muscleGroups()->attach($back);
+
+        $response = $this->actingAs($user)->get(route('exercises.index', [
+            'per_page' => 1,
+            'sort_by' => 'muscle_group_name',
+            'sort_dir' => 'asc',
+        ]));
+
+        $response->assertOk();
+        $response->assertInertia(fn (AssertableInertia $page) => $page
+            ->where('exercises.total', 2)
+            ->where('exercises.data.0.name', 'Barbell Row')
+            ->where('exercises.data.0.muscle_groups.0.name', 'Back')
+        );
+
+        $response = $this->actingAs($user)->get(route('exercises.index', [
+            'filters' => ['muscle_group_name' => ['Shoulders']],
+        ]));
+
+        $response->assertInertia(fn (AssertableInertia $page) => $page
+            ->where('exercises.total', 1)
+            ->where('exercises.data.0.name', 'Overhead Press')
         );
     });
 
