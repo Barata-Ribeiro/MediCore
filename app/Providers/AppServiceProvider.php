@@ -13,6 +13,7 @@ use App\Interfaces\Exams\UreaAndCreatinineServiceInterface;
 use App\Interfaces\Exams\UricAcidServiceInterface;
 use App\Interfaces\Exams\VitaminB12ServiceInterface;
 use App\Interfaces\Exams\VitaminD3ServiceInterface;
+use App\Interfaces\Fitness\ExerciseServiceInterface;
 use App\Services\DashboardService;
 use App\Services\Exams\CompleteBloodCountService;
 use App\Services\Exams\GlucoseService;
@@ -23,6 +24,7 @@ use App\Services\Exams\UreaAndCreatinineService;
 use App\Services\Exams\UricAcidService;
 use App\Services\Exams\VitaminB12Service;
 use App\Services\Exams\VitaminD3Service;
+use App\Services\Fitness\ExerciseService;
 use App\Translation\Translator;
 use Carbon\CarbonImmutable;
 use Gate;
@@ -104,10 +106,10 @@ class AppServiceProvider extends ServiceProvider
             TotalProteinsAndFractionsService::class
         );
 
-		$this->app->bind(
-			\App\Interfaces\Fitness\ExerciseServiceInterface::class,
-			\App\Services\Fitness\ExerciseService::class
-		);
+        $this->app->bind(
+            ExerciseServiceInterface::class,
+            ExerciseService::class
+        );
     }
 
     /**
