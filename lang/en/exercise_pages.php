@@ -11,17 +11,24 @@ return [
             'current' => 'Exercises',
         ],
         'table' => [
-            'title' => 'Registered exercises',
-            'description' => ':count exercise(s) in your catalog.',
             'columns' => [
+                'id' => 'ID',
                 'name' => 'Name',
                 'muscle_groups' => 'Muscle groups',
                 'video' => 'Video',
-                'actions' => 'Actions',
+                'created_at' => 'Created At',
             ],
             'open_video' => 'Open video',
-            'edit' => 'Edit',
-            'delete' => 'Delete',
+            'menu' => [
+                'open_label' => 'Open menu',
+                'actions' => 'Actions',
+                'edit' => 'Edit',
+                'delete' => 'Delete',
+            ],
+            'delete_dialog' => [
+                'title' => 'Delete Exercise',
+                'description' => 'Are you sure you want to delete this exercise? This action cannot be undone.',
+            ],
         ],
     ],
     'form' => [

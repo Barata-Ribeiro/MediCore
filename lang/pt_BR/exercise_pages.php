@@ -11,17 +11,24 @@ return [
             'current' => 'Exercícios',
         ],
         'table' => [
-            'title' => 'Exercícios cadastrados',
-            'description' => ':count exercício(s) no seu catálogo.',
             'columns' => [
+                'id' => 'ID',
                 'name' => 'Nome',
                 'muscle_groups' => 'Grupos musculares',
                 'video' => 'Vídeo',
-                'actions' => 'Ações',
+                'created_at' => 'Criado em',
             ],
             'open_video' => 'Abrir vídeo',
-            'edit' => 'Editar',
-            'delete' => 'Excluir',
+            'menu' => [
+                'open_label' => 'Abrir menu',
+                'actions' => 'Ações',
+                'edit' => 'Editar',
+                'delete' => 'Excluir',
+            ],
+            'delete_dialog' => [
+                'title' => 'Excluir exercício',
+                'description' => 'Tem certeza de que deseja excluir este exercício? Esta ação não pode ser desfeita.',
+            ],
         ],
     ],
     'form' => [
