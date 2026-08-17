@@ -11,6 +11,7 @@ import type { PaginationMeta } from '@/types/application/metadata';
 import type { RouteDefinition } from '@/wayfinder';
 import { lang } from '@erag/lang-sync-inertia/react';
 import { Link, router, usePage } from '@inertiajs/react';
+import { ModalLink } from '@inertiaui/modal-react';
 import type {
     Column,
     ColumnDef,
@@ -21,7 +22,7 @@ import type {
 } from '@tanstack/react-table';
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { ClipboardPlusIcon } from 'lucide-react';
-import type { CSSProperties } from 'react';
+import type { ComponentProps, CSSProperties } from 'react';
 import { useCallback, useEffect, useEffectEvent, useMemo, useState } from 'react';
 
 interface DataTableProps<TData, TValue> {
@@ -29,6 +30,7 @@ interface DataTableProps<TData, TValue> {
     data: PaginationMeta<TData[]>['data'];
     pagination: Omit<PaginationMeta<TData[]>, 'data'>;
     createRoute?: RouteDefinition<'get'>;
+    isModal?: boolean;
     exportables?: Partial<Record<'csvRoute' | 'pdfRoute', RouteDefinition<'get'>>>;
 }
 
@@ -84,6 +86,7 @@ export function DataTable<TData, TValue>({
     data,
     pagination,
     createRoute,
+    isModal = false,
     exportables,
 }: Readonly<DataTableProps<TData, TValue>>) {
     const { __ } = lang();
@@ -307,6 +310,14 @@ export function DataTable<TData, TValue>({
         return null;
     }
 
+    const createRecordButtonProps: Partial<ComponentProps<typeof ModalLink>> = {
+        'aria-label': __('main.data_table.create_record.label'),
+        title: __('main.data_table.create_record.label'),
+        as: 'button',
+        prefetch: true,
+        viewTransition: true,
+    };
+
     return (
         <Card className="mx-auto w-full flex-col space-y-4">
             <CardHeader className="flex flex-wrap items-center justify-between gap-4">
@@ -316,17 +327,21 @@ export function DataTable<TData, TValue>({
                     {createRoute && (
                         <Button
                             render={
-                                <Link
-                                    href={createRoute}
-                                    aria-label={__('main.data_table.create_record.label')}
-                                    title={__('main.data_table.create_record.label')}
-                                    as="button"
-                                    prefetch
-                                    viewTransition
-                                >
-                                    <ClipboardPlusIcon aria-hidden size={16} />
-                                    {__('main.data_table.create_record.action')}
-                                </Link>
+                                isModal ? (
+                                    <ModalLink
+                                        {...createRecordButtonProps}
+                                        href={createRoute.url}
+                                        method={createRoute.method}
+                                    >
+                                        <ClipboardPlusIcon aria-hidden size={16} />
+                                        {__('main.data_table.create_record.action')}
+                                    </ModalLink>
+                                ) : (
+                                    <Link {...createRecordButtonProps} href={createRoute}>
+                                        <ClipboardPlusIcon aria-hidden size={16} />
+                                        {__('main.data_table.create_record.action')}
+                                    </Link>
+                                )
                             }
                         />
                     )}
