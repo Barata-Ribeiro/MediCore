@@ -6,12 +6,12 @@ use App\Common\Helpers;
 use App\Interfaces\Fitness\ExerciseServiceInterface;
 use App\Models\Fitness\Exercise;
 use App\Models\Fitness\MuscleGroup;
+use Eloquent;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 use function in_array;
-use function is_array;
 
 class ExerciseService implements ExerciseServiceInterface
 {
@@ -32,8 +32,6 @@ class ExerciseService implements ExerciseServiceInterface
         $filters ??= [];
         $createdAtRange = $filters['created_at'] ?? [];
         $reportDateRange = $filters['report_date'] ?? [];
-        $muscleGroupName = $filters['muscle_group_name'] ?? null;
-        $muscleGroupName = is_array($muscleGroupName) ? ($muscleGroupName[0] ?? null) : $muscleGroupName;
 
         [$createdAtStart, $createdAtEnd] = Helpers::getDateRange($createdAtRange);
         [$reportDateStart, $reportDateEnd] = Helpers::getDateRange($reportDateRange);
@@ -53,14 +51,11 @@ class ExerciseService implements ExerciseServiceInterface
             ->with(['muscleGroups' => fn ($query) => $query->select(['muscle_groups.id', 'name'])->orderBy('name')])
             ->when($createdAtRange, fn ($q) => $q->whereBetween('created_at', [$createdAtStart, $createdAtEnd]))
             ->when($reportDateRange, fn ($q) => $q->whereBetween('report_date', [$reportDateStart, $reportDateEnd]))
-            ->when($muscleGroupName, fn (Builder $query) => $query->whereHas(
-                'muscleGroups',
-                fn (Builder $muscleGroups) => $muscleGroups->whereLike('muscle_groups.name', "%{$muscleGroupName}%"),
-            ))
-            ->when($search, function ($qr) use ($search, $isSql) {
+            ->when($search, function (Eloquent $qr) use ($search, $isSql) {
                 if ($isSql) {
                     $booleanQuery = Helpers::buildBooleanQuery($search);
-                    $qr->whereFullText(['exercises.name', 'exercises.description', 'exercises.video_url'], $booleanQuery);
+                    $qr->whereFullText(['exercises.name', 'exercises.description', 'exercises.video_url'], $booleanQuery)
+                        ->orWhereHas('muscleGroups', fn (Builder $muscleGroups) => $muscleGroups->whereLike('muscle_groups.name', "%{$search}%"));
                 } else {
                     $qr->where(function (Builder $query) use ($search) {
                         $query->whereLike('exercises.name', "%{$search}%")
