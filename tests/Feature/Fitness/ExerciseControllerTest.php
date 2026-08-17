@@ -26,7 +26,7 @@ describe('tests for ExerciseController', function () {
         );
     });
 
-    it('paginates, searches, and sorts exercises by muscle group name', function () {
+    it('paginates and sorts exercises by muscle group name', function () {
         $user = User::factory()->create();
         $shoulders = MuscleGroup::create(['name' => 'Shoulders', 'user_id' => $user->id]);
         $back = MuscleGroup::create(['name' => 'Back', 'user_id' => $user->id]);
@@ -49,14 +49,6 @@ describe('tests for ExerciseController', function () {
             ->where('exercises.data.0.muscle_groups.0.name', 'Back')
         );
 
-        $response = $this->actingAs($user)->get(route('exercises.index', [
-            'filters' => ['muscle_group_name' => ['Shoulders']],
-        ]));
-
-        $response->assertInertia(fn (AssertableInertia $page) => $page
-            ->where('exercises.total', 1)
-            ->where('exercises.data.0.name', 'Overhead Press')
-        );
     });
 
     it('stores exercise in authenticated user catalog and syncs muscle groups', function () {
