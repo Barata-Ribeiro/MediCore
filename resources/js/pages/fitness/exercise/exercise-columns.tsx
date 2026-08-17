@@ -88,14 +88,13 @@ export function useExerciseColumns(): ColumnDef<CatalogExercise>[] {
                 <TableColumnHeader column={column} title={__('exercise_pages.index.table.columns.name')} />
             ),
             cell: ({ row }) => (
-                <div>
+                <div className="grid gap-1">
                     <div className="font-medium">{row.original.name}</div>
                     {row.original.description && (
-                        <p className="text-xs text-muted-foreground">{row.original.description}</p>
+                        <p className="truncate text-xs text-muted-foreground">{row.original.description}</p>
                     )}
                 </div>
             ),
-            meta: { label: __('exercise_pages.index.table.columns.name'), variant: 'text' },
             enableSorting: true,
         },
         {
@@ -112,20 +111,6 @@ export function useExerciseColumns(): ColumnDef<CatalogExercise>[] {
                     ))}
                 </div>
             ),
-            meta: { label: __('exercise_pages.index.table.columns.muscle_groups'), variant: 'text' },
-            enableSorting: true,
-        },
-        {
-            accessorKey: 'created_at',
-            header: ({ column }) => (
-                <TableColumnHeader column={column} title={__('exercise_pages.index.table.columns.created_at')} />
-            ),
-            cell: ({ row }) => new Date(row.original.created_at).toLocaleDateString(),
-            meta: {
-                label: __('exercise_pages.index.table.columns.created_at'),
-                variant: 'dateRange',
-                icon: CalendarIcon,
-            },
             enableSorting: true,
         },
         {
@@ -148,6 +133,19 @@ export function useExerciseColumns(): ColumnDef<CatalogExercise>[] {
                 ),
             meta: { label: __('exercise_pages.index.table.columns.video') },
             enableSorting: false,
+        },
+        {
+            accessorKey: 'created_at',
+            header: ({ column }) => (
+                <TableColumnHeader column={column} title={__('exercise_pages.index.table.columns.created_at')} />
+            ),
+            cell: ({ row }) => new Date(row.original.created_at).toLocaleDateString(),
+            meta: {
+                label: __('exercise_pages.index.table.columns.created_at'),
+                variant: 'dateRange',
+                icon: CalendarIcon,
+            },
+            enableSorting: true,
         },
         {
             id: 'actions',
