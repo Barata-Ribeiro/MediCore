@@ -43,7 +43,7 @@ const MOBILE_BREAKPOINT = 768;
  *   // render mobile-specific UI
  * }
  */
-export const useIsMobile = (): UseIsMobileReturn => {
+export const useIsMobile = (breakpointValue = MOBILE_BREAKPOINT): UseIsMobileReturn => {
     const [isMobile, setIsMobile] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -52,7 +52,7 @@ export const useIsMobile = (): UseIsMobileReturn => {
 
         const checkIsMobile = () => {
             // Check using media query
-            const mediaQuery = globalThis.window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`);
+            const mediaQuery = globalThis.window.matchMedia(`(max-width: ${breakpointValue}px)`);
 
             // Check using user agent (additional detection)
             const userAgent = navigator.userAgent.toLowerCase();
@@ -70,7 +70,8 @@ export const useIsMobile = (): UseIsMobileReturn => {
             const isMobileUA = mobileKeywords.some((keyword) => userAgent.includes(keyword));
 
             // Combine both checks - prioritize media query but consider user agent
-            const isMobileDevice = mediaQuery.matches || (isMobileUA && globalThis.window.innerWidth <= 768);
+            const isMobileDevice =
+                mediaQuery.matches || (isMobileUA && globalThis.window.innerWidth <= breakpointValue);
 
             setIsMobile(isMobileDevice);
             setIsLoading(false);
@@ -80,7 +81,7 @@ export const useIsMobile = (): UseIsMobileReturn => {
         checkIsMobile();
 
         // Listen for media query changes
-        const mediaQuery = globalThis.window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`);
+        const mediaQuery = globalThis.window.matchMedia(`(max-width: ${breakpointValue}px)`);
         const handleChange = () => checkIsMobile();
 
         if (mediaQuery.addEventListener) {
@@ -104,7 +105,7 @@ export const useIsMobile = (): UseIsMobileReturn => {
 
             controller.abort();
         };
-    }, []);
+    }, [breakpointValue]);
 
     return {
         isMobile,
