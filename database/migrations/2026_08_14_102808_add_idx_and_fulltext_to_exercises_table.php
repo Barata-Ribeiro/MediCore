@@ -17,7 +17,6 @@ return new class extends Migration
         $this->isValidSql = in_array(DB::getDriverName(), ['mysql', 'pgsql'], true);
 
         Schema::table('exercises', function (Blueprint $table) {
-            $table->index('name');
             $table->index(['name', 'user_id']);
 
             if ($this->isValidSql) {
@@ -32,7 +31,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('exercises', function (Blueprint $table) {
-            $table->dropIndex(['name']);
             $table->dropIndex(['name', 'user_id']);
             $table->dropFullText('exercises_fulltext_index');
         });
