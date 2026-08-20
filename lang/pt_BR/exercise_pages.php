@@ -11,6 +11,8 @@ return [
             'current' => 'Exercícios',
         ],
         'table' => [
+            'title' => 'Exercícios cadastrados',
+            'description' => ':count exercício(s) em seu catálogo.',
             'columns' => [
                 'id' => 'ID',
                 'name' => 'Nome',

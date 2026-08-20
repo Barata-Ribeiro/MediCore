@@ -1,3 +1,4 @@
+import Heading from '@/components/common/heading';
 import { DataTable } from '@/components/table/data-table';
 import { useExerciseColumns } from '@/pages/fitness/exercise/exercise-columns';
 import { create, index } from '@/routes/exercises';
@@ -27,7 +28,13 @@ export default function Index({ exercises }: Readonly<Props>) {
         <Fragment>
             <Head title={__('exercise_pages.index.head_title')} />
             <h1 className="sr-only">{__('exercise_pages.index.head_title')}</h1>
-            <DataTable columns={columns} data={data} pagination={pagination} createRoute={create()} />
+
+            <Heading
+                title={__('exercise_pages.index.table.title')}
+                description={__('exercise_pages.index.table.description', { count: data.length })}
+            />
+
+            <DataTable columns={columns} data={data} pagination={pagination} createRoute={create()} isModal />
         </Fragment>
     );
 }

@@ -11,6 +11,8 @@ return [
             'current' => 'Exercises',
         ],
         'table' => [
+            'title' => 'Registered exercises',
+            'description' => ':count exercise(s) in your catalog.',
             'columns' => [
                 'id' => 'ID',
                 'name' => 'Name',
