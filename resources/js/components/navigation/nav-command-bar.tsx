@@ -11,7 +11,9 @@ import {
     CommandShortcut,
 } from '@/components/ui/command';
 import { Kbd } from '@/components/ui/kbd';
+import useIsMobile from '@/hooks/use-mobile';
 import { mainNavItems } from '@/lib/navigation-items';
+import { cn } from '@/lib/utils';
 import { edit as editAppearance } from '@/routes/appearance';
 import { edit } from '@/routes/profile';
 import { edit as editSecurity } from '@/routes/security';
@@ -23,6 +25,7 @@ import { KeyRoundIcon, SearchIcon, SunMoonIcon, UserIcon } from 'lucide-react';
 import { useCallback, useState } from 'react';
 
 export default function NavCommandBar() {
+    const { isMobile } = useIsMobile(330);
     const [open, setOpen] = useState(false);
     const { __ } = lang();
 
@@ -45,9 +48,14 @@ export default function NavCommandBar() {
 
     return (
         <div className="flex flex-col gap-4">
-            <Button variant="outline" size="sm" className="text-muted-foreground" onClick={() => setOpen(true)}>
+            <Button
+                variant="outline"
+                size={isMobile ? 'icon-sm' : 'sm'}
+                className="text-muted-foreground"
+                onClick={() => setOpen(true)}
+            >
                 <SearchIcon aria-hidden />
-                <span>{__('main.command_bar.placeholder')}</span>
+                <span className={cn(isMobile && 'hidden')}>{__('main.command_bar.placeholder')}</span>
 
                 <Kbd className="-mr-2 ml-18 hidden sm:inline-flex">{formatForDisplay('Mod+K')}</Kbd>
             </Button>
