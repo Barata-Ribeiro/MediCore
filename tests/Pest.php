@@ -18,7 +18,11 @@ use Tests\TestCase;
 pest()->extend(TestCase::class)
     ->use(LazilyRefreshDatabase::class)
     ->use(WithCachedConfig::class)
-    ->in('Feature', 'Unit');
+    ->in('Arch', 'Feature', 'Unit');
+
+arch()->preset()->php();
+arch()->preset()->laravel();
+arch()->preset()->security();
 
 /*
 |--------------------------------------------------------------------------
