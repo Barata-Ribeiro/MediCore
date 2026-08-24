@@ -21,7 +21,28 @@ describe('tests for MuscleGroupController', function () {
         $response->assertOk();
         $response->assertInertia(fn (AssertableInertia $page) => $page
             ->component('fitness/muscle-group/index')
-            ->has('muscleGroups', 1)
+            ->has('muscleGroups.data', 1)
+        );
+    });
+
+    it('paginates and sorts muscle groups by exercises count', function () {
+        $user = User::factory()->create();
+
+        $chest = MuscleGroup::create(['name' => 'Chest', 'user_id' => $user->id]);
+        $back = MuscleGroup::create(['name' => 'Back', 'user_id' => $user->id]);
+        $back->exercises()->create(['name' => 'Row', 'user_id' => $user->id]);
+
+        $response = $this->actingAs($user)->get(route('muscle-groups.index', [
+            'per_page' => 1,
+            'sort_by' => 'exercises_count',
+            'sort_dir' => 'desc',
+        ]));
+
+        $response->assertOk();
+        $response->assertInertia(fn (AssertableInertia $page) => $page
+            ->where('muscleGroups.total', 2)
+            ->where('muscleGroups.data.0.name', 'Back')
+            ->where('muscleGroups.data.0.exercises_count', 1)
         );
     });
 
