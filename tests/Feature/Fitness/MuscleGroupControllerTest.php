@@ -46,6 +46,41 @@ describe('tests for MuscleGroupController', function () {
         );
     });
 
+    it('filters muscle groups by exercises count range', function () {
+        $user = User::factory()->create();
+
+        $chest = MuscleGroup::create(['name' => 'Chest', 'user_id' => $user->id]);
+        $back = MuscleGroup::create(['name' => 'Back', 'user_id' => $user->id]);
+        $back->exercises()->create(['name' => 'Row', 'user_id' => $user->id]);
+
+        $response = $this->actingAs($user)->get(route('muscle-groups.index', [
+            'filters' => ['exercises_count' => [1, 5]],
+        ]));
+
+        $response->assertOk();
+        $response->assertInertia(fn (AssertableInertia $page) => $page
+            ->where('muscleGroups.total', 1)
+            ->where('muscleGroups.data.0.name', 'Back')
+        );
+    });
+
+    it('filters muscle groups by exercises count range starting at zero', function () {
+        $user = User::factory()->create();
+
+        $chest = MuscleGroup::create(['name' => 'Chest', 'user_id' => $user->id]);
+        $back = MuscleGroup::create(['name' => 'Back', 'user_id' => $user->id]);
+        $back->exercises()->create(['name' => 'Row', 'user_id' => $user->id]);
+
+        $response = $this->actingAs($user)->get(route('muscle-groups.index', [
+            'filters' => 'exercises_count:0,100',
+        ]));
+
+        $response->assertOk();
+        $response->assertInertia(fn (AssertableInertia $page) => $page
+            ->where('muscleGroups.total', 2)
+        );
+    });
+
     it('stores muscle group in authenticated user catalog', function () {
         $user = User::factory()->create();
 

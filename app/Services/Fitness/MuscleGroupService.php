@@ -24,7 +24,9 @@ class MuscleGroupService implements MuscleGroupServiceInterface
             ->whereBelongsTo(auth()->user())
             ->withCount('exercises')
             ->when($createdAtRange, fn ($q) => $q->whereBetween('created_at', [$createdAtStart, $createdAtEnd]))
-            ->when($exercisesCountRange, fn ($q) => $q->whereBetween('exercises_count', [$exercisesCountRange[0] ?? 0, $exercisesCountRange[1] ?? PHP_INT_MAX]))
+            ->when($exercisesCountRange, fn ($q) => $q
+                ->has('exercises', '>=', $exercisesCountRange[0] ?? 0)
+                ->has('exercises', '<=', $exercisesCountRange[1] ?? PHP_INT_MAX))
             ->when($search, fn ($q) => $q->whereLike('name', "%{$search}%"))
             ->orderBy($sortBy, $sortDir)
             ->paginate($perPage)
