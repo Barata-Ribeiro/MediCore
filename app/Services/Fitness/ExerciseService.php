@@ -31,10 +31,8 @@ class ExerciseService implements ExerciseServiceInterface
 
         $filters ??= [];
         $createdAtRange = $filters['created_at'] ?? [];
-        $reportDateRange = $filters['report_date'] ?? [];
 
         [$createdAtStart, $createdAtEnd] = Helpers::getDateRange($createdAtRange);
-        [$reportDateStart, $reportDateEnd] = Helpers::getDateRange($reportDateRange);
 
         return Exercise::query()
             ->select('exercises.*')
@@ -50,7 +48,6 @@ class ExerciseService implements ExerciseServiceInterface
             ->whereBelongsTo(auth()->user())
             ->with(['muscleGroups' => fn ($query) => $query->select(['muscle_groups.id', 'name'])->orderBy('name')])
             ->when($createdAtRange, fn ($q) => $q->whereBetween('created_at', [$createdAtStart, $createdAtEnd]))
-            ->when($reportDateRange, fn ($q) => $q->whereBetween('report_date', [$reportDateStart, $reportDateEnd]))
             ->when($search, function (Eloquent $qr) use ($search, $isSql) {
                 if ($isSql) {
                     $booleanQuery = Helpers::buildBooleanQuery($search);
