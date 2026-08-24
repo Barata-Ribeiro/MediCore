@@ -16,10 +16,18 @@ return [
             'columns' => [
                 'name' => 'Nome',
                 'exercises' => 'Exercícios vinculados',
-                'actions' => 'Ações',
+                'created_at' => 'Criado em',
             ],
-            'edit' => 'Editar',
-            'delete' => 'Excluir',
+            'menu' => [
+                'open_label' => 'Abrir menu',
+                'actions' => 'Ações',
+                'edit' => 'Editar',
+                'delete' => 'Excluir',
+            ],
+            'delete_dialog' => [
+                'title' => 'Excluir grupo muscular',
+                'description' => 'Tem certeza de que deseja excluir este grupo muscular? Esta ação não pode ser desfeita.',
+            ],
         ],
     ],
     'form' => [
