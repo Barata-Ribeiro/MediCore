@@ -4,6 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Separator } from '@/components/ui/separator';
 import { Slider } from '@/components/ui/slider';
+import { useDebounceCallback } from '@/hooks/use-debounce-callback';
 import { cn } from '@/lib/utils';
 import type { Column } from '@tanstack/react-table';
 import { PlusCircle, XCircle } from 'lucide-react';
@@ -71,9 +72,10 @@ export function DataTableSliderFilter<TData>({ column, title }: Readonly<DataTab
         return { min: minValue, max: maxValue, step };
     }, [column, defaultRange]);
 
-    const range = React.useMemo((): RangeValue => {
-        return columnFilterValue ?? [min, max];
-    }, [columnFilterValue, min, max]);
+    const [localRange, setLocalRange] = React.useState<RangeValue>(() => columnFilterValue ?? [min, max]);
+    const debouncedSetFilterValue = useDebounceCallback(column.setFilterValue, 500);
+
+    const range = columnFilterValue ?? localRange;
 
     const formatValue = React.useCallback((value: number) => {
         return value.toLocaleString(undefined, { maximumFractionDigits: 0 });
@@ -84,10 +86,12 @@ export function DataTableSliderFilter<TData>({ column, title }: Readonly<DataTab
             const numValue = Number(event.target.value);
 
             if (!Number.isNaN(numValue) && numValue >= min && numValue <= range[1]) {
-                column.setFilterValue([numValue, range[1]]);
+                const next: RangeValue = [numValue, range[1]];
+                setLocalRange(next);
+                debouncedSetFilterValue(next);
             }
         },
-        [column, min, range],
+        [debouncedSetFilterValue, min, range],
     );
 
     const onToInputChange = React.useCallback(
@@ -95,10 +99,12 @@ export function DataTableSliderFilter<TData>({ column, title }: Readonly<DataTab
             const numValue = Number(event.target.value);
 
             if (!Number.isNaN(numValue) && numValue <= max && numValue >= range[0]) {
-                column.setFilterValue([range[0], numValue]);
+                const next: RangeValue = [range[0], numValue];
+                setLocalRange(next);
+                debouncedSetFilterValue(next);
             }
         },
-        [column, max, range],
+        [debouncedSetFilterValue, max, range],
     );
 
     const onSliderValueChange = React.useCallback(
@@ -109,10 +115,12 @@ export function DataTableSliderFilter<TData>({ column, title }: Readonly<DataTab
                 typeof value[0] === 'number' &&
                 typeof value[1] === 'number'
             ) {
-                column.setFilterValue([value[0], value[1]]);
+                const next: RangeValue = [value[0], value[1]];
+                setLocalRange(next);
+                debouncedSetFilterValue(next);
             }
         },
-        [column],
+        [debouncedSetFilterValue],
     );
 
     const onReset = React.useCallback(
@@ -121,9 +129,11 @@ export function DataTableSliderFilter<TData>({ column, title }: Readonly<DataTab
                 event.stopPropagation();
             }
 
+            debouncedSetFilterValue.cancel();
+            setLocalRange([min, max]);
             column.setFilterValue(undefined);
         },
-        [column],
+        [column, debouncedSetFilterValue, min, max],
     );
 
     return (
@@ -141,12 +151,15 @@ export function DataTableSliderFilter<TData>({ column, title }: Readonly<DataTab
                                 <XCircle aria-hidden />
                             </button>
                         ) : (
-                            <PlusCircle />
+                            <PlusCircle aria-hidden />
                         )}
                         <span>{title}</span>
                         {columnFilterValue ? (
                             <>
-                                <Separator orientation="vertical" className="mx-0.5 data-[orientation=vertical]:h-4" />
+                                <Separator
+                                    orientation="vertical"
+                                    className="mx-0.5 data-[orientation=vertical]:h-full"
+                                />
                                 {formatValue(columnFilterValue[0])} - {formatValue(columnFilterValue[1])}
                                 {unit ? ` ${unit}` : ''}
                             </>
