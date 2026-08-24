@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Fitness;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Fitness\StoreMuscleGroupRequest;
 use App\Http\Requests\Fitness\UpdateMuscleGroupRequest;
+use App\Http\Requests\QueryRequest;
+use App\Interfaces\Fitness\MuscleGroupServiceInterface;
 use App\Models\Fitness\MuscleGroup;
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -12,17 +14,36 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Log;
 
+use function in_array;
+
 class MuscleGroupController extends Controller
 {
-    public function index(): Response
+    public function __construct(private MuscleGroupServiceInterface $muscleGroupService) {}
+
+    public function index(QueryRequest $request): Response
     {
         syncLangFiles('muscle_group_pages');
 
-        $muscleGroups = MuscleGroup::query()
-            ->whereBelongsTo(auth()->user())
-            ->withCount('exercises')
-            ->orderBy('name')
-            ->get();
+        $validated = $request->validated();
+
+        $perPage = $validated['per_page'] ?? 10;
+        $sortBy = $validated['sort_by'] ?? 'id';
+        $sortDir = $validated['sort_dir'] ?? 'asc';
+        $search = trim($validated['search'] ?? '');
+        $filters = $validated['filters'] ?? [];
+
+        $allowedSorts = ['id', 'name', 'exercises_count', 'created_at', 'updated_at'];
+        if (! in_array($sortBy, $allowedSorts)) {
+            $sortBy = 'id';
+        }
+
+        $muscleGroups = $this->muscleGroupService->getMuscleGroupsData(
+            perPage: $perPage,
+            sortBy: $sortBy,
+            sortDir: $sortDir,
+            search: $search,
+            filters: $filters,
+        );
 
         return Inertia::render('fitness/muscle-group/index', [
             'muscleGroups' => $muscleGroups,
