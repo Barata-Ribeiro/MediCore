@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\SocialAuthController;
+use App\Http\Controllers\SocialAuthCallbackController;
+use App\Http\Controllers\SocialAuthRedirectController;
 use App\Interfaces\DashboardServiceInterface;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 
-Route::get('auth/{provider}', [SocialAuthController::class, 'redirect'])->name('social.redirect');
-Route::get('auth/{provider}/callback', [SocialAuthController::class, 'callback'])->name('social.callback');
+Route::get('auth/{provider}', SocialAuthRedirectController::class)->name('social.redirect');
+Route::get('auth/{provider}/callback', SocialAuthCallbackController::class)->name('social.callback');
 
 Route::inertia('/', 'welcome', [
     'canRegister' => Features::enabled(Features::registration()),

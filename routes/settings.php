@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Settings\LocaleController;
 use App\Http\Controllers\Settings\MedicalFileController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\SecurityController;
@@ -10,7 +11,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('settings/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('settings/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::patch('settings/locale', [ProfileController::class, 'updateLocale'])->name('locale.update');
+    Route::patch('settings/locale', LocaleController::class)->name('locale.update');
 
     Route::get('settings/medical-file', [MedicalFileController::class, 'edit'])->name('medical-file.edit');
     Route::patch('settings/medical-file', [MedicalFileController::class, 'update'])->name('medical-file.update');
