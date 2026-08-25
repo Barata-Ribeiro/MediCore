@@ -10,9 +10,18 @@ interface RawCopyButtonProps {
 }
 
 export default function DropdownMenuCopyButton({ content, children }: Readonly<RawCopyButtonProps>) {
-    const [copiedText, copy] = useClipboard();
+    const { copied, copy, error, reset } = useClipboard();
 
-    const isContentInClipboard = copiedText === content;
+    const copyContentToClipboard = () => {
+        copy(JSON.stringify(content));
+
+        if (error) {
+            reset();
+            toast.error('Failed to copy content to clipboard');
+        }
+
+        toast.info('Copied to clipboard!', { duration: 2000 });
+    };
 
     return (
         <Button
@@ -20,16 +29,10 @@ export default function DropdownMenuCopyButton({ content, children }: Readonly<R
             variant="ghost"
             size="sm"
             className="w-full justify-start px-2"
-            disabled={isContentInClipboard}
-            onClick={() =>
-                copy(JSON.stringify(content)).then(() => toast.info('Copied to clipboard!', { duration: 2000 }))
-            }
+            disabled={copied}
+            onClick={copyContentToClipboard}
         >
-            {isContentInClipboard ? (
-                <ClipboardCheckIcon aria-hidden size={14} />
-            ) : (
-                <ClipboardIcon aria-hidden size={14} />
-            )}
+            {copied ? <ClipboardCheckIcon aria-hidden size={14} /> : <ClipboardIcon aria-hidden size={14} />}
             {children}
         </Button>
     );
