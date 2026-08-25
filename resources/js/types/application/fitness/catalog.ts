@@ -2,6 +2,7 @@ export interface CatalogMuscleGroup {
     id: number;
     name: string;
     exercises_count?: number;
+    created_at: string;
 }
 
 export interface CatalogExercise {

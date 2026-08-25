@@ -44,7 +44,7 @@ class QueryRequest extends FormRequest
             $filtersArray = [];
             foreach ($m as $match) {
                 $key = $match[1];
-                $values = array_filter(array_map('trim', explode(',', $match[2])));
+                $values = array_filter(array_map('trim', explode(',', $match[2])), fn ($value) => $value !== '');
                 if (! empty($values)) {
                     $filtersArray[$key] = array_values($values);
                 }
