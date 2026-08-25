@@ -1,28 +1,93 @@
-import { useIsomorphicLayoutEffect } from '@/hooks/use-isomorphic-layout-effect';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-export function useInterval(callback: () => void, delay: number | null) {
-    const savedCallback = useRef(callback);
+export interface UseIntervalOptions {
+    /** If set, the interval will start automatically when the component is mounted, `false` by default */
+    autoInvoke?: boolean;
+}
 
-    // Remember the latest callback if it changes.
-    useIsomorphicLayoutEffect(() => {
-        savedCallback.current = callback;
-    }, [callback]);
+export interface UseIntervalReturnValue {
+    /** Starts the interval */
+    start: () => void;
 
-    // Set up the interval.
-    useEffect(() => {
-        // Don't schedule if no delay is specified.
-        // Note: 0 is a valid value for delay.
-        if (delay === null) {
-            return;
+    /** Stops the interval */
+    stop: () => void;
+
+    /** Toggles the interval */
+    toggle: () => void;
+
+    /** Indicates if the interval is active */
+    active: boolean;
+}
+
+export function useInterval(
+    fn: () => void,
+    interval: number,
+    { autoInvoke = false }: UseIntervalOptions = {},
+): UseIntervalReturnValue {
+    const [active, setActive] = useState(false);
+    const intervalRef = useRef<number | null>(null);
+    const fnRef = useRef<() => void>(null);
+    const intervalValueRef = useRef(interval);
+
+    const start = useCallback(() => {
+        setActive((old) => {
+            if (!old && !intervalRef.current) {
+                intervalRef.current = window.setInterval(fnRef.current!, intervalValueRef.current);
+            }
+
+            return true;
+        });
+    }, []);
+
+    const stop = useCallback(() => {
+        setActive(false);
+
+        if (intervalRef.current) {
+            window.clearInterval(intervalRef.current);
         }
 
-        const id = setInterval(() => {
-            savedCallback.current();
-        }, delay);
+        intervalRef.current = null;
+    }, []);
 
-        return () => {
-            clearInterval(id);
-        };
-    }, [delay]);
+    const toggle = useCallback(() => {
+        setActive((current) => {
+            if (current) {
+                if (intervalRef.current) {
+                    window.clearInterval(intervalRef.current);
+                }
+
+                intervalRef.current = null;
+
+                return false;
+            }
+
+            if (!intervalRef.current) {
+                intervalRef.current = window.setInterval(fnRef.current!, intervalValueRef.current);
+            }
+
+            return true;
+        });
+    }, []);
+
+    useEffect(() => {
+        intervalValueRef.current = interval;
+    }, [interval]);
+
+    useEffect(() => {
+        fnRef.current = fn;
+
+        if (active) {
+            start();
+        }
+
+        return stop;
+    }, [fn, active, interval, stop, start]);
+
+    useEffect(() => {
+        if (autoInvoke) {
+            start();
+        }
+    }, [autoInvoke, start]);
+
+    return { start, stop, toggle, active };
 }
