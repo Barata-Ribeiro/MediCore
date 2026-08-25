@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Separator } from '@/components/ui/separator';
 import { Slider } from '@/components/ui/slider';
-import { useDebounceCallback } from '@/hooks/use-debounce-callback';
+import { useDebouncedCallback } from '@/hooks/use-debounced-callback';
 import { cn } from '@/lib/utils';
 import type { Column } from '@tanstack/react-table';
 import { PlusCircle, XCircle } from 'lucide-react';
@@ -73,7 +73,7 @@ export function DataTableSliderFilter<TData>({ column, title }: Readonly<DataTab
     }, [column, defaultRange]);
 
     const [localRange, setLocalRange] = React.useState<RangeValue>(() => columnFilterValue ?? [min, max]);
-    const debouncedSetFilterValue = useDebounceCallback(column.setFilterValue, 500);
+    const debouncedSetFilterValue = useDebouncedCallback(column.setFilterValue, 500);
 
     const range = columnFilterValue ?? localRange;
 
