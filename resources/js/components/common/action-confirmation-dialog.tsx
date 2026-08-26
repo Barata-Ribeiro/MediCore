@@ -35,6 +35,7 @@ export default function ActionConfirmationDialog(props: Readonly<Props>) {
                 <AlertDialogFooter>
                     <AlertDialogCancel onClick={() => setOpen(false)}>Cancel</AlertDialogCancel>
                     <AlertDialogAction
+                        nativeButton={false}
                         render={
                             <Link href={route} method={method} as="button">
                                 Confirm
