@@ -69,22 +69,21 @@ function ActionsCell({ completeBloodCount }: Readonly<{ completeBloodCount: Comp
                     }
                 />
                 <DropdownMenuContent align="end" className="w-40">
-                    <DropdownMenuLabel>
-                        {__('complete_blood_count_pages.index.table.menu.copy_fields')}
-                    </DropdownMenuLabel>
                     <DropdownMenuGroup>
-                        <DropdownMenuItem
-                            render={
-                                <DropdownMenuCopyButton content={valuesToCopy}>
-                                    {__('complete_blood_count_pages.index.table.menu.copy_values')}
-                                </DropdownMenuCopyButton>
-                            }
-                        />
+                        <DropdownMenuLabel>
+                            {__('complete_blood_count_pages.index.table.menu.copy_fields')}
+                        </DropdownMenuLabel>
+                        <DropdownMenuCopyButton content={valuesToCopy}>
+                            {__('complete_blood_count_pages.index.table.menu.copy_values')}
+                        </DropdownMenuCopyButton>
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
-                    <DropdownMenuLabel>{__('complete_blood_count_pages.index.table.menu.actions')}</DropdownMenuLabel>
                     <DropdownMenuGroup>
+                        <DropdownMenuLabel>
+                            {__('complete_blood_count_pages.index.table.menu.actions')}
+                        </DropdownMenuLabel>
                         <DropdownMenuItem
+                            nativeButton
                             render={
                                 <Link className="block w-full" href={edit(completeBloodCount.id)} as="button">
                                     <EditIcon aria-hidden size={14} />{' '}
@@ -92,7 +91,7 @@ function ActionsCell({ completeBloodCount }: Readonly<{ completeBloodCount: Comp
                                 </Link>
                             }
                         />
-                        <DropdownMenuItem variant="destructive" onSelect={() => setOpen(true)}>
+                        <DropdownMenuItem variant="destructive" onClick={() => setOpen(true)}>
                             <DeleteIcon aria-hidden size={14} />{' '}
                             {__('complete_blood_count_pages.index.table.menu.delete')}
                         </DropdownMenuItem>

@@ -63,24 +63,21 @@ function ActionsCell({
                     }
                 />
                 <DropdownMenuContent align="end" className="w-40">
-                    <DropdownMenuLabel>
-                        {__('total_proteins_and_fractions_pages.index.table.menu.copy_fields')}
-                    </DropdownMenuLabel>
                     <DropdownMenuGroup>
-                        <DropdownMenuItem
-                            render={
-                                <DropdownMenuCopyButton content={valuesToCopy}>
-                                    {__('total_proteins_and_fractions_pages.index.table.menu.copy_values')}
-                                </DropdownMenuCopyButton>
-                            }
-                        />
+                        <DropdownMenuLabel>
+                            {__('total_proteins_and_fractions_pages.index.table.menu.copy_fields')}
+                        </DropdownMenuLabel>
+                        <DropdownMenuCopyButton content={valuesToCopy}>
+                            {__('total_proteins_and_fractions_pages.index.table.menu.copy_values')}
+                        </DropdownMenuCopyButton>
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
-                    <DropdownMenuLabel>
-                        {__('total_proteins_and_fractions_pages.index.table.menu.actions')}
-                    </DropdownMenuLabel>
                     <DropdownMenuGroup>
+                        <DropdownMenuLabel>
+                            {__('total_proteins_and_fractions_pages.index.table.menu.actions')}
+                        </DropdownMenuLabel>
                         <DropdownMenuItem
+                            nativeButton
                             render={
                                 <Link
                                     className="block w-full"
@@ -92,7 +89,7 @@ function ActionsCell({
                                 </Link>
                             }
                         />
-                        <DropdownMenuItem variant="destructive" onSelect={() => setOpen(true)}>
+                        <DropdownMenuItem variant="destructive" onClick={() => setOpen(true)}>
                             <DeleteIcon aria-hidden size={14} />{' '}
                             {__('total_proteins_and_fractions_pages.index.table.menu.delete')}
                         </DropdownMenuItem>

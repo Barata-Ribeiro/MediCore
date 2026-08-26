@@ -65,27 +65,24 @@ function ActionsCell({ glucose }: Readonly<{ glucose: Glucose }>) {
                     }
                 />
                 <DropdownMenuContent align="end" className="w-40">
-                    <DropdownMenuLabel>{__('glucose_pages.index.table.menu.copy_fields')}</DropdownMenuLabel>
                     <DropdownMenuGroup>
-                        <DropdownMenuItem
-                            render={
-                                <DropdownMenuCopyButton content={valuesToCopy}>
-                                    {__('glucose_pages.index.table.menu.copy_values')}
-                                </DropdownMenuCopyButton>
-                            }
-                        />
+                        <DropdownMenuLabel>{__('glucose_pages.index.table.menu.copy_fields')}</DropdownMenuLabel>
+                        <DropdownMenuCopyButton content={valuesToCopy}>
+                            {__('glucose_pages.index.table.menu.copy_values')}
+                        </DropdownMenuCopyButton>
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
-                    <DropdownMenuLabel>{__('glucose_pages.index.table.menu.actions')}</DropdownMenuLabel>
                     <DropdownMenuGroup>
+                        <DropdownMenuLabel>{__('glucose_pages.index.table.menu.actions')}</DropdownMenuLabel>
                         <DropdownMenuItem
+                            nativeButton
                             render={
                                 <Link className="block w-full" href={GlucoseController.edit(glucose.id)} as="button">
                                     <EditIcon aria-hidden size={14} /> {__('glucose_pages.index.table.menu.edit')}
                                 </Link>
                             }
                         />
-                        <DropdownMenuItem variant="destructive" onSelect={() => setOpen(true)}>
+                        <DropdownMenuItem variant="destructive" onClick={() => setOpen(true)}>
                             <DeleteIcon aria-hidden size={14} /> {__('glucose_pages.index.table.menu.delete')}
                         </DropdownMenuItem>
                     </DropdownMenuGroup>

@@ -57,22 +57,21 @@ function ActionsCell({ ureaAndCreatinine }: Readonly<{ ureaAndCreatinine: UreaAn
                     }
                 />
                 <DropdownMenuContent align="end" className="w-40">
-                    <DropdownMenuLabel>
-                        {__('urea_and_creatinine_pages.index.table.menu.copy_fields')}
-                    </DropdownMenuLabel>
                     <DropdownMenuGroup>
-                        <DropdownMenuItem
-                            render={
-                                <DropdownMenuCopyButton content={valuesToCopy}>
-                                    {__('urea_and_creatinine_pages.index.table.menu.copy_values')}
-                                </DropdownMenuCopyButton>
-                            }
-                        />
+                        <DropdownMenuLabel>
+                            {__('urea_and_creatinine_pages.index.table.menu.copy_fields')}
+                        </DropdownMenuLabel>
+                        <DropdownMenuCopyButton content={valuesToCopy}>
+                            {__('urea_and_creatinine_pages.index.table.menu.copy_values')}
+                        </DropdownMenuCopyButton>
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
-                    <DropdownMenuLabel>{__('urea_and_creatinine_pages.index.table.menu.actions')}</DropdownMenuLabel>
                     <DropdownMenuGroup>
+                        <DropdownMenuLabel>
+                            {__('urea_and_creatinine_pages.index.table.menu.actions')}
+                        </DropdownMenuLabel>
                         <DropdownMenuItem
+                            nativeButton
                             render={
                                 <Link className="block w-full" href={edit(ureaAndCreatinine.id)} as="button">
                                     <EditIcon aria-hidden size={14} />{' '}
@@ -80,7 +79,7 @@ function ActionsCell({ ureaAndCreatinine }: Readonly<{ ureaAndCreatinine: UreaAn
                                 </Link>
                             }
                         />
-                        <DropdownMenuItem variant="destructive" onSelect={() => setOpen(true)}>
+                        <DropdownMenuItem variant="destructive" onClick={() => setOpen(true)}>
                             <DeleteIcon aria-hidden size={14} />{' '}
                             {__('urea_and_creatinine_pages.index.table.menu.delete')}
                         </DropdownMenuItem>

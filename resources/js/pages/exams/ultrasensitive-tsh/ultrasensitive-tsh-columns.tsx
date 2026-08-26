@@ -56,20 +56,19 @@ function ActionsCell({ ultrasensitiveTsh }: Readonly<{ ultrasensitiveTsh: Ultras
                     }
                 />
                 <DropdownMenuContent align="end" className="w-40">
-                    <DropdownMenuLabel>{__('ultrasensitive_tsh_pages.index.table.menu.copy_fields')}</DropdownMenuLabel>
                     <DropdownMenuGroup>
-                        <DropdownMenuItem
-                            render={
-                                <DropdownMenuCopyButton content={valuesToCopy}>
-                                    {__('ultrasensitive_tsh_pages.index.table.menu.copy_values')}
-                                </DropdownMenuCopyButton>
-                            }
-                        />
+                        <DropdownMenuLabel>
+                            {__('ultrasensitive_tsh_pages.index.table.menu.copy_fields')}
+                        </DropdownMenuLabel>
+                        <DropdownMenuCopyButton content={valuesToCopy}>
+                            {__('ultrasensitive_tsh_pages.index.table.menu.copy_values')}
+                        </DropdownMenuCopyButton>
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
-                    <DropdownMenuLabel>{__('ultrasensitive_tsh_pages.index.table.menu.actions')}</DropdownMenuLabel>
                     <DropdownMenuGroup>
+                        <DropdownMenuLabel>{__('ultrasensitive_tsh_pages.index.table.menu.actions')}</DropdownMenuLabel>
                         <DropdownMenuItem
+                            nativeButton
                             render={
                                 <Link className="block w-full" href={edit(ultrasensitiveTsh.id)} as="button">
                                     <EditIcon aria-hidden size={14} />{' '}
@@ -77,7 +76,7 @@ function ActionsCell({ ultrasensitiveTsh }: Readonly<{ ultrasensitiveTsh: Ultras
                                 </Link>
                             }
                         />
-                        <DropdownMenuItem variant="destructive" onSelect={() => setOpen(true)}>
+                        <DropdownMenuItem variant="destructive" onClick={() => setOpen(true)}>
                             <DeleteIcon aria-hidden size={14} />{' '}
                             {__('ultrasensitive_tsh_pages.index.table.menu.delete')}
                         </DropdownMenuItem>
