@@ -41,9 +41,10 @@ function ActionsCell({ exercise }: Readonly<{ exercise: CatalogExercise }>) {
                     }
                 />
                 <DropdownMenuContent align="end" className="w-40">
-                    <DropdownMenuLabel>{__('exercise_pages.index.table.menu.actions')}</DropdownMenuLabel>
                     <DropdownMenuGroup>
+                        <DropdownMenuLabel>{__('exercise_pages.index.table.menu.actions')}</DropdownMenuLabel>
                         <DropdownMenuItem
+                            nativeButton
                             render={
                                 <Link className="block w-full" href={edit(exercise.id)} as="button">
                                     <EditIcon aria-hidden size={14} /> {__('exercise_pages.index.table.menu.edit')}

@@ -43,9 +43,10 @@ function ActionsCell({ muscleGroup }: Readonly<{ muscleGroup: CatalogMuscleGroup
                     }
                 />
                 <DropdownMenuContent align="end" className="w-40">
-                    <DropdownMenuLabel>{__('muscle_group_pages.index.table.menu.actions')}</DropdownMenuLabel>
                     <DropdownMenuGroup>
+                        <DropdownMenuLabel>{__('muscle_group_pages.index.table.menu.actions')}</DropdownMenuLabel>
                         <DropdownMenuItem
+                            nativeButton
                             render={
                                 <ModalLink
                                     className="block w-full"
