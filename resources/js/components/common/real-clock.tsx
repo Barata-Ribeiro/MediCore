@@ -13,14 +13,18 @@ const RealClock = forwardRef<HTMLSpanElement, Props>((props, ref) => {
 
     const { className, ...otherProps } = props;
 
-    useInterval(() => {
-        if (!timeElRef.current) {
-            return;
-        }
+    useInterval(
+        () => {
+            if (!timeElRef.current) {
+                return;
+            }
 
-        const now = new Date();
-        timeElRef.current.textContent = format(now, 'dd/MM/yyyy HH:mm');
-    }, 60000);
+            const now = new Date();
+            timeElRef.current.textContent = format(now, 'dd/MM/yyyy HH:mm');
+        },
+        60000,
+        { autoInvoke: true },
+    );
 
     return (
         <span ref={composedRef} className={className} {...otherProps}>

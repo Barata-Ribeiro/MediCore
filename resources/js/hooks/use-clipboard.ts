@@ -1,32 +1,62 @@
-// Credit: https://usehooks-ts.com/
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-export type CopiedValue = string | null;
-export type CopyFn = (text: string) => Promise<boolean>;
-export type UseClipboardReturn = [CopiedValue, CopyFn];
+export interface UseClipboardInput {
+    /** Time in ms after which the copied state will reset, `2000` by default */
+    timeout?: number;
+}
 
-export function useClipboard(): UseClipboardReturn {
-    const [copiedText, setCopiedText] = useState<CopiedValue>(null);
+export interface UseClipboardReturnValue {
+    /** Function to copy value to clipboard */
+    copy: (value: any) => void;
 
-    const copy: CopyFn = async (text) => {
-        if (!navigator?.clipboard) {
-            console.warn('Clipboard not supported');
+    /** Function to reset copied state and error */
+    reset: () => void;
 
-            return false;
-        }
+    /** Error if copying failed */
+    error: Error | null;
 
-        try {
-            await navigator.clipboard.writeText(text);
-            setCopiedText(text);
+    /** Boolean indicating if the value was copied successfully */
+    copied: boolean;
+}
 
-            return true;
-        } catch (error) {
-            console.warn('Copy failed', error);
-            setCopiedText(null);
+export function useClipboard(options: UseClipboardInput = {}): UseClipboardReturnValue {
+    const timeout = options.timeout ?? 2000;
+    const [error, setError] = useState<Error | null>(null);
+    const [copied, setCopied] = useState(false);
+    const timeoutRef = useRef<number | null>(null);
 
-            return false;
+    useEffect(
+        () => () => {
+            globalThis.window.clearTimeout(timeoutRef.current!);
+        },
+        [],
+    );
+
+    const handleCopyResult = (value: boolean) => {
+        globalThis.window.clearTimeout(timeoutRef.current!);
+        timeoutRef.current = globalThis.window.setTimeout(() => setCopied(false), timeout);
+        setCopied(value);
+    };
+
+    const copy = (value: any) => {
+        if ('clipboard' in navigator) {
+            navigator.clipboard
+                .writeText(value)
+                .then(() => {
+                    setError(null);
+                    handleCopyResult(true);
+                })
+                .catch((err) => setError(err));
+        } else {
+            setError(new Error('useClipboard: navigator.clipboard is not supported'));
         }
     };
 
-    return [copiedText, copy];
+    const reset = () => {
+        setCopied(false);
+        setError(null);
+        globalThis.window.clearTimeout(timeoutRef.current!);
+    };
+
+    return { copy, reset, error, copied };
 }

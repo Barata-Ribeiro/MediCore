@@ -51,8 +51,8 @@ function TwoFactorSetupStep({
 }>) {
     const { __ } = lang();
     const { resolvedAppearance } = useAppearance();
-    const [copiedText, copy] = useClipboard();
-    const IconComponent = copiedText === manualSetupKey ? Check : Copy;
+    const { copied, copy } = useClipboard();
+    const IconComponent = copied ? Check : Copy;
 
     return errors?.length ? (
         <AlertError errors={errors} />
