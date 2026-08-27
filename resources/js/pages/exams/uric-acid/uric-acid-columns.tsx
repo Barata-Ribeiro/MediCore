@@ -56,27 +56,24 @@ function ActionsCell({ uricAcid }: Readonly<{ uricAcid: UricAcid }>) {
                     }
                 />
                 <DropdownMenuContent align="end" className="w-40">
-                    <DropdownMenuLabel>{__('uric_acid_pages.index.table.menu.copy_fields')}</DropdownMenuLabel>
                     <DropdownMenuGroup>
-                        <DropdownMenuItem
-                            render={
-                                <DropdownMenuCopyButton content={valuesToCopy}>
-                                    {__('uric_acid_pages.index.table.menu.copy_values')}
-                                </DropdownMenuCopyButton>
-                            }
-                        />
+                        <DropdownMenuLabel>{__('uric_acid_pages.index.table.menu.copy_fields')}</DropdownMenuLabel>
+                        <DropdownMenuCopyButton content={valuesToCopy}>
+                            {__('uric_acid_pages.index.table.menu.copy_values')}
+                        </DropdownMenuCopyButton>
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
-                    <DropdownMenuLabel>{__('uric_acid_pages.index.table.menu.actions')}</DropdownMenuLabel>
                     <DropdownMenuGroup>
+                        <DropdownMenuLabel>{__('uric_acid_pages.index.table.menu.actions')}</DropdownMenuLabel>
                         <DropdownMenuItem
+                            nativeButton
                             render={
                                 <Link className="block w-full" href={edit(uricAcid.id)} as="button">
                                     <EditIcon aria-hidden size={14} /> {__('uric_acid_pages.index.table.menu.edit')}
                                 </Link>
                             }
                         />
-                        <DropdownMenuItem variant="destructive" onSelect={() => setOpen(true)}>
+                        <DropdownMenuItem variant="destructive" onClick={() => setOpen(true)}>
                             <DeleteIcon aria-hidden size={14} /> {__('uric_acid_pages.index.table.menu.delete')}
                         </DropdownMenuItem>
                     </DropdownMenuGroup>

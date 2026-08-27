@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { useClipboard } from '@/hooks/use-clipboard';
 import { ClipboardCheckIcon, ClipboardIcon } from 'lucide-react';
 import type { ReactNode } from 'react';
@@ -24,16 +24,9 @@ export default function DropdownMenuCopyButton({ content, children }: Readonly<R
     };
 
     return (
-        <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            className="w-full justify-start px-2"
-            disabled={copied}
-            onClick={copyContentToClipboard}
-        >
+        <DropdownMenuItem disabled={copied} onClick={copyContentToClipboard}>
             {copied ? <ClipboardCheckIcon aria-hidden size={14} /> : <ClipboardIcon aria-hidden size={14} />}
             {children}
-        </Button>
+        </DropdownMenuItem>
     );
 }

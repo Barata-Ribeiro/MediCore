@@ -56,27 +56,24 @@ function ActionsCell({ vitaminB12 }: Readonly<{ vitaminB12: VitaminB12 }>) {
                     }
                 />
                 <DropdownMenuContent align="end" className="w-40">
-                    <DropdownMenuLabel>{__('vitamin_b12_pages.index.table.menu.copy_fields')}</DropdownMenuLabel>
                     <DropdownMenuGroup>
-                        <DropdownMenuItem
-                            render={
-                                <DropdownMenuCopyButton content={valuesToCopy}>
-                                    {__('vitamin_b12_pages.index.table.menu.copy_values')}
-                                </DropdownMenuCopyButton>
-                            }
-                        />
+                        <DropdownMenuLabel>{__('vitamin_b12_pages.index.table.menu.copy_fields')}</DropdownMenuLabel>
+                        <DropdownMenuCopyButton content={valuesToCopy}>
+                            {__('vitamin_b12_pages.index.table.menu.copy_values')}
+                        </DropdownMenuCopyButton>
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
-                    <DropdownMenuLabel>{__('vitamin_b12_pages.index.table.menu.actions')}</DropdownMenuLabel>
                     <DropdownMenuGroup>
+                        <DropdownMenuLabel>{__('vitamin_b12_pages.index.table.menu.actions')}</DropdownMenuLabel>
                         <DropdownMenuItem
+                            nativeButton
                             render={
                                 <Link className="block w-full" href={edit(vitaminB12.id)} as="button">
                                     <EditIcon aria-hidden size={14} /> {__('vitamin_b12_pages.index.table.menu.edit')}
                                 </Link>
                             }
                         />
-                        <DropdownMenuItem variant="destructive" onSelect={() => setOpen(true)}>
+                        <DropdownMenuItem variant="destructive" onClick={() => setOpen(true)}>
                             <DeleteIcon aria-hidden size={14} /> {__('vitamin_b12_pages.index.table.menu.delete')}
                         </DropdownMenuItem>
                     </DropdownMenuGroup>
