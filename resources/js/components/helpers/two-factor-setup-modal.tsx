@@ -249,7 +249,7 @@ export default function TwoFactorSetupModal({
         }
 
         if (isOpen && !qrCodeSvg) {
-            fetchSetupDataRef.current();
+            void fetchSetupDataRef.current();
         }
 
         if (twoFactorEnabled) {

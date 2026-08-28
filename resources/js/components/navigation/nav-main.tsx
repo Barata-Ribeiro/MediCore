@@ -15,7 +15,7 @@ import { lang } from '@erag/lang-sync-inertia/react';
 import { Link } from '@inertiajs/react';
 import { ChevronRight } from 'lucide-react';
 
-export function NavMain({ items = [] }: Readonly<{ items: NavItem[] }>) {
+export function NavMain({ items }: Readonly<{ items: NavItem[] }>) {
     const { isCurrentUrl } = useCurrentUrl();
     const { __ } = lang();
 

@@ -292,7 +292,7 @@ export function DataTable<TData, TValue>({
         const currentFilters = params.get('filters');
 
         const filtersParam = columnFilters?.length
-            ? columnFilters.map((f) => `${f.id}:${f.value}`).join(',')
+            ? columnFilters.map((f) => `${f.id}:${String(f.value)}`).join(',')
             : undefined;
 
         if (!currentFilters && !filtersParam) {

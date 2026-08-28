@@ -71,7 +71,11 @@ export default function TotalProteinsAndFractionsChart({ chartData, total }: Rea
                             content={
                                 <ChartTooltipContent
                                     indicator="line"
-                                    labelFormatter={(label) => format(new Date(String(label)), 'PPP')}
+                                    labelFormatter={(label) =>
+                                        typeof label === 'string' || typeof label === 'number'
+                                            ? format(new Date(label), 'PPP')
+                                            : ''
+                                    }
                                 />
                             }
                         />

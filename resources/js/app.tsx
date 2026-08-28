@@ -12,7 +12,7 @@ import { ModalStackProvider, putConfig } from '@inertiaui/modal-react';
 
 const appName = import.meta.env['VITE_APP_NAME'] ?? 'Laravel';
 
-createInertiaApp({
+void createInertiaApp({
     strictMode: true,
     title: (title) => `${title} - ${appName}`,
     layout: (name) => {

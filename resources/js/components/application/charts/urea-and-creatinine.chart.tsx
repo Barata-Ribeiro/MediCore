@@ -65,7 +65,11 @@ export default function UreaAndCreatinineChart({ chartData, total }: Readonly<Pr
                             content={
                                 <ChartTooltipContent
                                     indicator="line"
-                                    labelFormatter={(label) => format(new Date(String(label)), 'PPP')}
+                                    labelFormatter={(label) =>
+                                        typeof label === 'string' || typeof label === 'number'
+                                            ? format(new Date(label), 'PPP')
+                                            : ''
+                                    }
                                 />
                             }
                         />
