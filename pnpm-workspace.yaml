@@ -1,20 +1,20 @@
 packages:
-  - "."
+    - '.'
 allowBuilds:
-  msw: true
-  "unrs-resolver": true
+    msw: true
+    'unrs-resolver': true
 publicHoistPattern:
-  - "@inertiajs/core"
+    - '@inertiajs/core'
 supportedArchitectures:
-  os:
-    - win32
-    - darwin
-    - current
-  cpu:
-    - x64
-    - arm64
+    os:
+        - win32
+        - darwin
+        - current
+    cpu:
+        - x64
+        - arm64
 minimumReleaseAgeExclude:
-  - "@rollup/rollup-linux-x64-gnu@4.63.1"
-  - "@rollup/rollup-win32-x64-msvc@4.63.1"
-  - "@vitejs/plugin-react@6.1.1"
-  - lucide-react@1.35.0
+    - '@rollup/rollup-linux-x64-gnu@4.63.1'
+    - '@rollup/rollup-win32-x64-msvc@4.63.1'
+    - '@vitejs/plugin-react@6.1.1'
+    - lucide-react@1.35.0
