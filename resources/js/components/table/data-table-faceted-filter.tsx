@@ -100,7 +100,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                                     title: title ?? 'unknown',
                                 })}
                                 tabIndex={0}
-                                className="rounded-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none"
+                                className="focus-visible:ring-ring rounded-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:ring-1 focus-visible:outline-none"
                                 onClick={onReset}
                                 onKeyDown={onResetKeyDown}
                             >
@@ -154,7 +154,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                                     <CommandItem key={option.value} onSelect={() => onItemSelect(option, isSelected)}>
                                         <div
                                             className={cn(
-                                                'flex size-4 items-center justify-center rounded-sm border border-secondary',
+                                                'border-secondary flex size-4 items-center justify-center rounded-sm border',
                                                 isSelected ? 'bg-secondary' : 'opacity-50 [&_svg]:invisible',
                                             )}
                                         >

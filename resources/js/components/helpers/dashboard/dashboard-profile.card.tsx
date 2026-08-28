@@ -103,7 +103,7 @@ const DashboardProfileCard = memo<Readonly<Props>>(({ profile }) => {
             </CardContent>
 
             <CardFooter className="mt-auto flex items-end justify-between gap-4 border-t">
-                <time dateTime={profile.updated_at} className="text-sm text-muted-foreground">
+                <time dateTime={profile.updated_at} className="text-muted-foreground text-sm">
                     {__('dashboard.profile_card.card.updated_at')}{' '}
                     {format(new Date(profile.updated_at), 'MMMM dd, yyyy')}
                 </time>

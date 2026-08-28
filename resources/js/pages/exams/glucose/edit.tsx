@@ -54,7 +54,7 @@ export default function Edit({ glucose }: Readonly<Props>) {
                     <GlucoseForm glucose={glucose} />
                 </CardContent>
                 <CardFooter>
-                    <p className="text-sm text-muted-foreground">{__('glucose_pages.edit.footer')}</p>
+                    <p className="text-muted-foreground text-sm">{__('glucose_pages.edit.footer')}</p>
                 </CardFooter>
             </Card>
         </Fragment>

@@ -48,7 +48,7 @@ export default function Edit({ ureaAndCreatinine }: Readonly<Props>) {
                     <UreaAndCreatinineForm ureaAndCreatinine={ureaAndCreatinine} />
                 </CardContent>
                 <CardFooter>
-                    <p className="text-sm text-muted-foreground">{__('urea_and_creatinine_pages.edit.footer')}</p>
+                    <p className="text-muted-foreground text-sm">{__('urea_and_creatinine_pages.edit.footer')}</p>
                 </CardFooter>
             </Card>
         </Fragment>

@@ -423,7 +423,7 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                     ) : (
                         <Fragment>
                             {data.sections.map((section, sectionIndex) => (
-                                <Card key={section.id ?? `section-${sectionIndex}`} className="border bg-muted/10">
+                                <Card key={section.id ?? `section-${sectionIndex}`} className="bg-muted/10 border">
                                     <CardHeader className="gap-3">
                                         <div className="flex flex-wrap items-center justify-between gap-2">
                                             <CardTitle>
@@ -499,7 +499,7 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                                                 return (
                                                     <Card
                                                         key={exercise.id ?? `exercise-${sectionIndex}-${exerciseIndex}`}
-                                                        className="border bg-background"
+                                                        className="bg-background border"
                                                     >
                                                         <CardHeader className="gap-2">
                                                             <div className="flex items-center justify-between gap-2">

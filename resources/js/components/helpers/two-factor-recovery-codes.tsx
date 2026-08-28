@@ -104,7 +104,7 @@ export default function TwoFactorRecoveryCodes({ recoveryCodesList, fetchRecover
                             <>
                                 <div
                                     ref={codesSectionRef}
-                                    className="grid gap-1 rounded-lg bg-muted p-4 font-mono text-sm"
+                                    className="bg-muted grid gap-1 rounded-lg p-4 font-mono text-sm"
                                     role="list"
                                     aria-label={__(
                                         'settings_pages.security_page.two_factor_recovery_codes_section.codes_section_label',
@@ -126,7 +126,7 @@ export default function TwoFactorRecoveryCodes({ recoveryCodesList, fetchRecover
                                             {Array.from({ length: 8 }, (_, index) => (
                                                 <div
                                                     key={index}
-                                                    className="h-4 animate-pulse rounded bg-muted-foreground/20"
+                                                    className="bg-muted-foreground/20 h-4 animate-pulse rounded"
                                                     aria-hidden="true"
                                                 />
                                             ))}
@@ -134,7 +134,7 @@ export default function TwoFactorRecoveryCodes({ recoveryCodesList, fetchRecover
                                     )}
                                 </div>
 
-                                <div className="text-xs text-muted-foreground select-none">
+                                <div className="text-muted-foreground text-xs select-none">
                                     <p id="regenerate-warning">
                                         {__(
                                             'settings_pages.security_page.two_factor_recovery_codes_section.regenerate_warning_message',

@@ -50,7 +50,7 @@ function ActionsCell({ ureaAndCreatinine }: Readonly<{ ureaAndCreatinine: UreaAn
                         <Button
                             aria-label={__('urea_and_creatinine_pages.index.table.menu.open_label')}
                             variant="ghost"
-                            className="flex size-8 p-0 aria-expanded:bg-muted"
+                            className="aria-expanded:bg-muted flex size-8 p-0"
                         >
                             <EllipsisIcon aria-hidden size={16} />
                         </Button>

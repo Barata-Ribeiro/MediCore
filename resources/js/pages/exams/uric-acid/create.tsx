@@ -43,7 +43,7 @@ export default function Create() {
                     <UricAcidForm />
                 </CardContent>
                 <CardFooter>
-                    <p className="text-sm text-muted-foreground">{__('uric_acid_pages.create.footer')}</p>
+                    <p className="text-muted-foreground text-sm">{__('uric_acid_pages.create.footer')}</p>
                 </CardFooter>
             </Card>
         </Fragment>

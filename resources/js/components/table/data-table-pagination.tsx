@@ -59,7 +59,7 @@ export default function DataTablePagination<TData>({
         return items.map((item) => {
             if (typeof item === 'string') {
                 return (
-                    <span key={`ellipsis-${item}`} className="px-2 text-sm text-muted-foreground">
+                    <span key={`ellipsis-${item}`} className="text-muted-foreground px-2 text-sm">
                         {item}
                     </span>
                 );
@@ -88,7 +88,7 @@ export default function DataTablePagination<TData>({
     return (
         <div className="flex flex-col items-center justify-between gap-y-3 px-2 sm:flex-row">
             {/* Pagination Info */}
-            <div className="flex-1 text-sm text-muted-foreground">
+            <div className="text-muted-foreground flex-1 text-sm">
                 {trans('main.data_table.pagination.info', {
                     from: pagination.from,
                     to: pagination.to,

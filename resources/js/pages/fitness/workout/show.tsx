@@ -88,7 +88,7 @@ export default function Show({ workout }: Readonly<WorkoutShowProps>) {
                         </Empty>
                     ) : (
                         workout.sections.map((section, sectionIndex) => (
-                            <Card key={section.id} className="border bg-muted/10">
+                            <Card key={section.id} className="bg-muted/10 border">
                                 <CardHeader>
                                     <CardTitle>
                                         {__('workout_pages.show.section_label', {
@@ -100,7 +100,7 @@ export default function Show({ workout }: Readonly<WorkoutShowProps>) {
 
                                 <CardContent>
                                     {section.exercises.length === 0 ? (
-                                        <p className="text-sm text-muted-foreground">
+                                        <p className="text-muted-foreground text-sm">
                                             {__('workout_pages.show.empty_exercises')}
                                         </p>
                                     ) : (

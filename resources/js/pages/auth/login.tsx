@@ -99,7 +99,7 @@ export default function Login({ status, canResetPassword, canRegister }: Readonl
                         </div>
 
                         <Activity mode={canRegister ? 'visible' : 'hidden'}>
-                            <div className="text-center text-sm text-muted-foreground">
+                            <div className="text-muted-foreground text-center text-sm">
                                 {__('auth_pages.login_page.form.register_message_text')}{' '}
                                 <TextLink href={register()} tabIndex={0}>
                                     {__('auth_pages.login_page.form.register_message_link')}

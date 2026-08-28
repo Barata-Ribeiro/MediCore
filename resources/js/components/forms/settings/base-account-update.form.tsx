@@ -78,7 +78,7 @@ export default function BaseAccountUpdateForm({ mustVerifyEmail, status }: Reado
 
                     <Activity mode={mustVerifyEmail && auth.user.email_verified_at === null ? 'visible' : 'hidden'}>
                         <div>
-                            <p className="-mt-4 text-sm text-muted-foreground">
+                            <p className="text-muted-foreground -mt-4 text-sm">
                                 {__('settings_pages.profile_page.profile_info.form.must_verify_email_text')}{' '}
                                 <Link
                                     href={send()}

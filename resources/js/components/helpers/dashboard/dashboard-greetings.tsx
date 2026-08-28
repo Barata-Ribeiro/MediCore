@@ -8,7 +8,7 @@ export default function DashboardGreetings() {
     const { auth, date } = usePage().props;
 
     return (
-        <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-primary-foreground via-primary-foreground/90 to-accent-foreground p-6 text-white sm:p-8">
+        <div className="from-primary-foreground via-primary-foreground/90 to-accent-foreground relative overflow-hidden rounded-2xl bg-linear-to-br p-6 text-white sm:p-8">
             <div
                 className="pointer-events-none absolute inset-0 opacity-10"
                 style={{

@@ -42,8 +42,8 @@ export default function ErrorPage({ status }: Readonly<Props>) {
                     {status}
                 </span>
                 <div className="text-center max-lg:mt-36">
-                    <h1 className="text-2xl font-semibold tracking-tight text-muted sm:text-4xl">{title}</h1>
-                    <p className="mt-6 text-lg leading-8 text-muted-foreground">{description}</p>
+                    <h1 className="text-muted text-2xl font-semibold tracking-tight sm:text-4xl">{title}</h1>
+                    <p className="text-muted-foreground mt-6 text-lg leading-8">{description}</p>
 
                     <Button
                         variant="secondary"

@@ -54,7 +54,7 @@ export default function PasskeyRegistration({ onSuccess }: Readonly<Props>) {
 
     if (!isSupported) {
         return (
-            <div className="text-sm text-muted-foreground">
+            <div className="text-muted-foreground text-sm">
                 {__('settings_pages.security_page.passkeys_section.form.unsupported')}
             </div>
         );
@@ -69,7 +69,7 @@ export default function PasskeyRegistration({ onSuccess }: Readonly<Props>) {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-border bg-muted/50 p-4">
+        <form onSubmit={handleSubmit} className="border-border bg-muted/50 space-y-4 rounded-lg border p-4">
             <Field data-invalid={!!error}>
                 <Label htmlFor="passkey-name">{__('settings_pages.security_page.passkeys_section.form.name')}</Label>
                 <Input
@@ -78,14 +78,14 @@ export default function PasskeyRegistration({ onSuccess }: Readonly<Props>) {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder={__('settings_pages.security_page.passkeys_section.form.name_placeholder')}
-                    className="mt-1 block w-full border-foreground/20"
+                    className="border-foreground/20 mt-1 block w-full"
                     autoFocus
                 />
 
                 {error ? (
                     <InputError message={error} />
                 ) : (
-                    <FieldDescription className="text-xs text-muted-foreground">
+                    <FieldDescription className="text-muted-foreground text-xs">
                         {__('settings_pages.security_page.passkeys_section.form.name_description')}
                     </FieldDescription>
                 )}

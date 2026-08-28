@@ -48,7 +48,7 @@ export default function Edit({ ultrasensitiveTsh }: Readonly<Props>) {
                     <UltrasensitiveTshForm ultrasensitiveTsh={ultrasensitiveTsh} />
                 </CardContent>
                 <CardFooter>
-                    <p className="text-sm text-muted-foreground">{__('ultrasensitive_tsh_pages.edit.footer')}</p>
+                    <p className="text-muted-foreground text-sm">{__('ultrasensitive_tsh_pages.edit.footer')}</p>
                 </CardFooter>
             </Card>
         </Fragment>

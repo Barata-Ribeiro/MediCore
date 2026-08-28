@@ -90,7 +90,7 @@ export default function TotalProteinsAndFractionsChart({ chartData, total }: Rea
                 </ChartContainer>
             </CardContent>
             <CardFooter className="border-t">
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                     {__('total_proteins_and_fractions_pages.index.chart.footer_total_label')} <strong>{total}</strong>
                 </p>
             </CardFooter>

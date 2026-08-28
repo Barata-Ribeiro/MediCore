@@ -21,7 +21,7 @@ const DashboardExamsMadeCard = memo<Readonly<Props>>(({ exams }) => {
                 <ExamsSummaryChart exams={exams} />
             </CardContent>
 
-            <CardFooter className="mt-auto border-t text-sm text-muted-foreground">
+            <CardFooter className="text-muted-foreground mt-auto border-t text-sm">
                 {(exams['total'] ?? 0).toLocaleString()} {__('dashboard.exams_made_card.made')}
             </CardFooter>
         </Card>

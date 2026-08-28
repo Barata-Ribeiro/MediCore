@@ -43,7 +43,7 @@ export default function Create() {
                     <GlucoseForm />
                 </CardContent>
                 <CardFooter>
-                    <p className="text-sm text-muted-foreground">{__('glucose_pages.create.footer')}</p>
+                    <p className="text-muted-foreground text-sm">{__('glucose_pages.create.footer')}</p>
                 </CardFooter>
             </Card>
         </Fragment>

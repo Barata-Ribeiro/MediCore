@@ -42,7 +42,7 @@ export default function DataTableColumnHeader<TData, TValue>({
         <DropdownMenu>
             <DropdownMenuTrigger
                 className={cn(
-                    '-ml-1.5 flex h-8 items-center gap-1.5 rounded-md px-2 py-1.5 hover:bg-accent focus:ring-1 focus:ring-ring focus:outline-none aria-expanded:bg-accent [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground',
+                    'hover:bg-accent focus:ring-ring aria-expanded:bg-accent [&_svg]:text-muted-foreground -ml-1.5 flex h-8 items-center gap-1.5 rounded-md px-2 py-1.5 focus:ring-1 focus:outline-none [&_svg]:size-4 [&_svg]:shrink-0',
                     className,
                 )}
                 {...props}
@@ -53,7 +53,7 @@ export default function DataTableColumnHeader<TData, TValue>({
             <DropdownMenuContent align="end" className="w-full">
                 <Activity mode={column.getCanSort() ? 'visible' : 'hidden'}>
                     <DropdownMenuCheckboxItem
-                        className="relative pr-8 pl-2 [&_svg]:text-muted-foreground [&>span:first-child]:right-2 [&>span:first-child]:left-auto"
+                        className="[&_svg]:text-muted-foreground relative pr-8 pl-2 [&>span:first-child]:right-2 [&>span:first-child]:left-auto"
                         checked={column.getIsSorted() === 'asc'}
                         onClick={() => column.toggleSorting(false)}
                     >
@@ -61,7 +61,7 @@ export default function DataTableColumnHeader<TData, TValue>({
                         {__('main.data_table.column_header.asc')}
                     </DropdownMenuCheckboxItem>
                     <DropdownMenuCheckboxItem
-                        className="relative pr-8 pl-2 [&_svg]:text-muted-foreground [&>span:first-child]:right-2 [&>span:first-child]:left-auto"
+                        className="[&_svg]:text-muted-foreground relative pr-8 pl-2 [&>span:first-child]:right-2 [&>span:first-child]:left-auto"
                         checked={column.getIsSorted() === 'desc'}
                         onClick={() => column.toggleSorting(true)}
                     >
@@ -69,7 +69,7 @@ export default function DataTableColumnHeader<TData, TValue>({
                         {__('main.data_table.column_header.desc')}
                     </DropdownMenuCheckboxItem>
                     <DropdownMenuItem
-                        className="pl-2 [&_svg]:text-muted-foreground"
+                        className="[&_svg]:text-muted-foreground pl-2"
                         onClick={() => column.clearSorting()}
                     >
                         {columnSortIndicator['default']}
@@ -83,7 +83,7 @@ export default function DataTableColumnHeader<TData, TValue>({
 
                 <Activity mode={column.getCanHide() ? 'visible' : 'hidden'}>
                     <DropdownMenuItem
-                        className="pl-2 [&_svg]:text-muted-foreground"
+                        className="[&_svg]:text-muted-foreground pl-2"
                         onClick={() => column.toggleVisibility(false)}
                     >
                         <EyeOffIcon aria-hidden />

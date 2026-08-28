@@ -96,7 +96,7 @@ export default function UreaAndCreatinineChart({ chartData, total }: Readonly<Pr
                 </ChartContainer>
             </CardContent>
             <CardFooter className="border-t">
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                     {__('urea_and_creatinine_pages.index.chart.footer_total_label')} <strong>{total}</strong>
                 </p>
             </CardFooter>
