@@ -12,7 +12,7 @@ import { ModalStackProvider, putConfig } from '@inertiaui/modal-react';
 
 const appName = import.meta.env['VITE_APP_NAME'] ?? 'Laravel';
 
-createInertiaApp({
+void createInertiaApp({
     strictMode: true,
     title: (title) => `${title} - ${appName}`,
     layout: (name) => {
@@ -63,7 +63,7 @@ putConfig({
         closeOnClickOutside: true,
         maxWidth: 'full',
         paddingClasses: 'py-(--card-spacing)',
-        panelClasses: cn`group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-[min(var(--radius-4xl),24px)] bg-card text-sm text-card-foreground shadow-sm ring-1 ring-foreground/5 [--card-spacing:--spacing(5)] has-[>img:first-child]:pt-0 dark:ring-foreground/10 *:[img:first-child]:rounded-t-[min(var(--radius-4xl),24px)] *:[img:last-child]:rounded-b-[min(var(--radius-4xl),24px)]`,
+        panelClasses: cn`group/card bg-card text-card-foreground ring-foreground/5 dark:ring-foreground/10 flex flex-col gap-(--card-spacing) overflow-hidden rounded-[min(var(--radius-4xl),24px)] text-sm shadow-sm ring-1 [--card-spacing:--spacing(5)] has-[>img:first-child]:pt-0 *:[img:first-child]:rounded-t-[min(var(--radius-4xl),24px)] *:[img:last-child]:rounded-b-[min(var(--radius-4xl),24px)]`,
         position: 'center',
     },
     slideover: {
@@ -72,7 +72,7 @@ putConfig({
         closeOnClickOutside: true,
         maxWidth: 'md',
         paddingClasses: 'p-4 sm:p-6',
-        panelClasses: cn('min-h-screen rounded-none bg-background'),
+        panelClasses: cn('bg-background min-h-screen rounded-none'),
         position: 'right',
     },
 });

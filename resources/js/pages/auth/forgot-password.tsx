@@ -61,7 +61,7 @@ export default function ForgotPassword({ status }: Readonly<{ status?: string }>
                     )}
                 </Form>
 
-                <div className="space-x-1 text-center text-sm text-muted-foreground">
+                <div className="text-muted-foreground space-x-1 text-center text-sm">
                     <span>{__('auth_pages.forgot_password_page.return_message_text')}</span>
                     <TextLink href={login()}>{__('auth_pages.forgot_password_page.return_message_link')}</TextLink>
                 </div>

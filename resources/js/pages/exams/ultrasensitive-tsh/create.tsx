@@ -43,7 +43,7 @@ export default function Create() {
                     <UltrasensitiveTshForm />
                 </CardContent>
                 <CardFooter>
-                    <p className="text-sm text-muted-foreground">{__('ultrasensitive_tsh_pages.create.footer')}</p>
+                    <p className="text-muted-foreground text-sm">{__('ultrasensitive_tsh_pages.create.footer')}</p>
                 </CardFooter>
             </Card>
         </Fragment>

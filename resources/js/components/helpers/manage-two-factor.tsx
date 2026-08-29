@@ -56,7 +56,7 @@ export default function ManageTwoFactor(props: Readonly<Props>) {
             />
             {twoFactorEnabled ? (
                 <div className="flex flex-col items-start justify-start space-y-4">
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                         {__(
                             'settings_pages.security_page.two_factor_authentication_section.two_factor_authentication_enabled',
                         )}
@@ -82,7 +82,7 @@ export default function ManageTwoFactor(props: Readonly<Props>) {
                 </div>
             ) : (
                 <div className="flex flex-col items-start justify-start space-y-4">
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                         {__(
                             'settings_pages.security_page.two_factor_authentication_section.two_factor_authentication_disabled',
                         )}

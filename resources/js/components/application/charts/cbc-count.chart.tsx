@@ -73,7 +73,11 @@ export default function CbcCountChart({ chartData, total }: Readonly<Props>) {
                             content={
                                 <ChartTooltipContent
                                     indicator="line"
-                                    labelFormatter={(label) => format(new Date(String(label)), 'PPP')}
+                                    labelFormatter={(label) =>
+                                        typeof label === 'string' || typeof label === 'number'
+                                            ? format(new Date(label), 'PPP')
+                                            : ''
+                                    }
                                 />
                             }
                         />
@@ -92,7 +96,7 @@ export default function CbcCountChart({ chartData, total }: Readonly<Props>) {
                 </ChartContainer>
             </CardContent>
             <CardFooter className="border-t">
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                     {__('complete_blood_count_pages.index.chart.footer_total_label')} <strong>{total}</strong>
                     <br />
                     {__('complete_blood_count_pages.index.chart.footer_note')}

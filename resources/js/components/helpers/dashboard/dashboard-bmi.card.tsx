@@ -143,7 +143,7 @@ const DashboardBMICard = memo<Readonly<Props>>(({ bmi, height, weight }) => {
                             aria-readonly
                         />
 
-                        <small className="relative flex w-full justify-between text-xs font-medium text-muted-foreground">
+                        <small className="text-muted-foreground relative flex w-full justify-between text-xs font-medium">
                             <span>{BMI_PROGRESS_MIN}</span>
                             <span>18.5</span>
                             <span>25</span>
@@ -151,7 +151,7 @@ const DashboardBMICard = memo<Readonly<Props>>(({ bmi, height, weight }) => {
                             <span>{BMI_PROGRESS_MAX}</span>
                         </small>
 
-                        <div className="mt-3 flex justify-between text-sm text-muted-foreground">
+                        <div className="text-muted-foreground mt-3 flex justify-between text-sm">
                             <p className="m-0">
                                 {__('dashboard.bmi_card.card.height')}:&nbsp; <span>{height ?? '0'}</span> cm
                             </p>

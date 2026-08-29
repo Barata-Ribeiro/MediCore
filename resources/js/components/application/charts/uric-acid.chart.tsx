@@ -65,7 +65,11 @@ export default function UricAcidChart({ chartData, total }: Readonly<Props>) {
                             content={
                                 <ChartTooltipContent
                                     indicator="line"
-                                    labelFormatter={(label) => format(new Date(String(label)), 'PPP')}
+                                    labelFormatter={(label) =>
+                                        typeof label === 'string' || typeof label === 'number'
+                                            ? format(new Date(label), 'PPP')
+                                            : ''
+                                    }
                                 />
                             }
                         />
@@ -92,7 +96,7 @@ export default function UricAcidChart({ chartData, total }: Readonly<Props>) {
                 </ChartContainer>
             </CardContent>
             <CardFooter className="border-t">
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                     {__('uric_acid_pages.index.chart.footer_total_label')} <strong>{total}</strong>
                 </p>
             </CardFooter>

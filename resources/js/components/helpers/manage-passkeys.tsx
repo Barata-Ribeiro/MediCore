@@ -21,7 +21,7 @@ const EmptyState = () => {
         <Empty>
             <EmptyHeader>
                 <EmptyMedia variant="icon">
-                    <KeyRound aria-hidden className="size-7 text-muted-foreground" />
+                    <KeyRound aria-hidden className="text-muted-foreground size-7" />
                 </EmptyMedia>
                 <EmptyTitle>{__('settings_pages.security_page.passkeys_section.empty_title')}</EmptyTitle>
                 <EmptyDescription>
@@ -59,7 +59,7 @@ export default function ManagePasskeys(props: Readonly<Props>) {
                 description={__('settings_pages.security_page.passkeys_section.description')}
             />
 
-            <div className="overflow-hidden rounded-lg border border-border">
+            <div className="border-border overflow-hidden rounded-lg border">
                 {passkeys.length > 0 ? (
                     passkeys.map((passkey) => (
                         <PasskeyItem key={passkey.id} passkey={passkey} onDelete={handleDelete} />

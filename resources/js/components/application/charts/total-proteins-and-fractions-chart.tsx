@@ -71,7 +71,11 @@ export default function TotalProteinsAndFractionsChart({ chartData, total }: Rea
                             content={
                                 <ChartTooltipContent
                                     indicator="line"
-                                    labelFormatter={(label) => format(new Date(String(label)), 'PPP')}
+                                    labelFormatter={(label) =>
+                                        typeof label === 'string' || typeof label === 'number'
+                                            ? format(new Date(label), 'PPP')
+                                            : ''
+                                    }
                                 />
                             }
                         />
@@ -90,7 +94,7 @@ export default function TotalProteinsAndFractionsChart({ chartData, total }: Rea
                 </ChartContainer>
             </CardContent>
             <CardFooter className="border-t">
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                     {__('total_proteins_and_fractions_pages.index.chart.footer_total_label')} <strong>{total}</strong>
                 </p>
             </CardFooter>

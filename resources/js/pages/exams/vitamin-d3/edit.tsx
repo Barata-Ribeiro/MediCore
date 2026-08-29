@@ -48,7 +48,7 @@ export default function Edit({ vitaminD3 }: Readonly<Props>) {
                     <VitaminD3Form vitaminD3={vitaminD3} />
                 </CardContent>
                 <CardFooter>
-                    <p className="text-sm text-muted-foreground">{__('vitamin_d3_pages.edit.footer')}</p>
+                    <p className="text-muted-foreground text-sm">{__('vitamin_d3_pages.edit.footer')}</p>
                 </CardFooter>
             </Card>
         </Fragment>

@@ -12,7 +12,7 @@ export default function AuthSplitLayout({ children, title, description }: Readon
 
     return (
         <div className="relative grid h-dvh flex-col items-center justify-center px-8 sm:px-0 lg:max-w-none lg:grid-cols-2 lg:px-0">
-            <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r">
+            <div className="bg-muted relative hidden h-full flex-col p-10 text-white lg:flex dark:border-r">
                 <picture className="absolute inset-0 bg-zinc-900">
                     <source srcSet={authImageWebp} type="image/webp" />
                     <source srcSet={authImageAvif} type="image/avif" />
@@ -38,7 +38,7 @@ export default function AuthSplitLayout({ children, title, description }: Readon
                     </Link>
                     <div className="flex flex-col items-start gap-2 text-left sm:items-center sm:text-center">
                         <h1 className="text-xl font-medium">{title}</h1>
-                        <p className="text-sm text-balance text-muted-foreground">{description}</p>
+                        <p className="text-muted-foreground text-sm text-balance">{description}</p>
                     </div>
                     {children}
                 </div>

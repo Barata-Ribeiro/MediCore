@@ -32,16 +32,16 @@ const DashboardExamsSummaryCard = memo<Readonly<Props>>(({ exams }) => {
 
             <CardContent className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {Object.entries(examsObject).map(([examName, count]) => (
-                    <div key={examName} className="flex items-center justify-between rounded-md bg-muted p-4">
+                    <div key={examName} className="bg-muted flex items-center justify-between rounded-md p-4">
                         <span className="font-medium">{examName}</span>
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-muted-foreground text-sm">
                             {count} {__('dashboard.exams_summary_card.recorded')}
                         </span>
                     </div>
                 ))}
             </CardContent>
 
-            <CardFooter className="mt-auto border-t text-sm text-muted-foreground">
+            <CardFooter className="text-muted-foreground mt-auto border-t text-sm">
                 {exams['total']} {__('dashboard.exams_summary_card.recorded')}
             </CardFooter>
         </Card>

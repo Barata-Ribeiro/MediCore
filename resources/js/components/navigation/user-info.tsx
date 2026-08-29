@@ -19,7 +19,7 @@ export function UserInfo({ user, showEmail = false }: Readonly<{ user: User; sho
                     {user.name}
                 </span>
                 <Activity mode={showEmail ? 'visible' : 'hidden'}>
-                    <span className="truncate text-xs text-muted-foreground">{user.email}</span>
+                    <span className="text-muted-foreground truncate text-xs">{user.email}</span>
                 </Activity>
             </div>
         </Fragment>

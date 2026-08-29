@@ -32,25 +32,25 @@ export default function PasskeyItem({ passkey, onDelete }: Readonly<Props>) {
     return (
         <div className="flex items-center justify-between border-b p-4 last:border-b-0">
             <div className="flex items-center gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-muted">
-                    <KeyRound aria-hidden className="size-5 text-muted-foreground" />
+                <div className="bg-muted flex h-10 w-10 shrink-0 items-center justify-center rounded-xl">
+                    <KeyRound aria-hidden className="text-muted-foreground size-5" />
                 </div>
                 <div className="space-y-1">
                     <div className="flex items-center gap-2.5">
                         <p className="font-medium tracking-tight">{passkey.name}</p>
                         {passkey.authenticator && (
-                            <Badge variant="secondary" className="ring-1 ring-border ring-inset">
+                            <Badge variant="secondary" className="ring-border ring-1 ring-inset">
                                 {passkey.authenticator}
                             </Badge>
                         )}
                     </div>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                         {__('settings_pages.security_page.passkeys_section.added', {
                             time: passkey.created_at_diff,
                         })}
                         {passkey.last_used_at_diff && (
                             <>
-                                <span className="mx-1 text-muted-foreground/50">/</span>
+                                <span className="text-muted-foreground/50 mx-1">/</span>
                                 {__('settings_pages.security_page.passkeys_section.last_used', {
                                     time: passkey.last_used_at_diff,
                                 })}

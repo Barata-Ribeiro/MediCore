@@ -78,7 +78,7 @@ const DashboardMedicalFileCard = memo<Readonly<Props>>(({ medicalFile }) => {
             </CardContent>
 
             <CardFooter className="mt-auto flex flex-wrap items-end justify-between gap-4 border-t">
-                <time dateTime={medicalFile.updated_at} className="text-sm text-muted-foreground">
+                <time dateTime={medicalFile.updated_at} className="text-muted-foreground text-sm">
                     {__('dashboard.medical_file_card.card.updated_at')}{' '}
                     {format(new Date(medicalFile.updated_at), 'MMMM dd, yyyy')}
                 </time>

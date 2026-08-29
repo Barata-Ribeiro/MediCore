@@ -43,7 +43,7 @@ export default function Create() {
                     <LipidProfileForm />
                 </CardContent>
                 <CardFooter>
-                    <p className="text-sm text-muted-foreground">{__('lipid_profile_pages.create.footer')}</p>
+                    <p className="text-muted-foreground text-sm">{__('lipid_profile_pages.create.footer')}</p>
                 </CardFooter>
             </Card>
         </Fragment>

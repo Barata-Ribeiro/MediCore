@@ -43,7 +43,7 @@ export default function Create() {
                     <UreaAndCreatinineForm />
                 </CardContent>
                 <CardFooter>
-                    <p className="text-sm text-muted-foreground">{__('urea_and_creatinine_pages.create.footer')}</p>
+                    <p className="text-muted-foreground text-sm">{__('urea_and_creatinine_pages.create.footer')}</p>
                 </CardFooter>
             </Card>
         </Fragment>

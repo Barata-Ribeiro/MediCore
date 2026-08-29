@@ -49,7 +49,7 @@ function ActionsCell({ vitaminD3 }: Readonly<{ vitaminD3: VitaminD3 }>) {
                         <Button
                             aria-label={__('vitamin_d3_pages.index.table.menu.open_label')}
                             variant="ghost"
-                            className="flex size-8 p-0 aria-expanded:bg-muted"
+                            className="aria-expanded:bg-muted flex size-8 p-0"
                         >
                             <EllipsisIcon aria-hidden size={16} />
                         </Button>

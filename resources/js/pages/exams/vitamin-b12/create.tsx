@@ -43,7 +43,7 @@ export default function Create() {
                     <VitaminB12Form />
                 </CardContent>
                 <CardFooter>
-                    <p className="text-sm text-muted-foreground">{__('vitamin_b12_pages.create.footer')}</p>
+                    <p className="text-muted-foreground text-sm">{__('vitamin_b12_pages.create.footer')}</p>
                 </CardFooter>
             </Card>
         </Fragment>

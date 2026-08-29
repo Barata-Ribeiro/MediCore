@@ -43,7 +43,7 @@ export default function CreateCompleteBloodCount() {
                     <CbcCountForm />
                 </CardContent>
                 <CardFooter>
-                    <p className="text-sm text-muted-foreground">{__('complete_blood_count_pages.create.footer')}</p>
+                    <p className="text-muted-foreground text-sm">{__('complete_blood_count_pages.create.footer')}</p>
                 </CardFooter>
             </Card>
         </Fragment>

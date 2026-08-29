@@ -18,19 +18,19 @@ import { useRef, useState } from 'react';
 
 function GridScanIcon() {
     return (
-        <div className="mb-3 rounded-full border border-border bg-card p-0.5 shadow-sm">
-            <div className="relative overflow-hidden rounded-full border border-border bg-muted p-2.5">
+        <div className="border-border bg-card mb-3 rounded-full border p-0.5 shadow-sm">
+            <div className="border-border bg-muted relative overflow-hidden rounded-full border p-2.5">
                 <div className="absolute inset-0 grid grid-cols-5 opacity-50">
                     {Array.from({ length: 5 }, (_, i) => (
-                        <div key={`col-${i + 1}`} className="border-r border-border last:border-r-0" />
+                        <div key={`col-${i + 1}`} className="border-border border-r last:border-r-0" />
                     ))}
                 </div>
                 <div className="absolute inset-0 grid grid-rows-5 opacity-50">
                     {Array.from({ length: 5 }, (_, i) => (
-                        <div key={`row-${i + 1}`} className="border-b border-border last:border-b-0" />
+                        <div key={`row-${i + 1}`} className="border-border border-b last:border-b-0" />
                     ))}
                 </div>
-                <ScanLineIcon aria-hidden className="relative z-20 size-6 text-foreground" />
+                <ScanLineIcon aria-hidden className="text-foreground relative z-20 size-6" />
             </div>
         </div>
     );
@@ -59,7 +59,7 @@ function TwoFactorSetupStep({
     ) : (
         <>
             <div className="mx-auto flex max-w-md overflow-hidden">
-                <div className="mx-auto aspect-square w-64 rounded-lg border border-border">
+                <div className="border-border mx-auto aspect-square w-64 rounded-lg border">
                     <div className="z-10 flex h-full w-full items-center justify-center p-5">
                         {qrCodeSvg ? (
                             <div
@@ -83,32 +83,32 @@ function TwoFactorSetupStep({
             </div>
 
             <div className="relative flex w-full items-center justify-center">
-                <div className="absolute inset-0 top-1/2 h-px w-full bg-border" />
-                <span className="relative bg-card px-2 py-1">
+                <div className="bg-border absolute inset-0 top-1/2 h-px w-full" />
+                <span className="bg-card relative px-2 py-1">
                     {__('settings_pages.security_page.two_factor_setup_modal.setup_step_message_end')}
                 </span>
             </div>
 
             <div className="flex w-full space-x-2">
-                <div className="flex w-full items-stretch overflow-hidden rounded-xl border border-border">
+                <div className="border-border flex w-full items-stretch overflow-hidden rounded-xl border">
                     {manualSetupKey ? (
                         <>
                             <input
                                 type="text"
                                 readOnly
                                 value={manualSetupKey}
-                                className="h-full w-full bg-background p-3 text-foreground outline-none"
+                                className="bg-background text-foreground h-full w-full p-3 outline-none"
                             />
                             <button
                                 type="button"
                                 onClick={() => copy(manualSetupKey)}
-                                className="border-l border-border px-3 hover:bg-muted"
+                                className="border-border hover:bg-muted border-l px-3"
                             >
                                 <IconComponent aria-hidden className="w-4" />
                             </button>
                         </>
                     ) : (
-                        <div className="flex h-full w-full items-center justify-center bg-muted p-3">
+                        <div className="bg-muted flex h-full w-full items-center justify-center p-3">
                             <Spinner />
                         </div>
                     )}
@@ -249,7 +249,7 @@ export default function TwoFactorSetupModal({
         }
 
         if (isOpen && !qrCodeSvg) {
-            fetchSetupDataRef.current();
+            void fetchSetupDataRef.current();
         }
 
         if (twoFactorEnabled) {

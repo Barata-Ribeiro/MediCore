@@ -55,7 +55,7 @@ export default function Edit({ totalProteinsAndFractions }: Readonly<Props>) {
                     <TotalProteinsAndFractionsForm totalProteinAndFractions={totalProteinsAndFractions} />
                 </CardContent>
                 <CardFooter>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                         {__('total_proteins_and_fractions_pages.edit.footer')}
                     </p>
                 </CardFooter>

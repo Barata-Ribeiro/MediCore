@@ -54,7 +54,7 @@ export default function Edit({ lipidProfile }: Readonly<Props>) {
                     <LipidProfileForm lipidProfile={lipidProfile} />
                 </CardContent>
                 <CardFooter>
-                    <p className="text-sm text-muted-foreground">{__('lipid_profile_pages.edit.footer')}</p>
+                    <p className="text-muted-foreground text-sm">{__('lipid_profile_pages.edit.footer')}</p>
                 </CardFooter>
             </Card>
         </Fragment>
