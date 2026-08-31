@@ -18,3 +18,13 @@ minimumReleaseAgeExclude:
     - '@rollup/rollup-win32-x64-msvc@4.63.1'
     - '@vitejs/plugin-react@6.1.1'
     - lucide-react@1.35.0
+catalog:
+    vite: npm:@voidzero-dev/vite-plus-core@0.3.0
+    vite-plus: 0.3.0
+overrides:
+    vite@*: 'catalog:'
+peerDependencyRules:
+    allowAny:
+        - vite
+    allowedVersions:
+        vite: '*'
