@@ -7,6 +7,9 @@ import laravel from 'laravel-vite-plugin';
 import { defineConfig, lazyPlugins } from 'vite-plus';
 
 export default defineConfig({
+    staged: {
+        '*': 'vp check --fix',
+    },
     plugins: lazyPlugins(() => [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.tsx'],
@@ -45,6 +48,8 @@ export default defineConfig({
         },
     },
     lint: {
+        jsPlugins: [{ name: 'vite-plus', specifier: 'vite-plus/oxlint-plugin' }],
+        rules: { 'vite-plus/prefer-vite-plus-imports': 'error' },
         ignorePatterns: [
             'vendor/**',
             'node_modules/**',
@@ -56,23 +61,18 @@ export default defineConfig({
             'resources/js/routes/**',
             'resources/js/wayfinder/**',
         ],
-        options: {
-            denyWarnings: true,
-            typeAware: true,
-        },
+        options: { denyWarnings: true, typeAware: true },
     },
     fmt: {
-        printWidth: 120,
-        tabWidth: 4,
-        singleQuote: true,
+        endOfLine: 'lf',
         semi: true,
+        singleQuote: true,
         singleAttributePerLine: false,
+        tabWidth: 4,
+        printWidth: 120,
         htmlWhitespaceSensitivity: 'css',
-        ignorePatterns: ['.github/**', 'resources/js/components/ui/*', 'resources/views/mail/*'],
-        sortTailwindcss: {
-            functions: ['clsx', 'cn', 'cva'],
-            entryPoint: 'resources/css/app.css',
-        },
+        ignorePatterns: ['.github/**', 'composer.json', 'resources/js/components/ui/*', 'resources/views/mail/*'],
+        sortTailwindcss: { functions: ['clsx', 'cn', 'cva'], entryPoint: 'resources/css/app.css' },
     },
     assetsInclude: ['**/*.{woff,woff2,eot,ttf,otf,svg,png,jpg,jpeg,gif,webp,avif}'],
 });
