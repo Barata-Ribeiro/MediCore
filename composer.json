@@ -54,8 +54,8 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "@php artisan key:generate",
             "@php artisan migrate --force",
-            "pnpm install",
-            "pnpm run build"
+            "npm install",
+            "npm run build"
         ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
@@ -69,14 +69,17 @@
         ],
         "ci:check": [
             "Composer\\Config::disableProcessTimeout",
-            "npm run lint:check",
-            "npm run format:check",
-            "npm run types:check",
+            "pnpm run check",
+            "pnpm run types:check",
             "@test"
+        ],
+        "types:check": [
+            "phpstan analyse"
         ],
         "test": [
             "@php artisan config:clear --ansi",
             "@lint:check",
+            "@types:check",
             "@php artisan test --parallel --processes=4 --recreate-databases"
         ],
         "post-autoload-dump": [
@@ -101,7 +104,10 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [],
+            "installer": {
+                "post-create-project": []
+            }
         }
     },
     "config": {
