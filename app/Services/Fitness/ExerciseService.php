@@ -6,7 +6,6 @@ use App\Common\Helpers;
 use App\Interfaces\Fitness\ExerciseServiceInterface;
 use App\Models\Fitness\Exercise;
 use App\Models\Fitness\MuscleGroup;
-use Eloquent;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
@@ -24,8 +23,11 @@ class ExerciseService implements ExerciseServiceInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @param  array<string, mixed>|null  $filters
+     * @return LengthAwarePaginator<int, Exercise>
      */
-    public function getExercisesData(?int $perPage, ?string $sortBy, ?string $sortDir, ?string $search, $filters): LengthAwarePaginator
+    public function getExercisesData(?int $perPage, ?string $sortBy, ?string $sortDir, ?string $search, ?array $filters): LengthAwarePaginator
     {
         $isSql = $this->isSqlDriver;
 
@@ -48,21 +50,21 @@ class ExerciseService implements ExerciseServiceInterface
             ->whereBelongsTo(auth()->user())
             ->with(['muscleGroups' => fn ($query) => $query->select(['muscle_groups.id', 'name'])->orderBy('name')])
             ->when($createdAtRange, fn ($q) => $q->whereBetween('created_at', [$createdAtStart, $createdAtEnd]))
-            ->when($search, function (Eloquent $qr) use ($search, $isSql) {
+            ->when($search, function (Builder $query) use ($search, $isSql) {
                 if ($isSql) {
                     $booleanQuery = Helpers::buildBooleanQuery($search);
-                    $qr->whereFullText(['exercises.name', 'exercises.description', 'exercises.video_url'], $booleanQuery)
+                    $query->whereFullText(['exercises.name', 'exercises.description', 'exercises.video_url'], $booleanQuery)
                         ->orWhereHas('muscleGroups', fn (Builder $muscleGroups) => $muscleGroups->whereLike('muscle_groups.name', "%{$search}%"));
                 } else {
-                    $qr->where(function (Builder $query) use ($search) {
-                        $query->whereLike('exercises.name', "%{$search}%")
+                    $query->where(function (Builder $searchQuery) use ($search) {
+                        $searchQuery->whereLike('exercises.name', "%{$search}%")
                             ->orWhereLike('exercises.description', "%{$search}%")
                             ->orWhereLike('exercises.video_url', "%{$search}%")
                             ->orWhereHas('muscleGroups', fn (Builder $muscleGroups) => $muscleGroups->whereLike('muscle_groups.name', "%{$search}%"));
                     });
                 }
-            })->orderBy($sortBy, $sortDir)
-            ->paginate($perPage)
+            })->orderBy($sortBy ?? 'id', $sortDir === 'desc' ? 'desc' : 'asc')
+            ->paginate($perPage ?? 10)
             ->withQueryString();
     }
 }
