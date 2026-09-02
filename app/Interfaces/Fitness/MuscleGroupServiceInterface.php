@@ -2,7 +2,8 @@
 
 namespace App\Interfaces\Fitness;
 
-use Illuminate\Pagination\LengthAwarePaginator;
+use App\Models\Fitness\MuscleGroup;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface MuscleGroupServiceInterface
 {
@@ -18,8 +19,8 @@ interface MuscleGroupServiceInterface
      * @param  string|null  $sortBy  Column or attribute name to sort by.
      * @param  string|null  $sortDir  Sort direction ('asc'|'desc'); when null the service default is used.
      * @param  string|null  $search  Search term to be applied to relevant muscle group fields (name, description, etc.).
-     * @param  string|array|null  $filters  Additional filters to apply (e.g. associative array of field => value, filter objects, or a query callback).
-     * @return LengthAwarePaginator Paginated collection of muscle group models.
+     * @param  array<string, mixed>|null  $filters  Additional filters to apply.
+     * @return LengthAwarePaginator<int, MuscleGroup> Paginated collection of muscle group models.
      */
-    public function getMuscleGroupsData(?int $perPage, ?string $sortBy, ?string $sortDir, ?string $search, $filters): LengthAwarePaginator;
+    public function getMuscleGroupsData(?int $perPage, ?string $sortBy, ?string $sortDir, ?string $search, ?array $filters): LengthAwarePaginator;
 }
