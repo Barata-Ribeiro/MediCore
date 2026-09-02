@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests\Fitness;
 
+use App\Models\Fitness\MuscleGroup;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use LogicException;
 
 class UpdateMuscleGroupRequest extends FormRequest
 {
@@ -22,14 +24,18 @@ class UpdateMuscleGroupRequest extends FormRequest
      */
     public function rules(): array
     {
-        $muscleGroupId = (int) $this->route('muscle_group')->id;
+        $muscleGroup = $this->route('muscle_group');
+
+        if (! $muscleGroup instanceof MuscleGroup) {
+            throw new LogicException('The muscle group route parameter must be model-bound.');
+        }
 
         return [
             'name' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('muscle_groups', 'name')->where('user_id', $this->user()?->id)->ignore($muscleGroupId),
+                Rule::unique('muscle_groups', 'name')->where('user_id', $this->user()?->id)->ignore($muscleGroup),
             ],
         ];
     }
