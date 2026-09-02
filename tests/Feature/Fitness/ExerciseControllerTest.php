@@ -116,6 +116,27 @@ describe('tests for ExerciseController', function () {
         $response->assertSessionHasErrors('muscle_group_ids.0');
     });
 
+    it('updates an exercise while keeping its current name', function () {
+        $user = User::factory()->create();
+        $exercise = Exercise::create([
+            'name' => 'Bench Press',
+            'description' => 'Original description.',
+            'user_id' => $user->id,
+        ]);
+
+        $response = $this->actingAs($user)->put(route('exercises.update', $exercise), [
+            'name' => 'Bench Press',
+            'description' => 'Updated description.',
+        ]);
+
+        $response->assertRedirect(route('exercises.index'));
+        $this->assertDatabaseHas('exercises', [
+            'id' => $exercise->id,
+            'name' => 'Bench Press',
+            'description' => 'Updated description.',
+        ]);
+    });
+
     it('does not allow updating another user exercise', function () {
         $user = User::factory()->create();
         $otherUser = User::factory()->create();
