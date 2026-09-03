@@ -95,6 +95,21 @@ describe('tests for MuscleGroupController', function () {
         ]);
     });
 
+    it('updates a muscle group while keeping its current name', function () {
+        $user = User::factory()->create();
+        $muscleGroup = MuscleGroup::create(['name' => 'Back', 'user_id' => $user->id]);
+
+        $response = $this->actingAs($user)->put(route('muscle-groups.update', $muscleGroup), [
+            'name' => 'Back',
+        ]);
+
+        $response->assertRedirect(route('muscle-groups.index'));
+        $this->assertDatabaseHas('muscle_groups', [
+            'id' => $muscleGroup->id,
+            'name' => 'Back',
+        ]);
+    });
+
     it('does not allow updating another user muscle group', function () {
         $user = User::factory()->create();
         $otherUser = User::factory()->create();

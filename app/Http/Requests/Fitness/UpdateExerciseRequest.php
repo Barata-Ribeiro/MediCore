@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests\Fitness;
 
+use App\Models\Fitness\Exercise;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use LogicException;
 
 class UpdateExerciseRequest extends FormRequest
 {
@@ -22,14 +24,18 @@ class UpdateExerciseRequest extends FormRequest
      */
     public function rules(): array
     {
-        $exerciseId = (int) $this->route('exercise')->id;
+        $exercise = $this->route('exercise');
+
+        if (! $exercise instanceof Exercise) {
+            throw new LogicException('The exercise route parameter must be model-bound.');
+        }
 
         return [
             'name' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('exercises', 'name')->where('user_id', $this->user()?->id)->ignore($exerciseId),
+                Rule::unique('exercises', 'name')->where('user_id', $this->user()?->id)->ignore($exercise),
             ],
             'description' => ['nullable', 'string'],
             'video_url' => ['nullable', 'url', 'max:255'],
