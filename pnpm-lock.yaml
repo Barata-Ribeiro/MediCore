@@ -40,7 +40,7 @@ importers:
         version: 3.7.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@inertiajs/vite':
         specifier: ^3.7.0
-        version: 3.7.0(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))
+        version: 3.7.0(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))
       '@inertiaui/modal-react':
         specifier: ^3.1.2
         version: 3.1.2(@inertiajs/react@3.7.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -52,7 +52,7 @@ importers:
         version: 0.3.1(@types/react@19.2.18)(react@19.2.8)
       '@tailwindcss/vite':
         specifier: ^4.3.3
-        version: 4.3.3(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))
+        version: 4.3.3(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))
       '@tanstack/react-hotkeys':
         specifier: ^0.10.0
         version: 0.10.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -61,7 +61,7 @@ importers:
         version: 8.21.3(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@vitejs/plugin-react':
         specifier: ^6.1.1
-        version: 6.1.1(@rolldown/plugin-babel@0.2.3(@babel/core@8.0.1)(@babel/runtime@7.29.7)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))(rolldown@1.2.6))(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))(babel-plugin-react-compiler@1.0.0)
+        version: 6.1.1(@rolldown/plugin-babel@0.2.3(@babel/core@8.0.1)(@babel/runtime@7.29.7)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))(rolldown@1.2.6))(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))(babel-plugin-react-compiler@1.0.0)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -70,7 +70,7 @@ importers:
         version: 2.1.1
       cmdk:
         specifier: ^1.1.1
-        version: 1.1.1(@types/react-dom@19.2.5(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        version: 1.1.1(@types/react-dom@19.2.7(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       concurrently:
         specifier: ^10.0.5
         version: 10.0.5
@@ -81,20 +81,20 @@ importers:
         specifier: ^8.6.0
         version: 8.6.0(react@19.2.8)
       globals:
-        specifier: ^17.11.0
-        version: 17.11.0
+        specifier: ^17.12.0
+        version: 17.12.0
       input-otp:
         specifier: ^1.5.0
         version: 1.5.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       laravel-vite-plugin:
         specifier: ^3.2.0
-        version: 3.2.0(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))
+        version: 3.2.0(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))
       lodash:
         specifier: ^4.18.1
         version: 4.18.1
       lucide-react:
-        specifier: ^1.38.0
-        version: 1.38.0(react@19.2.8)
+        specifier: ^1.40.0
+        version: 1.40.0(react@19.2.8)
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -117,8 +117,8 @@ importers:
         specifier: ^3.10.1
         version: 3.10.1(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react-is@17.0.2)(react@19.2.8)(redux@5.0.1)
       shadcn:
-        specifier: ^4.19.1
-        version: 4.19.1(supports-color@10.2.2)(typescript@6.0.3)
+        specifier: ^4.20.1
+        version: 4.20.1(supports-color@10.2.2)(typescript@6.0.3)
       sonner:
         specifier: ^2.0.8
         version: 2.0.8(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -133,17 +133,17 @@ importers:
         version: 1.4.0
       vite:
         specifier: 'catalog:'
-        version: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3)'
+        version: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3)'
     devDependencies:
       '@babel/core':
         specifier: ^8.0.1
         version: 8.0.1
       '@laravel/vite-plugin-wayfinder':
-        specifier: ^0.1.7
-        version: 0.1.7
+        specifier: ^0.1.10
+        version: 0.1.10
       '@rolldown/plugin-babel':
         specifier: ^0.2.3
-        version: 0.2.3(@babel/core@8.0.1)(@babel/runtime@7.29.7)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))(rolldown@1.2.6)
+        version: 0.2.3(@babel/core@8.0.1)(@babel/runtime@7.29.7)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))(rolldown@1.2.6)
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
@@ -151,14 +151,14 @@ importers:
         specifier: ^4.17.25
         version: 4.17.25
       '@types/node':
-        specifier: ^26.4.0
-        version: 26.4.0
+        specifier: ^26.4.1
+        version: 26.4.1
       '@types/react':
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.5
-        version: 19.2.5(@types/react@19.2.18)
+        specifier: ^19.2.7
+        version: 19.2.7(@types/react@19.2.18)
       babel-plugin-react-compiler:
         specifier: ^1.0.0
         version: 1.0.0
@@ -167,7 +167,7 @@ importers:
         version: 6.0.3
       vite-plus:
         specifier: 'catalog:'
-        version: 0.3.0(@types/node@26.4.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))(jiti@2.7.0)(svelte@5.56.8(@typescript-eslint/types@8.68.0))(typescript@6.0.3)
+        version: 0.3.0(@types/node@26.4.1)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))(jiti@2.7.0)(svelte@5.56.8(@typescript-eslint/types@8.68.0))(typescript@6.0.3)
     optionalDependencies:
       '@laravel/multiplex':
         specifier: ^0.4.3
@@ -526,11 +526,11 @@ packages:
   '@inertiaui/vanilla@1.3.1':
     resolution: {integrity: sha512-ir93aiFqGAhabC+WXkqKW+ORcJCZEaDC4LXmdHxQp8pY/3jbI9l6uvnWfnZudPD/TyQMb1YWh8O/Ad1spyziPg==}
 
-  '@internationalized/date@3.12.3':
-    resolution: {integrity: sha512-fuLX+3ZKLsxI73y8b01EG/WjHb6gE6weCqlfawPO27kBWGMh9G1yH6Csv1uU7/cac9H2GHmOMt6CjmuQ1aia4Q==}
+  '@internationalized/date@3.12.4':
+    resolution: {integrity: sha512-M1dEn4c1U1HsSlaVR8upZtSqvXrTkHDfv18H01uCSJyjVLDxnBR38v/fMxecmlwXKR4i9HeZcmgQAPE6A+aGJQ==}
 
-  '@internationalized/number@3.6.7':
-    resolution: {integrity: sha512-3ji1fcrT+FPAK86UqEhB/psHixYo6niWPJtt7+qRaYFynt/BaJG8GhAPimtWUpEiVSTq8ZM8L5psMxGquiB/Vg==}
+  '@internationalized/number@3.6.8':
+    resolution: {integrity: sha512-8UmMFia46DUt+k97zKd9fKWXcWHR+k8ae3eYzILETuT2KbIvLyOfac7zesw+sJdRAAZ7Q9pM1Mk22aXp2LD0Ig==}
 
   '@internationalized/string@3.2.10':
     resolution: {integrity: sha512-PDx6//vHSpRnHfxqMqto11zQvhsaU74O3mKv2F/0eicGZcl9NLjQmGlbHz/LsJh5tLKp4A4L7ZVTzN1/MmMTvA==}
@@ -572,8 +572,8 @@ packages:
       vue:
         optional: true
 
-  '@laravel/vite-plugin-wayfinder@0.1.7':
-    resolution: {integrity: sha512-yZYIr1iwuCQ7LFI+GsJk9vacw1HWMp3ZlDlW0pdfz3zXyKeu4US7oH79KmQQ031L0cYaSyaUMo/Ha1D4BosKqw==}
+  '@laravel/vite-plugin-wayfinder@0.1.10':
+    resolution: {integrity: sha512-59ZCMCEeC1UcZkqbvn+G06C4D0C/jCm525gTft7T7RPAo+0ZaHtoKl9r86OFVFd/BwuJiOYky4zJUrAPRKyRaA==}
 
   '@modelcontextprotocol/sdk@1.30.0':
     resolution: {integrity: sha512-xKd8OIzlqNzcqcNumGAa6g+PW2kjD5vrpcKOnfldAUPP3j7lnqMPwlTXQm8gF+UwH72z0lqaRbjr9hqGz0eITA==}
@@ -1378,8 +1378,8 @@ packages:
     resolution: {integrity: sha512-o4PXJQidqJl82ckFaXUeoAW+XysPLauYI43Abki5hABd853iMhitooc6znOnczgbTYmEP6U6/y1ZyKAIsvMKGg==}
     engines: {node: '>=18'}
 
-  '@testing-library/user-event@14.6.6':
-    resolution: {integrity: sha512-Jbs9FpkkIDw8FgSc6kOVsOv8JuuqGAL7J4X1oot77JxAoDlkNn2GRkd0aYRVuQ+pVQAiHWVkE4rX/dkF5fBiCw==}
+  '@testing-library/user-event@14.6.7':
+    resolution: {integrity: sha512-MPCpX8bxe8zS+JmmTwLp8jd0dy1rAm60Te/SL8JrQM3qvQJcBOs1d7IefJMyZzqM3EWBrDn/LWDt1BCGu4ASfg==}
     engines: {node: '>=12', npm: '>=6'}
     peerDependencies:
       '@testing-library/dom': '>=7.21.4'
@@ -1447,11 +1447,11 @@ packages:
   '@types/lodash@4.17.25':
     resolution: {integrity: sha512-+K1NIO8I+F9/wNulfVvu23QYd0Pe9/OCqRrim4NoYIf1VoEDL90Ve4ClzpyqBLc7NpGGWRvYNCKZ1BE/Jpf8dQ==}
 
-  '@types/node@26.4.0':
-    resolution: {integrity: sha512-faiGnoIrLH/V8cibOMEAZ8pMw6oXqSukl29ra4mN8GdaB2ZewzeaLj+INpV5N+Z1eKWzY+IzaIZH2EIR6YZRNQ==}
+  '@types/node@26.4.1':
+    resolution: {integrity: sha512-k97ENvZWtvA6yqz5/FS6a7duDgOPEeOQOc2iKS/nY6mX6qJUKtLnWzQS+Xj6tXweyj6ZcTAK2Qecetnvi9nCLA==}
 
-  '@types/react-dom@19.2.5':
-    resolution: {integrity: sha512-fMPwH9v7r/pp43yUd2/Mbiex5KouJwwR3dzHkhLREUC6764VyDsqxhAxv6OFEYR1RhjOyD1naqba8ECDBe7ZQg==}
+  '@types/react-dom@19.2.7':
+    resolution: {integrity: sha512-I8bPpDLcHBv1qiIiXDCy71Rt8eQDKJP0sMSWJphDdAcdqiJ1sGpZamavoEIRZmYzjia9LuEb2HlYdDpmoENpvQ==}
     peerDependencies:
       '@types/react': ^19.2.0
 
@@ -2181,8 +2181,8 @@ packages:
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
 
-  electron-to-chromium@1.5.417:
-    resolution: {integrity: sha512-4T+DTDWuMPM4aHlHwWdAVCVWwp7LDilnhzkj+c/Lbj91XSQrLuOmZSLtS9Q4iIqjlPUbPOnC624zDVVHCHaolQ==}
+  electron-to-chromium@1.5.420:
+    resolution: {integrity: sha512-2yD6XreGusOfNV+dUcvipJEXc3n/n7fgr7996aszTG+YY5E4mqM4tOq/3uhP129cazL9YHbVWSpc79ePotWtPA==}
 
   embla-carousel-react@8.6.0:
     resolution: {integrity: sha512-0/PjqU7geVmo6F734pmPqpyHqiM99olvyecY7zdweCw+6tKEXnrE90pBiBbMMU8s5tICemzpQ3hi5EpxzGW+JA==}
@@ -2326,8 +2326,8 @@ packages:
     resolution: {integrity: sha512-7MptL8U0cqcFdzIzwOTHoilX9x5BrNqye7Z/LuC7kCMRio1EMSyqRK3BEAUD7sXRq4iT4AzTVuZdhgQ2TCvYLg==}
     engines: {node: '>=8.6.0'}
 
-  fast-uri@3.1.6:
-    resolution: {integrity: sha512-7Ical1vFEMr0onbVzEDIreM22I4khW+fzyQPwvAFWBp1iwdshSZRsL4jjRvPG9JP1uiqMHRto+YU6R2/CzDz5Q==}
+  fast-uri@3.1.7:
+    resolution: {integrity: sha512-dOvZVzjdZdz7phd9v6jCbwxrBW3fK6n8Rc0CtdmM4bumzMnxywBYhuph6J819RRw/ku+rLbelwfMunktuzVVHg==}
 
   fastq@1.20.3:
     resolution: {integrity: sha512-XKv5nnLs6nLF71NgiKJLIZFLkPyIEuOselLG7ujZnGrRfQK8HpvY+WqKhAJUAdLomwVHErVS4LfxFlPq0/FTAw==}
@@ -2420,8 +2420,8 @@ packages:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
     engines: {node: '>= 6'}
 
-  globals@17.11.0:
-    resolution: {integrity: sha512-Z2I8hM+PbJDXQDq3Icgpzv+mPdwr68iZUU9d5WW4FuXfDUQfkZaZuvjMv42/5crNyw154+9+VWXbYrUgDXbxNw==}
+  globals@17.12.0:
+    resolution: {integrity: sha512-cezEd/DTyyht9cvSSURyygXPfy04GtWO/5e6ZPvH7fCtjKz9PYOmuawphw1Ctd1f6C+5JypXfGD7ahNMXvevBA==}
     engines: {node: '>=18'}
 
   gopd@1.2.0:
@@ -2852,8 +2852,8 @@ packages:
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
-  lucide-react@1.38.0:
-    resolution: {integrity: sha512-xZCyBd/wiVUDactoCc+42TjL0aB7EBOXsuX+tjz+W/sGzw2KhHpL1NOH3FIaVUcpimvUBpIYfz34Ofj9S5JEzQ==}
+  lucide-react@1.40.0:
+    resolution: {integrity: sha512-MaG+8WnOXkDWz9XeElj7TnQ890tTZUB0a36i03aRRCKGWE6e7jJpmdCvtxxuxcjjdqyN6m4sL6qlHVuSUDtYgg==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -3147,8 +3147,8 @@ packages:
     resolution: {integrity: sha512-K5zQjDllxWkf7Z5xJdV0/B0WTNqx6vxG70zJE4N0kBs4LovmEYWJzQGxC9bS9RAKu3bgM40lrd5zoLJ12MQ5BA==}
     engines: {node: '>= 0.10'}
 
-  react-aria@3.51.0:
-    resolution: {integrity: sha512-AyWLw0XR38cFPwBu/ErgGaVrc5dupLEKmRlMXTGvFKOtbaGRQ2+yQJkjVhpdHhoRhU4+G+tJDFeHDTS8tK3bfQ==}
+  react-aria@3.52.0:
+    resolution: {integrity: sha512-eGU8GOqT6Stn4Se/X3esz0Wum6TqSwQJBbK3jSLJIbFAS7XkvpICCVwmqZQG1/siXuCgB9DBRq9CttI+K9HPTA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
       react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
@@ -3215,8 +3215,8 @@ packages:
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
 
-  react-stately@3.49.0:
-    resolution: {integrity: sha512-13iNq2KzBrRAzxRc+n53hgROfIistiYY/sPtIhCw1qUB7/kmo+X1xEU2uiS5zcCIrc55AUPwoHqOIIpKWSwB9A==}
+  react-stately@3.50.0:
+    resolution: {integrity: sha512-TnckvpDQGU0672wEaLZqdzvhuSeXWjgW6vijMWxiKOxc8CosQUfPGISdcZyfHqjX3XMjEtRxj4w9HumvX4h4mw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
 
@@ -3325,8 +3325,8 @@ packages:
   setprototypeof@1.2.0:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
 
-  shadcn@4.19.1:
-    resolution: {integrity: sha512-QZ++YvYniZCEZHxBenWUsZnzKCDSUKwRqi0io7ovS9Him02zrg1U8AJCRTL0PWOaEM46NpTlw8PwewWk+9rCng==}
+  shadcn@4.20.1:
+    resolution: {integrity: sha512-gq3Z2MNeGpiPvMkiy0bTc24KIUcl3gVHS/aoWCmlkoychQHL38KSx3CkD7+7DHcFjyPvy8fzmynfmUFf7fejeg==}
     engines: {node: '>=20.18.1'}
     hasBin: true
 
@@ -3463,8 +3463,8 @@ packages:
     resolution: {integrity: sha512-PY8LOw7xP6c8IOiVqdo0sbbZVYhXRSfklOQLAUyGBKqjTX0wx/z4l/9J+PmBpmlLnxzEb1NqltxQ5/wZme/Cmg==}
     engines: {node: '>=18'}
 
-  systeminformation@5.33.6:
-    resolution: {integrity: sha512-hMOQG/eRUzuopuYGGdl8ntkau0nEC7fOaRoTUg1RSr2GTQIk2VNa76DA0+ApajkGfzmcgAupgIP/vt+jtoe5EA==}
+  systeminformation@5.33.7:
+    resolution: {integrity: sha512-ndIY+FxSMednjy1OAi7Av72fOPfaD2NMcwOS0uCLkX1F9GdqDn5eyHuMnTycjoabH5K2NqH1wPLBiaSbNbgQGg==}
     engines: {node: '>=10.0.0'}
     os: [darwin, linux, win32, freebsd, openbsd, netbsd, sunos, android]
     hasBin: true
@@ -4092,7 +4092,7 @@ snapshots:
       object-treeify: 1.1.33
       open: 8.4.2
       picomatch: 4.0.7
-      systeminformation: 5.33.6
+      systeminformation: 5.33.7
       undici: 7.29.0
       which: 4.0.0
       yocto-spinner: 1.2.2
@@ -4183,11 +4183,11 @@ snapshots:
     transitivePeerDependencies:
       - axios
 
-  '@inertiajs/vite@3.7.0(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))':
+  '@inertiajs/vite@3.7.0(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))':
     dependencies:
       '@inertiajs/core': 3.7.0
       tinyglobby: 0.2.17
-      vite: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3)'
+      vite: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3)'
     transitivePeerDependencies:
       - axios
 
@@ -4209,11 +4209,11 @@ snapshots:
 
   '@inertiaui/vanilla@1.3.1': {}
 
-  '@internationalized/date@3.12.3':
+  '@internationalized/date@3.12.4':
     dependencies:
       '@swc/helpers': 0.5.23
 
-  '@internationalized/number@3.6.7':
+  '@internationalized/number@3.6.8':
     dependencies:
       '@swc/helpers': 0.5.23
 
@@ -4263,7 +4263,7 @@ snapshots:
       svelte: 5.56.8(@typescript-eslint/types@8.68.0)
       vue: 3.5.40(typescript@6.0.3)
 
-  '@laravel/vite-plugin-wayfinder@0.1.7': {}
+  '@laravel/vite-plugin-wayfinder@0.1.10': {}
 
   '@modelcontextprotocol/sdk@1.30.0(supports-color@10.2.2)(zod@3.25.76)':
     dependencies:
@@ -4455,18 +4455,18 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.2.18
 
-  '@radix-ui/react-dialog@1.1.23(@types/react-dom@19.2.5(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@radix-ui/react-dialog@1.1.23(@types/react-dom@19.2.7(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
       '@radix-ui/primitive': 1.1.7
       '@radix-ui/react-compose-refs': 1.1.5(@types/react@19.2.18)(react@19.2.8)
       '@radix-ui/react-context': 1.2.2(@types/react@19.2.18)(react@19.2.8)
-      '@radix-ui/react-dismissable-layer': 1.1.19(@types/react-dom@19.2.5(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@radix-ui/react-dismissable-layer': 1.1.19(@types/react-dom@19.2.7(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@radix-ui/react-focus-guards': 1.1.6(@types/react@19.2.18)(react@19.2.8)
-      '@radix-ui/react-focus-scope': 1.1.16(@types/react-dom@19.2.5(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@radix-ui/react-focus-scope': 1.1.16(@types/react-dom@19.2.7(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@radix-ui/react-id': 1.1.4(@types/react@19.2.18)(react@19.2.8)
-      '@radix-ui/react-portal': 1.1.17(@types/react-dom@19.2.5(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
-      '@radix-ui/react-presence': 1.1.10(@types/react-dom@19.2.5(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
-      '@radix-ui/react-primitive': 2.1.10(@types/react-dom@19.2.5(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@radix-ui/react-portal': 1.1.17(@types/react-dom@19.2.7(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@radix-ui/react-presence': 1.1.10(@types/react-dom@19.2.7(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@radix-ui/react-primitive': 2.1.10(@types/react-dom@19.2.7(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@radix-ui/react-slot': 1.3.3(@types/react@19.2.18)(react@19.2.8)
       '@radix-ui/react-use-controllable-state': 1.2.6(@types/react@19.2.18)(react@19.2.8)
       '@radix-ui/react-use-layout-effect': 1.1.4(@types/react@19.2.18)(react@19.2.8)
@@ -4476,20 +4476,20 @@ snapshots:
       react-remove-scroll: 2.7.2(@types/react@19.2.18)(react@19.2.8)
     optionalDependencies:
       '@types/react': 19.2.18
-      '@types/react-dom': 19.2.5(@types/react@19.2.18)
+      '@types/react-dom': 19.2.7(@types/react@19.2.18)
 
-  '@radix-ui/react-dismissable-layer@1.1.19(@types/react-dom@19.2.5(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@radix-ui/react-dismissable-layer@1.1.19(@types/react-dom@19.2.7(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
       '@radix-ui/primitive': 1.1.7
       '@radix-ui/react-compose-refs': 1.1.5(@types/react@19.2.18)(react@19.2.8)
-      '@radix-ui/react-primitive': 2.1.10(@types/react-dom@19.2.5(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@radix-ui/react-primitive': 2.1.10(@types/react-dom@19.2.7(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@radix-ui/react-use-callback-ref': 1.1.4(@types/react@19.2.18)(react@19.2.8)
       '@radix-ui/react-use-effect-event': 0.0.5(@types/react@19.2.18)(react@19.2.8)
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
     optionalDependencies:
       '@types/react': 19.2.18
-      '@types/react-dom': 19.2.5(@types/react@19.2.18)
+      '@types/react-dom': 19.2.7(@types/react@19.2.18)
 
   '@radix-ui/react-focus-guards@1.1.6(@types/react@19.2.18)(react@19.2.8)':
     dependencies:
@@ -4497,16 +4497,16 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.2.18
 
-  '@radix-ui/react-focus-scope@1.1.16(@types/react-dom@19.2.5(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@radix-ui/react-focus-scope@1.1.16(@types/react-dom@19.2.7(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
       '@radix-ui/react-compose-refs': 1.1.5(@types/react@19.2.18)(react@19.2.8)
-      '@radix-ui/react-primitive': 2.1.10(@types/react-dom@19.2.5(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@radix-ui/react-primitive': 2.1.10(@types/react-dom@19.2.7(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@radix-ui/react-use-callback-ref': 1.1.4(@types/react@19.2.18)(react@19.2.8)
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
     optionalDependencies:
       '@types/react': 19.2.18
-      '@types/react-dom': 19.2.5(@types/react@19.2.18)
+      '@types/react-dom': 19.2.7(@types/react@19.2.18)
 
   '@radix-ui/react-id@1.1.4(@types/react@19.2.18)(react@19.2.8)':
     dependencies:
@@ -4515,33 +4515,33 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.2.18
 
-  '@radix-ui/react-portal@1.1.17(@types/react-dom@19.2.5(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@radix-ui/react-portal@1.1.17(@types/react-dom@19.2.7(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
-      '@radix-ui/react-primitive': 2.1.10(@types/react-dom@19.2.5(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@radix-ui/react-primitive': 2.1.10(@types/react-dom@19.2.7(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@radix-ui/react-use-layout-effect': 1.1.4(@types/react@19.2.18)(react@19.2.8)
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
     optionalDependencies:
       '@types/react': 19.2.18
-      '@types/react-dom': 19.2.5(@types/react@19.2.18)
+      '@types/react-dom': 19.2.7(@types/react@19.2.18)
 
-  '@radix-ui/react-presence@1.1.10(@types/react-dom@19.2.5(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@radix-ui/react-presence@1.1.10(@types/react-dom@19.2.7(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
       '@radix-ui/react-use-layout-effect': 1.1.4(@types/react@19.2.18)(react@19.2.8)
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
     optionalDependencies:
       '@types/react': 19.2.18
-      '@types/react-dom': 19.2.5(@types/react@19.2.18)
+      '@types/react-dom': 19.2.7(@types/react@19.2.18)
 
-  '@radix-ui/react-primitive@2.1.10(@types/react-dom@19.2.5(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@radix-ui/react-primitive@2.1.10(@types/react-dom@19.2.7(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
       '@radix-ui/react-slot': 1.3.3(@types/react@19.2.18)(react@19.2.8)
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
     optionalDependencies:
       '@types/react': 19.2.18
-      '@types/react-dom': 19.2.5(@types/react@19.2.18)
+      '@types/react-dom': 19.2.7(@types/react@19.2.18)
 
   '@radix-ui/react-slot@1.3.3(@types/react@19.2.18)(react@19.2.8)':
     dependencies:
@@ -4582,7 +4582,7 @@ snapshots:
     dependencies:
       '@swc/helpers': 0.5.23
       react: 19.2.8
-      react-aria: 3.51.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      react-aria: 3.52.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       react-dom: 19.2.8(react@19.2.8)
 
   '@react-aria/interactions@3.28.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
@@ -4590,7 +4590,7 @@ snapshots:
       '@react-types/shared': 3.36.1(react@19.2.8)
       '@swc/helpers': 0.5.23
       react: 19.2.8
-      react-aria: 3.51.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      react-aria: 3.52.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       react-dom: 19.2.8(react@19.2.8)
 
   '@react-types/shared@3.36.1(react@19.2.8)':
@@ -4654,14 +4654,14 @@ snapshots:
   '@rolldown/binding-win32-x64-msvc@1.2.6':
     optional: true
 
-  '@rolldown/plugin-babel@0.2.3(@babel/core@8.0.1)(@babel/runtime@7.29.7)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))(rolldown@1.2.6)':
+  '@rolldown/plugin-babel@0.2.3(@babel/core@8.0.1)(@babel/runtime@7.29.7)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))(rolldown@1.2.6)':
     dependencies:
       '@babel/core': 8.0.1
       picomatch: 4.0.7
       rolldown: 1.2.6
     optionalDependencies:
       '@babel/runtime': 7.29.7
-      vite: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3)'
+      vite: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3)'
 
   '@rolldown/pluginutils@1.0.1': {}
 
@@ -4755,12 +4755,12 @@ snapshots:
       '@tailwindcss/oxide-win32-arm64-msvc': 4.3.3
       '@tailwindcss/oxide-win32-x64-msvc': 4.3.3
 
-  '@tailwindcss/vite@4.3.3(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))':
+  '@tailwindcss/vite@4.3.3(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))':
     dependencies:
       '@tailwindcss/node': 4.3.3
       '@tailwindcss/oxide': 4.3.3
       tailwindcss: 4.3.3
-      vite: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3)'
+      vite: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3)'
 
   '@tanstack/hotkeys@0.8.0':
     dependencies:
@@ -4809,7 +4809,7 @@ snapshots:
       picocolors: 1.1.1
       pretty-format: 27.5.1
 
-  '@testing-library/user-event@14.6.6(@testing-library/dom@10.4.1)':
+  '@testing-library/user-event@14.6.7(@testing-library/dom@10.4.1)':
     dependencies:
       '@testing-library/dom': 10.4.1
 
@@ -4881,11 +4881,11 @@ snapshots:
 
   '@types/lodash@4.17.25': {}
 
-  '@types/node@26.4.0':
+  '@types/node@26.4.1':
     dependencies:
       undici-types: 8.3.0
 
-  '@types/react-dom@19.2.5(@types/react@19.2.18)':
+  '@types/react-dom@19.2.7(@types/react@19.2.18)':
     dependencies:
       '@types/react': 19.2.18
 
@@ -4902,36 +4902,36 @@ snapshots:
   '@typescript-eslint/types@8.68.0':
     optional: true
 
-  '@vitejs/plugin-react@6.1.1(@rolldown/plugin-babel@0.2.3(@babel/core@8.0.1)(@babel/runtime@7.29.7)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))(rolldown@1.2.6))(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))(babel-plugin-react-compiler@1.0.0)':
+  '@vitejs/plugin-react@6.1.1(@rolldown/plugin-babel@0.2.3(@babel/core@8.0.1)(@babel/runtime@7.29.7)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))(rolldown@1.2.6))(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))(babel-plugin-react-compiler@1.0.0)':
     dependencies:
       '@rolldown/pluginutils': 1.0.1
-      vite: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3)'
+      vite: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3)'
     optionalDependencies:
-      '@rolldown/plugin-babel': 0.2.3(@babel/core@8.0.1)(@babel/runtime@7.29.7)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))(rolldown@1.2.6)
+      '@rolldown/plugin-babel': 0.2.3(@babel/core@8.0.1)(@babel/runtime@7.29.7)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))(rolldown@1.2.6)
       babel-plugin-react-compiler: 1.0.0
 
-  '@vitest/browser-preview@4.1.11(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))(vitest@4.1.11)':
+  '@vitest/browser-preview@4.1.11(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))(vitest@4.1.11)':
     dependencies:
       '@testing-library/dom': 10.4.1
-      '@testing-library/user-event': 14.6.6(@testing-library/dom@10.4.1)
-      '@vitest/browser': 4.1.11(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))(vitest@4.1.11)
-      vitest: 4.1.11(@types/node@26.4.0)(@vitest/browser-preview@4.1.11)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))
+      '@testing-library/user-event': 14.6.7(@testing-library/dom@10.4.1)
+      '@vitest/browser': 4.1.11(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))(vitest@4.1.11)
+      vitest: 4.1.11(@types/node@26.4.1)(@vitest/browser-preview@4.1.11)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))
     transitivePeerDependencies:
       - bufferutil
       - msw
       - utf-8-validate
       - vite
 
-  '@vitest/browser@4.1.11(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))(vitest@4.1.11)':
+  '@vitest/browser@4.1.11(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))(vitest@4.1.11)':
     dependencies:
       '@blazediff/core': 1.9.1
-      '@vitest/mocker': 4.1.11(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))
+      '@vitest/mocker': 4.1.11(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))
       '@vitest/utils': 4.1.11
       magic-string: 0.30.21
       pngjs: 7.0.0
       sirv: 3.0.2
       tinyrainbow: 3.1.1
-      vitest: 4.1.11(@types/node@26.4.0)(@vitest/browser-preview@4.1.11)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))
+      vitest: 4.1.11(@types/node@26.4.1)(@vitest/browser-preview@4.1.11)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))
       ws: 8.21.3
     transitivePeerDependencies:
       - bufferutil
@@ -4948,13 +4948,13 @@ snapshots:
       chai: 6.2.2
       tinyrainbow: 3.1.1
 
-  '@vitest/mocker@4.1.11(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))':
+  '@vitest/mocker@4.1.11(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))':
     dependencies:
       '@vitest/spy': 4.1.11
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3)'
+      vite: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3)'
 
   '@vitest/pretty-format@4.1.11':
     dependencies:
@@ -4980,7 +4980,7 @@ snapshots:
       convert-source-map: 2.0.0
       tinyrainbow: 3.1.1
 
-  '@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3)':
+  '@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3)':
     dependencies:
       '@oxc-project/runtime': 0.146.0
       '@oxc-project/types': 0.146.0
@@ -4989,7 +4989,7 @@ snapshots:
       yuku-codegen: 0.5.48
       yuku-parser: 0.5.48
     optionalDependencies:
-      '@types/node': 26.4.0
+      '@types/node': 26.4.1
       '@voidzero-dev/vite-plus-darwin-arm64': 0.3.0
       '@voidzero-dev/vite-plus-darwin-x64': 0.3.0
       '@voidzero-dev/vite-plus-linux-arm64-gnu': 0.3.0
@@ -5166,7 +5166,7 @@ snapshots:
   ajv@8.20.0:
     dependencies:
       fast-deep-equal: 3.1.3
-      fast-uri: 3.1.6
+      fast-uri: 3.1.7
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
 
@@ -5244,7 +5244,7 @@ snapshots:
     dependencies:
       baseline-browser-mapping: 2.11.20
       caniuse-lite: 1.0.30001810
-      electron-to-chromium: 1.5.417
+      electron-to-chromium: 1.5.420
       node-releases: 2.0.54
       update-browserslist-db: 1.3.2(browserslist@4.28.8)
 
@@ -5304,12 +5304,12 @@ snapshots:
 
   clsx@2.1.1: {}
 
-  cmdk@1.1.1(@types/react-dom@19.2.5(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
+  cmdk@1.1.1(@types/react-dom@19.2.7(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
     dependencies:
       '@radix-ui/react-compose-refs': 1.1.5(@types/react@19.2.18)(react@19.2.8)
-      '@radix-ui/react-dialog': 1.1.23(@types/react-dom@19.2.5(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@radix-ui/react-dialog': 1.1.23(@types/react-dom@19.2.7(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@radix-ui/react-id': 1.1.4(@types/react@19.2.18)(react@19.2.8)
-      '@radix-ui/react-primitive': 2.1.10(@types/react-dom@19.2.5(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@radix-ui/react-primitive': 2.1.10(@types/react-dom@19.2.7(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
     transitivePeerDependencies:
@@ -5486,7 +5486,7 @@ snapshots:
 
   ee-first@1.1.1: {}
 
-  electron-to-chromium@1.5.417: {}
+  electron-to-chromium@1.5.420: {}
 
   embla-carousel-react@8.6.0(react@19.2.8):
     dependencies:
@@ -5652,7 +5652,7 @@ snapshots:
       merge2: 1.4.1
       micromatch: 4.0.8
 
-  fast-uri@3.1.6: {}
+  fast-uri@3.1.7: {}
 
   fastq@1.20.3:
     dependencies:
@@ -5741,7 +5741,7 @@ snapshots:
     dependencies:
       is-glob: 4.0.3
 
-  globals@17.11.0: {}
+  globals@17.12.0: {}
 
   gopd@1.2.0: {}
 
@@ -5935,11 +5935,11 @@ snapshots:
     dependencies:
       es-toolkit: 1.52.0
 
-  laravel-vite-plugin@3.2.0(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3)):
+  laravel-vite-plugin@3.2.0(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3)):
     dependencies:
       picocolors: 1.1.1
       tinyglobby: 0.2.17
-      vite: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3)'
+      vite: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3)'
       vite-plugin-full-reload: 1.2.0
 
   lightningcss-android-arm64@1.32.0:
@@ -6062,7 +6062,7 @@ snapshots:
     dependencies:
       yallist: 3.1.1
 
-  lucide-react@1.38.0(react@19.2.8):
+  lucide-react@1.40.0(react@19.2.8):
     dependencies:
       react: 19.2.8
 
@@ -6184,7 +6184,7 @@ snapshots:
       string-width: 7.2.0
       strip-ansi: 7.2.0
 
-  oxfmt@0.64.0(svelte@5.56.8(@typescript-eslint/types@8.68.0))(vite-plus@0.3.0(@types/node@26.4.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))(jiti@2.7.0)(svelte@5.56.8(@typescript-eslint/types@8.68.0))(typescript@6.0.3)):
+  oxfmt@0.64.0(svelte@5.56.8(@typescript-eslint/types@8.68.0))(vite-plus@0.3.0(@types/node@26.4.1)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))(jiti@2.7.0)(svelte@5.56.8(@typescript-eslint/types@8.68.0))(typescript@6.0.3)):
     dependencies:
       tinypool: 2.1.0
     optionalDependencies:
@@ -6208,7 +6208,7 @@ snapshots:
       '@oxfmt/binding-win32-ia32-msvc': 0.64.0
       '@oxfmt/binding-win32-x64-msvc': 0.64.0
       svelte: 5.56.8(@typescript-eslint/types@8.68.0)
-      vite-plus: 0.3.0(@types/node@26.4.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))(jiti@2.7.0)(svelte@5.56.8(@typescript-eslint/types@8.68.0))(typescript@6.0.3)
+      vite-plus: 0.3.0(@types/node@26.4.1)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))(jiti@2.7.0)(svelte@5.56.8(@typescript-eslint/types@8.68.0))(typescript@6.0.3)
 
   oxlint-tsgolint@7.0.2001:
     optionalDependencies:
@@ -6219,7 +6219,7 @@ snapshots:
       '@oxlint-tsgolint/win32-arm64': 7.0.2001
       '@oxlint-tsgolint/win32-x64': 7.0.2001
 
-  oxlint@1.79.0(oxlint-tsgolint@7.0.2001)(vite-plus@0.3.0(@types/node@26.4.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))(jiti@2.7.0)(svelte@5.56.8(@typescript-eslint/types@8.68.0))(typescript@6.0.3)):
+  oxlint@1.79.0(oxlint-tsgolint@7.0.2001)(vite-plus@0.3.0(@types/node@26.4.1)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))(jiti@2.7.0)(svelte@5.56.8(@typescript-eslint/types@8.68.0))(typescript@6.0.3)):
     optionalDependencies:
       '@oxlint/binding-android-arm-eabi': 1.79.0
       '@oxlint/binding-android-arm64': 1.79.0
@@ -6241,7 +6241,7 @@ snapshots:
       '@oxlint/binding-win32-ia32-msvc': 1.79.0
       '@oxlint/binding-win32-x64-msvc': 1.79.0
       oxlint-tsgolint: 7.0.2001
-      vite-plus: 0.3.0(@types/node@26.4.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))(jiti@2.7.0)(svelte@5.56.8(@typescript-eslint/types@8.68.0))(typescript@6.0.3)
+      vite-plus: 0.3.0(@types/node@26.4.1)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))(jiti@2.7.0)(svelte@5.56.8(@typescript-eslint/types@8.68.0))(typescript@6.0.3)
 
   p-limit@2.3.0:
     dependencies:
@@ -6348,10 +6348,10 @@ snapshots:
       iconv-lite: 0.7.3
       unpipe: 1.0.0
 
-  react-aria@3.51.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
+  react-aria@3.52.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
     dependencies:
-      '@internationalized/date': 3.12.3
-      '@internationalized/number': 3.6.7
+      '@internationalized/date': 3.12.4
+      '@internationalized/number': 3.6.8
       '@internationalized/string': 3.2.10
       '@react-types/shared': 3.36.1(react@19.2.8)
       '@swc/helpers': 0.5.23
@@ -6359,7 +6359,7 @@ snapshots:
       clsx: 2.1.1
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
-      react-stately: 3.49.0(react@19.2.8)
+      react-stately: 3.50.0(react@19.2.8)
       use-sync-external-store: 1.6.0(react@19.2.8)
 
   react-day-picker@10.0.1(@types/react@19.2.18)(react@19.2.8):
@@ -6416,10 +6416,10 @@ snapshots:
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
 
-  react-stately@3.49.0(react@19.2.8):
+  react-stately@3.50.0(react@19.2.8):
     dependencies:
-      '@internationalized/date': 3.12.3
-      '@internationalized/number': 3.6.7
+      '@internationalized/date': 3.12.4
+      '@internationalized/number': 3.6.8
       '@internationalized/string': 3.2.10
       '@react-types/shared': 3.36.1(react@19.2.8)
       '@swc/helpers': 0.5.23
@@ -6567,7 +6567,7 @@ snapshots:
 
   setprototypeof@1.2.0: {}
 
-  shadcn@4.19.1(supports-color@10.2.2)(typescript@6.0.3):
+  shadcn@4.20.1(supports-color@10.2.2)(typescript@6.0.3):
     dependencies:
       '@babel/core': 7.29.7(supports-color@10.2.2)
       '@babel/parser': 7.29.8
@@ -6750,7 +6750,7 @@ snapshots:
     transitivePeerDependencies:
       - '@typescript-eslint/types'
 
-  systeminformation@5.33.6: {}
+  systeminformation@5.33.7: {}
 
   tabbable@6.5.0: {}
 
@@ -6882,24 +6882,24 @@ snapshots:
       picocolors: 1.1.1
       picomatch: 2.3.2
 
-  vite-plus@0.3.0(@types/node@26.4.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))(jiti@2.7.0)(svelte@5.56.8(@typescript-eslint/types@8.68.0))(typescript@6.0.3):
+  vite-plus@0.3.0(@types/node@26.4.1)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))(jiti@2.7.0)(svelte@5.56.8(@typescript-eslint/types@8.68.0))(typescript@6.0.3):
     dependencies:
       '@oxc-project/types': 0.146.0
       '@oxlint/plugins': 1.79.0
-      '@vitest/browser': 4.1.11(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))(vitest@4.1.11)
-      '@vitest/browser-preview': 4.1.11(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))(vitest@4.1.11)
+      '@vitest/browser': 4.1.11(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))(vitest@4.1.11)
+      '@vitest/browser-preview': 4.1.11(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))(vitest@4.1.11)
       '@vitest/expect': 4.1.11
-      '@vitest/mocker': 4.1.11(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))
+      '@vitest/mocker': 4.1.11(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))
       '@vitest/pretty-format': 4.1.11
       '@vitest/runner': 4.1.11
       '@vitest/snapshot': 4.1.11
       '@vitest/spy': 4.1.11
       '@vitest/utils': 4.1.11
-      '@voidzero-dev/vite-plus-core': 0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3)
-      oxfmt: 0.64.0(svelte@5.56.8(@typescript-eslint/types@8.68.0))(vite-plus@0.3.0(@types/node@26.4.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))(jiti@2.7.0)(svelte@5.56.8(@typescript-eslint/types@8.68.0))(typescript@6.0.3))
-      oxlint: 1.79.0(oxlint-tsgolint@7.0.2001)(vite-plus@0.3.0(@types/node@26.4.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))(jiti@2.7.0)(svelte@5.56.8(@typescript-eslint/types@8.68.0))(typescript@6.0.3))
+      '@voidzero-dev/vite-plus-core': 0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3)
+      oxfmt: 0.64.0(svelte@5.56.8(@typescript-eslint/types@8.68.0))(vite-plus@0.3.0(@types/node@26.4.1)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))(jiti@2.7.0)(svelte@5.56.8(@typescript-eslint/types@8.68.0))(typescript@6.0.3))
+      oxlint: 1.79.0(oxlint-tsgolint@7.0.2001)(vite-plus@0.3.0(@types/node@26.4.1)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))(jiti@2.7.0)(svelte@5.56.8(@typescript-eslint/types@8.68.0))(typescript@6.0.3))
       oxlint-tsgolint: 7.0.2001
-      vitest: 4.1.11(@types/node@26.4.0)(@vitest/browser-preview@4.1.11)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))
+      vitest: 4.1.11(@types/node@26.4.1)(@vitest/browser-preview@4.1.11)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))
     optionalDependencies:
       '@voidzero-dev/vite-plus-darwin-arm64': 0.3.0
       '@voidzero-dev/vite-plus-darwin-x64': 0.3.0
@@ -6940,10 +6940,10 @@ snapshots:
       - vite
       - yaml
 
-  vitest@4.1.11(@types/node@26.4.0)(@vitest/browser-preview@4.1.11)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3)):
+  vitest@4.1.11(@types/node@26.4.1)(@vitest/browser-preview@4.1.11)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3)):
     dependencies:
       '@vitest/expect': 4.1.11
-      '@vitest/mocker': 4.1.11(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))
+      '@vitest/mocker': 4.1.11(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))
       '@vitest/pretty-format': 4.1.11
       '@vitest/runner': 4.1.11
       '@vitest/snapshot': 4.1.11
@@ -6960,11 +6960,11 @@ snapshots:
       tinyexec: 1.3.0
       tinyglobby: 0.2.17
       tinyrainbow: 3.1.1
-      vite: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3)'
+      vite: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3)'
       why-is-node-running: 2.3.0
     optionalDependencies:
-      '@types/node': 26.4.0
-      '@vitest/browser-preview': 4.1.11(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.0)(jiti@2.7.0)(typescript@6.0.3))(vitest@4.1.11)
+      '@types/node': 26.4.1
+      '@vitest/browser-preview': 4.1.11(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.4.1)(jiti@2.7.0)(typescript@6.0.3))(vitest@4.1.11)
     transitivePeerDependencies:
       - msw
 
