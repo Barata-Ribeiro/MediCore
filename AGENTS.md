@@ -208,19 +208,6 @@ Use Wayfinder to generate TypeScript functions for Laravel routes. Import from `
 
 - IMPORTANT: Activate `inertia-react-development` when working with Inertia React client-side patterns.
 
-=== inertia-svelte/core rules ===
-
-# Inertia + Svelte
-
-- IMPORTANT: Activate `inertia-svelte-development` when working with Inertia Svelte client-side patterns.
-
-=== inertia-vue/core rules ===
-
-# Inertia + Vue
-
-Vue components must have a single root element.
-- IMPORTANT: Activate `inertia-vue-development` when working with Inertia Vue client-side patterns.
-
 === inertiaui/modal/core rules ===
 
 ## Inertia Modal
