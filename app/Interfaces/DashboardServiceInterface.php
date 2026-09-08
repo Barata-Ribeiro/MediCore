@@ -18,6 +18,7 @@ interface DashboardServiceInterface
      *         glucoses_count: int,
      *         lipid_profiles_count: int,
      *         ultrasensitive_tshs_count: int,
+     *         tgo_and_tgps_count: int,
      *         urea_and_creatinines_count: int,
      *         vitamin_d3s_count: int,
      *         vitamin_b12s_count: int,

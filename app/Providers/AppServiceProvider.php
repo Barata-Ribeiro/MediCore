@@ -7,6 +7,7 @@ use App\Interfaces\DashboardServiceInterface;
 use App\Interfaces\Exams\CompleteBloodCountServiceInterface;
 use App\Interfaces\Exams\GlucoseServiceInterface;
 use App\Interfaces\Exams\LipidProfileServiceInterface;
+use App\Interfaces\Exams\TgoAndTgpServiceInterface;
 use App\Interfaces\Exams\TotalProteinsAndFractionsServiceInterface;
 use App\Interfaces\Exams\UltrasensitiveTshServiceInterface;
 use App\Interfaces\Exams\UreaAndCreatinineServiceInterface;
@@ -19,6 +20,7 @@ use App\Services\DashboardService;
 use App\Services\Exams\CompleteBloodCountService;
 use App\Services\Exams\GlucoseService;
 use App\Services\Exams\LipidProfileService;
+use App\Services\Exams\TgoAndTgpService;
 use App\Services\Exams\TotalProteinsAndFractionsService;
 use App\Services\Exams\UltrasensitiveTshService;
 use App\Services\Exams\UreaAndCreatinineService;
@@ -86,6 +88,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             VitaminB12ServiceInterface::class,
             VitaminB12Service::class
+        );
+
+        $this->app->bind(
+            TgoAndTgpServiceInterface::class,
+            TgoAndTgpService::class
         );
 
         $this->app->bind(
