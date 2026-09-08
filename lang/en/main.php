@@ -16,6 +16,7 @@ return [
                 'lipid_profile' => 'Lipid Profile',
                 'total_proteins_and_fractions' => 'Total Proteins and Fractions',
                 'ultrasensitive_tsh' => 'Ultrasensitive TSH',
+                'tgo_and_tgp' => 'TGO and TGP',
                 'urea_and_creatinine' => 'Urea and Creatinine',
                 'uric_acid' => 'Uric Acid',
                 'vitamin_b12' => 'Vitamin B12',

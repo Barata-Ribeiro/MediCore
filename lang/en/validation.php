@@ -198,6 +198,9 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'tgo_level' => 'TGO (AST)',
+        'tgp_level' => 'TGP (ALT)',
+    ],
 
 ];

@@ -54,6 +54,16 @@ return [
             'destroy_successfully' => 'Ultrasensitive TSH record deleted successfully.',
             'destroy_failed' => 'An error occurred while deleting the ultrasensitive TSH record. Please try again.',
         ],
+        'tgo_and_tgp' => [
+            'store_successfully' => 'TGO and TGP record created successfully.',
+            'store_failed' => 'An error occurred while creating the TGO and TGP record. Please try again.',
+            'update_unauthorized' => 'You are not authorized to update this TGO and TGP record.',
+            'update_successfully' => 'TGO and TGP record updated successfully.',
+            'update_failed' => 'An error occurred while updating the TGO and TGP record. Please try again.',
+            'destroy_unauthorized' => 'You are not authorized to delete this TGO and TGP record.',
+            'destroy_successfully' => 'TGO and TGP record deleted successfully.',
+            'destroy_failed' => 'An error occurred while deleting the TGO and TGP record. Please try again.',
+        ],
         'urea_and_creatinine' => [
             'store_successfully' => 'Urea and creatinine record created successfully.',
             'store_failed' => 'An error occurred while creating the urea and creatinine record. Please try again.',
