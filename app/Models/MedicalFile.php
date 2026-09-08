@@ -6,6 +6,7 @@ use App\Enums\BloodType;
 use App\Models\Exams\CompleteBloodCount;
 use App\Models\Exams\Glucose;
 use App\Models\Exams\LipidProfile;
+use App\Models\Exams\TgoAndTgp;
 use App\Models\Exams\TotalProteinsAndFractions;
 use App\Models\Exams\UltrasensitiveTsh;
 use App\Models\Exams\UreaAndCreatinine;
@@ -53,6 +54,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read Collection<int, UltrasensitiveTsh> $ultrasensitiveTshs
  * @property-read int|null $ultrasensitive_tshs_count
  * @property-read bool|null $ultrasensitive_tshs_exists
+ * @property-read Collection<int, TgoAndTgp> $tgoAndTgps
+ * @property-read int|null $tgo_and_tgps_count
+ * @property-read bool|null $tgo_and_tgps_exists
  * @property-read Collection<int, UreaAndCreatinine> $ureaAndCreatinines
  * @property-read int|null $urea_and_creatinines_count
  * @property-read bool|null $urea_and_creatinines_exists
@@ -180,6 +184,14 @@ class MedicalFile extends Model
     public function ultrasensitiveTshs(): HasMany
     {
         return $this->hasMany(UltrasensitiveTsh::class);
+    }
+
+    /**
+     * @return HasMany<TgoAndTgp, $this>
+     */
+    public function tgoAndTgps(): HasMany
+    {
+        return $this->hasMany(TgoAndTgp::class);
     }
 
     /**
