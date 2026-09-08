@@ -32,7 +32,10 @@ const ExamsSummaryChart = memo<Readonly<Props>>(({ exams }) => {
             const examKey = key.replace(/_count$/, '');
 
             acc[examKey] = {
-                label: normalizeString(examKey),
+                label:
+                    examKey === 'tgo_and_tgps'
+                        ? __('main.menu.sidebar_items.exams_items.tgo_and_tgp')
+                        : normalizeString(examKey),
                 color: `var(--chart-${(index % 6) + 1})`,
             };
 

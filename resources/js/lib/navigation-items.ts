@@ -7,6 +7,7 @@ import { edit } from '@/routes/medical-file';
 import { index as muscleGroupsIndex } from '@/routes/muscle-groups';
 import { index as totalProteinsAndFractionsIndex } from '@/routes/total-proteins-and-fractions';
 import { index as ultrasensitiveTshIndex } from '@/routes/ultrasensitive-tsh';
+import { index as tgoAndTgpIndex } from '@/routes/tgo-and-tgp';
 import { index as ureaAndCreatinineIndex } from '@/routes/urea-and-creatinine';
 import { index as vitaminB12Index } from '@/routes/vitamin-b12';
 import { index as vitaminD3Index } from '@/routes/vitamin-d3';
@@ -56,6 +57,10 @@ const mainNavItems: NavItem[] = [
             {
                 title_path: 'main.menu.sidebar_items.exams_items.ultrasensitive_tsh',
                 href: ultrasensitiveTshIndex(),
+            },
+            {
+                title_path: 'main.menu.sidebar_items.exams_items.tgo_and_tgp',
+                href: tgoAndTgpIndex(),
             },
             {
                 title_path: 'main.menu.sidebar_items.exams_items.urea_and_creatinine',

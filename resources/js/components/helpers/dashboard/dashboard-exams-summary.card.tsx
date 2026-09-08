@@ -15,7 +15,10 @@ const DashboardExamsSummaryCard = memo<Readonly<Props>>(({ exams }) => {
         .reduce(
             (acc, [key, value]) => {
                 const removeCounterSuffix = key.replace(/_count$/, '');
-                const normalizedKey = normalizeString(removeCounterSuffix);
+                const normalizedKey =
+                    removeCounterSuffix === 'tgo_and_tgps'
+                        ? __('main.menu.sidebar_items.exams_items.tgo_and_tgp')
+                        : normalizeString(removeCounterSuffix);
                 acc[normalizedKey] = value;
 
                 return acc;
