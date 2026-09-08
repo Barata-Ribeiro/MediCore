@@ -1,8 +1,24 @@
 <?php
 
+use App\Models\Exams\TgoAndTgp;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Inertia\Testing\AssertableInertia;
+
+test('dashboard includes only the authenticated user TGO and TGP records in totals', function () {
+    $user = User::factory()->create();
+    $medicalFile = $user->medicalFile()->create();
+    TgoAndTgp::factory()->count(2)->for($medicalFile)->create();
+    TgoAndTgp::factory()->create();
+
+    $this->actingAs($user)->get(route('dashboard'))
+        ->assertOk()->assertInertia(fn (AssertableInertia $page) => $page
+        ->where('data.exams.tgo_and_tgps_count', 2)
+        ->where('data.exams.total', 2)
+        ->where('lang.main.menu.sidebar_items.exams_items.tgo_and_tgp', 'TGO and TGP')
+        ->missing('data.medicalFile.tgo_and_tgps_count')
+        );
+});
 
 test('guests are redirected to the login page', function () {
     $response = $this->get(route('dashboard'));
@@ -52,6 +68,7 @@ test('dashboard route uses the dashboard service data', function () {
                 ->has('total_proteins_and_fractions_count')
                 ->has('glucoses_count')
                 ->has('ultrasensitive_tshs_count')
+                ->has('tgo_and_tgps_count')
                 ->has('urea_and_creatinines_count')
                 ->has('vitamin_d3s_count')
                 ->has('vitamin_b12s_count')
