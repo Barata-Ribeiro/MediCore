@@ -3,12 +3,85 @@
 use App\Models\Fitness\Exercise;
 use App\Models\Fitness\MuscleGroup;
 use App\Models\Fitness\Workout;
+use App\Models\Fitness\WorkoutExercise;
+use App\Models\Fitness\WorkoutSection;
 use App\Models\User;
+use Illuminate\Support\Facades\Event;
 use Inertia\Testing\AssertableInertia;
 
 beforeEach(function () {
     $this->withoutVite();
+    $this->travelTo('2026-08-10 12:00:00');
 });
+
+it('redirects guests from the remaining workout routes', function (string $method, string $action) {
+    $this->actingAsGuest()->{$method}(route('workouts.'.$action, 999), [])
+        ->assertRedirect(route('login'));
+})->with([
+    'show' => ['get', 'show'],
+    'edit' => ['get', 'edit'],
+    'update' => ['put', 'update'],
+]);
+
+it('rejects invalid workout data without changing existing sections or exercises', function (string $field, mixed $value, string $method) {
+    $row = WorkoutExercise::factory()->create();
+    $workout = $row->section->workout;
+    $muscleGroup = MuscleGroup::factory()->for($workout->user)->create();
+    $row->exercise->muscleGroups()->attach($muscleGroup);
+    $payload = workoutPayload($row->exercise, $muscleGroup);
+    data_set($payload, $field, $value);
+    $originalWorkout = $workout->getRawOriginal();
+    $originalRow = $row->getRawOriginal();
+    $route = $method === 'post' ? route('workouts.store') : route('workouts.update', $workout);
+
+    $this->actingAs($workout->user)->{$method}($route, $payload)
+        ->assertSessionHasErrors($field);
+
+    $this->assertDatabaseCount('workouts', 1);
+    $this->assertDatabaseCount('workout_sections', 1);
+    $this->assertDatabaseCount('workout_exercises', 1);
+    $this->assertDatabaseHas('workouts', $originalWorkout);
+    $this->assertDatabaseHas('workout_exercises', $originalRow);
+})->with([
+    'invalid date' => ['filled_at', 'invalid'],
+    'change before start' => ['next_change_at', '2026-08-09'],
+    'negative rest' => ['rest_between_sets', -1],
+    'missing section name' => ['sections.0.name', null],
+    'negative section order' => ['sections.0.order', -1],
+    'no sets' => ['sections.0.exercises.0.sets', 0],
+    'negative load' => ['sections.0.exercises.0.load', -1],
+    'missing reps' => ['sections.0.exercises.0.reps', null],
+    'missing unit' => ['sections.0.exercises.0.load_unit', null],
+])->with(['post', 'put']);
+
+it('rolls back the workout and nested records when an exercise cannot be saved', function (string $method) {
+    $row = WorkoutExercise::factory()->create();
+    $workout = $row->section->workout;
+    $muscleGroup = MuscleGroup::factory()->for($workout->user)->create();
+    $row->exercise->muscleGroups()->attach($muscleGroup);
+    $payload = workoutPayload($row->exercise, $muscleGroup);
+    $original = $workout->getRawOriginal();
+    $eventName = 'eloquent.creating: '.WorkoutExercise::class;
+    Event::listen($eventName, function () {
+        throw new RuntimeException('Persistence unavailable');
+    });
+
+    try {
+        $route = $method === 'post' ? route('workouts.store') : route('workouts.update', $workout);
+
+        $this->from(route('workouts.index'))->actingAs($workout->user)->{$method}($route, $payload)
+            ->assertRedirect(route('workouts.index'))
+            ->assertInertiaFlash('toast.type', 'error');
+
+        $this->assertDatabaseCount('workouts', 1);
+        $this->assertDatabaseCount('workout_sections', 1);
+        $this->assertDatabaseCount('workout_exercises', 1);
+        $this->assertDatabaseHas('workouts', $original);
+        $this->assertModelExists($row);
+    } finally {
+        Event::forget($eventName);
+    }
+})->with(['post', 'put']);
 
 function workoutPayload(Exercise $exercise, MuscleGroup $muscleGroup): array
 {
@@ -50,8 +123,8 @@ describe('tests for the "index" method of WorkoutController', function () {
         $user = User::factory()->create();
         $otherUser = User::factory()->create();
 
-        $user->workouts()->create(['goal' => 'User workout']);
-        $otherUser->workouts()->create(['goal' => 'Other workout']);
+        Workout::factory()->for($user)->create(['goal' => 'User workout']);
+        Workout::factory()->for($otherUser)->create(['goal' => 'Other workout']);
 
         $response = $this->actingAs($user)->get(route('workouts.index'));
 
@@ -59,7 +132,7 @@ describe('tests for the "index" method of WorkoutController', function () {
         $response->assertInertia(fn (AssertableInertia $page) => $page
             ->component($componentName)
             ->has('workouts.data', 1)
-            ->where('workouts.data.0.goal', fn (string $goal): bool => $goal === 'User workout')
+            ->where('workouts.data.0.goal', 'User workout')
         );
     });
 
@@ -77,12 +150,12 @@ describe('tests for the "create" method of WorkoutController', function () {
         $user = User::factory()->create();
         $otherUser = User::factory()->create();
 
-        $exercise = Exercise::create(['name' => 'Bench Press', 'user_id' => $user->id]);
-        $muscleGroup = MuscleGroup::create(['name' => 'Pectorals', 'user_id' => $user->id]);
+        $exercise = Exercise::factory()->for($user)->create(['name' => 'Bench Press']);
+        $muscleGroup = MuscleGroup::factory()->for($user)->create(['name' => 'Pectorals']);
         $exercise->muscleGroups()->attach($muscleGroup->id);
 
-        Exercise::create(['name' => 'Other exercise', 'user_id' => $otherUser->id]);
-        MuscleGroup::create(['name' => 'Other group', 'user_id' => $otherUser->id]);
+        Exercise::factory()->for($otherUser)->create(['name' => 'Other exercise']);
+        MuscleGroup::factory()->for($otherUser)->create(['name' => 'Other group']);
 
         $response = $this->actingAs($user)->get(route('workouts.create'));
 
@@ -104,8 +177,8 @@ describe('tests for the "create" method of WorkoutController', function () {
 describe('tests for the "store" method of WorkoutController', function () {
     it('should store workout with sections and exercises and redirect to index', function () {
         $user = User::factory()->create();
-        $exercise = Exercise::create(['name' => 'Bench Press', 'user_id' => $user->id]);
-        $muscleGroup = MuscleGroup::create(['name' => 'Pectorals', 'user_id' => $user->id]);
+        $exercise = Exercise::factory()->for($user)->create(['name' => 'Bench Press']);
+        $muscleGroup = MuscleGroup::factory()->for($user)->create(['name' => 'Pectorals']);
         $exercise->muscleGroups()->attach($muscleGroup->id);
 
         $payload = workoutPayload($exercise, $muscleGroup);
@@ -149,9 +222,9 @@ describe('tests for the "store" method of WorkoutController', function () {
 
     it('should reject muscle groups not linked to the selected exercise', function () {
         $user = User::factory()->create();
-        $exercise = Exercise::create(['name' => 'Bench Press', 'user_id' => $user->id]);
-        $linkedMuscleGroup = MuscleGroup::create(['name' => 'Pectorals', 'user_id' => $user->id]);
-        $mismatchedMuscleGroup = MuscleGroup::create(['name' => 'Quadriceps', 'user_id' => $user->id]);
+        $exercise = Exercise::factory()->for($user)->create(['name' => 'Bench Press']);
+        $linkedMuscleGroup = MuscleGroup::factory()->for($user)->create(['name' => 'Pectorals']);
+        $mismatchedMuscleGroup = MuscleGroup::factory()->for($user)->create(['name' => 'Quadriceps']);
 
         $exercise->muscleGroups()->attach($linkedMuscleGroup->id);
 
@@ -173,8 +246,8 @@ describe('tests for the "store" method of WorkoutController', function () {
         $user = User::factory()->create();
         $otherUser = User::factory()->create();
 
-        $exercise = Exercise::create(['name' => 'Bench Press', 'user_id' => $otherUser->id]);
-        $muscleGroup = MuscleGroup::create(['name' => 'Pectorals', 'user_id' => $otherUser->id]);
+        $exercise = Exercise::factory()->for($otherUser)->create(['name' => 'Bench Press']);
+        $muscleGroup = MuscleGroup::factory()->for($otherUser)->create(['name' => 'Pectorals']);
         $exercise->muscleGroups()->attach($muscleGroup->id);
 
         $payload = workoutPayload($exercise, $muscleGroup);
@@ -192,7 +265,7 @@ describe('tests for the "show" method of WorkoutController', function () {
 
     it('should return the show view for workout owner', function () use ($componentName) {
         $user = User::factory()->create();
-        $workout = $user->workouts()->create(['goal' => 'Maintain']);
+        $workout = Workout::factory()->for($user)->create(['goal' => 'Maintain']);
 
         $response = $this->actingAs($user)->get(route('workouts.show', $workout));
 
@@ -206,7 +279,7 @@ describe('tests for the "show" method of WorkoutController', function () {
     it('should not allow showing another user workout', function () {
         $user = User::factory()->create();
         $otherUser = User::factory()->create();
-        $workout = $otherUser->workouts()->create(['goal' => 'Other']);
+        $workout = Workout::factory()->for($otherUser)->create(['goal' => 'Other']);
 
         $response = $this->actingAs($user)->get(route('workouts.show', $workout));
 
@@ -219,9 +292,9 @@ describe('tests for the "edit" method of WorkoutController', function () {
 
     it('should return edit view for workout owner', function () use ($componentName) {
         $user = User::factory()->create();
-        $workout = $user->workouts()->create(['goal' => 'Maintain']);
-        $exercise = Exercise::create(['name' => 'Squat', 'user_id' => $user->id]);
-        $muscleGroup = MuscleGroup::create(['name' => 'Quadriceps', 'user_id' => $user->id]);
+        $workout = Workout::factory()->for($user)->create(['goal' => 'Maintain']);
+        $exercise = Exercise::factory()->for($user)->create(['name' => 'Squat']);
+        $muscleGroup = MuscleGroup::factory()->for($user)->create(['name' => 'Quadriceps']);
         $exercise->muscleGroups()->attach($muscleGroup->id);
 
         $response = $this->actingAs($user)->get(route('workouts.edit', $workout));
@@ -238,7 +311,7 @@ describe('tests for the "edit" method of WorkoutController', function () {
     it('should not allow editing another user workout', function () {
         $user = User::factory()->create();
         $otherUser = User::factory()->create();
-        $workout = $otherUser->workouts()->create(['goal' => 'Other']);
+        $workout = Workout::factory()->for($otherUser)->create(['goal' => 'Other']);
 
         $response = $this->actingAs($user)->get(route('workouts.edit', $workout));
 
@@ -249,24 +322,24 @@ describe('tests for the "edit" method of WorkoutController', function () {
 describe('tests for the "update" method of WorkoutController', function () {
     it('should update workout and synchronize nested sections and exercises', function () {
         $user = User::factory()->create();
-        $exerciseA = Exercise::create(['name' => 'Bench Press', 'user_id' => $user->id]);
-        $exerciseB = Exercise::create(['name' => 'Squat', 'user_id' => $user->id]);
-        $muscleGroup = MuscleGroup::create(['name' => 'Pectorals', 'user_id' => $user->id]);
+        $exerciseA = Exercise::factory()->for($user)->create(['name' => 'Bench Press']);
+        $exerciseB = Exercise::factory()->for($user)->create(['name' => 'Squat']);
+        $muscleGroup = MuscleGroup::factory()->for($user)->create(['name' => 'Pectorals']);
         $exerciseA->muscleGroups()->attach($muscleGroup->id);
         $exerciseB->muscleGroups()->attach($muscleGroup->id);
 
-        $workout = $user->workouts()->create([
+        $workout = Workout::factory()->for($user)->create([
             'goal' => 'Initial goal',
             'method' => 'Initial method',
             'is_active' => true,
         ]);
 
-        $section = $workout->sections()->create([
+        $section = WorkoutSection::factory()->for($workout)->create([
             'name' => 'Initial section',
             'order' => 1,
         ]);
 
-        $workoutExercise = $section->exercises()->create([
+        $workoutExercise = WorkoutExercise::factory()->for($section, 'section')->create([
             'exercise_id' => $exerciseA->id,
             'muscle_group_id' => $muscleGroup->id,
             'code' => 'A1',
@@ -331,7 +404,7 @@ describe('tests for the "update" method of WorkoutController', function () {
     it('should not allow updating another user workout', function () {
         $user = User::factory()->create();
         $otherUser = User::factory()->create();
-        $workout = $otherUser->workouts()->create(['goal' => 'Other']);
+        $workout = Workout::factory()->for($otherUser)->create(['goal' => 'Other']);
 
         $response = $this->actingAs($user)->put(route('workouts.update', $workout), [
             'goal' => 'Attempted update',
@@ -348,11 +421,11 @@ describe('tests for the "update" method of WorkoutController', function () {
 describe('tests for the "destroy" method of WorkoutController', function () {
     it('should delete workout and related sections and exercises and redirect to index', function () {
         $user = User::factory()->create();
-        $exercise = Exercise::create(['name' => 'Deadlift', 'user_id' => $user->id]);
+        $exercise = Exercise::factory()->for($user)->create(['name' => 'Deadlift']);
 
-        $workout = $user->workouts()->create(['goal' => 'Delete me']);
-        $section = $workout->sections()->create(['name' => 'Section', 'order' => 1]);
-        $exerciseRow = $section->exercises()->create([
+        $workout = Workout::factory()->for($user)->create(['goal' => 'Delete me']);
+        $section = WorkoutSection::factory()->for($workout)->create(['name' => 'Section', 'order' => 1]);
+        $exerciseRow = WorkoutExercise::factory()->for($section, 'section')->create([
             'exercise_id' => $exercise->id,
             'order' => 1,
             'sets' => 3,
@@ -371,7 +444,7 @@ describe('tests for the "destroy" method of WorkoutController', function () {
     it('should not allow deleting another user workout', function () {
         $user = User::factory()->create();
         $otherUser = User::factory()->create();
-        $workout = $otherUser->workouts()->create(['goal' => 'Other']);
+        $workout = Workout::factory()->for($otherUser)->create(['goal' => 'Other']);
 
         $response = $this->actingAs($user)->delete(route('workouts.destroy', $workout));
 
