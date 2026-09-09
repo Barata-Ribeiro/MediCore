@@ -4,9 +4,11 @@ namespace App\Models\Exams;
 
 use App\Models\MedicalFile;
 use Carbon\CarbonImmutable;
+use Database\Factories\Exams\UricAcidFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Attributes\Touches;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -36,6 +38,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 #[Fillable(['uric_acid_level', 'report_date', 'medical_file_id'])]
 class UricAcid extends Model
 {
+    /** @use HasFactory<UricAcidFactory> */
+    use HasFactory;
+
     /**
      * Get the attributes that should be cast.
      *

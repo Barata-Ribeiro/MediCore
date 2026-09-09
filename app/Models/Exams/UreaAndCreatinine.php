@@ -4,10 +4,12 @@ namespace App\Models\Exams;
 
 use App\Models\MedicalFile;
 use Carbon\CarbonImmutable;
+use Database\Factories\Exams\UreaAndCreatinineFactory;
 use Illuminate\Database\Eloquent\Attributes\Appends;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Attributes\Touches;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -41,6 +43,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 #[Appends(['urea_creatinine_ratio'])]
 class UreaAndCreatinine extends Model
 {
+    /** @use HasFactory<UreaAndCreatinineFactory> */
+    use HasFactory;
+
     /**
      * Get the attributes that should be cast.
      *
