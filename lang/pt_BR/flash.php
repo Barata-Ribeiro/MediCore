@@ -54,6 +54,16 @@ return [
             'destroy_successfully' => 'Registro de TSH ultrassensível excluído com sucesso.',
             'destroy_failed' => 'Ocorreu um erro ao excluir o registro de TSH ultrassensível. Por favor, tente novamente.',
         ],
+        'tgo_and_tgp' => [
+            'store_successfully' => 'Registro de TGO e TGP criado com sucesso.',
+            'store_failed' => 'Ocorreu um erro ao criar o registro de TGO e TGP. Por favor, tente novamente.',
+            'update_unauthorized' => 'Você não está autorizado a atualizar este registro de TGO e TGP.',
+            'update_successfully' => 'Registro de TGO e TGP atualizado com sucesso.',
+            'update_failed' => 'Ocorreu um erro ao atualizar o registro de TGO e TGP. Por favor, tente novamente.',
+            'destroy_unauthorized' => 'Você não está autorizado a excluir este registro de TGO e TGP.',
+            'destroy_successfully' => 'Registro de TGO e TGP excluído com sucesso.',
+            'destroy_failed' => 'Ocorreu um erro ao excluir o registro de TGO e TGP. Por favor, tente novamente.',
+        ],
         'urea_and_creatinine' => [
             'store_successfully' => 'Registro de ureia e creatinina criado com sucesso.',
             'store_failed' => 'Ocorreu um erro ao criar o registro de ureia e creatinina. Por favor, tente novamente.',

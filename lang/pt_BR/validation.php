@@ -199,6 +199,8 @@ return [
     */
 
     'attributes' => [
+        'tgo_level' => 'TGO (AST)',
+        'tgp_level' => 'TGP (ALT)',
         'address' => 'endereço',
         'age' => 'idade',
         'bio' => 'biografia',

@@ -1,0 +1,166 @@
+import ActionConfirmationDialog from '@/components/common/action-confirmation-dialog';
+import DropdownMenuCopyButton from '@/components/common/dropdown-menu-copy-button';
+import DataTableColumnHeader from '@/components/table/data-table-column-header';
+import { Button } from '@/components/ui/button';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { destroy, edit } from '@/routes/tgo-and-tgp';
+import type { TgoAndTgp } from '@/types/application/exams/tgo-and-tgp';
+import { lang } from '@erag/lang-sync-inertia/react';
+import { Link } from '@inertiajs/react';
+import type { Column, ColumnDef } from '@tanstack/react-table';
+import { format } from 'date-fns/format';
+import { CalendarIcon, DeleteIcon, EditIcon, EllipsisIcon } from 'lucide-react';
+import { Fragment, useState } from 'react';
+
+function TableColumnHeader({ column, title }: Readonly<{ column: Column<TgoAndTgp, unknown>; title: string }>) {
+    return <DataTableColumnHeader column={column} title={title} />;
+}
+
+function TgoAndTgpValueCell({ value }: Readonly<{ value: number }>) {
+    const { __ } = lang();
+
+    return `${value} ${__('tgo_and_tgp_pages.shared.unit')}`;
+}
+
+function ActionsCell({ tgoAndTgp }: Readonly<{ tgoAndTgp: TgoAndTgp }>) {
+    const { __, trans } = lang();
+    const [open, setOpen] = useState(false);
+
+    const valuesToCopy = trans('tgo_and_tgp_pages.index.table.copy_values_content', {
+        report_date: format(tgoAndTgp.report_date, 'PPP'),
+        tgo_level: tgoAndTgp.tgo_level,
+        tgp_level: tgoAndTgp.tgp_level,
+        unit: __('tgo_and_tgp_pages.shared.unit'),
+        created_at: format(tgoAndTgp.created_at, 'PPP p'),
+    });
+
+    return (
+        <Fragment>
+            <DropdownMenu modal={false}>
+                <DropdownMenuTrigger
+                    render={
+                        <Button
+                            aria-label={__('tgo_and_tgp_pages.index.table.menu.open_label')}
+                            variant="ghost"
+                            className="aria-expanded:bg-muted flex size-8 p-0"
+                        >
+                            <EllipsisIcon aria-hidden data-icon="inline-start" />
+                        </Button>
+                    }
+                />
+                <DropdownMenuContent align="end" className="w-40">
+                    <DropdownMenuGroup>
+                        <DropdownMenuLabel>{__('tgo_and_tgp_pages.index.table.menu.copy_fields')}</DropdownMenuLabel>
+                        <DropdownMenuCopyButton content={valuesToCopy}>
+                            {__('tgo_and_tgp_pages.index.table.menu.copy_values')}
+                        </DropdownMenuCopyButton>
+                    </DropdownMenuGroup>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuGroup>
+                        <DropdownMenuLabel>{__('tgo_and_tgp_pages.index.table.menu.actions')}</DropdownMenuLabel>
+                        <DropdownMenuItem
+                            nativeButton
+                            render={
+                                <Link className="block w-full" href={edit(tgoAndTgp.id)} as="button">
+                                    <EditIcon aria-hidden data-icon="inline-start" />{' '}
+                                    {__('tgo_and_tgp_pages.index.table.menu.edit')}
+                                </Link>
+                            }
+                        />
+                        <DropdownMenuItem variant="destructive" onClick={() => setOpen(true)}>
+                            <DeleteIcon aria-hidden data-icon="inline-start" />{' '}
+                            {__('tgo_and_tgp_pages.index.table.menu.delete')}
+                        </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                </DropdownMenuContent>
+            </DropdownMenu>
+
+            <ActionConfirmationDialog
+                title={__('tgo_and_tgp_pages.index.table.delete_dialog.title')}
+                description={__('tgo_and_tgp_pages.index.table.delete_dialog.description')}
+                open={open}
+                setOpen={setOpen}
+                method="delete"
+                route={destroy(tgoAndTgp.id)}
+            />
+        </Fragment>
+    );
+}
+
+export function useTgoAndTgpColumns(): ColumnDef<TgoAndTgp>[] {
+    const { __ } = lang();
+
+    return [
+        {
+            accessorKey: 'id',
+            header: ({ column }) => (
+                <TableColumnHeader column={column} title={__('tgo_and_tgp_pages.index.table.columns.id')} />
+            ),
+            enableSorting: true,
+            enableHiding: false,
+            size: 40,
+        },
+        {
+            accessorKey: 'report_date',
+            header: ({ column }) => (
+                <TableColumnHeader column={column} title={__('tgo_and_tgp_pages.index.table.columns.report_date')} />
+            ),
+            cell: ({ row }) => format(row.original.report_date, 'PPP'),
+            meta: {
+                label: __('tgo_and_tgp_pages.index.table.columns.report_date'),
+                variant: 'dateRange',
+                icon: CalendarIcon,
+            },
+            enableSorting: true,
+        },
+        {
+            accessorKey: 'tgo_level',
+            header: ({ column }) => (
+                <TableColumnHeader column={column} title={__('tgo_and_tgp_pages.index.table.columns.tgo_level')} />
+            ),
+            cell: ({ row }) => <TgoAndTgpValueCell value={row.original.tgo_level} />,
+            meta: {
+                label: __('tgo_and_tgp_pages.index.table.columns.tgo_level'),
+            },
+            enableSorting: true,
+        },
+        {
+            accessorKey: 'tgp_level',
+            header: ({ column }) => (
+                <TableColumnHeader column={column} title={__('tgo_and_tgp_pages.index.table.columns.tgp_level')} />
+            ),
+            cell: ({ row }) => <TgoAndTgpValueCell value={row.original.tgp_level} />,
+            meta: {
+                label: __('tgo_and_tgp_pages.index.table.columns.tgp_level'),
+            },
+            enableSorting: true,
+        },
+        {
+            accessorKey: 'created_at',
+            header: ({ column }) => (
+                <TableColumnHeader column={column} title={__('tgo_and_tgp_pages.index.table.columns.created_at')} />
+            ),
+            cell: ({ row }) => format(row.original.created_at, 'PPpp'),
+            meta: {
+                label: __('tgo_and_tgp_pages.index.table.columns.created_at'),
+                variant: 'dateRange',
+                icon: CalendarIcon,
+            },
+            enableSorting: true,
+        },
+        {
+            id: 'actions',
+            cell: ({ row }) => <ActionsCell tgoAndTgp={row.original} />,
+            size: 40,
+            enableHiding: false,
+        },
+    ];
+}
