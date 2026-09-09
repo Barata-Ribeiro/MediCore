@@ -28,7 +28,7 @@ class GlucoseService implements GlucoseServiceInterface
         $glucoses = Glucose::query()
             ->where('medical_file_id', auth()->user()->medicalFile->id)
             ->when($createdAtRange, fn ($q) => $q->whereBetween('created_at', [$createdAtStart, $createdAtEnd]))
-            ->when($reportDateRange, fn ($q) => $q->whereBetween('report_date', [$reportDateStart, $reportDateEnd]))
+            ->when($reportDateRange, fn ($q) => $q->whereBetween('report_date', [substr($reportDateStart, 0, 10), substr($reportDateEnd, 0, 10)]))
             ->when($search, fn ($q) => $q->where(function ($q) use ($search) {
                 $q->whereLike('glucose_level', "%{$search}%")
                     ->orWhereLike('glycated_hemoglobin', "%{$search}%")

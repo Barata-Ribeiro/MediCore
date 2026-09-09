@@ -29,7 +29,7 @@ class LipidProfileService implements LipidProfileServiceInterface
             ->select('lipid_profiles.*')
             ->where('medical_file_id', auth()->user()->medicalFile->id)
             ->when($createdAtRange, fn ($q) => $q->whereBetween('lipid_profiles.created_at', [$createdAtStart, $createdAtEnd]))
-            ->when($reportDateRange, fn ($q) => $q->whereBetween('lipid_profiles.report_date', [$reportDateStart, $reportDateEnd]))
+            ->when($reportDateRange, fn ($q) => $q->whereBetween('lipid_profiles.report_date', [substr($reportDateStart, 0, 10), substr($reportDateEnd, 0, 10)]))
             ->when($search, fn ($q) => $q->where(function ($q) use ($search) {
                 $q->whereLike('total_cholesterol', "%{$search}%")
                     ->orWhereLike('hdl_cholesterol', "%{$search}%")

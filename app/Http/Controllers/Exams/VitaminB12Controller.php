@@ -62,6 +62,8 @@ class VitaminB12Controller extends Controller
 
     public function edit(VitaminB12 $vitaminB12): Response
     {
+        abort_unless($vitaminB12->medicalFile->user_id === request()->user()->id, 404);
+
         syncLangFiles('vitamin_b12_pages');
 
         return Inertia::render('exams/vitamin-b12/edit', [

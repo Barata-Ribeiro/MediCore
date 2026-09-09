@@ -61,6 +61,8 @@ class LipidProfileController extends Controller
 
     public function edit(LipidProfile $lipidProfile): Response
     {
+        abort_unless($lipidProfile->medicalFile->user_id === request()->user()->id, 404);
+
         syncLangFiles('lipid_profile_pages');
 
         return Inertia::render('exams/lipid-profile/edit', [

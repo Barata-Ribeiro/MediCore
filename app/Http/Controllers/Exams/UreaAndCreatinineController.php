@@ -61,6 +61,8 @@ class UreaAndCreatinineController extends Controller
 
     public function edit(UreaAndCreatinine $ureaAndCreatinine): Response
     {
+        abort_unless($ureaAndCreatinine->medicalFile->user_id === request()->user()->id, 404);
+
         syncLangFiles('urea_and_creatinine_pages');
 
         return Inertia::render('exams/urea-and-creatinine/edit', [

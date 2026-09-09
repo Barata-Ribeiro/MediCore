@@ -72,23 +72,25 @@ class TotalProteinsAndFractionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(TotalProteinsAndFractions $totalProteinsAndFractions): Response
+    public function edit(TotalProteinsAndFractions $totalProteinsAndFraction): Response
     {
+        abort_unless($totalProteinsAndFraction->medicalFile->user_id === request()->user()->id, 404);
+
         syncLangFiles('total_proteins_and_fractions_pages');
 
         return Inertia::render('exams/total-proteins-and-fractions/edit', [
-            'totalProteinsAndFractions' => $totalProteinsAndFractions,
+            'totalProteinsAndFractions' => $totalProteinsAndFraction,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(TotalProteinsAndFractionsRequest $request, TotalProteinsAndFractions $totalProteinsAndFractions): RedirectResponse
+    public function update(TotalProteinsAndFractionsRequest $request, TotalProteinsAndFractions $totalProteinsAndFraction): RedirectResponse
     {
         $user = $request->user();
 
-        if ($totalProteinsAndFractions->medicalFile->user_id !== $user->id) {
+        if ($totalProteinsAndFraction->medicalFile->user_id !== $user->id) {
             Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.total_proteins_and_fractions.update_unauthorized')]);
 
             return back();
@@ -97,7 +99,7 @@ class TotalProteinsAndFractionsController extends Controller
         $validated = $request->validated();
 
         try {
-            $totalProteinsAndFractions->update($validated);
+            $totalProteinsAndFraction->update($validated);
 
             Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exams.total_proteins_and_fractions.update_successfully')]);
 
@@ -113,18 +115,18 @@ class TotalProteinsAndFractionsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TotalProteinsAndFractions $totalProteinsAndFractions): RedirectResponse
+    public function destroy(TotalProteinsAndFractions $totalProteinsAndFraction): RedirectResponse
     {
         $user = auth()->user();
 
-        if ($totalProteinsAndFractions->medicalFile->user_id !== $user->id) {
+        if ($totalProteinsAndFraction->medicalFile->user_id !== $user->id) {
             Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exams.total_proteins_and_fractions.destroy_unauthorized')]);
 
             return back();
         }
 
         try {
-            $totalProteinsAndFractions->delete();
+            $totalProteinsAndFraction->delete();
 
             Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exams.total_proteins_and_fractions.destroy_successfully')]);
 

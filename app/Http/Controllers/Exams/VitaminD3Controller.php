@@ -62,6 +62,8 @@ class VitaminD3Controller extends Controller
 
     public function edit(VitaminD3 $vitaminD3): Response
     {
+        abort_unless($vitaminD3->medicalFile->user_id === request()->user()->id, 404);
+
         syncLangFiles('vitamin_d3_pages');
 
         return Inertia::render('exams/vitamin-d3/edit', [
