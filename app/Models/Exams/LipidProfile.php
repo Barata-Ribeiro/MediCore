@@ -4,9 +4,11 @@ namespace App\Models\Exams;
 
 use App\Models\MedicalFile;
 use Carbon\CarbonImmutable;
+use Database\Factories\Exams\LipidProfileFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Attributes\Touches;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -44,6 +46,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 #[Fillable(['total_cholesterol', 'hdl_cholesterol', 'ldl_cholesterol', 'vldl_cholesterol', 'triglycerides', 'report_date', 'medical_file_id'])]
 class LipidProfile extends Model
 {
+    /** @use HasFactory<LipidProfileFactory> */
+    use HasFactory;
+
     /**
      * Get the attributes that should be cast.
      *

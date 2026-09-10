@@ -29,7 +29,7 @@ class CompleteBloodCountService implements CompleteBloodCountServiceInterface
             ->select('complete_blood_counts.*')
             ->where('medical_file_id', auth()->user()->medicalFile->id)
             ->when($createdAtRange, fn ($q) => $q->whereBetween('complete_blood_counts.created_at', [$createdAtStart, $createdAtEnd]))
-            ->when($reportDateRange, fn ($q) => $q->whereBetween('complete_blood_counts.report_date', [$reportDateStart, $reportDateEnd]))
+            ->when($reportDateRange, fn ($q) => $q->whereBetween('complete_blood_counts.report_date', [substr($reportDateStart, 0, 10), substr($reportDateEnd, 0, 10)]))
             ->when($search, fn ($q) => $q->where(function ($q) use ($search) {
                 $q->whereLike('hematocrit', "%{$search}%")
                     ->orWhereLike('hemoglobin', "%{$search}%")

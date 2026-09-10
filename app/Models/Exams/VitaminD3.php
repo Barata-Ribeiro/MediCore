@@ -4,9 +4,11 @@ namespace App\Models\Exams;
 
 use App\Models\MedicalFile;
 use Carbon\CarbonImmutable;
+use Database\Factories\Exams\VitaminD3Factory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Attributes\Touches;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -36,6 +38,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 #[Fillable(['twenty_five_hydroxyvitamin_d3', 'report_date', 'medical_file_id'])]
 class VitaminD3 extends Model
 {
+    /** @use HasFactory<VitaminD3Factory> */
+    use HasFactory;
+
     /**
      * Get the attributes that should be cast.
      *

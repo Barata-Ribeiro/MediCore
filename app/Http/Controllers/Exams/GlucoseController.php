@@ -61,6 +61,8 @@ class GlucoseController extends Controller
 
     public function edit(Glucose $glucose): Response
     {
+        abort_unless($glucose->medicalFile->user_id === request()->user()->id, 404);
+
         syncLangFiles('glucose_pages');
 
         return Inertia::render('exams/glucose/edit', [

@@ -24,10 +24,10 @@ class TotalProteinsAndFractionsService implements TotalProteinsAndFractionsServi
         $tpfs = TotalProteinsAndFractions::query()
             ->where('medical_file_id', auth()->user()->medicalFile->id)
             ->when($createdAtRange, fn ($q) => $q->whereBetween('created_at', [$createdAtStart, $createdAtEnd]))
-            ->when($reportDateRange, fn ($q) => $q->whereBetween('report_date', [$reportDateStart, $reportDateEnd]))
-            ->when($search, fn ($q) => $q->whereLike('total_proteins', "%{$search}%")
+            ->when($reportDateRange, fn ($q) => $q->whereBetween('report_date', [substr($reportDateStart, 0, 10), substr($reportDateEnd, 0, 10)]))
+            ->when($search !== '', fn ($q) => $q->where(fn ($query) => $query->whereLike('total_proteins', "%{$search}%")
                 ->orWhereLike('albumin', "%{$search}%")
-                ->orWhereLike('globulin', "%{$search}%"))
+                ->orWhereLike('globulin', "%{$search}%")))
             ->orderBy($sortBy ?? 'created_at', $sortDir === 'desc' ? 'desc' : 'asc')
             ->paginate($perPage)
             ->withQueryString();

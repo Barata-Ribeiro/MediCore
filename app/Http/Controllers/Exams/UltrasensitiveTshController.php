@@ -62,6 +62,8 @@ class UltrasensitiveTshController extends Controller
 
     public function edit(UltrasensitiveTsh $ultrasensitiveTsh): Response
     {
+        abort_unless($ultrasensitiveTsh->medicalFile->user_id === request()->user()->id, 404);
+
         syncLangFiles('ultrasensitive_tsh_pages');
 
         return Inertia::render('exams/ultrasensitive-tsh/edit', [

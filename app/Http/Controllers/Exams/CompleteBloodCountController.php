@@ -61,6 +61,8 @@ class CompleteBloodCountController extends Controller
 
     public function edit(CompleteBloodCount $completeBloodCount): Response
     {
+        abort_unless($completeBloodCount->medicalFile->user_id === request()->user()->id, 404);
+
         syncLangFiles('complete_blood_count_pages');
 
         return Inertia::render('exams/complete-blood-count/edit', [

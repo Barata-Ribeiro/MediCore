@@ -28,8 +28,10 @@ class UreaAndCreatinineService implements UreaAndCreatinineServiceInterface
         $uacs = UreaAndCreatinine::query()
             ->where('medical_file_id', auth()->user()->medicalFile->id)
             ->when($createdAtRange, fn ($q) => $q->whereBetween('created_at', [$createdAtStart, $createdAtEnd]))
-            ->when($reportDateRange, fn ($q) => $q->whereBetween('report_date', [$reportDateStart, $reportDateEnd]))
-            ->when($search, fn ($q) => $q->whereLike('urea_level', "%{$search}%")->orWhereLike('creatinine_level', "%{$search}%"))
+            ->when($reportDateRange, fn ($q) => $q->whereBetween('report_date', [substr($reportDateStart, 0, 10), substr($reportDateEnd, 0, 10)]))
+            ->when($search !== '', fn ($q) => $q->where(fn ($query) => $query
+                ->whereLike('urea_level', "%{$search}%")
+                ->orWhereLike('creatinine_level', "%{$search}%")))
             ->orderBy($sortBy ?? 'created_at', $sortDir === 'desc' ? 'desc' : 'asc')
             ->paginate($perPage)
             ->withQueryString();

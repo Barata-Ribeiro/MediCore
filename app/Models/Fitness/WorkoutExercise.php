@@ -3,8 +3,10 @@
 namespace App\Models\Fitness;
 
 use Carbon\CarbonImmutable;
+use Database\Factories\Fitness\WorkoutExerciseFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -51,6 +53,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 #[Fillable(['workout_section_id', 'exercise_id', 'muscle_group_id', 'code', 'order', 'sets', 'reps', 'load', 'load_unit', 'rest_seconds', 'notes'])]
 class WorkoutExercise extends Model
 {
+    /** @use HasFactory<WorkoutExerciseFactory> */
+    use HasFactory;
+
     /**
      * The model's default values for attributes.
      *

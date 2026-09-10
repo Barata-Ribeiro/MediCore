@@ -4,9 +4,11 @@ namespace App\Models\Fitness;
 
 use App\Models\User;
 use Carbon\CarbonImmutable;
+use Database\Factories\Fitness\WorkoutFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -49,6 +51,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 #[Fillable(['filled_at', 'next_change_at', 'goal', 'method', 'rest_between_sets', 'rest_between_exercises', 'is_active', 'user_id'])]
 class Workout extends Model
 {
+    /** @use HasFactory<WorkoutFactory> */
+    use HasFactory;
+
     /**
      * The model's default values for attributes.
      *

@@ -28,7 +28,7 @@ class VitaminD3Service implements VitaminD3ServiceInterface
         $vitaminD3s = VitaminD3::query()
             ->where('medical_file_id', auth()->user()->medicalFile->id)
             ->when($createdAtRange, fn ($q) => $q->whereBetween('created_at', [$createdAtStart, $createdAtEnd]))
-            ->when($reportDateRange, fn ($q) => $q->whereBetween('report_date', [$reportDateStart, $reportDateEnd]))
+            ->when($reportDateRange, fn ($q) => $q->whereBetween('report_date', [substr($reportDateStart, 0, 10), substr($reportDateEnd, 0, 10)]))
             ->when($search, fn ($q) => $q->whereLike('twenty_five_hydroxyvitamin_d3', "%{$search}%"))
             ->orderBy($sortBy ?? 'created_at', $sortDir === 'desc' ? 'desc' : 'asc')
             ->paginate($perPage)

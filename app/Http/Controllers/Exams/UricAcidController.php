@@ -61,6 +61,8 @@ class UricAcidController extends Controller
 
     public function edit(UricAcid $uricAcid): Response
     {
+        abort_unless($uricAcid->medicalFile->user_id === request()->user()->id, 404);
+
         syncLangFiles('uric_acid_pages');
 
         return Inertia::render('exams/uric-acid/edit', [
