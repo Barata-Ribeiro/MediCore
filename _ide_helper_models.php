@@ -37,6 +37,7 @@ namespace App\Models\Exams{
  * @property CarbonImmutable|null $updated_at
  * @property int $medical_file_id
  * @property-read MedicalFile $medicalFile
+ * @method static \Database\Factories\Exams\CompleteBloodCountFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CompleteBloodCount newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CompleteBloodCount newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CompleteBloodCount query()
@@ -79,6 +80,7 @@ namespace App\Models\Exams{
  * @property CarbonImmutable|null $updated_at
  * @property int $medical_file_id
  * @property-read MedicalFile $medicalFile
+ * @method static \Database\Factories\Exams\GlucoseFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Glucose newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Glucose newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Glucose query()
@@ -108,6 +110,7 @@ namespace App\Models\Exams{
  * @property CarbonImmutable|null $updated_at
  * @property int $medical_file_id
  * @property-read MedicalFile $medicalFile
+ * @method static \Database\Factories\Exams\LipidProfileFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LipidProfile newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LipidProfile newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LipidProfile query()
@@ -129,6 +132,32 @@ namespace App\Models\Exams{
 namespace App\Models\Exams{
 /**
  * @property int $id
+ * @property float $tgo_level Aspartate aminotransferase (TGO/AST) in U/L
+ * @property float $tgp_level Alanine aminotransferase (TGP/ALT) in U/L
+ * @property CarbonImmutable $report_date Date of the TGO and TGP report
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
+ * @property int $medical_file_id
+ * @property-read MedicalFile $medicalFile
+ * @method static \Database\Factories\Exams\TgoAndTgpFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TgoAndTgp newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TgoAndTgp newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TgoAndTgp query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TgoAndTgp whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TgoAndTgp whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TgoAndTgp whereMedicalFileId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TgoAndTgp whereReportDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TgoAndTgp whereTgoLevel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TgoAndTgp whereTgpLevel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TgoAndTgp whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
+	class TgoAndTgp extends \Eloquent {}
+}
+
+namespace App\Models\Exams{
+/**
+ * @property int $id
  * @property float $total_proteins Total Proteins level
  * @property float $albumin Albumin level
  * @property float $globulin Globulin level
@@ -138,6 +167,7 @@ namespace App\Models\Exams{
  * @property int $medical_file_id
  * @property-read float|null $albumin_globulin_ratio
  * @property-read MedicalFile $medicalFile
+ * @method static \Database\Factories\Exams\TotalProteinsAndFractionsFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions query()
@@ -163,6 +193,7 @@ namespace App\Models\Exams{
  * @property CarbonImmutable|null $updated_at
  * @property int $medical_file_id
  * @property-read MedicalFile $medicalFile
+ * @method static \Database\Factories\Exams\UltrasensitiveTshFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh query()
@@ -188,6 +219,7 @@ namespace App\Models\Exams{
  * @property int $medical_file_id
  * @property-read float|null $urea_creatinine_ratio
  * @property-read MedicalFile $medicalFile
+ * @method static \Database\Factories\Exams\UreaAndCreatinineFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UreaAndCreatinine newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UreaAndCreatinine newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UreaAndCreatinine query()
@@ -212,6 +244,7 @@ namespace App\Models\Exams{
  * @property CarbonImmutable|null $updated_at
  * @property int $medical_file_id
  * @property-read MedicalFile $medicalFile
+ * @method static \Database\Factories\Exams\UricAcidFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid query()
@@ -235,6 +268,7 @@ namespace App\Models\Exams{
  * @property CarbonImmutable|null $updated_at
  * @property int $medical_file_id
  * @property-read MedicalFile $medicalFile
+ * @method static \Database\Factories\Exams\VitaminB12Factory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminB12 newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminB12 newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminB12 query()
@@ -258,6 +292,7 @@ namespace App\Models\Exams{
  * @property CarbonImmutable|null $updated_at
  * @property int $medical_file_id
  * @property-read MedicalFile $medicalFile
+ * @method static \Database\Factories\Exams\VitaminD3Factory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 query()
@@ -288,6 +323,7 @@ namespace App\Models\Fitness{
  * @property-read Collection<int, \App\Models\Fitness\WorkoutExercise> $workoutExercises
  * @property-read int|null $workout_exercises_count
  * @property-read bool|null $workout_exercises_exists
+ * @method static \Database\Factories\Fitness\ExerciseFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise query()
@@ -317,6 +353,7 @@ namespace App\Models\Fitness{
  * @property-read Collection<int, \App\Models\Fitness\WorkoutExercise> $workoutExercises
  * @property-read int|null $workout_exercises_count
  * @property-read bool|null $workout_exercises_exists
+ * @method static \Database\Factories\Fitness\MuscleGroupFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|MuscleGroup newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|MuscleGroup newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|MuscleGroup query()
@@ -347,6 +384,7 @@ namespace App\Models\Fitness{
  * @property-read int|null $sections_count
  * @property-read bool|null $sections_exists
  * @property-read User $user
+ * @method static \Database\Factories\Fitness\WorkoutFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Workout newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Workout newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Workout query()
@@ -385,6 +423,7 @@ namespace App\Models\Fitness{
  * @property-read \App\Models\Fitness\Exercise $exercise
  * @property-read \App\Models\Fitness\MuscleGroup|null $muscleGroup
  * @property-read \App\Models\Fitness\WorkoutSection $section
+ * @method static \Database\Factories\Fitness\WorkoutExerciseFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise query()
@@ -419,6 +458,7 @@ namespace App\Models\Fitness{
  * @property-read int|null $exercises_count
  * @property-read bool|null $exercises_exists
  * @property-read \App\Models\Fitness\Workout $workout
+ * @method static \Database\Factories\Fitness\WorkoutSectionFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutSection newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutSection newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutSection query()
@@ -458,6 +498,9 @@ namespace App\Models{
  * @property-read Collection<int, LipidProfile> $lipidProfiles
  * @property-read int|null $lipid_profiles_count
  * @property-read bool|null $lipid_profiles_exists
+ * @property-read Collection<int, TgoAndTgp> $tgoAndTgps
+ * @property-read int|null $tgo_and_tgps_count
+ * @property-read bool|null $tgo_and_tgps_exists
  * @property-read Collection<int, TotalProteinsAndFractions> $totalProteinsAndFractions
  * @property-read int|null $total_proteins_and_fractions_count
  * @property-read bool|null $total_proteins_and_fractions_exists
