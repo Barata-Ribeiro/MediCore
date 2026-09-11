@@ -104,7 +104,7 @@ export default function DataTablePagination<TData>({
                     <Select
                         value={`${pagination.per_page}`}
                         onValueChange={(value) =>
-                            router.get(pagination.path, buildParams({ per_page: value }), {
+                            router.get(pagination.path, buildParams({ per_page: value ?? pagination.per_page }), {
                                 preserveState: true,
                                 replace: true,
                             })
