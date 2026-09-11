@@ -30,6 +30,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int|null $workout_exercises_count
  * @property-read bool|null $workout_exercises_exists
  *
+ * @method static \Database\Factories\Fitness\ExerciseFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise query()

@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int|null $workout_exercises_count
  * @property-read bool|null $workout_exercises_exists
  *
+ * @method static \Database\Factories\Fitness\MuscleGroupFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|MuscleGroup newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|MuscleGroup newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|MuscleGroup query()

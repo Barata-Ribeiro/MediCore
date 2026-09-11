@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read float|null $albumin_globulin_ratio
  * @property-read MedicalFile $medicalFile
  *
+ * @method static \Database\Factories\Exams\TotalProteinsAndFractionsFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions query()

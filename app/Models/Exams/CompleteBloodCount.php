@@ -38,6 +38,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $medical_file_id
  * @property-read MedicalFile $medicalFile
  *
+ * @method static \Database\Factories\Exams\CompleteBloodCountFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CompleteBloodCount newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CompleteBloodCount newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CompleteBloodCount query()

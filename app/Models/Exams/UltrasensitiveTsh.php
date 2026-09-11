@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $medical_file_id
  * @property-read MedicalFile $medicalFile
  *
+ * @method static \Database\Factories\Exams\UltrasensitiveTshFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh query()

@@ -48,15 +48,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read Collection<int, LipidProfile> $lipidProfiles
  * @property-read int|null $lipid_profiles_count
  * @property-read bool|null $lipid_profiles_exists
+ * @property-read Collection<int, TgoAndTgp> $tgoAndTgps
+ * @property-read int|null $tgo_and_tgps_count
+ * @property-read bool|null $tgo_and_tgps_exists
  * @property-read Collection<int, TotalProteinsAndFractions> $totalProteinsAndFractions
  * @property-read int|null $total_proteins_and_fractions_count
  * @property-read bool|null $total_proteins_and_fractions_exists
  * @property-read Collection<int, UltrasensitiveTsh> $ultrasensitiveTshs
  * @property-read int|null $ultrasensitive_tshs_count
  * @property-read bool|null $ultrasensitive_tshs_exists
- * @property-read Collection<int, TgoAndTgp> $tgoAndTgps
- * @property-read int|null $tgo_and_tgps_count
- * @property-read bool|null $tgo_and_tgps_exists
  * @property-read Collection<int, UreaAndCreatinine> $ureaAndCreatinines
  * @property-read int|null $urea_and_creatinines_count
  * @property-read bool|null $urea_and_creatinines_exists

@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read float|null $urea_creatinine_ratio
  * @property-read MedicalFile $medicalFile
  *
+ * @method static \Database\Factories\Exams\UreaAndCreatinineFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UreaAndCreatinine newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UreaAndCreatinine newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UreaAndCreatinine query()

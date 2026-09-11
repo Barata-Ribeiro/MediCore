@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read MuscleGroup|null $muscleGroup
  * @property-read WorkoutSection $section
  *
+ * @method static \Database\Factories\Fitness\WorkoutExerciseFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise query()

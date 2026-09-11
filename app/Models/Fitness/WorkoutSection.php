@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read bool|null $exercises_exists
  * @property-read Workout $workout
  *
+ * @method static \Database\Factories\Fitness\WorkoutSectionFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutSection newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutSection newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutSection query()
