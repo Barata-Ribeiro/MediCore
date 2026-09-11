@@ -19,8 +19,8 @@ The package exposes:
 - facade: `Lang`
 - middleware: `ShareLangTranslations`
 - commands:
-  - `php artisan erag:install-lang`
-  - `php artisan erag:generate-lang`
+    - `php artisan erag:install-lang`
+    - `php artisan erag:generate-lang`
 
 ## Service Provider Behavior
 

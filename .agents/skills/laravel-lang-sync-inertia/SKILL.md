@@ -1,9 +1,9 @@
 ---
 name: laravel-lang-sync-inertia
-description: "Activate when the user is adding, debugging, or documenting Laravel to Inertia translation syncing with erag/laravel-lang-sync-inertia. Use for syncLangFiles(), Lang facade usage, shared Inertia lang props, generated frontend JSON translations, config/inertia-lang.php, package install or generate commands, Vue, React, or Svelte frontend lang() helpers, pluralization helpers, and locale-aware loading."
+description: 'Activate when the user is adding, debugging, or documenting Laravel to Inertia translation syncing with erag/laravel-lang-sync-inertia. Use for syncLangFiles(), Lang facade usage, shared Inertia lang props, generated frontend JSON translations, config/inertia-lang.php, package install or generate commands, Vue, React, or Svelte frontend lang() helpers, pluralization helpers, and locale-aware loading.'
 license: MIT
 metadata:
-  author: Er Amit Gupta
+    author: Er Amit Gupta
 ---
 
 # Laravel Lang Sync Inertia
@@ -37,8 +37,8 @@ Load only the reference file you need:
 2. Publish Laravel language files with `php artisan lang:publish` when the app does not already have them.
 3. Publish the package config with `php artisan erag:install-lang`.
 4. Choose one loading strategy:
-   - call `syncLangFiles()` inside the controller action before returning `Inertia::render(...)`, or
-   - run `php artisan erag:generate-lang` to generate JSON translation files for the configured output path
+    - call `syncLangFiles()` inside the controller action before returning `Inertia::render(...)`, or
+    - run `php artisan erag:generate-lang` to generate JSON translation files for the configured output path
 5. Read translations directly inside each Vue, React, or Svelte page/component with `lang()` from `@erag/lang-sync-inertia/vue`, `@erag/lang-sync-inertia/react`, or `@erag/lang-sync-inertia/svelte`.
 
 ## Important Behavior
@@ -54,17 +54,17 @@ Load only the reference file you need:
 - Generated JSON translations are merged first and runtime-loaded translations win on conflicts through `array_replace_recursive`.
 - The current locale comes from `app()->getLocale()`.
 - Vue, React, and Svelte consumers should prefer the dedicated entrypoints:
-  - `@erag/lang-sync-inertia/vue`
-  - `@erag/lang-sync-inertia/react`
-  - `@erag/lang-sync-inertia/svelte`
+    - `@erag/lang-sync-inertia/vue`
+    - `@erag/lang-sync-inertia/react`
+    - `@erag/lang-sync-inertia/svelte`
 - Do not configure this package in Vite, `app.ts`, or `app.js`.
 - Do not register an Inertia app plugin/provider for frontend translation helpers.
 - Import `lang()` in the page or component that needs translations.
 - Frontend helpers support:
-  - `__()`
-  - `trans()`
-  - `transChoice()`
-  - `trans_choice()`
+    - `__()`
+    - `trans()`
+    - `transChoice()`
+    - `trans_choice()`
 
 ## Configuration
 
