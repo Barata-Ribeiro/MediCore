@@ -158,7 +158,7 @@ export default function PersonalProfileManagerForm() {
                                         )}
                                     />
                                 </SelectTrigger>
-                                <SelectContent position="item-aligned">
+                                <SelectContent alignItemWithTrigger>
                                     <SelectGroup>
                                         <SelectItem value="male">
                                             {__('settings_pages.profile_page.personal_profile_manager.form.sex_male')}

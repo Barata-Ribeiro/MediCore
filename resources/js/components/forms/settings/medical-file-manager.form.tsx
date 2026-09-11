@@ -47,7 +47,7 @@ export default function MedicalFileManagerForm() {
                                     placeholder={__('settings_pages.medical_file_page.form.blood_type_placeholder')}
                                 />
                             </SelectTrigger>
-                            <SelectContent position="item-aligned">
+                            <SelectContent alignItemWithTrigger>
                                 <SelectGroup>
                                     {Object.values(BloodType).map((type) => (
                                         <SelectItem key={type} value={type}>
