@@ -26,26 +26,20 @@ composer require inertiaui/modal
 
 Then link the frontend package:
 ```bash
-
 # Vue
-
 npm install vendor/inertiaui/modal/vue
 
 # React
-
 npm install vendor/inertiaui/modal/react
 ```
 
 ### NPM (alternative)
 
 ```bash
-
 # Vue
-
 npm install @inertiaui/modal-vue
 
 # React
-
 npm install @inertiaui/modal-react
 ```
 
