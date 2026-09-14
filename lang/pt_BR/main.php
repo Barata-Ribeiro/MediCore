@@ -3,6 +3,19 @@
 declare(strict_types=1);
 
 return [
+    'welcome' => [
+        'head_title' => 'Início',
+        'navigation' => 'Acesso à conta',
+        'login' => 'Entrar',
+        'register' => 'Criar conta',
+        'eyebrow' => 'Saúde pessoal',
+        'title' => 'Sua saúde,',
+        'title_end' => 'em um só lugar.',
+        'open_dashboard' => 'Acessar meu painel',
+        'get_started' => 'Acessar minha saúde',
+        'overview' => 'Seu espaço de saúde',
+        'footer' => 'Seu histórico. Seu ritmo.',
+    ],
     'menu' => [
         'sidebar_group_label' => 'Plataforma',
         'sidebar_items' => [
