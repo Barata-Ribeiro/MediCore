@@ -3,6 +3,19 @@
 declare(strict_types=1);
 
 return [
+    'welcome' => [
+        'head_title' => 'Home',
+        'navigation' => 'Account access',
+        'login' => 'Log in',
+        'register' => 'Create account',
+        'eyebrow' => 'Personal health',
+        'title' => 'Your health,',
+        'title_end' => 'all in one place.',
+        'open_dashboard' => 'Open my dashboard',
+        'get_started' => 'Access my health',
+        'overview' => 'Your health space',
+        'footer' => 'Your history. Your pace.',
+    ],
     'menu' => [
         'sidebar_group_label' => 'Platform',
         'sidebar_items' => [
