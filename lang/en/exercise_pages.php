@@ -34,6 +34,8 @@ return [
         ],
     ],
     'form' => [
+        'create_muscle_group' => 'New muscle group',
+        'save_failed' => 'Unable to save. Check the fields or try again.',
         'title' => 'Exercise editor',
         'description' => 'Create or update exercises linked to your own muscle groups.',
         'name' => 'Exercise name',
