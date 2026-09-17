@@ -1,62 +1,67 @@
-import MuscleGroupController from '@/actions/App/Http/Controllers/Fitness/MuscleGroupController';
+import { store, update } from '@/routes/muscle-groups';
 import InputError from '@/components/helpers/input-error';
 import { Button } from '@/components/ui/button';
-import { Field, FieldLabel } from '@/components/ui/field';
+import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
 import type { CatalogMuscleGroup } from '@/types/application/fitness/catalog';
 import { lang } from '@erag/lang-sync-inertia/react';
-import { Form } from '@inertiajs/react';
-import { Activity, Fragment, memo } from 'react';
+import { router, useHttp, usePage } from '@inertiajs/react';
+import { useModal } from '@inertiaui/modal-react';
+import type { FormEvent } from 'react';
+import { toast } from 'sonner';
 
-type Props = {
-    muscleGroup?: CatalogMuscleGroup | null;
-    closeAction: () => void;
-};
+type Props = { muscleGroup?: CatalogMuscleGroup | null; closeAction: () => void };
 
-const MuscleGroupRegistryForm = memo<Readonly<Props>>(({ muscleGroup, closeAction }) => {
+export default function MuscleGroupRegistryForm({ muscleGroup, closeAction }: Readonly<Props>) {
     const { __ } = lang();
+    const modal = useModal();
+    const page = usePage();
+    const form = useHttp<{ name: string }, { muscleGroup: CatalogMuscleGroup; message: string }>({
+        name: muscleGroup?.name ?? '',
+    });
 
-    const isEditMode = muscleGroup && muscleGroup !== null;
-    const formRoute = isEditMode
-        ? MuscleGroupController.update.form(muscleGroup.id)
-        : MuscleGroupController.store.form();
+    const submit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        try {
+            const response = await form.submit(muscleGroup ? update(muscleGroup.id) : store());
+            modal?.emit('saved', response.muscleGroup);
+            toast.success(response.message);
+            closeAction();
+            if (page.component === 'fitness/muscle-group/index') {
+                router.reload({ only: ['muscleGroups'] });
+            }
+        } catch {
+            toast.error(__('muscle_group_pages.form.save_failed'));
+        }
+    };
 
     return (
-        <Form
-            {...formRoute}
-            onSuccess={closeAction}
-            options={{ preserveScroll: true }}
-            disableWhileProcessing
-            className="space-y-6 inert:pointer-events-none inert:grayscale-100"
-        >
-            {({ processing, errors }) => (
-                <Fragment>
-                    <Field data-invalid={!!errors['name']}>
-                        <FieldLabel htmlFor="name">{__('muscle_group_pages.form.name')}</FieldLabel>
-                        <Input
-                            id="name"
-                            name="name"
-                            placeholder={__('muscle_group_pages.form.name_placeholder')}
-                            defaultValue={muscleGroup?.name}
-                            aria-invalid={!!errors['name']}
-                            required
-                        />
-                        <InputError message={errors['name']} />
-                    </Field>
-
-                    <Button data-test="save-muscle-group" type="submit" disabled={processing}>
-                        <Activity mode={processing ? 'visible' : 'hidden'}>
-                            <Spinner aria-hidden />
-                        </Activity>
-                        {isEditMode
-                            ? __('muscle_group_pages.form.update_action')
-                            : __('muscle_group_pages.form.create_action')}
+        <form onSubmit={submit}>
+            <FieldGroup>
+                <Field data-invalid={!!form.errors.name}>
+                    <FieldLabel htmlFor="muscle-group-name">{__('muscle_group_pages.form.name')}</FieldLabel>
+                    <Input
+                        id="muscle-group-name"
+                        value={form.data.name}
+                        onChange={(event) => form.setData('name', event.target.value)}
+                        placeholder={__('muscle_group_pages.form.name_placeholder')}
+                        required
+                        maxLength={255}
+                        aria-invalid={!!form.errors.name}
+                    />
+                    <InputError message={form.errors.name} />
+                </Field>
+                <div className="flex justify-end gap-2">
+                    <Button type="button" variant="outline" onClick={closeAction}>
+                        {__('muscle_group_pages.form.cancel_action')}
                     </Button>
-                </Fragment>
-            )}
-        </Form>
+                    <Button data-test="save-muscle-group" type="submit" disabled={form.processing}>
+                        {form.processing && <Spinner data-icon="inline-start" />}
+                        {__('muscle_group_pages.form.' + (muscleGroup ? 'update_action' : 'create_action'))}
+                    </Button>
+                </div>
+            </FieldGroup>
+        </form>
     );
-});
-
-export default MuscleGroupRegistryForm;
+}
