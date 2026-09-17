@@ -14,8 +14,8 @@ supportedArchitectures:
         - x64
         - arm64
 minimumReleaseAgeExclude:
-    - '@rollup/rollup-linux-x64-gnu@4.63.1'
-    - '@rollup/rollup-win32-x64-msvc@4.63.1'
+    - '@rollup/rollup-linux-x64-gnu@4.63.1 || 4.63.3'
+    - '@rollup/rollup-win32-x64-msvc@4.63.1 || 4.63.3'
     - '@vitejs/plugin-react@6.1.1'
     - lucide-react@1.35.0 || 1.38.0 || 1.40.0 || 1.42.0
     - '@shadcn/react@0.3.1'
