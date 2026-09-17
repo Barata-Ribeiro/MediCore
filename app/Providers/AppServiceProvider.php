@@ -141,7 +141,7 @@ class AppServiceProvider extends ServiceProvider
             }
         });
 
-        $this->app->extend('translator', function ($service, $app) {
+        $this->app->extend('translator', function ($service) {
             $translator = new Translator($service->getLoader(), $service->getLocale());
             $translator->setFallback($service->getFallback());
 
@@ -157,6 +157,8 @@ class AppServiceProvider extends ServiceProvider
         Date::use(CarbonImmutable::class);
 
         Model::shouldBeStrict();
+        Model::preventSilentlyDiscardingAttributes(! app()->isProduction());
+        Model::preventLazyLoading(! app()->isProduction());
         DB::prohibitDestructiveCommands(app()->isProduction());
         Vite::prefetch(concurrency: 3);
         JsonResource::withoutWrapping();
