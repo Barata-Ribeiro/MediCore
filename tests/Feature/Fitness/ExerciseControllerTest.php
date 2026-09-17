@@ -3,6 +3,7 @@
 use App\Models\Fitness\Exercise;
 use App\Models\Fitness\MuscleGroup;
 use App\Models\User;
+use Illuminate\Support\Facades\Event;
 use Inertia\Testing\AssertableInertia;
 
 beforeEach(function () {
@@ -233,3 +234,61 @@ describe('tests for ExerciseController', function () {
         $response->assertRedirect(route('login'));
     });
 });
+
+it('returns a saved exercise and its groups to the calling modal', function (string $method) {
+    $user = User::factory()->create();
+    $group = MuscleGroup::factory()->for($user)->create(['name' => 'Pectorals']);
+    $exercise = $method === 'putJson' ? Exercise::factory()->for($user)->create() : null;
+    $url = $exercise ? route('exercises.update', $exercise) : route('exercises.store');
+
+    $response = $this->actingAs($user)->{$method}($url, ['name' => 'Bench press', 'muscle_group_ids' => [$group->id]]);
+
+    $response->assertSuccessful()->assertJsonPath('exercise.name', 'Bench press')->assertJsonPath('exercise.muscle_groups.0.id', $group->id);
+    $this->assertDatabaseHas('exercises', ['id' => $response->json('exercise.id'), 'name' => 'Bench press', 'user_id' => $user->id]);
+    $this->assertDatabaseHas('exercise_muscle_groups', ['exercise_id' => $response->json('exercise.id'), 'muscle_group_id' => $group->id]);
+})->with(['postJson', 'putJson']);
+
+it('returns inline validation errors without saving an invalid exercise from the modal', function () {
+    $user = User::factory()->create();
+    $foreignGroup = MuscleGroup::factory()->create();
+
+    $this->actingAs($user)->postJson(route('exercises.store'), ['name' => 'Bench press', 'muscle_group_ids' => [$foreignGroup->id]])
+        ->assertUnprocessable()->assertJsonValidationErrors('muscle_group_ids.0');
+
+    $this->assertDatabaseCount('exercises', 0);
+});
+
+it('refuses a modal update of another users exercise', function () {
+    $exercise = Exercise::factory()->create(['name' => 'Original']);
+
+    $this->actingAs(User::factory()->create())->putJson(route('exercises.update', $exercise), ['name' => 'Changed'])
+        ->assertForbidden();
+
+    $this->assertDatabaseHas('exercises', ['id' => $exercise->id, 'name' => 'Original']);
+});
+
+it('requires authentication for JSON exercise creation', function () {
+    $this->actingAsGuest()->postJson(route('exercises.store'), ['name' => 'Bench press'])->assertUnauthorized();
+    $this->assertDatabaseCount('exercises', 0);
+});
+
+it('keeps the modal open with a JSON error when exercise persistence fails', function (string $method) {
+    $user = User::factory()->create();
+    $exercise = $method === 'putJson' ? Exercise::factory()->for($user)->create(['name' => 'Original']) : null;
+    $eventName = 'eloquent.saving: '.Exercise::class;
+    Event::listen($eventName, function () {
+        throw new RuntimeException('Persistence unavailable');
+    });
+
+    try {
+        $this->actingAs($user)->{$method}($exercise ? route('exercises.update', $exercise) : route('exercises.store'), ['name' => 'Changed'])
+            ->assertInternalServerError()->assertJsonPath('message', __('flash.exercise.'.($exercise ? 'update_failed' : 'store_failed')));
+
+        $this->assertDatabaseCount('exercises', $exercise ? 1 : 0);
+        if ($exercise) {
+            $this->assertDatabaseHas('exercises', ['id' => $exercise->id, 'name' => 'Original']);
+        }
+    } finally {
+        Event::forget($eventName);
+    }
+})->with(['postJson', 'putJson']);
