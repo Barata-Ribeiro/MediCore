@@ -55,3 +55,8 @@ export interface WorkoutResource {
     is_active: boolean;
     sections: WorkoutSectionResource[];
 }
+
+export type WorkoutSummary = Omit<WorkoutResource, 'sections'> & {
+    sections_count: number;
+    exercises_count: number;
+};

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Fitness;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Fitness\StoreWorkoutRequest;
 use App\Http\Requests\Fitness\UpdateWorkoutRequest;
+use App\Http\Requests\QueryRequest;
 use App\Models\Fitness\Exercise;
 use App\Models\Fitness\MuscleGroup;
 use App\Models\Fitness\Workout;
@@ -24,35 +25,34 @@ use function in_array;
 
 class WorkoutController extends Controller
 {
-    public function index(): Response
+    public function index(QueryRequest $request): Response
     {
         syncLangFiles('workout_pages');
 
+        $validated = $request->validated();
+        $sortBy = $validated['sort_by'] ?? 'id';
+        if (! in_array($sortBy, ['id', 'goal', 'method', 'filled_at', 'next_change_at', 'is_active', 'sections_count', 'exercises_count'], true)) {
+            $sortBy = 'id';
+        }
+        $search = trim($validated['search'] ?? '');
+        $statuses = array_filter((array) ($validated['filters']['is_active'] ?? []), fn (mixed $status): bool => in_array($status, ['0', '1', 0, 1], true));
+
         $workouts = Workout::query()
             ->whereBelongsTo(auth()->user())
-            ->with([
-                'sections' => fn ($query) => $query->select(['id', 'workout_id', 'name', 'order'])->orderBy('order'),
-                'sections.exercises' => fn ($query) => $query
-                    ->select([
-                        'id',
-                        'workout_section_id',
-                        'exercise_id',
-                        'muscle_group_id',
-                        'code',
-                        'order',
-                        'sets',
-                        'reps',
-                        'load',
-                        'load_unit',
-                        'rest_seconds',
-                        'notes',
-                    ])
-                    ->orderBy('order'),
-                'sections.exercises.exercise' => fn ($query) => $query->select(['id', 'name']),
-                'sections.exercises.muscleGroup' => fn ($query) => $query->select(['id', 'name']),
-            ])
-            ->orderByDesc('created_at')
-            ->paginate(10)
+            ->withCount('sections')
+            ->addSelect(['exercises_count' => WorkoutExercise::query()
+                ->selectRaw('count(*)')
+                ->join('workout_sections', 'workout_sections.id', '=', 'workout_exercises.workout_section_id')
+                ->whereColumn('workout_sections.workout_id', 'workouts.id')])
+            ->when($search !== '', fn ($query) => $query->where(fn ($query) => $query
+                ->whereLike('goal', "%{$search}%")
+                ->orWhereLike('method', "%{$search}%")
+                ->orWhereHas('sections', fn ($query) => $query->whereLike('name', "%{$search}%"))
+                ->orWhereHas('sections.exercises.exercise', fn ($query) => $query->whereLike('name', "%{$search}%"))))
+            ->when($statuses !== [], fn ($query) => $query->whereIn('is_active', $statuses))
+            ->orderBy($sortBy, $validated['sort_dir'] ?? 'desc')
+            ->orderByDesc('id')
+            ->paginate($validated['per_page'] ?? 10)
             ->withQueryString();
 
         return Inertia::render('fitness/workout/index', [
@@ -62,7 +62,7 @@ class WorkoutController extends Controller
 
     public function create(): Response
     {
-        syncLangFiles('workout_pages');
+        syncLangFiles(['workout_pages', 'exercise_pages', 'muscle_group_pages']);
 
         return Inertia::render('fitness/workout/create', [
             'formOptions' => $this->formOptions(),
@@ -75,16 +75,18 @@ class WorkoutController extends Controller
         $validated = $request->validated();
 
         try {
-            DB::transaction(function () use ($validated, $user): void {
+            $workout = DB::transaction(function () use ($validated, $user): Workout {
                 /** @var Workout $workout */
                 $workout = $user->workouts()->create($this->workoutAttributes($validated));
 
                 $this->syncSections($workout, $validated['sections'] ?? []);
+
+                return $workout;
             });
 
             Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.workout.store_successfully')]);
 
-            return to_route('workouts.index');
+            return to_route('workouts.show', $workout);
         } catch (Exception $e) {
             Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.workout.store_failed')]);
             Log::error('Error creating workout', ['user_id' => $user->id, 'error' => $e->getMessage()]);
@@ -117,7 +119,7 @@ class WorkoutController extends Controller
 
     public function edit(Workout $workout): Response|RedirectResponse
     {
-        syncLangFiles('workout_pages');
+        syncLangFiles(['workout_pages', 'exercise_pages', 'muscle_group_pages']);
 
         if ($workout->user_id !== auth()->id()) {
             Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.workout.edit_unauthorized')]);
@@ -158,7 +160,7 @@ class WorkoutController extends Controller
 
             Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.workout.update_successfully')]);
 
-            return to_route('workouts.index');
+            return to_route('workouts.show', $workout);
         } catch (Throwable $e) {
             Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.workout.update_failed')]);
             Log::error('Error updating workout', [

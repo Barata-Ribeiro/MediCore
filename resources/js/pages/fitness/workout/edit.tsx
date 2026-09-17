@@ -31,14 +31,15 @@ export default function Edit({ workout, formOptions }: Readonly<WorkoutEditProps
             <h1 className="sr-only">{__('workout_pages.edit.head_title')}</h1>
 
             <Card>
-                <CardHeader className="space-y-4">
+                <CardHeader className="flex flex-col gap-4">
                     <Button
+                        nativeButton={false}
                         variant="outline"
                         size="sm"
                         className="w-fit"
                         render={
                             <Link href={index()} prefetch="hover" viewTransition>
-                                <ArrowLeftIcon aria-hidden size={14} />
+                                <ArrowLeftIcon aria-hidden data-icon="inline-start" />
                                 {__('workout_pages.shared.back')}
                             </Link>
                         }

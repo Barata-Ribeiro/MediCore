@@ -1,50 +1,50 @@
 import InputError from '@/components/helpers/input-error';
-import RequiredIndicator from '@/components/helpers/required-indicator';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import {
+    Combobox,
+    ComboboxContent,
+    ComboboxEmpty,
+    ComboboxInput,
+    ComboboxItem,
+    ComboboxList,
+} from '@/components/ui/combobox';
 import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from '@/components/ui/empty';
-import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
+import { Field, FieldDescription, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select';
 import { Separator } from '@/components/ui/separator';
 import { Spinner } from '@/components/ui/spinner';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
-import { create, index, store, update } from '@/routes/workouts';
-import type { WorkoutFormOptions, WorkoutResource } from '@/types/application/fitness/workout';
+import { create as createExercise, edit as editExercise } from '@/routes/exercises';
+import { create as createMuscleGroup } from '@/routes/muscle-groups';
+import { index, show, store, update } from '@/routes/workouts';
+import type { WorkoutFormOptions, WorkoutOptionExercise, WorkoutResource } from '@/types/application/fitness/workout';
 import { lang } from '@erag/lang-sync-inertia/react';
 import { Link, useForm } from '@inertiajs/react';
-import type { FormEvent } from 'react';
-import { Activity, Fragment } from 'react';
+import { ModalLink } from '@inertiaui/modal-react';
+import { ArrowDownIcon, ArrowUpIcon, ChevronDownIcon, PencilIcon, PlusIcon, SaveIcon, Trash2Icon } from 'lucide-react';
+import { useState, type FormEvent } from 'react';
 
-type Props = {
-    workout?: WorkoutResource;
-    formOptions: WorkoutFormOptions;
-};
-
-type WorkoutExerciseInput = {
+type ExerciseInput = {
+    key: string;
     id?: number;
     exercise_id: number | '';
     muscle_group_id: number | '';
     code: string;
     order: number;
-    sets: number;
+    sets: number | '';
     reps: string;
     load: string;
     load_unit: string;
     rest_seconds: string;
     notes: string;
 };
-
-type WorkoutSectionInput = {
-    id?: number;
-    name: string;
-    order: number;
-    exercises: WorkoutExerciseInput[];
-};
-
-type WorkoutFormData = {
+type SectionInput = { key: string; id?: number; name: string; order: number; exercises: ExerciseInput[] };
+type FormData = {
     filled_at: string;
     next_change_at: string;
     goal: string;
@@ -52,15 +52,17 @@ type WorkoutFormData = {
     rest_between_sets: string;
     rest_between_exercises: string;
     is_active: boolean;
-    sections: WorkoutSectionInput[];
+    sections: SectionInput[];
 };
+type Props = { workout?: WorkoutResource; formOptions: WorkoutFormOptions };
 
-function createExerciseInput(order: number): WorkoutExerciseInput {
+function newExercise(): ExerciseInput {
     return {
+        key: crypto.randomUUID(),
         exercise_id: '',
         muscle_group_id: '',
         code: '',
-        order,
+        order: 1,
         sets: 3,
         reps: '8-12',
         load: '',
@@ -69,58 +71,99 @@ function createExerciseInput(order: number): WorkoutExerciseInput {
         notes: '',
     };
 }
-
-function createSectionInput(order: number): WorkoutSectionInput {
-    return {
-        name: '',
-        order,
-        exercises: [createExerciseInput(1)],
-    };
+function newSection(name: string): SectionInput {
+    return { key: crypto.randomUUID(), name, order: 1, exercises: [newExercise()] };
 }
 
 export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<Props>) {
     const { __ } = lang();
-    const isEditMode = workout !== undefined;
-
-    const initialSections: WorkoutSectionInput[] = workout?.sections.map<WorkoutSectionInput>((section) => ({
-        id: section.id,
-        name: section.name,
-        order: section.order,
-        exercises: section.exercises.map<WorkoutExerciseInput>((exercise) => ({
-            id: exercise.id,
-            exercise_id: exercise.exercise_id,
-            muscle_group_id: exercise.muscle_group_id ?? '',
-            code: exercise.code ?? '',
-            order: exercise.order,
-            sets: exercise.sets,
-            reps: exercise.reps,
-            load: exercise.load === null ? '' : String(exercise.load),
-            load_unit: exercise.load_unit,
-            rest_seconds: exercise.rest_seconds === null ? '' : String(exercise.rest_seconds),
-            notes: exercise.notes ?? '',
-        })),
-    })) ?? [createSectionInput(1)];
-
-    const { data, setData, post, put, processing, errors, transform } = useForm<WorkoutFormData>({
-        filled_at: workout?.filled_at ?? '',
-        next_change_at: workout?.next_change_at ?? '',
+    const [catalog, setCatalog] = useState(formOptions.exercises);
+    const [initial] = useState<FormData>(() => ({
+        filled_at: workout?.filled_at?.slice(0, 10) ?? '',
+        next_change_at: workout?.next_change_at?.slice(0, 10) ?? '',
         goal: workout?.goal ?? '',
         method: workout?.method ?? '',
-        rest_between_sets:
-            workout?.rest_between_sets === null || workout?.rest_between_sets === undefined
-                ? ''
-                : String(workout.rest_between_sets),
-        rest_between_exercises:
-            workout?.rest_between_exercises === null || workout?.rest_between_exercises === undefined
-                ? ''
-                : String(workout.rest_between_exercises),
+        rest_between_sets: String(workout?.rest_between_sets ?? ''),
+        rest_between_exercises: String(workout?.rest_between_exercises ?? ''),
         is_active: workout?.is_active ?? true,
-        sections: initialSections,
-    });
-
+        sections: workout?.sections.map((section) => ({
+            ...section,
+            key: `section-${section.id}`,
+            exercises: section.exercises.map((exercise) => ({
+                ...exercise,
+                key: `exercise-${exercise.id}`,
+                muscle_group_id: exercise.muscle_group_id ?? '',
+                code: exercise.code ?? '',
+                load: String(exercise.load ?? ''),
+                rest_seconds: String(exercise.rest_seconds ?? ''),
+                notes: exercise.notes ?? '',
+            })),
+        })) ?? [newSection(__('workout_pages.form.default_section', { number: 1 }))],
+    }));
+    const { data, setData, post, put, processing, errors, transform, clearErrors } = useForm<FormData>(initial);
+    const error = (path: string) => (errors as Record<string, string>)[path];
+    const replaceSections = (sections: SectionInput[]) => {
+        clearErrors();
+        setData(
+            'sections',
+            sections.map((section, i) => ({
+                ...section,
+                order: i + 1,
+                exercises: section.exercises.map((exercise, j) => ({ ...exercise, order: j + 1 })),
+            })),
+        );
+    };
+    const updateSection = (key: string, patch: Partial<SectionInput>) =>
+        replaceSections(data.sections.map((section) => (section.key === key ? { ...section, ...patch } : section)));
+    const updateExercise = (sectionKey: string, exerciseKey: string, patch: Partial<ExerciseInput>) =>
+        replaceSections(
+            data.sections.map((section) =>
+                section.key === sectionKey
+                    ? {
+                          ...section,
+                          exercises: section.exercises.map((exercise) =>
+                              exercise.key === exerciseKey ? { ...exercise, ...patch } : exercise,
+                          ),
+                      }
+                    : section,
+            ),
+        );
+    const move = <T,>(items: T[], position: number, direction: number): T[] => {
+        const result = [...items];
+        const current = result[position];
+        const target = result[position + direction];
+        if (current === undefined || target === undefined) {
+            return result;
+        }
+        result[position] = target;
+        result[position + direction] = current;
+        return result;
+    };
+    const saveCatalogExercise = (saved: WorkoutOptionExercise, sectionKey: string, exerciseKey: string) => {
+        setCatalog((current) =>
+            [...current.filter((item) => item.id !== saved.id), saved].sort((a, b) => a.name.localeCompare(b.name)),
+        );
+        replaceSections(
+            data.sections.map((section) => ({
+                ...section,
+                exercises: section.exercises.map((exercise) => {
+                    const selectedRow = section.key === sectionKey && exercise.key === exerciseKey;
+                    if (!selectedRow && exercise.exercise_id !== saved.id) {
+                        return exercise;
+                    }
+                    return {
+                        ...exercise,
+                        exercise_id: saved.id,
+                        muscle_group_id: saved.muscle_groups.some((group) => group.id === exercise.muscle_group_id)
+                            ? exercise.muscle_group_id
+                            : (saved.muscle_groups[0]?.id ?? ''),
+                    };
+                }),
+            })),
+        );
+    };
     const submit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
         transform((values) => ({
             ...values,
             filled_at: values.filled_at || null,
@@ -129,16 +172,16 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
             method: values.method || null,
             rest_between_sets: values.rest_between_sets === '' ? null : Number(values.rest_between_sets),
             rest_between_exercises: values.rest_between_exercises === '' ? null : Number(values.rest_between_exercises),
-            sections: values.sections.map((section) => ({
+            sections: values.sections.map((section, i) => ({
                 id: section.id,
                 name: section.name,
-                order: section.order,
-                exercises: section.exercises.map((exercise) => ({
+                order: i + 1,
+                exercises: section.exercises.map((exercise, j) => ({
                     id: exercise.id,
-                    exercise_id: Number(exercise.exercise_id),
-                    muscle_group_id: exercise.muscle_group_id === '' ? null : Number(exercise.muscle_group_id),
+                    exercise_id: exercise.exercise_id,
+                    muscle_group_id: exercise.muscle_group_id || null,
                     code: exercise.code || null,
-                    order: exercise.order,
+                    order: j + 1,
                     sets: exercise.sets,
                     reps: exercise.reps,
                     load: exercise.load === '' ? null : Number(exercise.load),
@@ -148,680 +191,470 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                 })),
             })),
         }));
-
-        if (isEditMode && workout) {
+        if (workout) {
             put(update(workout.id).url, { preserveScroll: true });
-
-            return;
+        } else {
+            post(store().url, { preserveScroll: true });
         }
-
-        post(store().url, { preserveScroll: true });
     };
-
-    const replaceSections = (sections: WorkoutSectionInput[]) => {
-        setData(
-            'sections',
-            sections.map((section, sectionIndex) => ({
-                ...section,
-                order: sectionIndex + 1,
-                exercises: section.exercises.map((exercise, exerciseIndex) => ({
-                    ...exercise,
-                    order: exerciseIndex + 1,
-                })),
-            })),
-        );
-    };
-
-    const updateSection = (sectionIndex: number, patch: Partial<WorkoutSectionInput>) => {
-        replaceSections(
-            data.sections.map((section, index) => {
-                if (index !== sectionIndex) {
-                    return section;
-                }
-
-                return {
-                    id: section.id,
-                    name: patch.name ?? section.name,
-                    order: patch.order ?? section.order,
-                    exercises: patch.exercises ?? section.exercises,
-                };
-            }),
-        );
-    };
-
-    const addSection = () => {
-        replaceSections([...data.sections, createSectionInput(data.sections.length + 1)]);
-    };
-
-    const removeSection = (sectionIndex: number) => {
-        replaceSections(data.sections.filter((_, index) => index !== sectionIndex));
-    };
-
-    const updateExercise = (sectionIndex: number, exerciseIndex: number, patch: Partial<WorkoutExerciseInput>) => {
-        replaceSections(
-            data.sections.map((section, currentSectionIndex) => {
-                if (currentSectionIndex !== sectionIndex) {
-                    return section;
-                }
-
-                return {
-                    ...section,
-                    exercises: section.exercises.map((exercise, currentExerciseIndex) => {
-                        if (currentExerciseIndex !== exerciseIndex) {
-                            return exercise;
-                        }
-
-                        return {
-                            id: exercise.id,
-                            exercise_id: patch.exercise_id ?? exercise.exercise_id,
-                            muscle_group_id: patch.muscle_group_id ?? exercise.muscle_group_id,
-                            code: patch.code ?? exercise.code,
-                            order: patch.order ?? exercise.order,
-                            sets: patch.sets ?? exercise.sets,
-                            reps: patch.reps ?? exercise.reps,
-                            load: patch.load ?? exercise.load,
-                            load_unit: patch.load_unit ?? exercise.load_unit,
-                            rest_seconds: patch.rest_seconds ?? exercise.rest_seconds,
-                            notes: patch.notes ?? exercise.notes,
-                        };
-                    }),
-                };
-            }),
-        );
-    };
-
-    const addExercise = (sectionIndex: number) => {
-        replaceSections(
-            data.sections.map((section, index) => {
-                if (index !== sectionIndex) {
-                    return section;
-                }
-
-                return {
-                    ...section,
-                    exercises: [...section.exercises, createExerciseInput(section.exercises.length + 1)],
-                };
-            }),
-        );
-    };
-
-    const removeExercise = (sectionIndex: number, exerciseIndex: number) => {
-        replaceSections(
-            data.sections.map((section, index) => {
-                if (index !== sectionIndex) {
-                    return section;
-                }
-
-                return {
-                    ...section,
-                    exercises: section.exercises.filter(
-                        (_, currentExerciseIndex) => currentExerciseIndex !== exerciseIndex,
-                    ),
-                };
-            }),
-        );
-    };
-
-    const handleExerciseChange = (sectionIndex: number, exerciseIndex: number, exerciseIdRaw: string) => {
-        const selectedExerciseId = exerciseIdRaw === '' ? '' : Number(exerciseIdRaw);
-        const selectedExercise = formOptions.exercises.find((exercise) => exercise.id === selectedExerciseId);
-
-        const currentMuscleGroupId = data.sections[sectionIndex]?.exercises[exerciseIndex]?.muscle_group_id ?? '';
-
-        const hasSelectedMuscleGroup =
-            currentMuscleGroupId !== '' &&
-            selectedExercise?.muscle_groups.some((muscleGroup) => muscleGroup.id === Number(currentMuscleGroupId));
-
-        updateExercise(sectionIndex, exerciseIndex, {
-            exercise_id: selectedExerciseId,
-            muscle_group_id: hasSelectedMuscleGroup ? currentMuscleGroupId : '',
-        });
-    };
-
-    const availableMuscleGroups = (exerciseId: number | '') => {
-        if (exerciseId === '') {
-            return [];
-        }
-
-        return formOptions.exercises.find((exercise) => exercise.id === Number(exerciseId))?.muscle_groups ?? [];
-    };
+    const addSection = () =>
+        replaceSections([
+            ...data.sections,
+            newSection(__('workout_pages.form.default_section', { number: data.sections.length + 1 })),
+        ]);
 
     return (
-        <form onSubmit={submit} className="space-y-6">
+        <form onSubmit={submit} className="flex flex-col gap-6">
             <Card>
                 <CardHeader>
                     <CardTitle>{__('workout_pages.form.identity_title')}</CardTitle>
                     <CardDescription>{__('workout_pages.form.identity_description')}</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                    <div className="grid gap-4 md:grid-cols-2">
-                        <Field data-invalid={!!errors.goal}>
-                            <FieldLabel htmlFor="goal">{__('workout_pages.form.goal')}</FieldLabel>
-                            <Input
-                                id="goal"
-                                value={data.goal}
-                                onChange={(event) => setData('goal', event.target.value)}
-                                placeholder={__('workout_pages.form.goal_placeholder')}
-                                aria-invalid={!!errors.goal}
-                            />
-                            <InputError message={errors.goal} />
-                        </Field>
-
-                        <Field data-invalid={!!errors.method}>
-                            <FieldLabel htmlFor="method">{__('workout_pages.form.method')}</FieldLabel>
-                            <Input
-                                id="method"
-                                value={data.method}
-                                onChange={(event) => setData('method', event.target.value)}
-                                placeholder={__('workout_pages.form.method_placeholder')}
-                                aria-invalid={!!errors.method}
-                            />
-                            <InputError message={errors.method} />
-                        </Field>
-
-                        <Field data-invalid={!!errors.filled_at}>
-                            <FieldLabel htmlFor="filled_at">{__('workout_pages.form.filled_at')}</FieldLabel>
-                            <Input
-                                id="filled_at"
-                                type="date"
-                                value={data.filled_at}
-                                onChange={(event) => setData('filled_at', event.target.value)}
-                                aria-invalid={!!errors.filled_at}
-                            />
-                            <InputError message={errors.filled_at} />
-                        </Field>
-
-                        <Field data-invalid={!!errors.next_change_at}>
-                            <FieldLabel htmlFor="next_change_at">{__('workout_pages.form.next_change_at')}</FieldLabel>
-                            <Input
-                                id="next_change_at"
-                                type="date"
-                                value={data.next_change_at}
-                                onChange={(event) => setData('next_change_at', event.target.value)}
-                                aria-invalid={!!errors.next_change_at}
-                            />
-                            <InputError message={errors.next_change_at} />
-                        </Field>
-
-                        <Field data-invalid={!!errors.rest_between_sets}>
-                            <FieldLabel htmlFor="rest_between_sets">
-                                {__('workout_pages.form.rest_between_sets')}
-                            </FieldLabel>
-                            <Input
-                                id="rest_between_sets"
-                                type="number"
-                                min={0}
-                                value={data.rest_between_sets}
-                                onChange={(event) => setData('rest_between_sets', event.target.value)}
-                                placeholder={__('workout_pages.form.rest_between_sets_placeholder')}
-                                aria-invalid={!!errors.rest_between_sets}
-                            />
-                            <InputError message={errors.rest_between_sets} />
-                        </Field>
-
-                        <Field data-invalid={!!errors.rest_between_exercises}>
-                            <FieldLabel htmlFor="rest_between_exercises">
-                                {__('workout_pages.form.rest_between_exercises')}
-                            </FieldLabel>
-                            <Input
-                                id="rest_between_exercises"
-                                type="number"
-                                min={0}
-                                value={data.rest_between_exercises}
-                                onChange={(event) => setData('rest_between_exercises', event.target.value)}
-                                placeholder={__('workout_pages.form.rest_between_exercises_placeholder')}
-                                aria-invalid={!!errors.rest_between_exercises}
-                            />
-                            <InputError message={errors.rest_between_exercises} />
-                        </Field>
-                    </div>
-
-                    <Separator />
-
-                    <Field>
-                        <FieldLabel htmlFor="is_active">{__('workout_pages.form.is_active')}</FieldLabel>
-                        <div className="flex items-center gap-3">
+                <CardContent>
+                    <FieldGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                        {(['goal', 'method', 'filled_at', 'next_change_at'] as const).map((name) => (
+                            <Field key={name} data-invalid={!!errors[name]}>
+                                <FieldLabel htmlFor={name}>{__('workout_pages.form.' + name)}</FieldLabel>
+                                <Input
+                                    id={name}
+                                    type={name.endsWith('_at') ? 'date' : 'text'}
+                                    value={data[name]}
+                                    onChange={(event) => setData(name, event.target.value)}
+                                    placeholder={
+                                        name.endsWith('_at')
+                                            ? undefined
+                                            : __('workout_pages.form.' + name + '_placeholder')
+                                    }
+                                    aria-invalid={!!errors[name]}
+                                />
+                                <InputError message={errors[name]} />
+                            </Field>
+                        ))}
+                        {(['rest_between_sets', 'rest_between_exercises'] as const).map((name) => (
+                            <Field key={name} data-invalid={!!errors[name]}>
+                                <FieldLabel htmlFor={name}>{__('workout_pages.form.' + name)}</FieldLabel>
+                                <Input
+                                    id={name}
+                                    type="number"
+                                    min={0}
+                                    value={data[name]}
+                                    onChange={(event) => setData(name, event.target.value)}
+                                    placeholder={__('workout_pages.form.' + name + '_placeholder')}
+                                    aria-invalid={!!errors[name]}
+                                />
+                                <InputError message={errors[name]} />
+                            </Field>
+                        ))}
+                        <Field orientation="horizontal" className="sm:col-span-2">
                             <Switch
                                 id="is_active"
                                 checked={data.is_active}
-                                onCheckedChange={(checked) => setData('is_active', Boolean(checked))}
+                                onCheckedChange={(checked) => setData('is_active', checked)}
                             />
-                            <Badge variant={data.is_active ? 'default' : 'secondary'}>
-                                {data.is_active
-                                    ? __('workout_pages.shared.active_status')
-                                    : __('workout_pages.shared.inactive_status')}
-                            </Badge>
-                        </div>
-                    </Field>
+                            <FieldLabel htmlFor="is_active">{__('workout_pages.form.is_active')}</FieldLabel>
+                        </Field>
+                    </FieldGroup>
                 </CardContent>
             </Card>
-
-            <Card>
-                <CardHeader className="flex flex-row items-center justify-between">
-                    <div>
-                        <CardTitle>{__('workout_pages.form.registry_title')}</CardTitle>
-                        <CardDescription>{__('workout_pages.form.registry_description')}</CardDescription>
-                    </div>
-
-                    <Button type="button" variant="outline" onClick={addSection}>
-                        {__('workout_pages.form.add_section')}
+            <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex flex-col gap-1">
+                    <h2 className="font-heading text-lg font-medium">{__('workout_pages.form.registry_title')}</h2>
+                    <p className="text-muted-foreground text-sm">{__('workout_pages.form.registry_description')}</p>
+                </div>
+                <Button type="button" variant="outline" onClick={addSection}>
+                    <PlusIcon data-icon="inline-start" />
+                    {__('workout_pages.form.add_section')}
+                </Button>
+            </div>
+            <InputError message={errors.sections} />
+            {data.sections.length === 0 && (
+                <Empty className="border">
+                    <EmptyHeader>
+                        <EmptyTitle>{__('workout_pages.form.empty_sections_title')}</EmptyTitle>
+                        <EmptyDescription>{__('workout_pages.form.empty_sections_description')}</EmptyDescription>
+                    </EmptyHeader>
+                    <Button type="button" onClick={addSection}>
+                        {__('workout_pages.form.add_first_section')}
                     </Button>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    {data.sections.length === 0 ? (
-                        <Empty className="border">
-                            <EmptyHeader>
-                                <EmptyTitle>{__('workout_pages.form.empty_sections_title')}</EmptyTitle>
-                                <EmptyDescription>
-                                    {__('workout_pages.form.empty_sections_description')}
-                                </EmptyDescription>
-                            </EmptyHeader>
-                            <Button type="button" onClick={addSection}>
-                                {__('workout_pages.form.add_first_section')}
-                            </Button>
-                        </Empty>
-                    ) : (
-                        <Fragment>
-                            {data.sections.map((section, sectionIndex) => (
-                                <Card key={section.id ?? `section-${sectionIndex}`} className="bg-muted/10 border">
-                                    <CardHeader className="gap-3">
-                                        <div className="flex flex-wrap items-center justify-between gap-2">
-                                            <CardTitle>
-                                                {__('workout_pages.form.section_label', {
-                                                    number: sectionIndex + 1,
-                                                })}
-                                            </CardTitle>
-
-                                            <div className="flex items-center gap-2">
-                                                <Badge variant="outline">
-                                                    {__('workout_pages.form.exercise_count_badge', {
-                                                        count: section.exercises.length,
-                                                    })}
-                                                </Badge>
-                                                <Button
-                                                    type="button"
-                                                    variant="outline"
-                                                    onClick={() => addExercise(sectionIndex)}
-                                                >
-                                                    {__('workout_pages.form.add_exercise')}
-                                                </Button>
-                                                <Button
-                                                    type="button"
-                                                    variant="destructive"
-                                                    onClick={() => removeSection(sectionIndex)}
-                                                >
-                                                    {__('workout_pages.form.remove_section')}
-                                                </Button>
-                                            </div>
+                </Empty>
+            )}
+            {data.sections.map((section, sectionIndex) => (
+                <Card key={section.key}>
+                    <CardHeader>
+                        <div className="flex flex-wrap items-center justify-between gap-3">
+                            <CardTitle>
+                                {__('workout_pages.form.section_label', { number: sectionIndex + 1 })}
+                            </CardTitle>
+                            <div className="flex items-center gap-1">
+                                <Badge variant="secondary">
+                                    {__('workout_pages.form.exercise_count_badge', { count: section.exercises.length })}
+                                </Badge>
+                                <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="icon"
+                                    disabled={sectionIndex === 0}
+                                    onClick={() => replaceSections(move(data.sections, sectionIndex, -1))}
+                                    aria-label={__('workout_pages.form.move_up')}
+                                >
+                                    <ArrowUpIcon />
+                                </Button>
+                                <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="icon"
+                                    disabled={sectionIndex === data.sections.length - 1}
+                                    onClick={() => replaceSections(move(data.sections, sectionIndex, 1))}
+                                    aria-label={__('workout_pages.form.move_down')}
+                                >
+                                    <ArrowDownIcon />
+                                </Button>
+                                <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={() =>
+                                        replaceSections(data.sections.filter((item) => item.key !== section.key))
+                                    }
+                                    aria-label={__('workout_pages.form.remove_section')}
+                                >
+                                    <Trash2Icon />
+                                </Button>
+                            </div>
+                        </div>
+                        <CardDescription>{__('workout_pages.form.section_hint')}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="flex flex-col gap-5">
+                        <FieldGroup>
+                            <Field data-invalid={!!error(`sections.${sectionIndex}.name`)}>
+                                <FieldLabel htmlFor={`section-${sectionIndex}`}>
+                                    {__('workout_pages.form.section_name')}
+                                </FieldLabel>
+                                <Input
+                                    id={`section-${sectionIndex}`}
+                                    value={section.name}
+                                    required
+                                    maxLength={255}
+                                    onChange={(event) => updateSection(section.key, { name: event.target.value })}
+                                    placeholder={__('workout_pages.form.section_name_placeholder')}
+                                    aria-invalid={!!error(`sections.${sectionIndex}.name`)}
+                                />
+                                <InputError message={error(`sections.${sectionIndex}.name`)} />
+                            </Field>
+                        </FieldGroup>
+                        <InputError message={error(`sections.${sectionIndex}.exercises`)} />
+                        {section.exercises.length === 0 && (
+                            <Empty>
+                                <EmptyHeader>
+                                    <EmptyTitle>{__('workout_pages.form.empty_exercises_title')}</EmptyTitle>
+                                    <EmptyDescription>
+                                        {__('workout_pages.form.empty_exercises_description')}
+                                    </EmptyDescription>
+                                </EmptyHeader>
+                            </Empty>
+                        )}
+                        {section.exercises.map((exercise, exerciseIndex) => {
+                            const path = `sections.${sectionIndex}.exercises.${exerciseIndex}`;
+                            const selected = catalog.find((item) => item.id === exercise.exercise_id) ?? null;
+                            const change = (patch: Partial<ExerciseInput>) =>
+                                updateExercise(section.key, exercise.key, patch);
+                            return (
+                                <div key={exercise.key} className="flex flex-col gap-4">
+                                    <Separator />
+                                    <div className="flex items-center justify-between gap-3">
+                                        <Badge variant="outline">
+                                            {__('workout_pages.form.exercise_label', { number: exerciseIndex + 1 })}
+                                        </Badge>
+                                        <div className="flex gap-1">
+                                            <Button
+                                                type="button"
+                                                variant="ghost"
+                                                size="icon"
+                                                disabled={exerciseIndex === 0}
+                                                onClick={() =>
+                                                    updateSection(section.key, {
+                                                        exercises: move(section.exercises, exerciseIndex, -1),
+                                                    })
+                                                }
+                                                aria-label={__('workout_pages.form.move_up')}
+                                            >
+                                                <ArrowUpIcon />
+                                            </Button>
+                                            <Button
+                                                type="button"
+                                                variant="ghost"
+                                                size="icon"
+                                                disabled={exerciseIndex === section.exercises.length - 1}
+                                                onClick={() =>
+                                                    updateSection(section.key, {
+                                                        exercises: move(section.exercises, exerciseIndex, 1),
+                                                    })
+                                                }
+                                                aria-label={__('workout_pages.form.move_down')}
+                                            >
+                                                <ArrowDownIcon />
+                                            </Button>
+                                            <Button
+                                                type="button"
+                                                variant="ghost"
+                                                size="icon"
+                                                onClick={() =>
+                                                    updateSection(section.key, {
+                                                        exercises: section.exercises.filter(
+                                                            (item) => item.key !== exercise.key,
+                                                        ),
+                                                    })
+                                                }
+                                                aria-label={__('workout_pages.form.remove_exercise')}
+                                            >
+                                                <Trash2Icon />
+                                            </Button>
                                         </div>
-
-                                        <div className="grid gap-4 md:grid-cols-2">
-                                            <Field data-invalid={!!errors[`sections.${sectionIndex}.name`]}>
-                                                <FieldLabel htmlFor={`section-name-${sectionIndex}`}>
-                                                    {__('workout_pages.form.section_name')} <RequiredIndicator />
+                                    </div>
+                                    <FieldGroup className="grid gap-4 sm:grid-cols-2 xl:grid-cols-12">
+                                        <Field
+                                            className="sm:col-span-2 xl:col-span-4"
+                                            data-invalid={!!error(`${path}.exercise_id`)}
+                                        >
+                                            <FieldLabel htmlFor={`${path}.exercise_id`}>
+                                                {__('workout_pages.form.exercise')}
+                                            </FieldLabel>
+                                            <Combobox
+                                                items={catalog}
+                                                value={selected}
+                                                itemToStringLabel={(item) => item.name}
+                                                isItemEqualToValue={(a, b) => a.id === b.id}
+                                                onValueChange={(item) =>
+                                                    change({
+                                                        exercise_id: item?.id ?? '',
+                                                        muscle_group_id: item?.muscle_groups[0]?.id ?? '',
+                                                    })
+                                                }
+                                            >
+                                                <ComboboxInput
+                                                    id={`${path}.exercise_id`}
+                                                    placeholder={__('workout_pages.form.select_exercise')}
+                                                    aria-invalid={!!error(`${path}.exercise_id`)}
+                                                />
+                                                <ComboboxContent>
+                                                    <ComboboxEmpty>
+                                                        {__('workout_pages.form.no_exercises_found')}
+                                                    </ComboboxEmpty>
+                                                    <ComboboxList>
+                                                        {(item: WorkoutOptionExercise) => (
+                                                            <ComboboxItem key={item.id} value={item}>
+                                                                {item.name}
+                                                            </ComboboxItem>
+                                                        )}
+                                                    </ComboboxList>
+                                                </ComboboxContent>
+                                            </Combobox>
+                                            <InputError message={error(`${path}.exercise_id`)} />
+                                            <div className="flex flex-wrap gap-2">
+                                                <Button
+                                                    type="button"
+                                                    nativeButton={false}
+                                                    variant="outline"
+                                                    size="sm"
+                                                    render={
+                                                        <ModalLink
+                                                            children={null}
+                                                            href={createExercise().url}
+                                                            onSaved={(saved: WorkoutOptionExercise) =>
+                                                                saveCatalogExercise(saved, section.key, exercise.key)
+                                                            }
+                                                        />
+                                                    }
+                                                >
+                                                    <PlusIcon data-icon="inline-start" />
+                                                    {__('workout_pages.form.new_exercise')}
+                                                </Button>
+                                                {selected && (
+                                                    <Button
+                                                        type="button"
+                                                        nativeButton={false}
+                                                        variant="ghost"
+                                                        size="sm"
+                                                        render={
+                                                            <ModalLink
+                                                                children={null}
+                                                                href={editExercise(selected.id).url}
+                                                                onSaved={(saved: WorkoutOptionExercise) =>
+                                                                    saveCatalogExercise(
+                                                                        saved,
+                                                                        section.key,
+                                                                        exercise.key,
+                                                                    )
+                                                                }
+                                                            />
+                                                        }
+                                                    >
+                                                        <PencilIcon data-icon="inline-start" />
+                                                        {__('workout_pages.form.edit_catalog_exercise')}
+                                                    </Button>
+                                                )}
+                                            </div>
+                                        </Field>
+                                        {(['sets', 'reps', 'load', 'rest_seconds'] as const).map((name) => (
+                                            <Field
+                                                key={name}
+                                                className="xl:col-span-2"
+                                                data-invalid={!!error(`${path}.${name}`)}
+                                            >
+                                                <FieldLabel htmlFor={`${path}.${name}`}>
+                                                    {__('workout_pages.form.' + name)}
+                                                    {name === 'load' && ` (${exercise.load_unit})`}
                                                 </FieldLabel>
                                                 <Input
-                                                    id={`section-name-${sectionIndex}`}
-                                                    value={section.name}
+                                                    id={`${path}.${name}`}
+                                                    type={name === 'reps' ? 'text' : 'number'}
+                                                    min={name === 'sets' ? 1 : 0}
+                                                    step={name === 'load' ? 'any' : undefined}
+                                                    required={name === 'sets' || name === 'reps'}
+                                                    value={exercise[name]}
                                                     onChange={(event) =>
-                                                        updateSection(sectionIndex, { name: event.target.value })
+                                                        change({
+                                                            [name]:
+                                                                name === 'sets' && event.target.value !== ''
+                                                                    ? Number(event.target.value)
+                                                                    : event.target.value,
+                                                        })
                                                     }
-                                                    placeholder={__('workout_pages.form.section_name_placeholder')}
-                                                    aria-invalid={!!errors[`sections.${sectionIndex}.name`]}
-                                                    required
+                                                    placeholder={
+                                                        name === 'rest_seconds'
+                                                            ? data.rest_between_sets || '—'
+                                                            : undefined
+                                                    }
+                                                    aria-invalid={!!error(`${path}.${name}`)}
                                                 />
-                                                <InputError message={errors[`sections.${sectionIndex}.name`]} />
+                                                <InputError message={error(`${path}.${name}`)} />
                                             </Field>
-                                        </div>
-                                    </CardHeader>
-
-                                    <CardContent className="space-y-3">
-                                        {section.exercises.length === 0 ? (
-                                            <Empty className="border">
-                                                <EmptyHeader>
-                                                    <EmptyTitle>
-                                                        {__('workout_pages.form.empty_exercises_title')}
-                                                    </EmptyTitle>
-                                                    <EmptyDescription>
-                                                        {__('workout_pages.form.empty_exercises_description')}
-                                                    </EmptyDescription>
-                                                </EmptyHeader>
-                                                <Button type="button" onClick={() => addExercise(sectionIndex)}>
-                                                    {__('workout_pages.form.add_first_exercise')}
-                                                </Button>
-                                            </Empty>
-                                        ) : (
-                                            section.exercises.map((exercise, exerciseIndex) => {
-                                                const supportedMuscleGroups = availableMuscleGroups(
-                                                    exercise.exercise_id,
-                                                );
-
-                                                return (
-                                                    <Card
-                                                        key={exercise.id ?? `exercise-${sectionIndex}-${exerciseIndex}`}
-                                                        className="bg-background border"
-                                                    >
-                                                        <CardHeader className="gap-2">
-                                                            <div className="flex items-center justify-between gap-2">
-                                                                <CardTitle className="text-sm">
-                                                                    {__('workout_pages.form.exercise_label', {
-                                                                        number: exerciseIndex + 1,
-                                                                    })}
-                                                                </CardTitle>
-
-                                                                <Button
-                                                                    type="button"
-                                                                    variant="ghost"
-                                                                    onClick={() =>
-                                                                        removeExercise(sectionIndex, exerciseIndex)
-                                                                    }
-                                                                >
-                                                                    {__('workout_pages.form.remove_exercise')}
-                                                                </Button>
-                                                            </div>
-                                                        </CardHeader>
-
-                                                        <CardContent className="grid gap-4 md:grid-cols-2">
-                                                            <Field
-                                                                data-invalid={
-                                                                    !!errors[
-                                                                        `sections.${sectionIndex}.exercises.${exerciseIndex}.exercise_id`
-                                                                    ]
-                                                                }
-                                                            >
-                                                                <FieldLabel>
-                                                                    {__('workout_pages.form.exercise')}{' '}
-                                                                    <RequiredIndicator />
-                                                                </FieldLabel>
-                                                                <NativeSelect
-                                                                    value={exercise.exercise_id}
-                                                                    onChange={(event) =>
-                                                                        handleExerciseChange(
-                                                                            sectionIndex,
-                                                                            exerciseIndex,
-                                                                            event.target.value,
-                                                                        )
-                                                                    }
-                                                                    aria-invalid={
-                                                                        !!errors[
-                                                                            `sections.${sectionIndex}.exercises.${exerciseIndex}.exercise_id`
-                                                                        ]
-                                                                    }
-                                                                    required
-                                                                >
-                                                                    <NativeSelectOption value="">
-                                                                        {__('workout_pages.form.select_exercise')}
-                                                                    </NativeSelectOption>
-                                                                    {formOptions.exercises.map((option) => (
-                                                                        <NativeSelectOption
-                                                                            key={option.id}
-                                                                            value={option.id}
-                                                                        >
-                                                                            {option.name}
-                                                                        </NativeSelectOption>
-                                                                    ))}
-                                                                </NativeSelect>
-                                                                <InputError
-                                                                    message={
-                                                                        errors[
-                                                                            `sections.${sectionIndex}.exercises.${exerciseIndex}.exercise_id`
-                                                                        ]
-                                                                    }
-                                                                />
-                                                            </Field>
-
-                                                            <Field
-                                                                data-invalid={
-                                                                    !!errors[
-                                                                        `sections.${sectionIndex}.exercises.${exerciseIndex}.muscle_group_id`
-                                                                    ]
-                                                                }
-                                                            >
-                                                                <FieldLabel>
-                                                                    {__('workout_pages.form.muscle_group')}
-                                                                </FieldLabel>
-                                                                <NativeSelect
-                                                                    value={exercise.muscle_group_id}
-                                                                    onChange={(event) =>
-                                                                        updateExercise(sectionIndex, exerciseIndex, {
-                                                                            muscle_group_id:
-                                                                                event.target.value === ''
-                                                                                    ? ''
-                                                                                    : Number(event.target.value),
-                                                                        })
-                                                                    }
-                                                                    disabled={exercise.exercise_id === ''}
-                                                                    aria-invalid={
-                                                                        !!errors[
-                                                                            `sections.${sectionIndex}.exercises.${exerciseIndex}.muscle_group_id`
-                                                                        ]
-                                                                    }
-                                                                >
-                                                                    <NativeSelectOption value="">
-                                                                        {__('workout_pages.form.select_muscle_group')}
-                                                                    </NativeSelectOption>
-                                                                    {supportedMuscleGroups.map((option) => (
-                                                                        <NativeSelectOption
-                                                                            key={option.id}
-                                                                            value={option.id}
-                                                                        >
-                                                                            {option.name}
-                                                                        </NativeSelectOption>
-                                                                    ))}
-                                                                </NativeSelect>
-                                                                <FieldDescription>
-                                                                    {__('workout_pages.form.muscle_group_hint')}
-                                                                </FieldDescription>
-                                                                <InputError
-                                                                    message={
-                                                                        errors[
-                                                                            `sections.${sectionIndex}.exercises.${exerciseIndex}.muscle_group_id`
-                                                                        ]
-                                                                    }
-                                                                />
-                                                            </Field>
-
-                                                            <Field
-                                                                data-invalid={
-                                                                    !!errors[
-                                                                        `sections.${sectionIndex}.exercises.${exerciseIndex}.sets`
-                                                                    ]
-                                                                }
-                                                            >
-                                                                <FieldLabel>
-                                                                    {__('workout_pages.form.sets')}{' '}
-                                                                    <RequiredIndicator />
-                                                                </FieldLabel>
-                                                                <Input
-                                                                    type="number"
-                                                                    min={1}
-                                                                    value={exercise.sets}
-                                                                    onChange={(event) =>
-                                                                        updateExercise(sectionIndex, exerciseIndex, {
-                                                                            sets: Number(event.target.value || 1),
-                                                                        })
-                                                                    }
-                                                                    required
-                                                                />
-                                                                <InputError
-                                                                    message={
-                                                                        errors[
-                                                                            `sections.${sectionIndex}.exercises.${exerciseIndex}.sets`
-                                                                        ]
-                                                                    }
-                                                                />
-                                                            </Field>
-
-                                                            <Field
-                                                                data-invalid={
-                                                                    !!errors[
-                                                                        `sections.${sectionIndex}.exercises.${exerciseIndex}.reps`
-                                                                    ]
-                                                                }
-                                                            >
-                                                                <FieldLabel>
-                                                                    {__('workout_pages.form.reps')}{' '}
-                                                                    <RequiredIndicator />
-                                                                </FieldLabel>
-                                                                <Input
-                                                                    value={exercise.reps}
-                                                                    onChange={(event) =>
-                                                                        updateExercise(sectionIndex, exerciseIndex, {
-                                                                            reps: event.target.value,
-                                                                        })
-                                                                    }
-                                                                    placeholder={__(
-                                                                        'workout_pages.form.reps_placeholder',
-                                                                    )}
-                                                                    required
-                                                                />
-                                                                <InputError
-                                                                    message={
-                                                                        errors[
-                                                                            `sections.${sectionIndex}.exercises.${exerciseIndex}.reps`
-                                                                        ]
-                                                                    }
-                                                                />
-                                                            </Field>
-
-                                                            <Field>
-                                                                <FieldLabel>{__('workout_pages.form.code')}</FieldLabel>
-                                                                <Input
-                                                                    value={exercise.code}
-                                                                    onChange={(event) =>
-                                                                        updateExercise(sectionIndex, exerciseIndex, {
-                                                                            code: event.target.value,
-                                                                        })
-                                                                    }
-                                                                    placeholder={__(
-                                                                        'workout_pages.form.code_placeholder',
-                                                                    )}
-                                                                />
-                                                            </Field>
-
-                                                            <Field
-                                                                data-invalid={
-                                                                    !!errors[
-                                                                        `sections.${sectionIndex}.exercises.${exerciseIndex}.load`
-                                                                    ]
-                                                                }
-                                                            >
-                                                                <FieldLabel>{__('workout_pages.form.load')}</FieldLabel>
-                                                                <div className="grid grid-cols-3 gap-2">
-                                                                    <Input
-                                                                        className="col-span-2"
-                                                                        type="number"
-                                                                        min={0}
-                                                                        step={0.01}
-                                                                        value={exercise.load}
-                                                                        onChange={(event) =>
-                                                                            updateExercise(
-                                                                                sectionIndex,
-                                                                                exerciseIndex,
-                                                                                {
-                                                                                    load: event.target.value,
-                                                                                },
-                                                                            )
-                                                                        }
-                                                                        placeholder={__(
-                                                                            'workout_pages.form.load_placeholder',
-                                                                        )}
-                                                                    />
-
-                                                                    <NativeSelect
-                                                                        value={exercise.load_unit}
-                                                                        onChange={(event) =>
-                                                                            updateExercise(
-                                                                                sectionIndex,
-                                                                                exerciseIndex,
-                                                                                {
-                                                                                    load_unit: event.target.value,
-                                                                                },
-                                                                            )
-                                                                        }
-                                                                    >
-                                                                        <NativeSelectOption value="kg">
-                                                                            kg
-                                                                        </NativeSelectOption>
-                                                                        <NativeSelectOption value="lbs">
-                                                                            lbs
-                                                                        </NativeSelectOption>
-                                                                        <NativeSelectOption value="bodyweight">
-                                                                            bodyweight
-                                                                        </NativeSelectOption>
-                                                                    </NativeSelect>
-                                                                </div>
-                                                                <InputError
-                                                                    message={
-                                                                        errors[
-                                                                            `sections.${sectionIndex}.exercises.${exerciseIndex}.load`
-                                                                        ]
-                                                                    }
-                                                                />
-                                                            </Field>
-
-                                                            <Field>
-                                                                <FieldLabel>
-                                                                    {__('workout_pages.form.rest_seconds')}
-                                                                </FieldLabel>
-                                                                <Input
-                                                                    type="number"
-                                                                    min={0}
-                                                                    value={exercise.rest_seconds}
-                                                                    onChange={(event) =>
-                                                                        updateExercise(sectionIndex, exerciseIndex, {
-                                                                            rest_seconds: event.target.value,
-                                                                        })
-                                                                    }
-                                                                    placeholder={__(
-                                                                        'workout_pages.form.rest_seconds_placeholder',
-                                                                    )}
-                                                                />
-                                                            </Field>
-
-                                                            <Field className="md:col-span-2">
-                                                                <FieldLabel>
-                                                                    {__('workout_pages.form.notes')}
-                                                                </FieldLabel>
-                                                                <Textarea
-                                                                    value={exercise.notes}
-                                                                    onChange={(event) =>
-                                                                        updateExercise(sectionIndex, exerciseIndex, {
-                                                                            notes: event.target.value,
-                                                                        })
-                                                                    }
-                                                                    placeholder={__(
-                                                                        'workout_pages.form.notes_placeholder',
-                                                                    )}
-                                                                />
-                                                            </Field>
-                                                        </CardContent>
-                                                    </Card>
-                                                );
-                                            })
+                                        ))}
+                                    </FieldGroup>
+                                    <Collapsible
+                                        key={String(
+                                            !!error(`${path}.code`) ||
+                                                !!error(`${path}.load_unit`) ||
+                                                !!error(`${path}.muscle_group_id`),
                                         )}
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </Fragment>
-                    )}
-
-                    <InputError message={errors.sections} />
-                </CardContent>
-            </Card>
-
-            <div className="flex flex-wrap items-center gap-2">
-                <Button type="submit" disabled={processing}>
-                    <Activity mode={processing ? 'visible' : 'hidden'}>
-                        <Spinner aria-hidden />
-                    </Activity>
-                    {isEditMode ? __('workout_pages.form.update_button') : __('workout_pages.form.create_button')}
+                                        defaultOpen={
+                                            !!exercise.notes ||
+                                            !!exercise.code ||
+                                            !!error(`${path}.code`) ||
+                                            !!error(`${path}.load_unit`) ||
+                                            !!error(`${path}.muscle_group_id`)
+                                        }
+                                    >
+                                        <CollapsibleTrigger render={<Button type="button" variant="ghost" size="sm" />}>
+                                            <ChevronDownIcon data-icon="inline-start" />
+                                            {__('workout_pages.form.more_details')}
+                                        </CollapsibleTrigger>
+                                        <CollapsibleContent keepMounted>
+                                            <FieldGroup className="grid gap-4 pt-4 sm:grid-cols-3">
+                                                <Field data-invalid={!!error(`${path}.muscle_group_id`)}>
+                                                    <FieldLabel htmlFor={`${path}.muscle_group_id`}>
+                                                        {__('workout_pages.form.muscle_group')}
+                                                    </FieldLabel>
+                                                    <NativeSelect
+                                                        id={`${path}.muscle_group_id`}
+                                                        value={exercise.muscle_group_id}
+                                                        onChange={(event) =>
+                                                            change({
+                                                                muscle_group_id: event.target.value
+                                                                    ? Number(event.target.value)
+                                                                    : '',
+                                                            })
+                                                        }
+                                                        aria-invalid={!!error(`${path}.muscle_group_id`)}
+                                                    >
+                                                        <NativeSelectOption value="">
+                                                            {__('workout_pages.form.select_muscle_group')}
+                                                        </NativeSelectOption>
+                                                        {selected?.muscle_groups.map((group) => (
+                                                            <NativeSelectOption key={group.id} value={group.id}>
+                                                                {group.name}
+                                                            </NativeSelectOption>
+                                                        ))}
+                                                    </NativeSelect>
+                                                    <FieldDescription>
+                                                        {__('workout_pages.form.muscle_group_hint')}
+                                                    </FieldDescription>
+                                                    <InputError message={error(`${path}.muscle_group_id`)} />
+                                                </Field>
+                                                {(['code', 'load_unit'] as const).map((name) => (
+                                                    <Field key={name} data-invalid={!!error(`${path}.${name}`)}>
+                                                        <FieldLabel htmlFor={`${path}.${name}`}>
+                                                            {__('workout_pages.form.' + name)}
+                                                        </FieldLabel>
+                                                        <Input
+                                                            id={`${path}.${name}`}
+                                                            value={exercise[name]}
+                                                            maxLength={name === 'code' ? 10 : 25}
+                                                            onChange={(event) => change({ [name]: event.target.value })}
+                                                            aria-invalid={!!error(`${path}.${name}`)}
+                                                        />
+                                                        <InputError message={error(`${path}.${name}`)} />
+                                                    </Field>
+                                                ))}
+                                                <Field
+                                                    className="sm:col-span-3"
+                                                    data-invalid={!!error(`${path}.notes`)}
+                                                >
+                                                    <FieldLabel htmlFor={`${path}.notes`}>
+                                                        {__('workout_pages.form.notes')}
+                                                    </FieldLabel>
+                                                    <Textarea
+                                                        id={`${path}.notes`}
+                                                        value={exercise.notes}
+                                                        onChange={(event) => change({ notes: event.target.value })}
+                                                        aria-invalid={!!error(`${path}.notes`)}
+                                                    />
+                                                    <InputError message={error(`${path}.notes`)} />
+                                                </Field>
+                                            </FieldGroup>
+                                        </CollapsibleContent>
+                                    </Collapsible>
+                                </div>
+                            );
+                        })}
+                    </CardContent>
+                    <CardFooter>
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() =>
+                                updateSection(section.key, { exercises: [...section.exercises, newExercise()] })
+                            }
+                        >
+                            <PlusIcon data-icon="inline-start" />
+                            {__('workout_pages.form.add_exercise')}
+                        </Button>
+                    </CardFooter>
+                </Card>
+            ))}
+            <p className="text-muted-foreground text-sm">
+                {__('workout_pages.form.catalog_hint')}{' '}
+                <Button
+                    type="button"
+                    nativeButton={false}
+                    variant="link"
+                    render={<ModalLink children={null} href={createMuscleGroup().url} />}
+                >
+                    {__('workout_pages.form.new_muscle_group')}
                 </Button>
-
-                <Button variant="outline" render={<Link href={index()}>{__('workout_pages.shared.cancel')}</Link>} />
-                {!isEditMode && (
-                    <Button variant="ghost" render={<Link href={create()}>{__('workout_pages.shared.reset')}</Link>} />
-                )}
+            </p>
+            <div className="bg-background sticky bottom-3 flex flex-wrap items-center justify-between gap-3 rounded-xl border p-3 shadow-sm">
+                <Button
+                    nativeButton={false}
+                    variant="outline"
+                    render={<Link href={workout ? show(workout.id) : index()} />}
+                >
+                    {__('workout_pages.shared.cancel')}
+                </Button>
+                <Button type="submit" disabled={processing}>
+                    {processing ? <Spinner data-icon="inline-start" /> : <SaveIcon data-icon="inline-start" />}
+                    {__('workout_pages.form.' + (workout ? 'update_button' : 'create_button'))}
+                </Button>
             </div>
         </form>
     );
