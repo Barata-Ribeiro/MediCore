@@ -10,7 +10,7 @@ beforeEach(function () {
     app()->getNamespace();
     app()->useAppPath($this->generatorPath);
     File::ensureDirectoryExists(app_path('Providers'));
-    File::copy($this->originalAppPath.'/Providers/AppServiceProvider.php', app_path('Providers/AppServiceProvider.php'));
+    File::copy("{$this->originalAppPath}/Providers/AppServiceProvider.php", app_path('Providers/AppServiceProvider.php'));
 });
 
 afterEach(function () {
@@ -23,8 +23,8 @@ test('generates a resolvable service and interface without changing the provider
 
     $this->artisan('make:service', ['name' => $input])->assertSuccessful();
 
-    $servicePath = app_path('Services/'.$relativeName.'.php');
-    $interfacePath = app_path('Interfaces/'.$relativeName.'Interface.php');
+    $servicePath = app_path("Services/$relativeName.php");
+    $interfacePath = app_path("Interfaces/{$relativeName}Interface.php");
     $serviceClass = 'App\\Services\\'.str_replace('/', '\\', $relativeName);
     $interfaceClass = 'App\\Interfaces\\'.str_replace('/', '\\', $relativeName).'Interface';
 

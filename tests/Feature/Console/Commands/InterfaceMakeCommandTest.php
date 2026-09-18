@@ -13,7 +13,7 @@ beforeEach(function () {
     app()->getNamespace();
     app()->useAppPath($this->generatorPath);
     File::ensureDirectoryExists(app_path('Providers'));
-    File::copy($this->originalAppPath.'/Providers/AppServiceProvider.php', app_path('Providers/AppServiceProvider.php'));
+    File::copy("{$this->originalAppPath}/Providers/AppServiceProvider.php", app_path('Providers/AppServiceProvider.php'));
 });
 
 afterEach(function () {
