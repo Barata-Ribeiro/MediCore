@@ -1,14 +1,14 @@
-import { store, update } from '@/routes/muscle-groups';
 import InputError from '@/components/helpers/input-error';
 import { Button } from '@/components/ui/button';
 import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
+import { store, update } from '@/routes/muscle-groups';
 import type { CatalogMuscleGroup } from '@/types/application/fitness/catalog';
 import { lang } from '@erag/lang-sync-inertia/react';
 import { router, useHttp, usePage } from '@inertiajs/react';
 import { useModal } from '@inertiaui/modal-react';
-import type { FormEvent } from 'react';
+import { Activity, type FormEvent } from 'react';
 import { toast } from 'sonner';
 
 type Props = { muscleGroup?: CatalogMuscleGroup | null; closeAction: () => void };
@@ -52,12 +52,15 @@ export default function MuscleGroupRegistryForm({ muscleGroup, closeAction }: Re
                     />
                     <InputError message={form.errors.name} />
                 </Field>
+
                 <div className="flex justify-end gap-2">
                     <Button type="button" variant="outline" onClick={closeAction}>
                         {__('muscle_group_pages.form.cancel_action')}
                     </Button>
                     <Button data-test="save-muscle-group" type="submit" disabled={form.processing}>
-                        {form.processing && <Spinner data-icon="inline-start" />}
+                        <Activity mode={form.processing ? 'visible' : 'hidden'}>
+                            <Spinner aria-hidden data-icon="inline-start" />
+                        </Activity>
                         {__('muscle_group_pages.form.' + (muscleGroup ? 'update_action' : 'create_action'))}
                     </Button>
                 </div>
