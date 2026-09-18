@@ -3,8 +3,11 @@
 namespace App\Interfaces\Exams;
 
 use App\Models\Exams\VitaminD3;
+use App\Services\Exams\VitaminD3Service;
+use Illuminate\Container\Attributes\Bind;
 use Illuminate\Pagination\LengthAwarePaginator;
 
+#[Bind(VitaminD3Service::class)]
 interface VitaminD3ServiceInterface
 {
     /**

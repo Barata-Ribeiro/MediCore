@@ -3,8 +3,11 @@
 namespace App\Interfaces\Exams;
 
 use App\Models\Exams\LipidProfile;
+use App\Services\Exams\LipidProfileService;
+use Illuminate\Container\Attributes\Bind;
 use Illuminate\Pagination\LengthAwarePaginator;
 
+#[Bind(LipidProfileService::class)]
 interface LipidProfileServiceInterface
 {
     /**

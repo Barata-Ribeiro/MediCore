@@ -3,8 +3,11 @@
 namespace App\Interfaces\Exams;
 
 use App\Models\Exams\UreaAndCreatinine;
+use App\Services\Exams\UreaAndCreatinineService;
+use Illuminate\Container\Attributes\Bind;
 use Illuminate\Pagination\LengthAwarePaginator;
 
+#[Bind(UreaAndCreatinineService::class)]
 interface UreaAndCreatinineServiceInterface
 {
     /**

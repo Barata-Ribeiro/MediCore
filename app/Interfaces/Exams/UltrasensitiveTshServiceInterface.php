@@ -3,8 +3,11 @@
 namespace App\Interfaces\Exams;
 
 use App\Models\Exams\UltrasensitiveTsh;
+use App\Services\Exams\UltrasensitiveTshService;
+use Illuminate\Container\Attributes\Bind;
 use Illuminate\Pagination\LengthAwarePaginator;
 
+#[Bind(UltrasensitiveTshService::class)]
 interface UltrasensitiveTshServiceInterface
 {
     /**

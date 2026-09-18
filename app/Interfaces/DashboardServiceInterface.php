@@ -4,7 +4,10 @@ namespace App\Interfaces;
 
 use App\Models\MedicalFile;
 use App\Models\Profile;
+use App\Services\DashboardService;
+use Illuminate\Container\Attributes\Bind;
 
+#[Bind(DashboardService::class)]
 interface DashboardServiceInterface
 {
     /**

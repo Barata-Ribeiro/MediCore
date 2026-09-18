@@ -3,8 +3,11 @@
 namespace App\Interfaces\Exams;
 
 use App\Models\Exams\CompleteBloodCount;
+use App\Services\Exams\CompleteBloodCountService;
+use Illuminate\Container\Attributes\Bind;
 use Illuminate\Pagination\LengthAwarePaginator;
 
+#[Bind(CompleteBloodCountService::class)]
 interface CompleteBloodCountServiceInterface
 {
     /**
