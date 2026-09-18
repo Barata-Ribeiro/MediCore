@@ -27,7 +27,7 @@ import { lang } from '@erag/lang-sync-inertia/react';
 import { Link, useForm } from '@inertiajs/react';
 import { ModalLink } from '@inertiaui/modal-react';
 import { ArrowDownIcon, ArrowUpIcon, ChevronDownIcon, PencilIcon, PlusIcon, SaveIcon, Trash2Icon } from 'lucide-react';
-import { useState, type FormEvent } from 'react';
+import { type SubmitEvent, useState } from 'react';
 
 type ExerciseInput = {
     key: string;
@@ -43,7 +43,9 @@ type ExerciseInput = {
     rest_seconds: string;
     notes: string;
 };
+
 type SectionInput = { key: string; id?: number; name: string; order: number; exercises: ExerciseInput[] };
+
 type FormData = {
     filled_at: string;
     next_change_at: string;
@@ -54,6 +56,7 @@ type FormData = {
     is_active: boolean;
     sections: SectionInput[];
 };
+
 type Props = { workout?: WorkoutResource; formOptions: WorkoutFormOptions };
 
 function newExercise(): ExerciseInput {
@@ -71,6 +74,7 @@ function newExercise(): ExerciseInput {
         notes: '',
     };
 }
+
 function newSection(name: string): SectionInput {
     return { key: crypto.randomUUID(), name, order: 1, exercises: [newExercise()] };
 }
@@ -101,7 +105,9 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
         })) ?? [newSection(__('workout_pages.form.default_section', { number: 1 }))],
     }));
     const { data, setData, post, put, processing, errors, transform, clearErrors } = useForm<FormData>(initial);
+
     const error = (path: string) => (errors as Record<string, string>)[path];
+
     const replaceSections = (sections: SectionInput[]) => {
         clearErrors();
         setData(
@@ -113,8 +119,10 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
             })),
         );
     };
+
     const updateSection = (key: string, patch: Partial<SectionInput>) =>
         replaceSections(data.sections.map((section) => (section.key === key ? { ...section, ...patch } : section)));
+
     const updateExercise = (sectionKey: string, exerciseKey: string, patch: Partial<ExerciseInput>) =>
         replaceSections(
             data.sections.map((section) =>
@@ -128,29 +136,36 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                     : section,
             ),
         );
+
     const move = <T,>(items: T[], position: number, direction: number): T[] => {
         const result = [...items];
         const current = result[position];
         const target = result[position + direction];
+
         if (current === undefined || target === undefined) {
             return result;
         }
+
         result[position] = target;
         result[position + direction] = current;
         return result;
     };
+
     const saveCatalogExercise = (saved: WorkoutOptionExercise, sectionKey: string, exerciseKey: string) => {
         setCatalog((current) =>
             [...current.filter((item) => item.id !== saved.id), saved].sort((a, b) => a.name.localeCompare(b.name)),
         );
+
         replaceSections(
             data.sections.map((section) => ({
                 ...section,
                 exercises: section.exercises.map((exercise) => {
                     const selectedRow = section.key === sectionKey && exercise.key === exerciseKey;
+
                     if (!selectedRow && exercise.exercise_id !== saved.id) {
                         return exercise;
                     }
+
                     return {
                         ...exercise,
                         exercise_id: saved.id,
@@ -162,8 +177,10 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
             })),
         );
     };
-    const submit = (event: FormEvent<HTMLFormElement>) => {
+
+    const submit = (event: SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
+
         transform((values) => ({
             ...values,
             filled_at: values.filled_at || null,
@@ -191,12 +208,14 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                 })),
             })),
         }));
+
         if (workout) {
             put(update(workout.id).url, { preserveScroll: true });
         } else {
             post(store().url, { preserveScroll: true });
         }
     };
+
     const addSection = () =>
         replaceSections([
             ...data.sections,
@@ -210,6 +229,7 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                     <CardTitle>{__('workout_pages.form.identity_title')}</CardTitle>
                     <CardDescription>{__('workout_pages.form.identity_description')}</CardDescription>
                 </CardHeader>
+
                 <CardContent>
                     <FieldGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                         {(['goal', 'method', 'filled_at', 'next_change_at'] as const).map((name) => (
@@ -230,6 +250,7 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                                 <InputError message={errors[name]} />
                             </Field>
                         ))}
+
                         {(['rest_between_sets', 'rest_between_exercises'] as const).map((name) => (
                             <Field key={name} data-invalid={!!errors[name]}>
                                 <FieldLabel htmlFor={name}>{__('workout_pages.form.' + name)}</FieldLabel>
@@ -245,6 +266,7 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                                 <InputError message={errors[name]} />
                             </Field>
                         ))}
+
                         <Field orientation="horizontal" className="sm:col-span-2">
                             <Switch
                                 id="is_active"
@@ -256,17 +278,21 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                     </FieldGroup>
                 </CardContent>
             </Card>
+
             <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex flex-col gap-1">
                     <h2 className="font-heading text-lg font-medium">{__('workout_pages.form.registry_title')}</h2>
                     <p className="text-muted-foreground text-sm">{__('workout_pages.form.registry_description')}</p>
                 </div>
+
                 <Button type="button" variant="outline" onClick={addSection}>
-                    <PlusIcon data-icon="inline-start" />
+                    <PlusIcon aria-hidden data-icon="inline-start" />
                     {__('workout_pages.form.add_section')}
                 </Button>
             </div>
+
             <InputError message={errors.sections} />
+
             {data.sections.length === 0 && (
                 <Empty className="border">
                     <EmptyHeader>
@@ -278,6 +304,7 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                     </Button>
                 </Empty>
             )}
+
             {data.sections.map((section, sectionIndex) => (
                 <Card key={section.key}>
                     <CardHeader>
@@ -285,10 +312,12 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                             <CardTitle>
                                 {__('workout_pages.form.section_label', { number: sectionIndex + 1 })}
                             </CardTitle>
+
                             <div className="flex items-center gap-1">
                                 <Badge variant="secondary">
                                     {__('workout_pages.form.exercise_count_badge', { count: section.exercises.length })}
                                 </Badge>
+
                                 <Button
                                     type="button"
                                     variant="ghost"
@@ -296,9 +325,11 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                                     disabled={sectionIndex === 0}
                                     onClick={() => replaceSections(move(data.sections, sectionIndex, -1))}
                                     aria-label={__('workout_pages.form.move_up')}
+                                    title={__('workout_pages.form.move_up')}
                                 >
-                                    <ArrowUpIcon />
+                                    <ArrowUpIcon aria-hidden />
                                 </Button>
+
                                 <Button
                                     type="button"
                                     variant="ghost"
@@ -306,8 +337,9 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                                     disabled={sectionIndex === data.sections.length - 1}
                                     onClick={() => replaceSections(move(data.sections, sectionIndex, 1))}
                                     aria-label={__('workout_pages.form.move_down')}
+                                    title={__('workout_pages.form.move_down')}
                                 >
-                                    <ArrowDownIcon />
+                                    <ArrowDownIcon aria-hidden />
                                 </Button>
                                 <Button
                                     type="button"
@@ -317,13 +349,15 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                                         replaceSections(data.sections.filter((item) => item.key !== section.key))
                                     }
                                     aria-label={__('workout_pages.form.remove_section')}
+                                    title={__('workout_pages.form.remove_section')}
                                 >
-                                    <Trash2Icon />
+                                    <Trash2Icon aria-hidden />
                                 </Button>
                             </div>
                         </div>
                         <CardDescription>{__('workout_pages.form.section_hint')}</CardDescription>
                     </CardHeader>
+
                     <CardContent className="flex flex-col gap-5">
                         <FieldGroup>
                             <Field data-invalid={!!error(`sections.${sectionIndex}.name`)}>
@@ -342,7 +376,9 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                                 <InputError message={error(`sections.${sectionIndex}.name`)} />
                             </Field>
                         </FieldGroup>
+
                         <InputError message={error(`sections.${sectionIndex}.exercises`)} />
+
                         {section.exercises.length === 0 && (
                             <Empty>
                                 <EmptyHeader>
@@ -353,6 +389,7 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                                 </EmptyHeader>
                             </Empty>
                         )}
+
                         {section.exercises.map((exercise, exerciseIndex) => {
                             const path = `sections.${sectionIndex}.exercises.${exerciseIndex}`;
                             const selected = catalog.find((item) => item.id === exercise.exercise_id) ?? null;
@@ -365,6 +402,7 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                                         <Badge variant="outline">
                                             {__('workout_pages.form.exercise_label', { number: exerciseIndex + 1 })}
                                         </Badge>
+
                                         <div className="flex gap-1">
                                             <Button
                                                 type="button"
@@ -378,7 +416,7 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                                                 }
                                                 aria-label={__('workout_pages.form.move_up')}
                                             >
-                                                <ArrowUpIcon />
+                                                <ArrowUpIcon aria-hidden />
                                             </Button>
                                             <Button
                                                 type="button"
@@ -391,8 +429,9 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                                                     })
                                                 }
                                                 aria-label={__('workout_pages.form.move_down')}
+                                                title={__('workout_pages.form.move_down')}
                                             >
-                                                <ArrowDownIcon />
+                                                <ArrowDownIcon aria-hidden />
                                             </Button>
                                             <Button
                                                 type="button"
@@ -406,11 +445,13 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                                                     })
                                                 }
                                                 aria-label={__('workout_pages.form.remove_exercise')}
+                                                title={__('workout_pages.form.remove_exercise')}
                                             >
-                                                <Trash2Icon />
+                                                <Trash2Icon aria-hidden />
                                             </Button>
                                         </div>
                                     </div>
+
                                     <FieldGroup className="grid gap-4 sm:grid-cols-2 xl:grid-cols-12">
                                         <Field
                                             className="sm:col-span-2 xl:col-span-4"
@@ -450,6 +491,7 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                                                 </ComboboxContent>
                                             </Combobox>
                                             <InputError message={error(`${path}.exercise_id`)} />
+
                                             <div className="flex flex-wrap gap-2">
                                                 <Button
                                                     type="button"
@@ -458,17 +500,18 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                                                     size="sm"
                                                     render={
                                                         <ModalLink
-                                                            children={null}
                                                             href={createExercise().url}
                                                             onSaved={(saved: WorkoutOptionExercise) =>
                                                                 saveCatalogExercise(saved, section.key, exercise.key)
                                                             }
-                                                        />
+                                                            as="button"
+                                                        >
+                                                            <PlusIcon aria-hidden data-icon="inline-start" />
+                                                            {__('workout_pages.form.new_exercise')}
+                                                        </ModalLink>
                                                     }
-                                                >
-                                                    <PlusIcon data-icon="inline-start" />
-                                                    {__('workout_pages.form.new_exercise')}
-                                                </Button>
+                                                />
+
                                                 {selected && (
                                                     <Button
                                                         type="button"
@@ -477,7 +520,6 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                                                         size="sm"
                                                         render={
                                                             <ModalLink
-                                                                children={null}
                                                                 href={editExercise(selected.id).url}
                                                                 onSaved={(saved: WorkoutOptionExercise) =>
                                                                     saveCatalogExercise(
@@ -486,15 +528,17 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                                                                         exercise.key,
                                                                     )
                                                                 }
-                                                            />
+                                                                as="button"
+                                                            >
+                                                                <PencilIcon aria-hidden data-icon="inline-start" />
+                                                                {__('workout_pages.form.edit_catalog_exercise')}
+                                                            </ModalLink>
                                                         }
-                                                    >
-                                                        <PencilIcon data-icon="inline-start" />
-                                                        {__('workout_pages.form.edit_catalog_exercise')}
-                                                    </Button>
+                                                    />
                                                 )}
                                             </div>
                                         </Field>
+
                                         {(['sets', 'reps', 'load', 'rest_seconds'] as const).map((name) => (
                                             <Field
                                                 key={name}
@@ -546,7 +590,7 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                                         }
                                     >
                                         <CollapsibleTrigger render={<Button type="button" variant="ghost" size="sm" />}>
-                                            <ChevronDownIcon data-icon="inline-start" />
+                                            <ChevronDownIcon aria-hidden data-icon="inline-start" />
                                             {__('workout_pages.form.more_details')}
                                         </CollapsibleTrigger>
                                         <CollapsibleContent keepMounted>
@@ -626,22 +670,24 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                                 updateSection(section.key, { exercises: [...section.exercises, newExercise()] })
                             }
                         >
-                            <PlusIcon data-icon="inline-start" />
+                            <PlusIcon aria-hidden data-icon="inline-start" />
                             {__('workout_pages.form.add_exercise')}
                         </Button>
                     </CardFooter>
                 </Card>
             ))}
             <p className="text-muted-foreground text-sm">
-                {__('workout_pages.form.catalog_hint')}{' '}
+                {__('workout_pages.form.catalog_hint')}
                 <Button
                     type="button"
                     nativeButton={false}
                     variant="link"
-                    render={<ModalLink children={null} href={createMuscleGroup().url} />}
-                >
-                    {__('workout_pages.form.new_muscle_group')}
-                </Button>
+                    render={
+                        <ModalLink href={createMuscleGroup().url} method={createMuscleGroup().method}>
+                            {__('workout_pages.form.new_muscle_group')}
+                        </ModalLink>
+                    }
+                />
             </p>
             <div className="bg-background sticky bottom-3 flex flex-wrap items-center justify-between gap-3 rounded-xl border p-3 shadow-sm">
                 <Button
@@ -652,7 +698,11 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                     {__('workout_pages.shared.cancel')}
                 </Button>
                 <Button type="submit" disabled={processing}>
-                    {processing ? <Spinner data-icon="inline-start" /> : <SaveIcon data-icon="inline-start" />}
+                    {processing ? (
+                        <Spinner data-icon="inline-start" />
+                    ) : (
+                        <SaveIcon aria-hidden data-icon="inline-start" />
+                    )}
                     {__('workout_pages.form.' + (workout ? 'update_button' : 'create_button'))}
                 </Button>
             </div>
