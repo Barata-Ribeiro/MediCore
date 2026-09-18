@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Traits;
 
+use App\Providers\AppServiceProvider;
 use ReflectionClass;
 use RuntimeException;
 
@@ -11,7 +12,7 @@ trait ServiceProviderInjector
 {
     public function injectCodeToRegisterMethod(string $appServiceProviderFile, string $codeToAdd): void
     {
-        $reflectionClass = new ReflectionClass('App\\Providers\\AppServiceProvider');
+        $reflectionClass = new ReflectionClass(AppServiceProvider::class);
         $reflectionMethod = $reflectionClass->getMethod('register');
 
         $methodBody = file($appServiceProviderFile);
