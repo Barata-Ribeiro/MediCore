@@ -13,7 +13,7 @@ import {
 import { destroy, edit } from '@/routes/exercises';
 import type { CatalogExercise } from '@/types/application/fitness/catalog';
 import { lang } from '@erag/lang-sync-inertia/react';
-import { Link } from '@inertiajs/react';
+import { ModalLink } from '@inertiaui/modal-react';
 import type { Column, ColumnDef } from '@tanstack/react-table';
 import { CalendarIcon, DeleteIcon, EditIcon, EllipsisIcon, ExternalLinkIcon } from 'lucide-react';
 import { Fragment, useState } from 'react';
@@ -46,9 +46,14 @@ function ActionsCell({ exercise }: Readonly<{ exercise: CatalogExercise }>) {
                         <DropdownMenuItem
                             nativeButton
                             render={
-                                <Link className="block w-full" href={edit(exercise.id)} as="button">
+                                <ModalLink
+                                    className="block w-full"
+                                    href={edit(exercise.id).url}
+                                    method={edit(exercise.id).method}
+                                    as="button"
+                                >
                                     <EditIcon aria-hidden size={14} /> {__('exercise_pages.index.table.menu.edit')}
-                                </Link>
+                                </ModalLink>
                             }
                         />
                         <DropdownMenuItem variant="destructive" onSelect={() => setOpen(true)}>
