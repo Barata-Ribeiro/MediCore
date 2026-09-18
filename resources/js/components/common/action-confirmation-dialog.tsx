@@ -20,10 +20,21 @@ type Props = {
     setOpen: Dispatch<SetStateAction<boolean>>;
     method: Method;
     route: RouteDefinition<Method>;
+    cancelLabel?: string;
+    confirmLabel?: string;
 };
 
 export default function ActionConfirmationDialog(props: Readonly<Props>) {
-    const { title, description, open, setOpen, method, route } = props;
+    const {
+        title,
+        description,
+        open,
+        setOpen,
+        method,
+        route,
+        cancelLabel = 'Cancel',
+        confirmLabel = 'Confirm',
+    } = props;
 
     return (
         <AlertDialog open={open} onOpenChange={setOpen}>
@@ -33,12 +44,12 @@ export default function ActionConfirmationDialog(props: Readonly<Props>) {
                     <AlertDialogDescription>{description}</AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel onClick={() => setOpen(false)}>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel onClick={() => setOpen(false)}>{cancelLabel}</AlertDialogCancel>
                     <AlertDialogAction
                         nativeButton={false}
                         render={
                             <Link href={route} method={method} as="button">
-                                Confirm
+                                {confirmLabel}
                             </Link>
                         }
                     />

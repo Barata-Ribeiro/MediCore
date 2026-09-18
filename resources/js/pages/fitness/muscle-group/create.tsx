@@ -14,11 +14,11 @@ export default function CreateMuscleGroup() {
     const { __ } = lang();
 
     return (
-        <Modal>
+        <Modal maxWidth="2xl">
             {({ close }: Readonly<CloseActionType>) => (
                 <Fragment>
                     <CardHeader className="flex items-start justify-between gap-2 border-b">
-                        <div className="w-max space-y-1">
+                        <div className="flex min-w-0 flex-col gap-1">
                             <CardTitle>{__('muscle_group_pages.form.title')}</CardTitle>
                             <CardDescription>{__('muscle_group_pages.form.description')}</CardDescription>
                         </div>

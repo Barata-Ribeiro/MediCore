@@ -31,6 +31,7 @@ return [
         ],
     ],
     'form' => [
+        'save_failed' => 'Unable to save. Check the fields or try again.',
         'title' => 'Muscle group editor',
         'description' => 'Create or update your muscle groups used by exercises.',
         'name' => 'Muscle group name',

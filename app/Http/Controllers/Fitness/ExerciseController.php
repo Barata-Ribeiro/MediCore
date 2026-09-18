@@ -9,6 +9,7 @@ use App\Http\Requests\QueryRequest;
 use App\Interfaces\Fitness\ExerciseServiceInterface;
 use App\Models\Fitness\Exercise;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -22,7 +23,7 @@ class ExerciseController extends Controller
 
     public function index(QueryRequest $request): Response
     {
-        syncLangFiles('exercise_pages');
+        syncLangFiles(['exercise_pages', 'muscle_group_pages']);
 
         $validated = $request->validated();
 
@@ -52,7 +53,7 @@ class ExerciseController extends Controller
 
     public function create(): Response
     {
-        syncLangFiles('exercise_pages');
+        syncLangFiles(['exercise_pages', 'muscle_group_pages']);
 
         $user = auth()->user();
 
@@ -63,7 +64,7 @@ class ExerciseController extends Controller
 
     public function edit(Exercise $exercise): RedirectResponse|Response
     {
-        syncLangFiles('exercise_pages');
+        syncLangFiles(['exercise_pages', 'muscle_group_pages']);
 
         $user = auth()->user();
 
@@ -79,7 +80,7 @@ class ExerciseController extends Controller
         ]);
     }
 
-    public function store(StoreExerciseRequest $request): RedirectResponse
+    public function store(StoreExerciseRequest $request): RedirectResponse|JsonResponse
     {
         $validated = $request->validated();
         $user = $request->user();
@@ -93,22 +94,35 @@ class ExerciseController extends Controller
 
             $exercise->muscleGroups()->sync($validated['muscle_group_ids'] ?? []);
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exercise.store_successfully')]);
-
-            return to_route('exercises.index');
         } catch (Exception $e) {
+            if ($request->expectsJson()) {
+                report($e);
+
+                return response()->json(['message' => __('flash.exercise.store_failed')], 500);
+            }
+
             Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exercise.store_failed')]);
             Log::error('Error creating exercise', ['user_id' => $user->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
         }
+
+        if ($request->expectsJson()) {
+            return response()->json(['exercise' => $exercise->load('muscleGroups'), 'message' => __('flash.exercise.store_successfully')], 201);
+        }
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exercise.store_successfully')]);
+
+        return to_route('exercises.index');
     }
 
-    public function update(UpdateExerciseRequest $request, Exercise $exercise): RedirectResponse
+    public function update(UpdateExerciseRequest $request, Exercise $exercise): RedirectResponse|JsonResponse
     {
         $user = $request->user();
 
         if ($exercise->user_id !== $user->id) {
+            abort_if($request->expectsJson(), 403);
+
             Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exercise.update_unauthorized')]);
 
             return back();
@@ -124,10 +138,13 @@ class ExerciseController extends Controller
             ]);
             $exercise->muscleGroups()->sync($validated['muscle_group_ids'] ?? []);
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exercise.update_successfully')]);
-
-            return to_route('exercises.index');
         } catch (Exception $e) {
+            if ($request->expectsJson()) {
+                report($e);
+
+                return response()->json(['message' => __('flash.exercise.update_failed')], 500);
+            }
+
             Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.exercise.update_failed')]);
             Log::error('Error updating exercise', [
                 'user_id' => $user->id,
@@ -137,6 +154,14 @@ class ExerciseController extends Controller
 
             return back()->withInput();
         }
+
+        if ($request->expectsJson()) {
+            return response()->json(['exercise' => $exercise->load('muscleGroups'), 'message' => __('flash.exercise.update_successfully')], 200);
+        }
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.exercise.update_successfully')]);
+
+        return to_route('exercises.index');
     }
 
     public function destroy(Exercise $exercise): RedirectResponse

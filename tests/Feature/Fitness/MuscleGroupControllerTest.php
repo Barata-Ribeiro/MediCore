@@ -3,6 +3,7 @@
 use App\Models\Fitness\Exercise;
 use App\Models\Fitness\MuscleGroup;
 use App\Models\User;
+use Illuminate\Support\Facades\Event;
 use Inertia\Testing\AssertableInertia;
 
 beforeEach(function () {
@@ -208,3 +209,56 @@ describe('tests for MuscleGroupController', function () {
         $response->assertRedirect(route('login'));
     });
 });
+
+it('returns a saved muscle group to the calling modal', function (string $method) {
+    $user = User::factory()->create();
+    $group = $method === 'putJson' ? MuscleGroup::factory()->for($user)->create() : null;
+    $url = $group ? route('muscle-groups.update', $group) : route('muscle-groups.store');
+
+    $response = $this->actingAs($user)->{$method}($url, ['name' => 'Pectorals']);
+
+    $response->assertSuccessful()->assertJsonPath('muscleGroup.name', 'Pectorals');
+    $this->assertDatabaseHas('muscle_groups', ['id' => $response->json('muscleGroup.id'), 'name' => 'Pectorals', 'user_id' => $user->id]);
+})->with(['postJson', 'putJson']);
+
+it('returns inline validation errors without saving an invalid muscle group from the modal', function () {
+    $this->actingAs(User::factory()->create())->postJson(route('muscle-groups.store'), ['name' => ''])
+        ->assertUnprocessable()->assertJsonValidationErrors(['name' => 'The name field is required.']);
+
+    $this->assertDatabaseCount('muscle_groups', 0);
+});
+
+it('refuses a modal update of another users muscle group', function () {
+    $group = MuscleGroup::factory()->create(['name' => 'Original']);
+
+    $this->actingAs(User::factory()->create())->putJson(route('muscle-groups.update', $group), ['name' => 'Changed'])
+        ->assertForbidden();
+
+    $this->assertDatabaseHas('muscle_groups', ['id' => $group->id, 'name' => 'Original']);
+});
+
+it('requires authentication for JSON muscle group creation', function () {
+    $this->actingAsGuest()->postJson(route('muscle-groups.store'), ['name' => 'Pectorals'])->assertUnauthorized();
+    $this->assertDatabaseCount('muscle_groups', 0);
+});
+
+it('keeps the modal open with a JSON error when muscle group persistence fails', function (string $method) {
+    $user = User::factory()->create();
+    $group = $method === 'putJson' ? MuscleGroup::factory()->for($user)->create(['name' => 'Original']) : null;
+    $eventName = 'eloquent.saving: '.MuscleGroup::class;
+    Event::listen($eventName, function () {
+        throw new RuntimeException('Persistence unavailable');
+    });
+
+    try {
+        $this->actingAs($user)->{$method}($group ? route('muscle-groups.update', $group) : route('muscle-groups.store'), ['name' => 'Changed'])
+            ->assertInternalServerError()->assertJsonPath('message', __('flash.muscle_group.'.($group ? 'update_failed' : 'store_failed')));
+
+        $this->assertDatabaseCount('muscle_groups', $group ? 1 : 0);
+        if ($group) {
+            $this->assertDatabaseHas('muscle_groups', ['id' => $group->id, 'name' => 'Original']);
+        }
+    } finally {
+        Event::forget($eventName);
+    }
+})->with(['postJson', 'putJson']);

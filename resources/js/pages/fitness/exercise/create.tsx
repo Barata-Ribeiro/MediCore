@@ -19,15 +19,20 @@ export default function CreateExercise({ muscleGroups }: Readonly<Props>) {
     const { __ } = lang();
 
     return (
-        <Modal>
+        <Modal maxWidth="2xl">
             {({ close }: Readonly<CloseActionType>) => (
                 <Fragment>
                     <CardHeader className="flex items-start justify-between gap-2 border-b">
-                        <div className="w-max space-y-1">
+                        <div className="flex min-w-0 flex-col gap-1">
                             <CardTitle>{__('exercise_pages.form.title')}</CardTitle>
                             <CardDescription>{__('exercise_pages.form.description')}</CardDescription>
                         </div>
-                        <Button onClick={close} variant="secondary" size="icon">
+                        <Button
+                            onClick={close}
+                            variant="secondary"
+                            size="icon"
+                            aria-label={__('exercise_pages.form.cancel_action')}
+                        >
                             <XIcon aria-hidden />
                         </Button>
                     </CardHeader>

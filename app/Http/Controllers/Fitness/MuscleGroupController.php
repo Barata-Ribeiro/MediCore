@@ -9,6 +9,7 @@ use App\Http\Requests\QueryRequest;
 use App\Interfaces\Fitness\MuscleGroupServiceInterface;
 use App\Models\Fitness\MuscleGroup;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -57,23 +58,34 @@ class MuscleGroupController extends Controller
         return Inertia::render('fitness/muscle-group/create');
     }
 
-    public function store(StoreMuscleGroupRequest $request): RedirectResponse
+    public function store(StoreMuscleGroupRequest $request): RedirectResponse|JsonResponse
     {
         $validated = $request->validated();
         $user = $request->user();
 
         try {
-            $user->muscleGroups()->create(['name' => $validated['name']]);
+            $muscleGroup = $user->muscleGroups()->create(['name' => $validated['name']]);
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.muscle_group.store_successfully')]);
-
-            return to_route('muscle-groups.index');
         } catch (Exception $e) {
+            if ($request->expectsJson()) {
+                report($e);
+
+                return response()->json(['message' => __('flash.muscle_group.store_failed')], 500);
+            }
+
             Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.muscle_group.store_failed')]);
             Log::error('Error creating muscle group', ['user_id' => $user->id, 'error' => $e->getMessage()]);
 
             return back()->withInput();
         }
+
+        if ($request->expectsJson()) {
+            return response()->json(['muscleGroup' => $muscleGroup, 'message' => __('flash.muscle_group.store_successfully')], 201);
+        }
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.muscle_group.store_successfully')]);
+
+        return to_route('muscle-groups.index');
     }
 
     public function edit(MuscleGroup $muscleGroup): RedirectResponse|Response
@@ -93,11 +105,13 @@ class MuscleGroupController extends Controller
         ]);
     }
 
-    public function update(UpdateMuscleGroupRequest $request, MuscleGroup $muscleGroup): RedirectResponse
+    public function update(UpdateMuscleGroupRequest $request, MuscleGroup $muscleGroup): RedirectResponse|JsonResponse
     {
         $user = $request->user();
 
         if ($muscleGroup->user_id !== $user->id) {
+            abort_if($request->expectsJson(), 403);
+
             Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.muscle_group.update_unauthorized')]);
 
             return back();
@@ -106,10 +120,13 @@ class MuscleGroupController extends Controller
         try {
             $muscleGroup->update(['name' => $request->validated()['name']]);
 
-            Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.muscle_group.update_successfully')]);
-
-            return to_route('muscle-groups.index');
         } catch (Exception $e) {
+            if ($request->expectsJson()) {
+                report($e);
+
+                return response()->json(['message' => __('flash.muscle_group.update_failed')], 500);
+            }
+
             Inertia::flash('toast', ['type' => 'error', 'message' => __('flash.muscle_group.update_failed')]);
             Log::error('Error updating muscle group', [
                 'user_id' => $user->id,
@@ -119,6 +136,14 @@ class MuscleGroupController extends Controller
 
             return back()->withInput();
         }
+
+        if ($request->expectsJson()) {
+            return response()->json(['muscleGroup' => $muscleGroup, 'message' => __('flash.muscle_group.update_successfully')], 200);
+        }
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('flash.muscle_group.update_successfully')]);
+
+        return to_route('muscle-groups.index');
     }
 
     public function destroy(MuscleGroup $muscleGroup): RedirectResponse

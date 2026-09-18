@@ -31,6 +31,7 @@ return [
         ],
     ],
     'form' => [
+        'save_failed' => 'Não foi possível salvar. Revise os campos ou tente novamente.',
         'title' => 'Editor de grupo muscular',
         'description' => 'Crie ou atualize seus grupos musculares usados nos exercícios.',
         'name' => 'Nome do grupo muscular',

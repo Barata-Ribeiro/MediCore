@@ -175,7 +175,7 @@ describe('tests for the "create" method of WorkoutController', function () {
 });
 
 describe('tests for the "store" method of WorkoutController', function () {
-    it('should store workout with sections and exercises and redirect to index', function () {
+    it('should store workout with sections and exercises and open the saved plan', function () {
         $user = User::factory()->create();
         $exercise = Exercise::factory()->for($user)->create(['name' => 'Bench Press']);
         $muscleGroup = MuscleGroup::factory()->for($user)->create(['name' => 'Pectorals']);
@@ -185,7 +185,7 @@ describe('tests for the "store" method of WorkoutController', function () {
 
         $response = $this->actingAs($user)->post(route('workouts.store'), $payload);
 
-        $response->assertRedirect(route('workouts.index'));
+        $response->assertRedirect(route('workouts.show', Workout::query()->whereBelongsTo($user)->sole()));
 
         $this->assertDatabaseHas('workouts', [
             'user_id' => $user->id,
@@ -378,7 +378,7 @@ describe('tests for the "update" method of WorkoutController', function () {
             ],
         ]);
 
-        $response->assertRedirect(route('workouts.index'));
+        $response->assertRedirect(route('workouts.show', Workout::query()->whereBelongsTo($user)->sole()));
 
         $this->assertDatabaseHas('workouts', [
             'id' => $workout->id,
@@ -457,4 +457,93 @@ describe('tests for the "destroy" method of WorkoutController', function () {
 
         $response->assertRedirect(route('login'));
     });
+});
+
+it('searches workout goals methods sections and exercises without exposing other users plans', function (string $search) {
+    $row = WorkoutExercise::factory()->create();
+    $workout = $row->section->workout;
+    $workout->update(['goal' => 'Strength plan', 'method' => 'Full body']);
+    $row->section->update(['name' => 'Monday session']);
+    $row->exercise->update(['name' => 'Bench press']);
+    Workout::factory()->for($workout->user)->create(['goal' => 'Unrelated', 'method' => 'Other']);
+    Workout::factory()->create(['goal' => $search]);
+
+    $this->actingAs($workout->user)->get(route('workouts.index', ['search' => $search]))
+        ->assertInertia(fn (AssertableInertia $page) => $page
+            ->has('workouts.data', 1)
+            ->where('workouts.data.0.id', $workout->id)
+            ->where('workouts.data.0.sections_count', 1)
+            ->where('workouts.data.0.exercises_count', 1)
+            ->missing('workouts.data.0.sections')
+        );
+})->with(['Strength', 'Full body', 'Monday', 'Bench press']);
+
+it('filters workout status and paginates sorted results while retaining the query', function () {
+    $user = User::factory()->create();
+    Workout::factory()->for($user)->create(['goal' => 'A', 'is_active' => true]);
+    $second = Workout::factory()->for($user)->create(['goal' => 'B', 'is_active' => true]);
+    Workout::factory()->for($user)->create(['goal' => 'C', 'is_active' => false]);
+    Workout::factory()->create(['goal' => 'D', 'is_active' => true]);
+
+    $this->actingAs($user)->get(route('workouts.index', ['filters' => 'is_active:1', 'sort_by' => 'goal', 'sort_dir' => 'asc', 'per_page' => 1, 'page' => 2]))
+        ->assertInertia(fn (AssertableInertia $page) => $page
+            ->where('workouts.total', 2)
+            ->where('workouts.current_page', 2)
+            ->has('workouts.data', 1)
+            ->where('workouts.data.0.id', $second->id)
+            ->where('workouts.prev_page_url', fn ($url) => str_contains($url, 'sort_by=goal') && str_contains($url, 'filters=is_active%3A1'))
+        );
+});
+
+it('finds inactive plans and returns an empty result for an unmatched search', function () {
+    $user = User::factory()->create();
+    $inactive = Workout::factory()->for($user)->create(['is_active' => false, 'goal' => 'Archived plan']);
+    Workout::factory()->for($user)->create(['is_active' => true]);
+
+    $this->actingAs($user)->get(route('workouts.index', ['filters' => 'is_active:0']))
+        ->assertInertia(fn (AssertableInertia $page) => $page->has('workouts.data', 1)->where('workouts.data.0.id', $inactive->id));
+    $this->get(route('workouts.index', ['search' => 'No matching plan']))
+        ->assertInertia(fn (AssertableInertia $page) => $page->has('workouts.data', 0));
+});
+
+it('falls back to a permitted sort column', function () {
+    $user = User::factory()->create();
+    Workout::factory()->for($user)->create();
+    $latest = Workout::factory()->for($user)->create();
+
+    $this->actingAs($user)->get(route('workouts.index', ['sort_by' => 'user_id']))
+        ->assertInertia(fn (AssertableInertia $page) => $page->where('workouts.data.0.id', $latest->id));
+});
+
+it('includes catalog modal translations when building or editing a workout', function (string $action) {
+    $workout = Workout::factory()->create();
+
+    $this->actingAs($workout->user)->get(route('workouts.'.$action, $action === 'edit' ? $workout : []))
+        ->assertInertia(fn (AssertableInertia $page) => $page
+            ->has('lang.workout_pages.form')
+            ->has('lang.exercise_pages.form.create_muscle_group')
+            ->has('lang.muscle_group_pages.form.name')
+        );
+})->with(['create', 'edit']);
+
+it('shows the complete prescription in section and exercise order', function () {
+    $workout = Workout::factory()->create(['filled_at' => '2026-08-10', 'rest_between_sets' => 60]);
+    $last = WorkoutSection::factory()->for($workout)->create(['name' => 'B', 'order' => 2]);
+    $first = WorkoutSection::factory()->for($workout)->create(['name' => 'A', 'order' => 1]);
+    $exercise = Exercise::factory()->for($workout->user)->create(['name' => 'Squat']);
+    WorkoutExercise::factory()->for($first, 'section')->for($exercise)->create(['order' => 2]);
+    $row = WorkoutExercise::factory()->for($first, 'section')->for($exercise)->create(['order' => 1, 'sets' => 4, 'reps' => '10', 'load' => 0, 'rest_seconds' => null, 'notes' => 'Controlled tempo']);
+
+    $this->actingAs($workout->user)->get(route('workouts.show', $workout))
+        ->assertInertia(fn (AssertableInertia $page) => $page
+            ->where('workout.sections.0.id', $first->id)
+            ->where('workout.sections.1.id', $last->id)
+            ->where('workout.sections.0.exercises.0.id', $row->id)
+            ->where('workout.sections.0.exercises.0.exercise.name', 'Squat')
+            ->where('workout.sections.0.exercises.0.sets', 4)
+            ->where('workout.sections.0.exercises.0.reps', '10')
+            ->where('workout.sections.0.exercises.0.notes', 'Controlled tempo')
+            ->where('workout.sections.0.exercises.0.rest_seconds', null)
+            ->where('workout.rest_between_sets', 60)
+        );
 });
