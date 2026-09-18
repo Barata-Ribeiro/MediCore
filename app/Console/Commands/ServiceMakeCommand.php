@@ -2,15 +2,12 @@
 
 namespace App\Console\Commands;
 
-use App\Console\Commands\Traits\ServiceProviderInjector;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Str;
 
 class ServiceMakeCommand extends GeneratorCommand
 {
-    use ServiceProviderInjector;
-
     /**
      * The name and signature of the console command.
      *
@@ -32,18 +29,25 @@ class ServiceMakeCommand extends GeneratorCommand
      */
     public function handle(): ?bool
     {
-        $codeToAdd = "\n\t\t\$this->app->bind(\n".
-            "\t\t\t\\App\\Interfaces\\".str_replace('/', '\\', $this->argument('name'))."Interface::class,\n".
-            "\t\t\t\\App\\Services\\".str_replace('/', '\\', $this->argument('name'))."::class\n".
-            "\t\t);\n";
+        $name = $this->qualifyClass($this->getNameInput());
 
-        $appServiceProviderFile = app_path('Providers/AppServiceProvider.php');
+        if ($this->isReservedName(class_basename($name))) {
+            $this->fail('The name "'.class_basename($name).'" is reserved by PHP.');
+        }
 
-        $this->injectCodeToRegisterMethod($appServiceProviderFile, $codeToAdd);
+        if ($this->alreadyExists($name)) {
+            $this->fail('Service already exists.');
+        }
 
-        Artisan::call('make:interface', [
-            'name' => $this->argument('name').'Interface',
-        ]);
+        $interface = $this->qualifyInterfaceFqn($name);
+
+        if ($this->files->exists($this->getPath($interface))) {
+            $this->fail('Interface already exists. Add its binding and implementation manually.');
+        }
+
+        if ($this->call('make:interface', ['name' => $interface, '--service' => $name]) !== self::SUCCESS) {
+            $this->fail('The service interface could not be created.');
+        }
 
         return parent::handle();
     }
@@ -75,7 +79,7 @@ class ServiceMakeCommand extends GeneratorCommand
     protected function qualifyInterfaceFqn(string $name): string
     {
         $rootNamespace = rtrim($this->rootNamespace(), '\\');
-        $relativeName = str_replace(['/', '\\'], '\\', $this->argument('name'));
+        $relativeName = Str::after($name, $rootNamespace.'\\Services\\');
 
         return "{$rootNamespace}\\Interfaces\\{$relativeName}Interface";
     }
