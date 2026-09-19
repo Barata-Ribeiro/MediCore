@@ -3,8 +3,11 @@
 namespace App\Interfaces\Exams;
 
 use App\Models\Exams\TgoAndTgp;
+use App\Services\Exams\TgoAndTgpService;
+use Illuminate\Container\Attributes\Bind;
 use Illuminate\Pagination\LengthAwarePaginator;
 
+#[Bind(TgoAndTgpService::class)]
 interface TgoAndTgpServiceInterface
 {
     /**

@@ -3,8 +3,11 @@
 namespace App\Interfaces\Fitness;
 
 use App\Models\Fitness\Exercise;
+use App\Services\Fitness\ExerciseService;
+use Illuminate\Container\Attributes\Bind;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
+#[Bind(ExerciseService::class)]
 interface ExerciseServiceInterface
 {
     /**

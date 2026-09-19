@@ -3,8 +3,11 @@
 namespace App\Interfaces\Exams;
 
 use App\Models\Exams\UricAcid;
+use App\Services\Exams\UricAcidService;
+use Illuminate\Container\Attributes\Bind;
 use Illuminate\Pagination\LengthAwarePaginator;
 
+#[Bind(UricAcidService::class)]
 interface UricAcidServiceInterface
 {
     /**

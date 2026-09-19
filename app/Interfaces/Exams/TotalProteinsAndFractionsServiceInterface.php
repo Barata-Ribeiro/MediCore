@@ -3,8 +3,11 @@
 namespace App\Interfaces\Exams;
 
 use App\Models\Exams\TotalProteinsAndFractions;
+use App\Services\Exams\TotalProteinsAndFractionsService;
+use Illuminate\Container\Attributes\Bind;
 use Illuminate\Pagination\LengthAwarePaginator;
 
+#[Bind(TotalProteinsAndFractionsService::class)]
 interface TotalProteinsAndFractionsServiceInterface
 {
     /**

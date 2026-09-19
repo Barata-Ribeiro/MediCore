@@ -3,8 +3,11 @@
 namespace App\Interfaces\Exams;
 
 use App\Models\Exams\Glucose;
+use App\Services\Exams\GlucoseService;
+use Illuminate\Container\Attributes\Bind;
 use Illuminate\Pagination\LengthAwarePaginator;
 
+#[Bind(GlucoseService::class)]
 interface GlucoseServiceInterface
 {
     /**
