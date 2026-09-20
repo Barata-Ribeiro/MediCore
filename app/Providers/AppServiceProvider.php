@@ -3,32 +3,6 @@
 namespace App\Providers;
 
 use App\Http\Requests\Auth\VerifyEmailRequest as AppVerifyEmailRequest;
-use App\Interfaces\DashboardServiceInterface;
-use App\Interfaces\Exams\CompleteBloodCountServiceInterface;
-use App\Interfaces\Exams\GlucoseServiceInterface;
-use App\Interfaces\Exams\LipidProfileServiceInterface;
-use App\Interfaces\Exams\TgoAndTgpServiceInterface;
-use App\Interfaces\Exams\TotalProteinsAndFractionsServiceInterface;
-use App\Interfaces\Exams\UltrasensitiveTshServiceInterface;
-use App\Interfaces\Exams\UreaAndCreatinineServiceInterface;
-use App\Interfaces\Exams\UricAcidServiceInterface;
-use App\Interfaces\Exams\VitaminB12ServiceInterface;
-use App\Interfaces\Exams\VitaminD3ServiceInterface;
-use App\Interfaces\Fitness\ExerciseServiceInterface;
-use App\Interfaces\Fitness\MuscleGroupServiceInterface;
-use App\Services\DashboardService;
-use App\Services\Exams\CompleteBloodCountService;
-use App\Services\Exams\GlucoseService;
-use App\Services\Exams\LipidProfileService;
-use App\Services\Exams\TgoAndTgpService;
-use App\Services\Exams\TotalProteinsAndFractionsService;
-use App\Services\Exams\UltrasensitiveTshService;
-use App\Services\Exams\UreaAndCreatinineService;
-use App\Services\Exams\UricAcidService;
-use App\Services\Exams\VitaminB12Service;
-use App\Services\Exams\VitaminD3Service;
-use App\Services\Fitness\ExerciseService;
-use App\Services\Fitness\MuscleGroupService;
 use App\Translation\Translator;
 use Carbon\CarbonImmutable;
 use Gate;
@@ -58,71 +32,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             FortifyVerifyEmailRequest::class,
             AppVerifyEmailRequest::class
-        );
-
-        $this->app->bind(
-            LipidProfileServiceInterface::class,
-            LipidProfileService::class
-        );
-
-        $this->app->bind(
-            CompleteBloodCountServiceInterface::class,
-            CompleteBloodCountService::class
-        );
-
-        $this->app->bind(
-            GlucoseServiceInterface::class,
-            GlucoseService::class
-        );
-
-        $this->app->bind(
-            DashboardServiceInterface::class,
-            DashboardService::class
-        );
-
-        $this->app->bind(
-            VitaminD3ServiceInterface::class,
-            VitaminD3Service::class
-        );
-
-        $this->app->bind(
-            VitaminB12ServiceInterface::class,
-            VitaminB12Service::class
-        );
-
-        $this->app->bind(
-            TgoAndTgpServiceInterface::class,
-            TgoAndTgpService::class
-        );
-
-        $this->app->bind(
-            UreaAndCreatinineServiceInterface::class,
-            UreaAndCreatinineService::class
-        );
-
-        $this->app->bind(
-            UltrasensitiveTshServiceInterface::class,
-            UltrasensitiveTshService::class
-        );
-
-        $this->app->bind(
-            UricAcidServiceInterface::class,
-            UricAcidService::class
-        );
-
-        $this->app->bind(
-            TotalProteinsAndFractionsServiceInterface::class,
-            TotalProteinsAndFractionsService::class
-        );
-
-        $this->app->bind(
-            ExerciseServiceInterface::class,
-            ExerciseService::class
-        );
-
-        $this->app->bind(
-            MuscleGroupServiceInterface::class,
-            MuscleGroupService::class
         );
     }
 

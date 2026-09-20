@@ -3,8 +3,11 @@
 namespace App\Interfaces\Fitness;
 
 use App\Models\Fitness\MuscleGroup;
+use App\Services\Fitness\MuscleGroupService;
+use Illuminate\Container\Attributes\Bind;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
+#[Bind(MuscleGroupService::class)]
 interface MuscleGroupServiceInterface
 {
     /**

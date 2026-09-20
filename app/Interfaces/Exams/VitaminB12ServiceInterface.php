@@ -3,8 +3,11 @@
 namespace App\Interfaces\Exams;
 
 use App\Models\Exams\VitaminB12;
+use App\Services\Exams\VitaminB12Service;
+use Illuminate\Container\Attributes\Bind;
 use Illuminate\Pagination\LengthAwarePaginator;
 
+#[Bind(VitaminB12Service::class)]
 interface VitaminB12ServiceInterface
 {
     /**
