@@ -83,5 +83,10 @@
         "lightningcss-linux-x64-gnu": "^1.33.0",
         "lightningcss-win32-x64-msvc": "^1.33.0"
     },
-    "packageManager": "pnpm@12.5.1"
+    "packageManager": "pnpm@12.5.1",
+    "intent": {
+        "skills": [
+            "*"
+        ]
+    }
 }
