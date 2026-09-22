@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Fitness;
 
+use App\Common\DataTableQuery;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Fitness\StoreWorkoutRequest;
 use App\Http\Requests\Fitness\UpdateWorkoutRequest;
@@ -30,12 +31,7 @@ class WorkoutController extends Controller
         syncLangFiles('workout_pages');
 
         $validated = $request->validated();
-        $sortBy = $validated['sort_by'] ?? 'id';
-        if (! in_array($sortBy, ['id', 'goal', 'method', 'filled_at', 'next_change_at', 'is_active', 'sections_count', 'exercises_count'], true)) {
-            $sortBy = 'id';
-        }
         $search = trim($validated['search'] ?? '');
-        $statuses = array_filter((array) ($validated['filters']['is_active'] ?? []), fn (mixed $status): bool => in_array($status, ['0', '1', 0, 1], true));
 
         $workouts = Workout::query()
             ->whereBelongsTo(auth()->user())
@@ -49,9 +45,9 @@ class WorkoutController extends Controller
                 ->orWhereLike('method', "%{$search}%")
                 ->orWhereHas('sections', fn ($query) => $query->whereLike('name', "%{$search}%"))
                 ->orWhereHas('sections.exercises.exercise', fn ($query) => $query->whereLike('name', "%{$search}%"))))
-            ->when($statuses !== [], fn ($query) => $query->whereIn('is_active', $statuses))
-            ->orderBy($sortBy, $validated['sort_dir'] ?? 'desc')
-            ->orderByDesc('id')
+            ->tap(fn ($query) => DataTableQuery::apply($query, $validated['filters'] ?? [], $validated['sorting'] ?? [], [
+                'id' => 'number', 'goal' => 'text', 'method' => 'text', 'filled_at' => 'date', 'next_change_at' => 'date', 'is_active' => 'boolean', 'sections_count' => 'sort', 'exercises_count' => 'sort',
+            ], defaultDescending: true))
             ->paginate($validated['per_page'] ?? 10)
             ->withQueryString();
 

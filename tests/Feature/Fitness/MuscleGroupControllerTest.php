@@ -113,8 +113,7 @@ describe('tests for MuscleGroupController', function () {
 
         $response = $this->actingAs($user)->get(route('muscle-groups.index', [
             'per_page' => 1,
-            'sort_by' => 'exercises_count',
-            'sort_dir' => 'desc',
+            'sorting' => [['id' => 'exercises_count', 'desc' => true]],
         ]));
 
         $response->assertOk();
@@ -133,7 +132,7 @@ describe('tests for MuscleGroupController', function () {
         Exercise::factory()->for($user)->hasAttached($back)->create(['name' => 'Row']);
 
         $response = $this->actingAs($user)->get(route('muscle-groups.index', [
-            'filters' => ['exercises_count' => [1, 5]],
+            'filters' => [['id' => 'exercises_count', 'operator' => 'inRange', 'value' => [1, 5]]],
         ]));
 
         $response->assertOk();
@@ -151,7 +150,7 @@ describe('tests for MuscleGroupController', function () {
         Exercise::factory()->for($user)->hasAttached($back)->create(['name' => 'Row']);
 
         $response = $this->actingAs($user)->get(route('muscle-groups.index', [
-            'filters' => 'exercises_count:0,100',
+            'filters' => [['id' => 'exercises_count', 'operator' => 'inRange', 'value' => [0, 100]]],
         ]));
 
         $response->assertOk();

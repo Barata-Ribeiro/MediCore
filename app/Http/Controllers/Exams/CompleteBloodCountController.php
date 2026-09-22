@@ -14,8 +14,6 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Log;
 
-use function in_array;
-
 class CompleteBloodCountController extends Controller
 {
     public function __construct(private CompleteBloodCountServiceInterface $completeBloodCountService) {}
@@ -134,24 +132,13 @@ class CompleteBloodCountController extends Controller
         $validated = $request->validated();
 
         $perPage = $validated['per_page'] ?? 10;
-        $sortBy = $validated['sort_by'] ?? 'id';
-        $sortDir = $validated['sort_dir'] ?? 'asc';
+        $sorting = $validated['sorting'] ?? [];
         $search = trim($validated['search'] ?? '');
         $filters = $validated['filters'] ?? [];
 
-        $allowedSorts = ['id', 'hematocrit', 'hemoglobin', 'red_blood_cell_count', 'mean_corpuscular_volume', 'mean_corpuscular_hemoglobin',
-            'mean_corpuscular_hemoglobin_concentration', 'red_blood_cell_distribution_width', 'leukocyte_count', 'rod_neutrophil_count',
-            'segmented_neutrophil_count', 'lymphocyte_count', 'monocyte_count', 'eosinophil_count', 'basophil_count', 'metamyelocyte_count',
-            'promyelocyte_count', 'atypical_cell_count', 'platelet_count', 'report_date', 'created_at'];
-
-        if (! in_array($sortBy, $allowedSorts)) {
-            $sortBy = 'id';
-        }
-
         return $this->completeBloodCountService->getCompleteBloodCountData(
             perPage: $perPage,
-            sortBy: $sortBy,
-            sortDir: $sortDir,
+            sorting: $sorting,
             search: $search,
             filters: $filters
         );

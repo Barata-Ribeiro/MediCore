@@ -2,7 +2,6 @@
 
 use App\Models\Exams\CompleteBloodCount;
 use App\Models\User;
-use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Event;
 use Inertia\Testing\AssertableInertia;
 
@@ -23,11 +22,11 @@ it('searches measurements without exposing other users or bypassing date filters
     $record = CompleteBloodCount::factory()->create(['hematocrit' => 12, 'hemoglobin' => 12, 'red_blood_cell_count' => 12, 'mean_corpuscular_volume' => 12, 'mean_corpuscular_hemoglobin' => 12, 'mean_corpuscular_hemoglobin_concentration' => 12, 'red_blood_cell_distribution_width' => 12, 'leukocyte_count' => 12, 'rod_neutrophil_count' => 12, 'segmented_neutrophil_count' => 12, 'lymphocyte_count' => 12, 'monocyte_count' => 12, 'eosinophil_count' => 12, 'basophil_count' => 12, 'metamyelocyte_count' => 12, 'promyelocyte_count' => 12, 'atypical_cell_count' => 12, 'platelet_count' => 12, $field => 87.5, 'report_date' => '2026-08-10']);
     CompleteBloodCount::factory()->for($record->medicalFile)->create(['hematocrit' => 12, 'hemoglobin' => 12, 'red_blood_cell_count' => 12, 'mean_corpuscular_volume' => 12, 'mean_corpuscular_hemoglobin' => 12, 'mean_corpuscular_hemoglobin_concentration' => 12, 'red_blood_cell_distribution_width' => 12, 'leukocyte_count' => 12, 'rod_neutrophil_count' => 12, 'segmented_neutrophil_count' => 12, 'lymphocyte_count' => 12, 'monocyte_count' => 12, 'eosinophil_count' => 12, 'basophil_count' => 12, 'metamyelocyte_count' => 12, 'promyelocyte_count' => 12, 'atypical_cell_count' => 12, 'platelet_count' => 12, $field => 87.5, 'report_date' => '2026-07-10']);
     CompleteBloodCount::factory()->create(['hematocrit' => 12, 'hemoglobin' => 12, 'red_blood_cell_count' => 12, 'mean_corpuscular_volume' => 12, 'mean_corpuscular_hemoglobin' => 12, 'mean_corpuscular_hemoglobin_concentration' => 12, 'red_blood_cell_distribution_width' => 12, 'leukocyte_count' => 12, 'rod_neutrophil_count' => 12, 'segmented_neutrophil_count' => 12, 'lymphocyte_count' => 12, 'monocyte_count' => 12, 'eosinophil_count' => 12, 'basophil_count' => 12, 'metamyelocyte_count' => 12, 'promyelocyte_count' => 12, 'atypical_cell_count' => 12, 'platelet_count' => 12, $field => 87.5, 'report_date' => '2026-08-10']);
-    $date = CarbonImmutable::parse('2026-08-10')->getTimestampMs();
+    $date = '2026-08-10';
 
     $this->actingAs($record->medicalFile->user)->get(route('complete-blood-count.index', [
         'search' => '87.5',
-        'filters' => ['report_date' => [$date, $date]],
+        'filters' => [['id' => 'report_date', 'operator' => 'inRange', 'value' => [$date, $date]]],
     ]))->assertOk()->assertInertia(fn (AssertableInertia $page) => $page
         ->has('completeBloodCounts.data', 1)
         ->where('completeBloodCounts.data.0.id', $record->id)
@@ -452,7 +451,7 @@ it('sorts and paginates only the authenticated users records', function () {
     CompleteBloodCount::factory()->create(['hematocrit' => 90]);
 
     $this->actingAs($record->medicalFile->user)
-        ->get(route('complete-blood-count.index', ['sort_by' => 'hematocrit', 'sort_dir' => 'desc', 'per_page' => 1]))
+        ->get(route('complete-blood-count.index', ['sorting' => [['id' => 'hematocrit', 'desc' => true]], 'per_page' => 1]))
         ->assertOk()->assertInertia(fn (AssertableInertia $page) => $page
         ->has('completeBloodCounts.data', 1)
         ->where('completeBloodCounts.total', 2)
@@ -464,10 +463,10 @@ it('filters records by date without including other owners', function (string $f
     $record = CompleteBloodCount::factory()->create([$field => '2026-08-10 12:00:00']);
     CompleteBloodCount::factory()->for($record->medicalFile)->create([$field => '2026-08-09 12:00:00']);
     CompleteBloodCount::factory()->create([$field => '2026-08-10 12:00:00']);
-    $date = CarbonImmutable::parse('2026-08-10')->getTimestampMs();
+    $date = '2026-08-10';
 
     $this->actingAs($record->medicalFile->user)->get(route('complete-blood-count.index', [
-        'filters' => [$field => [$date, $date]],
+        'filters' => [['id' => $field, 'operator' => 'inRange', 'value' => [$date, $date]]],
     ]))->assertOk()->assertInertia(fn (AssertableInertia $page) => $page
         ->has('completeBloodCounts.data', 1)
         ->where('completeBloodCounts.data.0.id', $record->id)

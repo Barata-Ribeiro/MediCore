@@ -2,7 +2,6 @@
 
 use App\Models\Exams\VitaminD3;
 use App\Models\User;
-use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Event;
 use Inertia\Testing\AssertableInertia;
 
@@ -23,11 +22,11 @@ it('searches measurements without exposing other users or bypassing date filters
     $record = VitaminD3::factory()->create(['twenty_five_hydroxyvitamin_d3' => 12, $field => 87.5, 'report_date' => '2026-08-10']);
     VitaminD3::factory()->for($record->medicalFile)->create(['twenty_five_hydroxyvitamin_d3' => 12, $field => 87.5, 'report_date' => '2026-07-10']);
     VitaminD3::factory()->create(['twenty_five_hydroxyvitamin_d3' => 12, $field => 87.5, 'report_date' => '2026-08-10']);
-    $date = CarbonImmutable::parse('2026-08-10')->getTimestampMs();
+    $date = '2026-08-10';
 
     $this->actingAs($record->medicalFile->user)->get(route('vitamin-d3.index', [
         'search' => '87.5',
-        'filters' => ['report_date' => [$date, $date]],
+        'filters' => [['id' => 'report_date', 'operator' => 'inRange', 'value' => [$date, $date]]],
     ]))->assertOk()->assertInertia(fn (AssertableInertia $page) => $page
         ->has('vitaminD3s.data', 1)
         ->where('vitaminD3s.data.0.id', $record->id)
@@ -340,7 +339,7 @@ it('sorts and paginates only the authenticated users records', function () {
     VitaminD3::factory()->create(['twenty_five_hydroxyvitamin_d3' => 90]);
 
     $this->actingAs($record->medicalFile->user)
-        ->get(route('vitamin-d3.index', ['sort_by' => 'twenty_five_hydroxyvitamin_d3', 'sort_dir' => 'desc', 'per_page' => 1]))
+        ->get(route('vitamin-d3.index', ['sorting' => [['id' => 'twenty_five_hydroxyvitamin_d3', 'desc' => true]], 'per_page' => 1]))
         ->assertOk()->assertInertia(fn (AssertableInertia $page) => $page
         ->has('vitaminD3s.data', 1)
         ->where('vitaminD3s.total', 2)
@@ -352,10 +351,10 @@ it('filters records by date without including other owners', function (string $f
     $record = VitaminD3::factory()->create([$field => '2026-08-10 12:00:00']);
     VitaminD3::factory()->for($record->medicalFile)->create([$field => '2026-08-09 12:00:00']);
     VitaminD3::factory()->create([$field => '2026-08-10 12:00:00']);
-    $date = CarbonImmutable::parse('2026-08-10')->getTimestampMs();
+    $date = '2026-08-10';
 
     $this->actingAs($record->medicalFile->user)->get(route('vitamin-d3.index', [
-        'filters' => [$field => [$date, $date]],
+        'filters' => [['id' => $field, 'operator' => 'inRange', 'value' => [$date, $date]]],
     ]))->assertOk()->assertInertia(fn (AssertableInertia $page) => $page
         ->has('vitaminD3s.data', 1)
         ->where('vitaminD3s.data.0.id', $record->id)

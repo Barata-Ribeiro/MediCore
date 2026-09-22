@@ -13,11 +13,12 @@ interface CompleteBloodCountServiceInterface
     /**
      * Fetch paginated data and chart data for this exam type based on the provided parameters.
      *
-     * @param  array<string, mixed>|null  $filters
+     * @param  list<array{id: string, desc: bool}>  $sorting
+     * @param  list<array{id: string, operator: string, value?: mixed, joinOperator?: string, filterId?: string}>|null  $filters
      * @return array{
      *     0: LengthAwarePaginator<int, CompleteBloodCount>,
      *     1: array<string, mixed>
      * }
      */
-    public function getCompleteBloodCountData(?int $perPage, ?string $sortBy, ?string $sortDir, ?string $search, ?array $filters): array;
+    public function getCompleteBloodCountData(?int $perPage, array $sorting, ?string $search, ?array $filters): array;
 }

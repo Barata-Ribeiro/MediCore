@@ -2,7 +2,6 @@
 
 use App\Models\Exams\VitaminB12;
 use App\Models\User;
-use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Event;
 use Inertia\Testing\AssertableInertia;
 
@@ -23,11 +22,11 @@ it('searches measurements without exposing other users or bypassing date filters
     $record = VitaminB12::factory()->create(['vitamin_b12_level' => 12, $field => 87.5, 'report_date' => '2026-08-10']);
     VitaminB12::factory()->for($record->medicalFile)->create(['vitamin_b12_level' => 12, $field => 87.5, 'report_date' => '2026-07-10']);
     VitaminB12::factory()->create(['vitamin_b12_level' => 12, $field => 87.5, 'report_date' => '2026-08-10']);
-    $date = CarbonImmutable::parse('2026-08-10')->getTimestampMs();
+    $date = '2026-08-10';
 
     $this->actingAs($record->medicalFile->user)->get(route('vitamin-b12.index', [
         'search' => '87.5',
-        'filters' => ['report_date' => [$date, $date]],
+        'filters' => [['id' => 'report_date', 'operator' => 'inRange', 'value' => [$date, $date]]],
     ]))->assertOk()->assertInertia(fn (AssertableInertia $page) => $page
         ->has('vitaminB12s.data', 1)
         ->where('vitaminB12s.data.0.id', $record->id)
@@ -341,7 +340,7 @@ it('sorts and paginates only the authenticated users records', function () {
     VitaminB12::factory()->create(['vitamin_b12_level' => 90]);
 
     $this->actingAs($record->medicalFile->user)
-        ->get(route('vitamin-b12.index', ['sort_by' => 'vitamin_b12_level', 'sort_dir' => 'desc', 'per_page' => 1]))
+        ->get(route('vitamin-b12.index', ['sorting' => [['id' => 'vitamin_b12_level', 'desc' => true]], 'per_page' => 1]))
         ->assertOk()->assertInertia(fn (AssertableInertia $page) => $page
         ->has('vitaminB12s.data', 1)
         ->where('vitaminB12s.total', 2)
@@ -353,10 +352,10 @@ it('filters records by date without including other owners', function (string $f
     $record = VitaminB12::factory()->create([$field => '2026-08-10 12:00:00']);
     VitaminB12::factory()->for($record->medicalFile)->create([$field => '2026-08-09 12:00:00']);
     VitaminB12::factory()->create([$field => '2026-08-10 12:00:00']);
-    $date = CarbonImmutable::parse('2026-08-10')->getTimestampMs();
+    $date = '2026-08-10';
 
     $this->actingAs($record->medicalFile->user)->get(route('vitamin-b12.index', [
-        'filters' => [$field => [$date, $date]],
+        'filters' => [['id' => $field, 'operator' => 'inRange', 'value' => [$date, $date]]],
     ]))->assertOk()->assertInertia(fn (AssertableInertia $page) => $page
         ->has('vitaminB12s.data', 1)
         ->where('vitaminB12s.data.0.id', $record->id)

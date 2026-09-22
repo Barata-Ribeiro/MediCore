@@ -2,7 +2,6 @@
 
 use App\Models\Exams\LipidProfile;
 use App\Models\User;
-use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Event;
 use Inertia\Testing\AssertableInertia;
 
@@ -23,11 +22,11 @@ it('searches measurements without exposing other users or bypassing date filters
     $record = LipidProfile::factory()->create(['total_cholesterol' => 12, 'hdl_cholesterol' => 12, 'ldl_cholesterol' => 12, 'vldl_cholesterol' => 12, 'triglycerides' => 12, $field => 87.5, 'report_date' => '2026-08-10']);
     LipidProfile::factory()->for($record->medicalFile)->create(['total_cholesterol' => 12, 'hdl_cholesterol' => 12, 'ldl_cholesterol' => 12, 'vldl_cholesterol' => 12, 'triglycerides' => 12, $field => 87.5, 'report_date' => '2026-07-10']);
     LipidProfile::factory()->create(['total_cholesterol' => 12, 'hdl_cholesterol' => 12, 'ldl_cholesterol' => 12, 'vldl_cholesterol' => 12, 'triglycerides' => 12, $field => 87.5, 'report_date' => '2026-08-10']);
-    $date = CarbonImmutable::parse('2026-08-10')->getTimestampMs();
+    $date = '2026-08-10';
 
     $this->actingAs($record->medicalFile->user)->get(route('lipid-profile.index', [
         'search' => '87.5',
-        'filters' => ['report_date' => [$date, $date]],
+        'filters' => [['id' => 'report_date', 'operator' => 'inRange', 'value' => [$date, $date]]],
     ]))->assertOk()->assertInertia(fn (AssertableInertia $page) => $page
         ->has('lipidProfiles.data', 1)
         ->where('lipidProfiles.data.0.id', $record->id)
@@ -364,7 +363,7 @@ it('sorts and paginates only the authenticated users records', function () {
     LipidProfile::factory()->create(['total_cholesterol' => 90]);
 
     $this->actingAs($record->medicalFile->user)
-        ->get(route('lipid-profile.index', ['sort_by' => 'total_cholesterol', 'sort_dir' => 'desc', 'per_page' => 1]))
+        ->get(route('lipid-profile.index', ['sorting' => [['id' => 'total_cholesterol', 'desc' => true]], 'per_page' => 1]))
         ->assertOk()->assertInertia(fn (AssertableInertia $page) => $page
         ->has('lipidProfiles.data', 1)
         ->where('lipidProfiles.total', 2)
@@ -376,10 +375,10 @@ it('filters records by date without including other owners', function (string $f
     $record = LipidProfile::factory()->create([$field => '2026-08-10 12:00:00']);
     LipidProfile::factory()->for($record->medicalFile)->create([$field => '2026-08-09 12:00:00']);
     LipidProfile::factory()->create([$field => '2026-08-10 12:00:00']);
-    $date = CarbonImmutable::parse('2026-08-10')->getTimestampMs();
+    $date = '2026-08-10';
 
     $this->actingAs($record->medicalFile->user)->get(route('lipid-profile.index', [
-        'filters' => [$field => [$date, $date]],
+        'filters' => [['id' => $field, 'operator' => 'inRange', 'value' => [$date, $date]]],
     ]))->assertOk()->assertInertia(fn (AssertableInertia $page) => $page
         ->has('lipidProfiles.data', 1)
         ->where('lipidProfiles.data.0.id', $record->id)

@@ -2,7 +2,6 @@
 
 use App\Models\Exams\TotalProteinsAndFractions;
 use App\Models\User;
-use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Event;
 use Inertia\Testing\AssertableInertia;
 
@@ -23,11 +22,11 @@ it('searches measurements without exposing other users or bypassing date filters
     $record = TotalProteinsAndFractions::factory()->create(['total_proteins' => 12, 'albumin' => 12, 'globulin' => 12, $field => 87.5, 'report_date' => '2026-08-10']);
     TotalProteinsAndFractions::factory()->for($record->medicalFile)->create(['total_proteins' => 12, 'albumin' => 12, 'globulin' => 12, $field => 87.5, 'report_date' => '2026-07-10']);
     TotalProteinsAndFractions::factory()->create(['total_proteins' => 12, 'albumin' => 12, 'globulin' => 12, $field => 87.5, 'report_date' => '2026-08-10']);
-    $date = CarbonImmutable::parse('2026-08-10')->getTimestampMs();
+    $date = '2026-08-10';
 
     $this->actingAs($record->medicalFile->user)->get(route('total-proteins-and-fractions.index', [
         'search' => '87.5',
-        'filters' => ['report_date' => [$date, $date]],
+        'filters' => [['id' => 'report_date', 'operator' => 'inRange', 'value' => [$date, $date]]],
     ]))->assertOk()->assertInertia(fn (AssertableInertia $page) => $page
         ->has('totalProteinsAndFractions.data', 1)
         ->where('totalProteinsAndFractions.data.0.id', $record->id)
@@ -373,7 +372,7 @@ it('sorts and paginates only the authenticated users records', function () {
     TotalProteinsAndFractions::factory()->create(['total_proteins' => 90]);
 
     $this->actingAs($record->medicalFile->user)
-        ->get(route('total-proteins-and-fractions.index', ['sort_by' => 'total_proteins', 'sort_dir' => 'desc', 'per_page' => 1]))
+        ->get(route('total-proteins-and-fractions.index', ['sorting' => [['id' => 'total_proteins', 'desc' => true]], 'per_page' => 1]))
         ->assertOk()->assertInertia(fn (AssertableInertia $page) => $page
         ->has('totalProteinsAndFractions.data', 1)
         ->where('totalProteinsAndFractions.total', 2)
@@ -385,10 +384,10 @@ it('filters records by date without including other owners', function (string $f
     $record = TotalProteinsAndFractions::factory()->create([$field => '2026-08-10 12:00:00']);
     TotalProteinsAndFractions::factory()->for($record->medicalFile)->create([$field => '2026-08-09 12:00:00']);
     TotalProteinsAndFractions::factory()->create([$field => '2026-08-10 12:00:00']);
-    $date = CarbonImmutable::parse('2026-08-10')->getTimestampMs();
+    $date = '2026-08-10';
 
     $this->actingAs($record->medicalFile->user)->get(route('total-proteins-and-fractions.index', [
-        'filters' => [$field => [$date, $date]],
+        'filters' => [['id' => $field, 'operator' => 'inRange', 'value' => [$date, $date]]],
     ]))->assertOk()->assertInertia(fn (AssertableInertia $page) => $page
         ->has('totalProteinsAndFractions.data', 1)
         ->where('totalProteinsAndFractions.data.0.id', $record->id)

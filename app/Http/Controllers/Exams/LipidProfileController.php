@@ -14,8 +14,6 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Log;
 
-use function in_array;
-
 class LipidProfileController extends Controller
 {
     public function __construct(private LipidProfileServiceInterface $lipidProfileService) {}
@@ -134,17 +132,10 @@ class LipidProfileController extends Controller
         $validated = $request->validated();
 
         $perPage = $validated['per_page'] ?? 10;
-        $sortBy = $validated['sort_by'] ?? 'id';
-        $sortDir = $validated['sort_dir'] ?? 'asc';
+        $sorting = $validated['sorting'] ?? [];
         $search = trim($validated['search'] ?? '');
         $filters = $validated['filters'] ?? [];
 
-        $allowedSorts = ['id', 'report_date', 'total_cholesterol', 'hdl_cholesterol', 'ldl_cholesterol', 'vldl_cholesterol', 'triglycerides', 'created_at'];
-
-        if (! in_array($sortBy, $allowedSorts)) {
-            $sortBy = 'id';
-        }
-
-        return $this->lipidProfileService->getLipidProfileData($perPage, $sortBy, $sortDir, $search, $filters);
+        return $this->lipidProfileService->getLipidProfileData($perPage, $sorting, $search, $filters);
     }
 }
