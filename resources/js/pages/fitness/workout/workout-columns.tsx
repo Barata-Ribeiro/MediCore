@@ -1,3 +1,4 @@
+import { createAppColumnHelper } from '@/hooks/table';
 import ActionConfirmationDialog from '@/components/common/action-confirmation-dialog';
 import DataTableColumnHeader from '@/components/table/data-table-column-header';
 import { Badge } from '@/components/ui/badge';
@@ -13,7 +14,7 @@ import { destroy, edit, show } from '@/routes/workouts';
 import type { WorkoutSummary } from '@/types/application/fitness/workout';
 import { lang } from '@erag/lang-sync-inertia/react';
 import { Link } from '@inertiajs/react';
-import type { ColumnDef } from '@tanstack/react-table';
+import type { ColumnDef } from '@/types/data-table';
 import { EllipsisIcon, EyeIcon, PencilIcon, Trash2Icon } from 'lucide-react';
 import { useState } from 'react';
 
@@ -62,7 +63,7 @@ function ActionsCell({ workout }: Readonly<{ workout: WorkoutSummary }>) {
 
 export function useWorkoutColumns(): ColumnDef<WorkoutSummary>[] {
     const { __ } = lang();
-    return [
+    return createAppColumnHelper<WorkoutSummary>().columns([
         {
             accessorKey: 'id',
             header: ({ column }) => <DataTableColumnHeader column={column} title="#" />,
@@ -74,7 +75,7 @@ export function useWorkoutColumns(): ColumnDef<WorkoutSummary>[] {
             header: ({ column }) => (
                 <DataTableColumnHeader column={column} title={__('workout_pages.index.table.goal')} />
             ),
-            meta: { label: __('workout_pages.index.table.goal') },
+            meta: { label: __('workout_pages.index.table.goal'), variant: 'text' },
             cell: ({ row }) => (
                 <Link href={show(row.original.id)} className="font-medium underline-offset-4 hover:underline" prefetch>
                     {row.original.goal || __('workout_pages.shared.untitled')}
@@ -86,7 +87,7 @@ export function useWorkoutColumns(): ColumnDef<WorkoutSummary>[] {
             header: ({ column }) => (
                 <DataTableColumnHeader column={column} title={__('workout_pages.index.table.' + key)} />
             ),
-            meta: { label: __('workout_pages.index.table.' + key) },
+            meta: { label: __('workout_pages.index.table.' + key), variant: key === 'method' ? 'text' : undefined },
             cell: ({ row }) => row.original[key] ?? '—',
         })),
         {
@@ -96,7 +97,7 @@ export function useWorkoutColumns(): ColumnDef<WorkoutSummary>[] {
             ),
             meta: {
                 label: __('workout_pages.index.table.status'),
-                variant: 'select',
+                variant: 'boolean',
                 options: [
                     { label: __('workout_pages.shared.active_status'), value: '1' },
                     { label: __('workout_pages.shared.inactive_status'), value: '0' },
@@ -109,5 +110,5 @@ export function useWorkoutColumns(): ColumnDef<WorkoutSummary>[] {
             ),
         },
         { id: 'actions', cell: ({ row }) => <ActionsCell workout={row.original} />, enableHiding: false, size: 50 },
-    ];
+    ]);
 }

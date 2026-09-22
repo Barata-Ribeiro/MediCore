@@ -1,186 +1,67 @@
+import { DataTableSelect } from '@/components/table/data-table-select';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { buildParams } from '@/lib/utils';
-import type { PaginationMeta } from '@/types/application/metadata';
+import { useTableContext } from '@/hooks/table-context';
 import { lang } from '@erag/lang-sync-inertia/react';
-import { router } from '@inertiajs/react';
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from 'lucide-react';
 
-export default function DataTablePagination<TData>({
-    pagination,
-}: Readonly<{ pagination: Omit<PaginationMeta<TData[]>, 'data'> }>) {
+export default function DataTablePagination() {
+    const table = useTableContext();
     const { __, trans } = lang();
-
-    const goToUrl = (url?: string | null) => {
-        if (!url) {
-            return;
-        }
-
-        router.get(url, {}, { preserveState: true, replace: true });
-    };
-
-    const goToPage = (page: number) => {
-        router.get(pagination.path, buildParams({ page }), { preserveState: true, replace: true });
-    };
-
-    const createPageRange = (current: number, last: number, delta = 2) => {
-        if (last <= 1) {
-            return [1];
-        }
-
-        const range: (number | string)[] = [];
-        const left = Math.max(2, current - delta);
-        const right = Math.min(last - 1, current + delta);
-
-        range.push(1);
-
-        if (left > 2) {
-            range.push('...');
-        }
-
-        for (let i = left; i <= right; i++) {
-            range.push(i);
-        }
-
-        if (right < last - 1) {
-            range.push('...');
-        }
-
-        if (last > 1) {
-            range.push(last);
-        }
-
-        return range;
-    };
-
-    const renderPageLinks = () => {
-        const items = createPageRange(pagination.current_page, pagination.last_page);
-
-        return items.map((item) => {
-            if (typeof item === 'string') {
-                return (
-                    <span key={`ellipsis-${item}`} className="text-muted-foreground px-2 text-sm">
-                        {item}
-                    </span>
-                );
-            }
-
-            const pageNumber = item;
-            const serverLink = pagination.links.find((l) => l.page === pageNumber && l.url);
-            const isActive = pageNumber === pagination.current_page;
-
-            return (
-                <Button
-                    key={`page-${pageNumber}-${item}`}
-                    variant={isActive ? 'default' : 'outline'}
-                    size="sm"
-                    onClick={() => (serverLink ? goToUrl(serverLink.url) : goToPage(pageNumber))}
-                    disabled={isActive}
-                    aria-current={isActive ? 'page' : undefined}
-                    className="h-8 min-w-9 px-2"
-                >
-                    {pageNumber}
-                </Button>
-            );
-        });
-    };
-
+    const { pageIndex, pageSize } = table.state.pagination;
+    const label = (key: string) => __(`main.data_table.pagination.${key}`);
     return (
-        <div className="flex flex-col items-center justify-between gap-y-3 px-2 sm:flex-row">
-            {/* Pagination Info */}
-            <div className="text-muted-foreground flex-1 text-sm">
-                {trans('main.data_table.pagination.info', {
-                    from: pagination.from,
-                    to: pagination.to,
-                    total: pagination.total,
-                })}
-            </div>
-
-            {/* Pagination Controls */}
-            <div className="flex flex-col items-center gap-x-6 gap-y-3 sm:flex-row lg:gap-x-8">
-                {/* Per Page Select */}
-                <div className="flex items-center gap-x-2">
-                    <p className="text-sm font-medium">{__('main.data_table.pagination.per_page_label')}</p>
-                    <Select
-                        value={`${pagination.per_page}`}
-                        onValueChange={(value) =>
-                            router.get(pagination.path, buildParams({ per_page: value ?? pagination.per_page }), {
-                                preserveState: true,
-                                replace: true,
-                            })
-                        }
-                    >
-                        <SelectTrigger className="h-8 w-17.5">
-                            <SelectValue placeholder={pagination.per_page.toString()} />
-                        </SelectTrigger>
-                        <SelectContent side="top">
-                            {[5, 10, 25, 75].map((pageSize) => (
-                                <SelectItem key={pageSize} value={`${pageSize}`}>
-                                    {pageSize}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                </div>
-
-                {/* Page Navigation */}
-                <div className="flex flex-wrap items-center gap-2">
-                    <Button
-                        variant="outline"
-                        size="icon"
-                        className="hidden size-8 lg:flex"
-                        onClick={() => (pagination.first_page_url ? goToUrl(pagination.first_page_url) : goToPage(1))}
-                        disabled={pagination.current_page === 1}
-                    >
-                        <span className="sr-only">{__('main.data_table.pagination.first_page_label')}</span>
-                        <ChevronsLeft aria-hidden />
-                    </Button>
-                    <Button
-                        variant="outline"
-                        size="icon"
-                        className="size-8"
-                        onClick={() =>
-                            pagination.prev_page_url
-                                ? goToUrl(pagination.prev_page_url)
-                                : goToPage(Math.max(1, pagination.current_page - 1))
-                        }
-                        disabled={!pagination.prev_page_url && pagination.current_page === 1}
-                    >
-                        <span className="sr-only">{__('main.data_table.pagination.previous_page_label')}</span>
-                        <ChevronLeft aria-hidden />
-                    </Button>
-
-                    <div className="flex items-center gap-x-1 px-2">{renderPageLinks()}</div>
-
-                    <Button
-                        variant="outline"
-                        size="icon"
-                        className="size-8"
-                        onClick={() =>
-                            pagination.next_page_url
-                                ? goToUrl(pagination.next_page_url)
-                                : goToPage(Math.min(pagination.last_page, pagination.current_page + 1))
-                        }
-                        disabled={!pagination.next_page_url && pagination.current_page === pagination.last_page}
-                    >
-                        <span className="sr-only">{__('main.data_table.pagination.next_page_label')}</span>
-                        <ChevronRight aria-hidden />
-                    </Button>
-                    <Button
-                        variant="outline"
-                        size="icon"
-                        className="hidden size-8 lg:flex"
-                        onClick={() =>
-                            pagination.last_page_url
-                                ? goToUrl(pagination.last_page_url)
-                                : goToPage(pagination.last_page)
-                        }
-                        disabled={pagination.current_page === pagination.last_page}
-                    >
-                        <span className="sr-only">{__('main.data_table.pagination.last_page_label')}</span>
-                        <ChevronsRight aria-hidden />
-                    </Button>
-                </div>
+        <div className="flex w-full flex-wrap items-center justify-between gap-4">
+            <span>{trans('main.data_table.pagination.summary', { total: table.options.rowCount ?? 0 })}</span>
+            <div className="flex flex-wrap items-center gap-2">
+                <span>{label('per_page')}</span>
+                <DataTableSelect
+                    label={label('per_page')}
+                    value={String(pageSize)}
+                    options={[5, 10, 25, 75].map((size) => ({ value: String(size), label: String(size) }))}
+                    onChange={(value) => table.setPageSize(Number(value))}
+                />
+                <span>
+                    {trans('main.data_table.pagination.page', {
+                        current: pageIndex + 1,
+                        total: Math.max(1, table.getPageCount()),
+                    })}
+                </span>
+                <Button
+                    variant="outline"
+                    size="icon"
+                    disabled={!table.getCanPreviousPage()}
+                    aria-label={label('first')}
+                    onClick={() => table.firstPage()}
+                >
+                    <ChevronsLeftIcon />
+                </Button>
+                <Button
+                    variant="outline"
+                    size="icon"
+                    disabled={!table.getCanPreviousPage()}
+                    aria-label={label('previous')}
+                    onClick={() => table.previousPage()}
+                >
+                    <ChevronLeftIcon />
+                </Button>
+                <Button
+                    variant="outline"
+                    size="icon"
+                    disabled={!table.getCanNextPage()}
+                    aria-label={label('next')}
+                    onClick={() => table.nextPage()}
+                >
+                    <ChevronRightIcon />
+                </Button>
+                <Button
+                    variant="outline"
+                    size="icon"
+                    disabled={!table.getCanNextPage()}
+                    aria-label={label('last')}
+                    onClick={() => table.lastPage()}
+                >
+                    <ChevronsRightIcon />
+                </Button>
             </div>
         </div>
     );

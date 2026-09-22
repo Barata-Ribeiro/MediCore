@@ -1,3 +1,4 @@
+import { createAppColumnHelper } from '@/hooks/table';
 import ActionConfirmationDialog from '@/components/common/action-confirmation-dialog';
 import DataTableColumnHeader from '@/components/table/data-table-column-header';
 import { Button } from '@/components/ui/button';
@@ -13,7 +14,7 @@ import { destroy, edit } from '@/routes/muscle-groups';
 import type { CatalogMuscleGroup } from '@/types/application/fitness/catalog';
 import { lang } from '@erag/lang-sync-inertia/react';
 import { ModalLink } from '@inertiaui/modal-react';
-import type { Column, ColumnDef } from '@tanstack/react-table';
+import type { Column, ColumnDef } from '@/types/data-table';
 import { CalendarIcon, DeleteIcon, DumbbellIcon, EditIcon, EllipsisIcon } from 'lucide-react';
 import { Fragment, useState } from 'react';
 
@@ -80,9 +81,10 @@ function ActionsCell({ muscleGroup }: Readonly<{ muscleGroup: CatalogMuscleGroup
 export function useMuscleGroupColumns(): ColumnDef<CatalogMuscleGroup>[] {
     const { __ } = lang();
 
-    return [
+    return createAppColumnHelper<CatalogMuscleGroup>().columns([
         {
             accessorKey: 'name',
+            meta: { label: __('muscle_group_pages.index.table.columns.name'), variant: 'text' },
             header: ({ column }) => (
                 <TableColumnHeader column={column} title={__('muscle_group_pages.index.table.columns.name')} />
             ),
@@ -98,7 +100,7 @@ export function useMuscleGroupColumns(): ColumnDef<CatalogMuscleGroup>[] {
             cell: ({ row }) => row.original.exercises_count ?? 0,
             meta: {
                 label: __('muscle_group_pages.index.table.columns.exercises'),
-                variant: 'range',
+                variant: 'number',
                 icon: DumbbellIcon,
             },
             enableSorting: true,
@@ -111,7 +113,7 @@ export function useMuscleGroupColumns(): ColumnDef<CatalogMuscleGroup>[] {
             cell: ({ row }) => new Date(row.original.created_at).toLocaleDateString(),
             meta: {
                 label: __('muscle_group_pages.index.table.columns.created_at'),
-                variant: 'dateRange',
+                variant: 'date',
                 icon: CalendarIcon,
             },
             enableSorting: true,
@@ -122,5 +124,5 @@ export function useMuscleGroupColumns(): ColumnDef<CatalogMuscleGroup>[] {
             size: 40,
             enableHiding: false,
         },
-    ];
+    ]);
 }

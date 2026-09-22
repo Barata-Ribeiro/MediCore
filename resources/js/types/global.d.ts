@@ -2,7 +2,6 @@
 
 import type { Auth } from '@/types/auth';
 import '@inertiajs/core';
-import '@tanstack/react-table';
 
 declare module 'react' {
     interface InputHTMLAttributes<T> {
@@ -25,24 +24,3 @@ declare module '@inertiajs/core' {
         };
     }
 }
-
-declare module '@tanstack/react-table' {
-    interface ColumnMeta<TData extends RowData, TValue> {
-        label?: string;
-        placeholder?: string;
-        variant?: FilterVariant;
-        options?: Option[];
-        range?: [number, number];
-        unit?: string;
-        icon?: React.ComponentType<React.ComponentProps<'svg'>>;
-    }
-}
-
-export interface Option {
-    label: string;
-    value: string;
-    count?: number;
-    icon?: React.ComponentType<React.ComponentProps<'svg'>>;
-}
-
-export type FilterVariant = 'text' | 'number' | 'range' | 'date' | 'dateRange' | 'boolean' | 'select' | 'multiSelect';

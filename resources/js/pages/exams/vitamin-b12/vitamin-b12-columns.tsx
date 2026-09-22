@@ -1,3 +1,5 @@
+import { DateCell } from '@/components/table/cell-components';
+import { createAppColumnHelper } from '@/hooks/table';
 import ActionConfirmationDialog from '@/components/common/action-confirmation-dialog';
 import DropdownMenuCopyButton from '@/components/common/dropdown-menu-copy-button';
 import DataTableColumnHeader from '@/components/table/data-table-column-header';
@@ -15,7 +17,7 @@ import { destroy, edit } from '@/routes/vitamin-b12';
 import type { VitaminB12 } from '@/types/application/exams/vitamin-b12';
 import { lang } from '@erag/lang-sync-inertia/react';
 import { Link } from '@inertiajs/react';
-import type { Column, ColumnDef } from '@tanstack/react-table';
+import type { Column, ColumnDef } from '@/types/data-table';
 import { format } from 'date-fns/format';
 import { CalendarIcon, DeleteIcon, EditIcon, EllipsisIcon } from 'lucide-react';
 import { Fragment, useState } from 'react';
@@ -95,9 +97,10 @@ function ActionsCell({ vitaminB12 }: Readonly<{ vitaminB12: VitaminB12 }>) {
 export function useVitaminB12Columns(): ColumnDef<VitaminB12>[] {
     const { __ } = lang();
 
-    return [
+    return createAppColumnHelper<VitaminB12>().columns([
         {
             accessorKey: 'id',
+            meta: { label: __('vitamin_b12_pages.index.table.columns.id'), variant: 'number' },
             header: ({ column }) => (
                 <TableColumnHeader column={column} title={__('vitamin_b12_pages.index.table.columns.id')} />
             ),
@@ -110,10 +113,10 @@ export function useVitaminB12Columns(): ColumnDef<VitaminB12>[] {
             header: ({ column }) => (
                 <TableColumnHeader column={column} title={__('vitamin_b12_pages.index.table.columns.report_date')} />
             ),
-            cell: ({ row }) => format(row.original.report_date, 'PPP'),
+            cell: DateCell,
             meta: {
                 label: __('vitamin_b12_pages.index.table.columns.report_date'),
-                variant: 'dateRange',
+                variant: 'date',
                 icon: CalendarIcon,
             },
             enableSorting: true,
@@ -126,6 +129,7 @@ export function useVitaminB12Columns(): ColumnDef<VitaminB12>[] {
             cell: ({ row }) => <VitaminB12ValueCell value={row.original.vitamin_b12_level} />,
             meta: {
                 label: __('vitamin_b12_pages.index.table.columns.vitamin_b12'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -137,7 +141,7 @@ export function useVitaminB12Columns(): ColumnDef<VitaminB12>[] {
             cell: ({ row }) => format(row.original.created_at, 'PPpp'),
             meta: {
                 label: __('vitamin_b12_pages.index.table.columns.created_at'),
-                variant: 'dateRange',
+                variant: 'date',
                 icon: CalendarIcon,
             },
             enableSorting: true,
@@ -148,5 +152,5 @@ export function useVitaminB12Columns(): ColumnDef<VitaminB12>[] {
             size: 40,
             enableHiding: false,
         },
-    ];
+    ]);
 }

@@ -1,3 +1,5 @@
+import { DateCell } from '@/components/table/cell-components';
+import { createAppColumnHelper } from '@/hooks/table';
 import GlucoseController from '@/actions/App/Http/Controllers/Exams/GlucoseController';
 import ActionConfirmationDialog from '@/components/common/action-confirmation-dialog';
 import DropdownMenuCopyButton from '@/components/common/dropdown-menu-copy-button';
@@ -15,7 +17,7 @@ import {
 import type { Glucose } from '@/types/application/exams/glucose';
 import { lang } from '@erag/lang-sync-inertia/react';
 import { Link } from '@inertiajs/react';
-import type { Column, ColumnDef } from '@tanstack/react-table';
+import type { Column, ColumnDef } from '@/types/data-table';
 import { format } from 'date-fns/format';
 import { CalendarIcon, DeleteIcon, EditIcon, EllipsisIcon } from 'lucide-react';
 import { Fragment, useState } from 'react';
@@ -104,9 +106,10 @@ function ActionsCell({ glucose }: Readonly<{ glucose: Glucose }>) {
 export function useGlucoseColumns(): ColumnDef<Glucose>[] {
     const { __ } = lang();
 
-    return [
+    return createAppColumnHelper<Glucose>().columns([
         {
             accessorKey: 'id',
+            meta: { label: __('glucose_pages.index.table.columns.id'), variant: 'number' },
             header: ({ column }) => (
                 <TableColumnHeader column={column} title={__('glucose_pages.index.table.columns.id')} />
             ),
@@ -119,10 +122,10 @@ export function useGlucoseColumns(): ColumnDef<Glucose>[] {
             header: ({ column }) => (
                 <TableColumnHeader column={column} title={__('glucose_pages.index.table.columns.report_date')} />
             ),
-            cell: ({ row }) => format(row.original.report_date, 'PPP'),
+            cell: DateCell,
             meta: {
                 label: __('glucose_pages.index.table.columns.report_date'),
-                variant: 'dateRange',
+                variant: 'date',
                 icon: CalendarIcon,
             },
             enableSorting: true,
@@ -135,6 +138,7 @@ export function useGlucoseColumns(): ColumnDef<Glucose>[] {
             cell: ({ row }) => <GlucoseValueCell value={row.original.glucose_level} />,
             meta: {
                 label: __('glucose_pages.index.table.columns.glucose_level'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -149,6 +153,7 @@ export function useGlucoseColumns(): ColumnDef<Glucose>[] {
             cell: ({ row }) => <PercentageValueCell value={row.original.glycated_hemoglobin} />,
             meta: {
                 label: __('glucose_pages.index.table.columns.glycated_hemoglobin'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -163,6 +168,7 @@ export function useGlucoseColumns(): ColumnDef<Glucose>[] {
             cell: ({ row }) => <GlucoseValueCell value={row.original.estimated_average_glucose} />,
             meta: {
                 label: __('glucose_pages.index.table.columns.estimated_average_glucose'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -174,7 +180,7 @@ export function useGlucoseColumns(): ColumnDef<Glucose>[] {
             cell: ({ row }) => format(row.original.created_at, 'PPP p'),
             meta: {
                 label: __('glucose_pages.index.table.columns.created_at'),
-                variant: 'dateRange',
+                variant: 'date',
                 icon: CalendarIcon,
             },
             enableSorting: true,
@@ -185,5 +191,5 @@ export function useGlucoseColumns(): ColumnDef<Glucose>[] {
             size: 40,
             enableHiding: false,
         },
-    ];
+    ]);
 }

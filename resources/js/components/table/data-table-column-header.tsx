@@ -1,96 +1,67 @@
+import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
-    DropdownMenuCheckboxItem,
     DropdownMenuContent,
+    DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { cn } from '@/lib/utils';
+import type { Column } from '@/types/data-table';
 import { lang } from '@erag/lang-sync-inertia/react';
-import type { Column } from '@tanstack/react-table';
-import { ArrowDown, ArrowUp, ChevronsUpDown, EyeOffIcon } from 'lucide-react';
-import type { ComponentProps } from 'react';
-import { Activity } from 'react';
+import { Subscribe, type RowData } from '@tanstack/react-table';
+import { ArrowDownIcon, ArrowUpIcon, ChevronsUpDownIcon, EyeOffIcon } from 'lucide-react';
 
-interface DataTableColumnHeaderProps<TData, TValue> extends ComponentProps<typeof DropdownMenuTrigger> {
-    column: Column<TData, TValue>;
-    title: string;
-}
-
-export default function DataTableColumnHeader<TData, TValue>({
+export default function DataTableColumnHeader<TData extends RowData, TValue>({
     column,
     title,
-    className,
-    ...props
-}: Readonly<DataTableColumnHeaderProps<TData, TValue>>) {
+}: Readonly<{ column: Column<TData, TValue>; title: string }>) {
     const { __ } = lang();
-
-    if (!column.getCanSort() && !column.getCanHide()) {
-        return <div className={cn(className)}>{title}</div>;
-    }
-
-    const columnSortDir = column.getIsSorted();
-
-    const columnSortIndicator = {
-        asc: <ArrowUp aria-hidden />,
-        desc: <ArrowDown aria-hidden />,
-        default: <ChevronsUpDown aria-hidden />,
-    };
-
+    if (!column.getCanSort() && !column.getCanHide()) return <span>{title}</span>;
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger
-                className={cn(
-                    'hover:bg-accent focus:ring-ring aria-expanded:bg-accent [&_svg]:text-muted-foreground -ml-1.5 flex h-8 items-center gap-1.5 rounded-md px-2 py-1.5 focus:ring-1 focus:outline-none [&_svg]:size-4 [&_svg]:shrink-0',
-                    className,
-                )}
-                {...props}
-            >
-                <span>{title}</span>
-                {columnSortDir ? columnSortIndicator[columnSortDir] : columnSortIndicator['default']}
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-full">
-                <Activity mode={column.getCanSort() ? 'visible' : 'hidden'}>
-                    <DropdownMenuCheckboxItem
-                        className="[&_svg]:text-muted-foreground relative pr-8 pl-2 [&>span:first-child]:right-2 [&>span:first-child]:left-auto"
-                        checked={column.getIsSorted() === 'asc'}
-                        onClick={() => column.toggleSorting(false)}
-                    >
-                        {columnSortIndicator['asc']}
-                        {__('main.data_table.column_header.asc')}
-                    </DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem
-                        className="[&_svg]:text-muted-foreground relative pr-8 pl-2 [&>span:first-child]:right-2 [&>span:first-child]:left-auto"
-                        checked={column.getIsSorted() === 'desc'}
-                        onClick={() => column.toggleSorting(true)}
-                    >
-                        {columnSortIndicator['desc']}
-                        {__('main.data_table.column_header.desc')}
-                    </DropdownMenuCheckboxItem>
-                    <DropdownMenuItem
-                        className="[&_svg]:text-muted-foreground pl-2"
-                        onClick={() => column.clearSorting()}
-                    >
-                        {columnSortIndicator['default']}
-                        {__('main.data_table.column_header.clear')}
-                    </DropdownMenuItem>
-                </Activity>
-
-                <Activity mode={column.getCanHide() && column.getCanSort() ? 'visible' : 'hidden'}>
-                    <DropdownMenuSeparator />
-                </Activity>
-
-                <Activity mode={column.getCanHide() ? 'visible' : 'hidden'}>
-                    <DropdownMenuItem
-                        className="[&_svg]:text-muted-foreground pl-2"
-                        onClick={() => column.toggleVisibility(false)}
-                    >
-                        <EyeOffIcon aria-hidden />
-                        {__('main.data_table.column_header.hide')}
-                    </DropdownMenuItem>
-                </Activity>
-            </DropdownMenuContent>
-        </DropdownMenu>
+        <Subscribe source={column.table.atoms.sorting}>
+            {(sorting) => {
+                const sort = sorting.find((item) => item.id === column.id);
+                const Icon = sort ? (sort.desc ? ArrowDownIcon : ArrowUpIcon) : ChevronsUpDownIcon;
+                return (
+                    <DropdownMenu>
+                        <DropdownMenuTrigger
+                            render={
+                                <Button variant="ghost" size="sm">
+                                    {title}
+                                    <Icon data-icon="inline-end" />
+                                </Button>
+                            }
+                        />
+                        <DropdownMenuContent align="start">
+                            <DropdownMenuGroup>
+                                {column.getCanSort() && (
+                                    <>
+                                        <DropdownMenuItem onClick={() => column.toggleSorting(false, true)}>
+                                            <ArrowUpIcon />
+                                            {__('main.data_table.column_header.asc')}
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem onClick={() => column.toggleSorting(true, true)}>
+                                            <ArrowDownIcon />
+                                            {__('main.data_table.column_header.desc')}
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem onClick={() => column.clearSorting()}>
+                                            {__('main.data_table.column_header.clear')}
+                                        </DropdownMenuItem>
+                                    </>
+                                )}
+                                {column.getCanSort() && column.getCanHide() && <DropdownMenuSeparator />}
+                                {column.getCanHide() && (
+                                    <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
+                                        <EyeOffIcon />
+                                        {__('main.data_table.column_header.hide')}
+                                    </DropdownMenuItem>
+                                )}
+                            </DropdownMenuGroup>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                );
+            }}
+        </Subscribe>
     );
 }

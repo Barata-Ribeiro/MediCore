@@ -1,3 +1,5 @@
+import { DateCell } from '@/components/table/cell-components';
+import { createAppColumnHelper } from '@/hooks/table';
 import TotalProteinsAndFractionsController from '@/actions/App/Http/Controllers/Exams/TotalProteinsAndFractionsController';
 import ActionConfirmationDialog from '@/components/common/action-confirmation-dialog';
 import DropdownMenuCopyButton from '@/components/common/dropdown-menu-copy-button';
@@ -15,7 +17,7 @@ import {
 import type { TotalProteinsAndFractions } from '@/types/application/exams/total-proteins-and-fractions';
 import { lang } from '@erag/lang-sync-inertia/react';
 import { Link } from '@inertiajs/react';
-import type { Column, ColumnDef } from '@tanstack/react-table';
+import type { Column, ColumnDef } from '@/types/data-table';
 import { format } from 'date-fns';
 import { CalendarIcon, DeleteIcon, EditIcon, EllipsisIcon } from 'lucide-react';
 import { Fragment, useState } from 'react';
@@ -112,9 +114,10 @@ function ActionsCell({
 export function useTotalProteinsAndFractionsColumns(): ColumnDef<TotalProteinsAndFractions>[] {
     const { __ } = lang();
 
-    return [
+    return createAppColumnHelper<TotalProteinsAndFractions>().columns([
         {
             accessorKey: 'id',
+            meta: { label: __('total_proteins_and_fractions_pages.index.table.columns.id'), variant: 'number' },
             header: ({ column }) => (
                 <TableColumnHeader
                     column={column}
@@ -133,10 +136,10 @@ export function useTotalProteinsAndFractionsColumns(): ColumnDef<TotalProteinsAn
                     title={__('total_proteins_and_fractions_pages.index.table.columns.report_date')}
                 />
             ),
-            cell: ({ row }) => format(row.original.report_date, 'PPP'),
+            cell: DateCell,
             meta: {
                 label: __('total_proteins_and_fractions_pages.index.table.columns.report_date'),
-                variant: 'dateRange',
+                variant: 'date',
                 icon: CalendarIcon,
             },
             enableSorting: true,
@@ -152,6 +155,7 @@ export function useTotalProteinsAndFractionsColumns(): ColumnDef<TotalProteinsAn
             cell: ({ row }) => <TotalProteinsAndFractionsValueCell value={row.original.total_proteins} />,
             meta: {
                 label: __('total_proteins_and_fractions_pages.index.table.columns.total_proteins'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -166,6 +170,7 @@ export function useTotalProteinsAndFractionsColumns(): ColumnDef<TotalProteinsAn
             cell: ({ row }) => <TotalProteinsAndFractionsValueCell value={row.original.albumin} />,
             meta: {
                 label: __('total_proteins_and_fractions_pages.index.table.columns.albumin'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -180,6 +185,7 @@ export function useTotalProteinsAndFractionsColumns(): ColumnDef<TotalProteinsAn
             cell: ({ row }) => <TotalProteinsAndFractionsValueCell value={row.original.globulin} />,
             meta: {
                 label: __('total_proteins_and_fractions_pages.index.table.columns.globulin'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -194,6 +200,7 @@ export function useTotalProteinsAndFractionsColumns(): ColumnDef<TotalProteinsAn
             cell: ({ row }) => <TotalProteinsAndFractionsValueCell value={row.original.albumin_globulin_ratio} />,
             meta: {
                 label: __('total_proteins_and_fractions_pages.index.table.columns.albumin_globulin_ratio'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -208,7 +215,7 @@ export function useTotalProteinsAndFractionsColumns(): ColumnDef<TotalProteinsAn
             cell: ({ row }) => format(row.original.created_at, 'PPpp'),
             meta: {
                 label: __('total_proteins_and_fractions_pages.index.table.columns.created_at'),
-                variant: 'dateRange',
+                variant: 'date',
                 icon: CalendarIcon,
             },
             enableSorting: true,
@@ -219,5 +226,5 @@ export function useTotalProteinsAndFractionsColumns(): ColumnDef<TotalProteinsAn
             size: 40,
             enableHiding: false,
         },
-    ];
+    ]);
 }
