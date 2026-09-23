@@ -14,8 +14,6 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Log;
 
-use function in_array;
-
 class VitaminD3Controller extends Controller
 {
     public function __construct(private VitaminD3ServiceInterface $vitaminD3Service) {}
@@ -136,20 +134,13 @@ class VitaminD3Controller extends Controller
         $validated = $request->validated();
 
         $perPage = $validated['per_page'] ?? 10;
-        $sortBy = $validated['sort_by'] ?? 'id';
-        $sortDir = $validated['sort_dir'] ?? 'asc';
+        $sorting = $validated['sorting'] ?? [];
         $search = trim($validated['search'] ?? '');
         $filters = $validated['filters'] ?? [];
 
-        $allowedSorts = ['id', 'twenty_five_hydroxyvitamin_d3', 'report_date', 'created_at'];
-        if (! in_array($sortBy, $allowedSorts)) {
-            $sortBy = 'id';
-        }
-
         return $this->vitaminD3Service->getVitaminD3sData(
             perPage: $perPage,
-            sortBy: $sortBy,
-            sortDir: $sortDir,
+            sorting: $sorting,
             search: $search,
             filters: $filters
         );

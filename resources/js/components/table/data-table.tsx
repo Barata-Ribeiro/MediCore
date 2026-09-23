@@ -1,410 +1,218 @@
 import DataTableExportData from '@/components/table/data-table-export-data';
-import DataTablePagination from '@/components/table/data-table-pagination';
 import DataTableToolbar from '@/components/table/data-table-toolbar';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import useIsMounted from '@/hooks/use-mounted';
-import { buildParams } from '@/lib/utils';
+import { useAppTable } from '@/hooks/table';
+import { parseTableState } from '@/lib/data-table';
+import type { Column, ColumnDef, ExtendedColumnFilter } from '@/types/data-table';
 import type { PaginationMeta } from '@/types/application/metadata';
 import type { RouteDefinition } from '@/wayfinder';
 import { lang } from '@erag/lang-sync-inertia/react';
 import { Link, router, usePage } from '@inertiajs/react';
 import { ModalLink } from '@inertiaui/modal-react';
-import type {
-    Column,
-    ColumnDef,
-    ColumnFiltersState,
-    SortingState,
-    Updater,
-    VisibilityState,
-} from '@tanstack/react-table';
-import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import type { ColumnFiltersState, PaginationState, RowData, SortingState, Updater } from '@tanstack/react-table';
 import { ClipboardPlusIcon } from 'lucide-react';
-import type { ComponentProps, CSSProperties } from 'react';
-import { useCallback, useEffect, useEffectEvent, useMemo, useState } from 'react';
+import type { CSSProperties } from 'react';
+import { useRef, useState } from 'react';
+import { toast } from 'sonner';
 
-interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<TData, TValue>[];
-    data: PaginationMeta<TData[]>['data'];
+interface DataTableProps<TData extends { id: string | number }> {
+    columns: ColumnDef<TData>[];
+    data: TData[];
     pagination: Omit<PaginationMeta<TData[]>, 'data'>;
     createRoute?: RouteDefinition<'get'>;
     isModal?: boolean;
     exportables?: Partial<Record<'csvRoute' | 'pdfRoute', RouteDefinition<'get'>>>;
 }
 
-type FilterValue = string | string[] | null;
-
-function getSearchParams(pageUrl?: string): URLSearchParams {
-    if (pageUrl) {
-        try {
-            return new URL(pageUrl, 'http://localhost').searchParams;
-        } catch {
-            return new URLSearchParams();
-        }
-    }
-
-    if (globalThis.window !== undefined) {
-        return new URLSearchParams(globalThis.window.location.search);
-    }
-
-    return new URLSearchParams();
-}
-
-function getCommonPinningStyles<TData>({
-    column,
-    withBorder = false,
-}: {
-    column: Column<TData>;
-    withBorder?: boolean;
-}): CSSProperties {
-    const isPinned = column.getIsPinned();
-    const isLastLeftPinnedColumn = isPinned === 'left' && column.getIsLastColumn('left');
-    const isFirstRightPinnedColumn = isPinned === 'right' && column.getIsFirstColumn('right');
-
-    const leftPinnedBoxShadow = '-4px 0 4px -4px var(--border) inset';
-    const rightPinnedBoxShadow = '4px 0 4px -4px var(--border) inset';
-
-    const rightPinnedShadow = isFirstRightPinnedColumn ? rightPinnedBoxShadow : undefined;
-    const pinnedColumnShadow = isLastLeftPinnedColumn ? leftPinnedBoxShadow : rightPinnedShadow;
-
+function pinningStyles<TData extends RowData>(column: Column<TData>): CSSProperties {
+    const pinned = column.getIsPinned();
     return {
-        boxShadow: withBorder ? pinnedColumnShadow : undefined,
-        left: isPinned === 'left' ? `${column.getStart('left')}px` : undefined,
-        right: isPinned === 'right' ? `${column.getAfter('right')}px` : undefined,
-        opacity: isPinned ? 0.97 : 1,
-        position: isPinned ? 'sticky' : 'relative',
+        insetInlineStart: pinned === 'start' ? column.getStart('start') : undefined,
+        insetInlineEnd: pinned === 'end' ? column.getAfter('end') : undefined,
+        position: pinned ? 'sticky' : 'relative',
         background: 'var(--background)',
         width: column.getSize(),
-        zIndex: isPinned ? 1 : undefined,
+        zIndex: pinned ? 1 : undefined,
     };
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends { id: string | number }>({
     columns,
     data,
     pagination,
     createRoute,
     isModal = false,
     exportables,
-}: Readonly<DataTableProps<TData, TValue>>) {
+}: Readonly<DataTableProps<TData>>) {
     const { __ } = lang();
     const page = usePage();
-    const isMounted = useIsMounted();
-    const [path] = useState(pagination.path);
-
-    const onFilteringNavigating = useEffectEvent((filtersParams: string | undefined) => {
-        if (!path) {
-            return;
-        }
-
-        router.get(path, buildParams({ filters: filtersParams }), {
-            preserveState: true,
-            replace: true,
-        });
-    });
-
-    const onSortingNavigating = useEffectEvent((sortBy: string | undefined, sortDir: string | undefined) => {
-        if (!path) {
-            return;
-        }
-
-        router.get(path, buildParams({ sort_by: sortBy, sort_dir: sortDir }), {
-            preserveState: true,
-            replace: true,
-        });
-    });
-
-    const params = useMemo(() => getSearchParams(page.url), [page.url]);
-
-    const [sorting, setSorting] = useState<SortingState>(() => {
-        const sort_by = params.get('sort_by');
-        const sort_dir = params.get('sort_dir');
-
-        if (!sort_by) {
-            return [];
-        }
-
-        return [{ id: sort_by, desc: sort_dir === 'desc' }];
-    });
-
-    const [filterValues, setFilterValues] = useState<Record<string, FilterValue>>(() => {
-        const rawFilters = params.get('filters');
-
-        if (!rawFilters) {
-            return {};
-        }
-
-        const obj: Record<string, FilterValue> = {};
-
-        const tokens = rawFilters.split(',');
-        let currentKey = '';
-        let currentValueParts: string[] = [];
-
-        for (const token of tokens) {
-            const idx = token.indexOf(':');
-
-            if (idx === -1) {
-                if (currentKey) {
-                    currentValueParts.push(token);
-                }
-            } else {
-                if (currentKey) {
-                    obj[currentKey] = currentValueParts.join(',');
-                }
-
-                currentKey = token.substring(0, idx);
-                currentValueParts = [token.substring(idx + 1)];
-            }
-        }
-
-        if (currentKey) {
-            obj[currentKey] = currentValueParts.join(',');
-        }
-
-        const decodedFilters: Record<string, FilterValue> = {};
-
-        for (const [k, v] of Object.entries(obj)) {
-            const key = decodeURIComponent(k);
-            const value = decodeURIComponent(String(v));
-            decodedFilters[key] = value;
-        }
-
-        return decodedFilters;
-    });
-
-    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
-        useMemo(() => {
-            return Object.entries(filterValues).reduce<ColumnFiltersState>((filters, [key, value]) => {
-                if (value !== null) {
-                    let processedValue;
-
-                    if (Array.isArray(value)) {
-                        processedValue = value;
-                    } else if (typeof value === 'string' && value.includes(',')) {
-                        processedValue = value
-                            .split(',')
-                            .map((v) => v.trim())
-                            .filter(Boolean);
-                    } else {
-                        processedValue = [value];
-                    }
-
-                    filters.push({
-                        id: key,
-                        value: processedValue,
-                    });
-                }
-
-                return filters;
-            }, []);
-        }, [filterValues]),
-    );
-
-    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-
-    const onColumnFiltersChange = useCallback((updaterOrValue: Updater<ColumnFiltersState>) => {
-        setColumnFilters((prev) => {
-            const next = typeof updaterOrValue === 'function' ? updaterOrValue(prev) : updaterOrValue;
-
-            const filterUpdates = next.reduce<Record<string, FilterValue>>((acc, f) => {
-                const val = f.value;
-                let normalized: FilterValue;
-
-                if (val == null) {
-                    normalized = null;
-                } else if (Array.isArray(val)) {
-                    normalized = val as string[];
-                } else if (typeof val === 'string') {
-                    normalized = val;
-                } else {
-                    normalized = JSON.stringify(val);
-                }
-
-                acc[f.id] = normalized;
-
-                return acc;
-            }, {});
-
-            for (const prevFilter of prev) {
-                if (!next.some((filter) => filter.id === prevFilter.id)) {
-                    filterUpdates[prevFilter.id] = null;
-                }
-            }
-
-            setFilterValues((prevValues) => ({
-                ...prevValues,
-                ...filterUpdates,
-            }));
-
-            return next;
-        });
-    }, []);
-
-    const table = useReactTable({
+    const params = new URL(page.url, 'http://localhost').searchParams;
+    const serverState = {
+        sorting: parseTableState<SortingState>(params.get('sorting'), []),
+        columnFilters: parseTableState<ExtendedColumnFilter[]>(params.get('filters'), []),
+        globalFilter: params.get('search') ?? '',
+        pagination: { pageIndex: Math.max(0, pagination.current_page - 1), pageSize: pagination.per_page },
+    };
+    const [state, setState] = useState(serverState);
+    const [sourceUrl, setSourceUrl] = useState(page.url);
+    const [busy, setBusy] = useState(false);
+    const navigationVersion = useRef(0);
+    if (sourceUrl !== page.url) {
+        setSourceUrl(page.url);
+        setState(serverState);
+    }
+    function navigate(next: typeof state) {
+        const version = ++navigationVersion.current;
+        setState(next);
+        setBusy(true);
+        router.get(
+            pagination.path,
+            {
+                ...(next.sorting.length ? { sorting: JSON.stringify(next.sorting) } : {}),
+                ...(next.columnFilters.length ? { filters: JSON.stringify(next.columnFilters) } : {}),
+                ...(next.globalFilter ? { search: next.globalFilter } : {}),
+                per_page: next.pagination.pageSize,
+                page: next.pagination.pageIndex + 1,
+            },
+            {
+                preserveState: true,
+                preserveScroll: true,
+                onError: (errors) => {
+                    if (version !== navigationVersion.current) return;
+                    setState(serverState);
+                    toast.error(Object.values(errors)[0] ?? __('main.data_table.toolbar.search.flash_error'));
+                },
+                onFinish: () => {
+                    if (version === navigationVersion.current) setBusy(false);
+                },
+            },
+        );
+    }
+    function update<T>(updater: Updater<T>, previous: T): T {
+        return typeof updater === 'function' ? (updater as (value: T) => T)(previous) : updater;
+    }
+    const table = useAppTable({
         columns,
         data,
-        getCoreRowModel: getCoreRowModel(),
-        manualPagination: true, // turn off client-side pagination
-        manualSorting: true, // turn off client-side sorting
-        manualFiltering: true, // turn off client-side filtering
-        pageCount: pagination.last_page ?? Math.ceil((pagination.total ?? 0) / (pagination.per_page ?? 1)),
-        initialState: {
-            pagination: {
-                pageIndex: Math.max((pagination.current_page ?? 1) - 1, 0),
-                pageSize: pagination.per_page,
-            },
-            columnPinning: { left: ['id'], right: ['actions'] },
+        rowCount: pagination.total,
+        getRowId: (row) => String(row.id),
+        initialState: { columnPinning: { start: ['id'], end: ['actions'] } },
+        state,
+        onSortingChange: (updater: Updater<SortingState>) =>
+            navigate({
+                ...state,
+                sorting: update(updater, state.sorting),
+                pagination: { ...state.pagination, pageIndex: 0 },
+            }),
+        onColumnFiltersChange: (updater: Updater<ColumnFiltersState>) =>
+            navigate({
+                ...state,
+                columnFilters: update(updater, state.columnFilters) as ExtendedColumnFilter[],
+                pagination: { ...state.pagination, pageIndex: 0 },
+            }),
+        onGlobalFilterChange: (updater: Updater<string>) =>
+            navigate({
+                ...state,
+                globalFilter: update(updater, state.globalFilter),
+                pagination: { ...state.pagination, pageIndex: 0 },
+            }),
+        onPaginationChange: (updater: Updater<PaginationState>) => {
+            const next = update(updater, state.pagination);
+            navigate({
+                ...state,
+                pagination: { ...next, pageIndex: next.pageSize === state.pagination.pageSize ? next.pageIndex : 0 },
+            });
         },
-        state: { sorting, columnVisibility, columnFilters },
-        onSortingChange: setSorting,
-        onColumnVisibilityChange: setColumnVisibility,
-        onColumnFiltersChange,
     });
-
-    // Sync sorting state with server via Inertia
-    useEffect(() => {
-        const currentSortBy = params.get('sort_by');
-        const currentSortDir = params.get('sort_dir');
-
-        const sort = sorting?.[0];
-        const desiredSortBy = sort ? String(sort.id) : undefined;
-        let desiredSortDir: string | undefined = undefined;
-
-        if (sort) {
-            desiredSortDir = sort.desc ? 'desc' : 'asc';
-        }
-
-        if (!desiredSortBy && !desiredSortDir && !currentSortBy && !currentSortDir) {
-            return;
-        }
-
-        if (currentSortBy === desiredSortBy && currentSortDir === desiredSortDir) {
-            return;
-        }
-
-        onSortingNavigating(desiredSortBy, desiredSortDir);
-    }, [sorting, params]);
-
-    // Sync filters state with server via Inertia
-    useEffect(() => {
-        const currentFilters = params.get('filters');
-
-        const filtersParam = columnFilters?.length
-            ? columnFilters.map((f) => `${f.id}:${String(f.value)}`).join(',')
-            : undefined;
-
-        if (!currentFilters && !filtersParam) {
-            return;
-        }
-
-        if (currentFilters === filtersParam) {
-            return;
-        }
-
-        onFilteringNavigating(filtersParam);
-    }, [columnFilters, params]);
-
-    if (!isMounted) {
-        return null;
-    }
-
-    const createRecordButtonProps: Partial<ComponentProps<typeof ModalLink>> = {
-        'aria-label': __('main.data_table.create_record.label'),
-        title: __('main.data_table.create_record.label'),
-        as: 'button',
-        prefetch: true,
-        viewTransition: true,
-    };
-
     return (
-        <Card className="mx-auto w-full flex-col space-y-4">
-            <CardHeader className="flex flex-wrap items-center justify-between gap-4">
-                <DataTableToolbar table={table} path={path} />
-
-                <ButtonGroup>
-                    {createRoute && (
-                        <Button
-                            render={
-                                isModal ? (
-                                    <ModalLink
-                                        {...createRecordButtonProps}
-                                        href={createRoute.url}
-                                        method={createRoute.method}
-                                    >
-                                        <ClipboardPlusIcon aria-hidden size={16} />
-                                        {__('main.data_table.create_record.action')}
-                                    </ModalLink>
-                                ) : (
-                                    <Link {...createRecordButtonProps} href={createRoute}>
-                                        <ClipboardPlusIcon aria-hidden size={16} />
-                                        {__('main.data_table.create_record.action')}
-                                    </Link>
-                                )
-                            }
-                        />
-                    )}
-
-                    {exportables && (exportables.csvRoute || exportables.pdfRoute) && (
-                        <DataTableExportData csv={exportables.csvRoute} pdf={exportables.pdfRoute} />
-                    )}
-                </ButtonGroup>
-            </CardHeader>
-
-            <CardContent className="border-y py-4">
-                <Table>
-                    <TableHeader>
-                        {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow key={headerGroup.id}>
-                                {headerGroup.headers.map((header) => {
-                                    return (
+        <table.AppTable>
+            <Card className="mx-auto w-full" aria-busy={busy}>
+                <CardHeader className="flex flex-wrap items-center justify-between gap-4">
+                    <fieldset disabled={busy} className="contents">
+                        <DataTableToolbar />
+                    </fieldset>
+                    <ButtonGroup>
+                        {createRoute && (
+                            <Button
+                                render={
+                                    isModal ? (
+                                        <ModalLink
+                                            href={createRoute.url}
+                                            method={createRoute.method}
+                                            as="button"
+                                            prefetch
+                                        >
+                                            <ClipboardPlusIcon data-icon="inline-start" />
+                                            {__('main.data_table.create_record.action')}
+                                        </ModalLink>
+                                    ) : (
+                                        <Link href={createRoute} as="button" prefetch>
+                                            <ClipboardPlusIcon data-icon="inline-start" />
+                                            {__('main.data_table.create_record.action')}
+                                        </Link>
+                                    )
+                                }
+                            />
+                        )}
+                        {exportables && <DataTableExportData csv={exportables.csvRoute} pdf={exportables.pdfRoute} />}
+                    </ButtonGroup>
+                </CardHeader>
+                <CardContent className="border-y py-4">
+                    <Table>
+                        <TableHeader>
+                            {table.getHeaderGroups().map((group) => (
+                                <TableRow key={group.id}>
+                                    {group.headers.map((header) => (
                                         <TableHead
                                             key={header.id}
                                             colSpan={header.colSpan}
-                                            style={{
-                                                ...getCommonPinningStyles({ column: header.column }),
-                                            }}
+                                            style={pinningStyles(header.column)}
                                         >
-                                            {header.isPlaceholder
-                                                ? null
-                                                : flexRender(header.column.columnDef.header, header.getContext())}
+                                            {!header.isPlaceholder && (
+                                                <table.AppHeader header={header}>
+                                                    {(context) => <context.FlexRender />}
+                                                </table.AppHeader>
+                                            )}
                                         </TableHead>
-                                    );
-                                })}
-                            </TableRow>
-                        ))}
-                    </TableHeader>
-                    <TableBody className="bg-">
-                        {table.getRowModel().rows?.length ? (
-                            table.getRowModel().rows.map((row) => (
-                                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
-                                    {row.getVisibleCells().map((cell) => (
-                                        <TableCell
-                                            key={cell.id}
-                                            style={{
-                                                ...getCommonPinningStyles({ column: cell.column }),
-                                            }}
-                                        >
-                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                        </TableCell>
                                     ))}
                                 </TableRow>
-                            ))
-                        ) : (
-                            <TableRow>
-                                <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    {__('main.data_table.empty_message')}
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-            </CardContent>
-
-            <CardFooter className="-mt-2 grid">
-                <DataTablePagination pagination={pagination} />
-            </CardFooter>
-        </Card>
+                            ))}
+                        </TableHeader>
+                        <TableBody>
+                            {table.getRowModel().rows.length ? (
+                                table.getRowModel().rows.map((row) => (
+                                    <TableRow key={row.id}>
+                                        {row.getVisibleCells().map((cell) => (
+                                            <TableCell key={cell.id} style={pinningStyles(cell.column)}>
+                                                <table.AppCell cell={cell}>
+                                                    {(context) => <context.FlexRender />}
+                                                </table.AppCell>
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                ))
+                            ) : (
+                                <TableRow>
+                                    <TableCell
+                                        colSpan={table.getVisibleLeafColumns().length}
+                                        className="h-24 text-center"
+                                    >
+                                        {__('main.data_table.empty_message')}
+                                    </TableCell>
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table>
+                </CardContent>
+                <CardFooter>
+                    <fieldset disabled={busy} className="w-full">
+                        <table.Pagination />
+                    </fieldset>
+                </CardFooter>
+            </Card>
+        </table.AppTable>
     );
 }

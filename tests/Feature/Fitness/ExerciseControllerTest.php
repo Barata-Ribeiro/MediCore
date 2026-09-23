@@ -116,8 +116,7 @@ describe('tests for ExerciseController', function () {
 
         $response = $this->actingAs($user)->get(route('exercises.index', [
             'per_page' => 1,
-            'sort_by' => 'muscle_group_name',
-            'sort_dir' => 'asc',
+            'sorting' => [['id' => 'muscle_group_name', 'desc' => false]],
         ]));
 
         $response->assertOk();

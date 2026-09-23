@@ -2,7 +2,7 @@
 
 namespace App\Services\Exams;
 
-use App\Common\Helpers;
+use App\Common\DataTableQuery;
 use App\Interfaces\Exams\TgoAndTgpServiceInterface;
 use App\Models\Exams\TgoAndTgp;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -13,26 +13,25 @@ class TgoAndTgpService implements TgoAndTgpServiceInterface
     /**
      * Fetch paginated data and chart data for this exam type based on the provided parameters.
      *
-     * @param  array<string, mixed>|null  $filters
+     * @param  list<array{id: string, desc: bool}>  $sorting
+     * @param  list<array{id: string, operator: string, value?: mixed, joinOperator?: string, filterId?: string}>|null  $filters
      * @return array{0: LengthAwarePaginator<int, TgoAndTgp>, 1: array<string, mixed>}
      */
-    public function getTgoAndTgpsData(?int $perPage, ?string $sortBy, ?string $sortDir, ?string $search, ?array $filters): array
+    public function getTgoAndTgpsData(?int $perPage, array $sorting, ?string $search, ?array $filters): array
     {
-        $filters ??= [];
-        $createdAtRange = $filters['created_at'] ?? [];
-        $reportDateRange = $filters['report_date'] ?? [];
-
-        [$createdAtStart, $createdAtEnd] = Helpers::getDateRange($createdAtRange);
-        [$reportDateStart, $reportDateEnd] = Helpers::getDateRange($reportDateRange);
 
         $records = TgoAndTgp::query()
             ->where('medical_file_id', auth()->user()->medicalFile->id)
-            ->when($createdAtRange, fn ($q) => $q->whereBetween('created_at', [$createdAtStart, $createdAtEnd]))
-            ->when($reportDateRange, fn ($q) => $q->whereBetween('report_date', [substr($reportDateStart, 0, 10), substr($reportDateEnd, 0, 10)]))
             ->when($search !== '', fn ($q) => $q->where(fn ($query) => $query
                 ->whereLike('tgo_level', "%{$search}%")
                 ->orWhereLike('tgp_level', "%{$search}%")))
-            ->orderBy($sortBy ?? 'created_at', $sortDir === 'desc' ? 'desc' : 'asc')
+            ->tap(fn ($query) => DataTableQuery::apply($query, $filters ?? [], $sorting, [
+                'id' => 'number',
+                'tgo_level' => 'number',
+                'tgp_level' => 'number',
+                'report_date' => 'date',
+                'created_at' => 'date',
+            ]))
             ->paginate($perPage)
             ->withQueryString();
 

@@ -2,7 +2,6 @@
 
 use App\Models\Exams\TgoAndTgp;
 use App\Models\User;
-use Carbon\CarbonImmutable;
 use Database\Seeders\Exams\TgoAndTgpSeeder;
 use Illuminate\Support\Facades\Event;
 use Inertia\Testing\AssertableInertia;
@@ -79,7 +78,7 @@ it('searches both measurements without exposing other users or bypassing date fi
 
     $this->actingAs($user)->get(route('tgo-and-tgp.index', [
         'search' => '87.5',
-        'filters' => ['report_date' => [CarbonImmutable::parse('2026-08-10')->getTimestampMs(), CarbonImmutable::parse('2026-08-10')->getTimestampMs()]],
+        'filters' => [['id' => 'report_date', 'operator' => 'inRange', 'value' => ['2026-08-10', '2026-08-10']]],
     ]))->assertOk()->assertInertia(fn (AssertableInertia $page) => $page
         ->has('tgoAndTgps.data', 1)
         ->where('tgoAndTgps.data.0.id', $match->id)
@@ -114,7 +113,7 @@ it('sorts and paginates results', function () {
     TgoAndTgp::factory()->for($medicalFile)->create(['tgo_level' => 20]);
     $highest = TgoAndTgp::factory()->for($medicalFile)->create(['tgo_level' => 80]);
 
-    $this->actingAs($user)->get(route('tgo-and-tgp.index', ['sort_by' => 'tgo_level', 'sort_dir' => 'desc', 'per_page' => 1]))
+    $this->actingAs($user)->get(route('tgo-and-tgp.index', ['sorting' => [['id' => 'tgo_level', 'desc' => true]], 'per_page' => 1]))
         ->assertOk()->assertInertia(fn (AssertableInertia $page) => $page
         ->has('tgoAndTgps.data', 1)
         ->where('tgoAndTgps.total', 2)
@@ -125,7 +124,7 @@ it('sorts and paginates results', function () {
 it('falls back to id for unsupported sort columns', function () {
     $record = TgoAndTgp::factory()->create();
 
-    $this->actingAs($record->medicalFile->user)->get(route('tgo-and-tgp.index', ['sort_by' => 'password']))
+    $this->actingAs($record->medicalFile->user)->get(route('tgo-and-tgp.index', ['sorting' => [['id' => 'password', 'desc' => false]]]))
         ->assertOk()->assertInertia(fn (AssertableInertia $page) => $page->where('tgoAndTgps.data.0.id', $record->id));
 });
 
@@ -197,7 +196,7 @@ it('filters records by their creation date', function () {
     TgoAndTgp::factory()->for($medicalFile)->create(['created_at' => '2026-08-09 12:00:00']);
 
     $this->actingAs($user)->get(route('tgo-and-tgp.index', [
-        'filters' => ['created_at' => [CarbonImmutable::parse('2026-08-10')->getTimestampMs(), CarbonImmutable::parse('2026-08-10')->getTimestampMs()]],
+        'filters' => [['id' => 'created_at', 'operator' => 'inRange', 'value' => ['2026-08-10', '2026-08-10']]],
     ]))->assertOk()->assertInertia(fn (AssertableInertia $page) => $page
         ->has('tgoAndTgps.data', 1)
         ->where('tgoAndTgps.data.0.id', $record->id)

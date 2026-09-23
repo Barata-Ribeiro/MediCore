@@ -2,21 +2,21 @@
 
 namespace App\Http\Requests;
 
+use App\Common\DataTableQuery;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class QueryRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
+    /** Determine whether this query may be validated for the authenticated route. */
     public function authorize(): bool
     {
         return true;
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Validate the serialized v9 filtering and multi-sort state.
      *
      * @return array<string, ValidationRule|array<mixed>|string>
      */
@@ -24,33 +24,33 @@ class QueryRequest extends FormRequest
     {
         return [
             'page' => ['sometimes', 'integer', 'min:1'],
-            'per_page' => ['sometimes', 'integer', app()->environment('testing') ? '' : 'in:5,10,25,75'],
-
-            'sort_by' => ['sometimes', 'string', 'between:1,50', 'regex:/^[A-Za-z0-9_\.]+$/'],
-            'sort_dir' => ['sometimes', 'string', 'in:asc,desc'],
-
-            'search' => ['sometimes', 'string', 'between:1,255'],
-
-            'filters' => ['sometimes', 'nullable', 'array'],
+            'per_page' => ['sometimes', 'integer', 'min:1', 'max:75', app()->environment('testing') ? '' : 'in:5,10,25,75'],
+            'search' => ['sometimes', 'nullable', 'string', 'max:255'],
+            'sorting' => ['sometimes', 'array', 'list', 'max:10'],
+            'sorting.*' => ['array:id,desc'],
+            'sorting.*.id' => ['required', 'string', 'max:100', 'distinct', 'regex:/^[a-zA-Z0-9_]+$/'],
+            'sorting.*.desc' => ['required', 'boolean'],
+            'filters' => ['sometimes', 'array', 'list', 'max:20'],
+            'filters.*' => ['array:id,operator,value,filterId,joinOperator'],
+            'filters.*.id' => ['required', 'string', 'max:100', 'regex:/^[a-zA-Z0-9_]+$/'],
+            'filters.*.operator' => ['required', Rule::in(DataTableQuery::OPERATORS)],
+            'filters.*.filterId' => ['sometimes', 'string', 'max:100'],
+            'filters.*.joinOperator' => ['sometimes', Rule::in(['and', 'or'])],
+            'filters.*.value' => ['present', 'nullable'],
         ];
     }
 
-    public function prepareForValidation(): void
+    /** Decode JSON without silently accepting malformed input or legacy delimiter strings. */
+    protected function prepareForValidation(): void
     {
-        $filters = $this->input('filters');
-
-        // Parse filters from string format "key1:value1,value2,key2:value3,value4..."
-        if (\is_string($filters) && preg_match_all('/(?:^|,)\s*(\w+):([^,]*(?:,(?!\s*\w+:)[^,]*)*)/u', $filters, $m, PREG_SET_ORDER)) {
-            $filtersArray = [];
-            foreach ($m as $match) {
-                $key = $match[1];
-                $values = array_filter(array_map('trim', explode(',', $match[2])), fn ($value) => $value !== '');
-                if (! empty($values)) {
-                    $filtersArray[$key] = array_values($values);
+        foreach (['filters', 'sorting'] as $key) {
+            $value = $this->input($key);
+            if (is_string($value)) {
+                $decoded = json_decode($value, true);
+                if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                    $this->merge([$key => $decoded]);
                 }
             }
-
-            $this->merge(['filters' => $filtersArray]);
         }
     }
 }

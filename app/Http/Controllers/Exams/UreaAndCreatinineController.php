@@ -14,8 +14,6 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Log;
 
-use function in_array;
-
 class UreaAndCreatinineController extends Controller
 {
     public function __construct(private UreaAndCreatinineServiceInterface $ureaAndCreatinineService) {}
@@ -134,20 +132,13 @@ class UreaAndCreatinineController extends Controller
         $validated = $request->validated();
 
         $perPage = $validated['per_page'] ?? 10;
-        $sortBy = $validated['sort_by'] ?? 'id';
-        $sortDir = $validated['sort_dir'] ?? 'asc';
+        $sorting = $validated['sorting'] ?? [];
         $search = trim($validated['search'] ?? '');
         $filters = $validated['filters'] ?? [];
 
-        $allowedSorts = ['id', 'urea_level', 'creatinine_level', 'report_date', 'created_at'];
-        if (! in_array($sortBy, $allowedSorts)) {
-            $sortBy = 'id';
-        }
-
         return $this->ureaAndCreatinineService->getUreaAndCreatininesData(
             perPage: $perPage,
-            sortBy: $sortBy,
-            sortDir: $sortDir,
+            sorting: $sorting,
             search: $search,
             filters: $filters
         );

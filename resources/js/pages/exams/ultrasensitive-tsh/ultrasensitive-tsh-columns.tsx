@@ -1,3 +1,5 @@
+import { DateCell } from '@/components/table/cell-components';
+import { createAppColumnHelper } from '@/hooks/table';
 import ActionConfirmationDialog from '@/components/common/action-confirmation-dialog';
 import DropdownMenuCopyButton from '@/components/common/dropdown-menu-copy-button';
 import DataTableColumnHeader from '@/components/table/data-table-column-header';
@@ -15,7 +17,7 @@ import { destroy, edit } from '@/routes/ultrasensitive-tsh';
 import type { UltrasensitiveTsh } from '@/types/application/exams/ultrasensitive-tsh';
 import { lang } from '@erag/lang-sync-inertia/react';
 import { Link } from '@inertiajs/react';
-import type { Column, ColumnDef } from '@tanstack/react-table';
+import type { Column, ColumnDef } from '@/types/data-table';
 import { format } from 'date-fns';
 import { CalendarIcon, DeleteIcon, EditIcon, EllipsisIcon } from 'lucide-react';
 import { Fragment, useState } from 'react';
@@ -99,9 +101,10 @@ function ActionsCell({ ultrasensitiveTsh }: Readonly<{ ultrasensitiveTsh: Ultras
 export function useUltrasensitiveTshColumns(): ColumnDef<UltrasensitiveTsh>[] {
     const { __ } = lang();
 
-    return [
+    return createAppColumnHelper<UltrasensitiveTsh>().columns([
         {
             accessorKey: 'id',
+            meta: { label: __('ultrasensitive_tsh_pages.index.table.columns.id'), variant: 'number' },
             header: ({ column }) => (
                 <TableColumnHeader column={column} title={__('ultrasensitive_tsh_pages.index.table.columns.id')} />
             ),
@@ -117,10 +120,10 @@ export function useUltrasensitiveTshColumns(): ColumnDef<UltrasensitiveTsh>[] {
                     title={__('ultrasensitive_tsh_pages.index.table.columns.report_date')}
                 />
             ),
-            cell: ({ row }) => format(row.original.report_date, 'PPP'),
+            cell: DateCell,
             meta: {
                 label: __('ultrasensitive_tsh_pages.index.table.columns.report_date'),
-                variant: 'dateRange',
+                variant: 'date',
                 icon: CalendarIcon,
             },
             enableSorting: true,
@@ -136,6 +139,7 @@ export function useUltrasensitiveTshColumns(): ColumnDef<UltrasensitiveTsh>[] {
             cell: ({ row }) => <UltrasensitiveTshValueCell value={row.original.tsh_level} />,
             meta: {
                 label: __('ultrasensitive_tsh_pages.index.table.columns.tsh_level'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -150,7 +154,7 @@ export function useUltrasensitiveTshColumns(): ColumnDef<UltrasensitiveTsh>[] {
             cell: ({ row }) => format(row.original.created_at, 'PPpp'),
             meta: {
                 label: __('ultrasensitive_tsh_pages.index.table.columns.created_at'),
-                variant: 'dateRange',
+                variant: 'date',
                 icon: CalendarIcon,
             },
             enableSorting: true,
@@ -161,5 +165,5 @@ export function useUltrasensitiveTshColumns(): ColumnDef<UltrasensitiveTsh>[] {
             size: 40,
             enableHiding: false,
         },
-    ];
+    ]);
 }

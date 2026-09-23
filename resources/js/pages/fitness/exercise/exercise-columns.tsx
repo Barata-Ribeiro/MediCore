@@ -1,3 +1,4 @@
+import { createAppColumnHelper } from '@/hooks/table';
 import ActionConfirmationDialog from '@/components/common/action-confirmation-dialog';
 import DataTableColumnHeader from '@/components/table/data-table-column-header';
 import { Badge } from '@/components/ui/badge';
@@ -14,7 +15,7 @@ import { destroy, edit } from '@/routes/exercises';
 import type { CatalogExercise } from '@/types/application/fitness/catalog';
 import { lang } from '@erag/lang-sync-inertia/react';
 import { ModalLink } from '@inertiaui/modal-react';
-import type { Column, ColumnDef } from '@tanstack/react-table';
+import type { Column, ColumnDef } from '@/types/data-table';
 import { CalendarIcon, DeleteIcon, EditIcon, EllipsisIcon, ExternalLinkIcon } from 'lucide-react';
 import { Fragment, useState } from 'react';
 
@@ -78,9 +79,10 @@ function ActionsCell({ exercise }: Readonly<{ exercise: CatalogExercise }>) {
 export function useExerciseColumns(): ColumnDef<CatalogExercise>[] {
     const { __ } = lang();
 
-    return [
+    return createAppColumnHelper<CatalogExercise>().columns([
         {
             accessorKey: 'id',
+            meta: { label: __('exercise_pages.index.table.columns.id'), variant: 'number' },
             header: ({ column }) => (
                 <TableColumnHeader column={column} title={__('exercise_pages.index.table.columns.id')} />
             ),
@@ -90,6 +92,7 @@ export function useExerciseColumns(): ColumnDef<CatalogExercise>[] {
         },
         {
             accessorKey: 'name',
+            meta: { label: __('exercise_pages.index.table.columns.name'), variant: 'text' },
             header: ({ column }) => (
                 <TableColumnHeader column={column} title={__('exercise_pages.index.table.columns.name')} />
             ),
@@ -105,6 +108,7 @@ export function useExerciseColumns(): ColumnDef<CatalogExercise>[] {
         },
         {
             accessorKey: 'muscle_group_name',
+            meta: { label: __('exercise_pages.index.table.columns.muscle_groups') },
             header: ({ column }) => (
                 <TableColumnHeader column={column} title={__('exercise_pages.index.table.columns.muscle_groups')} />
             ),
@@ -137,7 +141,7 @@ export function useExerciseColumns(): ColumnDef<CatalogExercise>[] {
                 ) : (
                     <span className="text-muted-foreground text-sm">-</span>
                 ),
-            meta: { label: __('exercise_pages.index.table.columns.video') },
+            meta: { label: __('exercise_pages.index.table.columns.video'), variant: 'text' },
             enableSorting: false,
         },
         {
@@ -148,7 +152,7 @@ export function useExerciseColumns(): ColumnDef<CatalogExercise>[] {
             cell: ({ row }) => new Date(row.original.created_at).toLocaleDateString(),
             meta: {
                 label: __('exercise_pages.index.table.columns.created_at'),
-                variant: 'dateRange',
+                variant: 'date',
                 icon: CalendarIcon,
             },
             enableSorting: true,
@@ -159,5 +163,5 @@ export function useExerciseColumns(): ColumnDef<CatalogExercise>[] {
             size: 40,
             enableHiding: false,
         },
-    ];
+    ]);
 }

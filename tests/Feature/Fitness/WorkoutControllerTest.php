@@ -485,13 +485,13 @@ it('filters workout status and paginates sorted results while retaining the quer
     Workout::factory()->for($user)->create(['goal' => 'C', 'is_active' => false]);
     Workout::factory()->create(['goal' => 'D', 'is_active' => true]);
 
-    $this->actingAs($user)->get(route('workouts.index', ['filters' => 'is_active:1', 'sort_by' => 'goal', 'sort_dir' => 'asc', 'per_page' => 1, 'page' => 2]))
+    $this->actingAs($user)->get(route('workouts.index', ['filters' => [['id' => 'is_active', 'operator' => 'equals', 'value' => '1']], 'sorting' => [['id' => 'goal', 'desc' => false]], 'per_page' => 1, 'page' => 2]))
         ->assertInertia(fn (AssertableInertia $page) => $page
             ->where('workouts.total', 2)
             ->where('workouts.current_page', 2)
             ->has('workouts.data', 1)
             ->where('workouts.data.0.id', $second->id)
-            ->where('workouts.prev_page_url', fn ($url) => str_contains($url, 'sort_by=goal') && str_contains($url, 'filters=is_active%3A1'))
+            ->where('workouts.prev_page_url', fn ($url) => str_contains($url, 'sorting%5B0%5D%5Bid%5D=goal') && str_contains($url, 'filters%5B0%5D%5Bid%5D=is_active'))
         );
 });
 
@@ -500,7 +500,7 @@ it('finds inactive plans and returns an empty result for an unmatched search', f
     $inactive = Workout::factory()->for($user)->create(['is_active' => false, 'goal' => 'Archived plan']);
     Workout::factory()->for($user)->create(['is_active' => true]);
 
-    $this->actingAs($user)->get(route('workouts.index', ['filters' => 'is_active:0']))
+    $this->actingAs($user)->get(route('workouts.index', ['filters' => [['id' => 'is_active', 'operator' => 'equals', 'value' => '0']]]))
         ->assertInertia(fn (AssertableInertia $page) => $page->has('workouts.data', 1)->where('workouts.data.0.id', $inactive->id));
     $this->get(route('workouts.index', ['search' => 'No matching plan']))
         ->assertInertia(fn (AssertableInertia $page) => $page->has('workouts.data', 0));
@@ -511,7 +511,7 @@ it('falls back to a permitted sort column', function () {
     Workout::factory()->for($user)->create();
     $latest = Workout::factory()->for($user)->create();
 
-    $this->actingAs($user)->get(route('workouts.index', ['sort_by' => 'user_id']))
+    $this->actingAs($user)->get(route('workouts.index', ['sorting' => [['id' => 'user_id', 'desc' => false]]]))
         ->assertInertia(fn (AssertableInertia $page) => $page->where('workouts.data.0.id', $latest->id));
 });
 

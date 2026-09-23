@@ -2,6 +2,7 @@
 
 namespace App\Services\Fitness;
 
+use App\Common\DataTableQuery;
 use App\Common\Helpers;
 use App\Interfaces\Fitness\ExerciseServiceInterface;
 use App\Models\Fitness\Exercise;
@@ -24,17 +25,13 @@ class ExerciseService implements ExerciseServiceInterface
     /**
      * {@inheritDoc}
      *
-     * @param  array<string, mixed>|null  $filters
+     * @param  list<array{id: string, desc: bool}>  $sorting
+     * @param  list<array{id: string, operator: string, value?: mixed, joinOperator?: string, filterId?: string}>|null  $filters
      * @return LengthAwarePaginator<int, Exercise>
      */
-    public function getExercisesData(?int $perPage, ?string $sortBy, ?string $sortDir, ?string $search, ?array $filters): LengthAwarePaginator
+    public function getExercisesData(?int $perPage, array $sorting, ?string $search, ?array $filters): LengthAwarePaginator
     {
         $isSql = $this->isSqlDriver;
-
-        $filters ??= [];
-        $createdAtRange = $filters['created_at'] ?? [];
-
-        [$createdAtStart, $createdAtEnd] = Helpers::getDateRange($createdAtRange);
 
         return Exercise::query()
             ->select('exercises.*')
@@ -49,12 +46,12 @@ class ExerciseService implements ExerciseServiceInterface
             )
             ->whereBelongsTo(auth()->user())
             ->with(['muscleGroups' => fn ($query) => $query->select(['muscle_groups.id', 'name'])->orderBy('name')])
-            ->when($createdAtRange, fn ($q) => $q->whereBetween('created_at', [$createdAtStart, $createdAtEnd]))
             ->when($search, function (Builder $query) use ($search, $isSql) {
                 if ($isSql) {
                     $booleanQuery = Helpers::buildBooleanQuery($search);
-                    $query->whereFullText(['exercises.name', 'exercises.description', 'exercises.video_url'], $booleanQuery)
-                        ->orWhereHas('muscleGroups', fn (Builder $muscleGroups) => $muscleGroups->whereLike('muscle_groups.name', "%{$search}%"));
+                    $query->where(fn (Builder $searchQuery) => $searchQuery
+                        ->whereFullText(['exercises.name', 'exercises.description', 'exercises.video_url'], $booleanQuery)
+                        ->orWhereHas('muscleGroups', fn (Builder $muscleGroups) => $muscleGroups->whereLike('muscle_groups.name', "%{$search}%")));
                 } else {
                     $query->where(function (Builder $searchQuery) use ($search) {
                         $searchQuery->whereLike('exercises.name', "%{$search}%")
@@ -63,7 +60,14 @@ class ExerciseService implements ExerciseServiceInterface
                             ->orWhereHas('muscleGroups', fn (Builder $muscleGroups) => $muscleGroups->whereLike('muscle_groups.name', "%{$search}%"));
                     });
                 }
-            })->orderBy($sortBy ?? 'id', $sortDir === 'desc' ? 'desc' : 'asc')
+            })->tap(fn ($query) => DataTableQuery::apply($query, $filters ?? [], $sorting, [
+                'id' => 'number',
+                'name' => 'text',
+                'video_url' => 'text',
+                'muscle_group_name' => 'sort',
+                'created_at' => 'date',
+                'updated_at' => 'date',
+            ]))
             ->paginate($perPage ?? 10)
             ->withQueryString();
     }

@@ -2,7 +2,6 @@
 
 use App\Models\Exams\UreaAndCreatinine;
 use App\Models\User;
-use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Event;
 use Inertia\Testing\AssertableInertia;
 
@@ -23,11 +22,11 @@ it('searches measurements without exposing other users or bypassing date filters
     $record = UreaAndCreatinine::factory()->create(['urea_level' => 12, 'creatinine_level' => 12, $field => 87.5, 'report_date' => '2026-08-10']);
     UreaAndCreatinine::factory()->for($record->medicalFile)->create(['urea_level' => 12, 'creatinine_level' => 12, $field => 87.5, 'report_date' => '2026-07-10']);
     UreaAndCreatinine::factory()->create(['urea_level' => 12, 'creatinine_level' => 12, $field => 87.5, 'report_date' => '2026-08-10']);
-    $date = CarbonImmutable::parse('2026-08-10')->getTimestampMs();
+    $date = '2026-08-10';
 
     $this->actingAs($record->medicalFile->user)->get(route('urea-and-creatinine.index', [
         'search' => '87.5',
-        'filters' => ['report_date' => [$date, $date]],
+        'filters' => [['id' => 'report_date', 'operator' => 'inRange', 'value' => [$date, $date]]],
     ]))->assertOk()->assertInertia(fn (AssertableInertia $page) => $page
         ->has('ureaAndCreatinines.data', 1)
         ->where('ureaAndCreatinines.data.0.id', $record->id)
@@ -360,7 +359,7 @@ it('sorts and paginates only the authenticated users records', function () {
     UreaAndCreatinine::factory()->create(['urea_level' => 90]);
 
     $this->actingAs($record->medicalFile->user)
-        ->get(route('urea-and-creatinine.index', ['sort_by' => 'urea_level', 'sort_dir' => 'desc', 'per_page' => 1]))
+        ->get(route('urea-and-creatinine.index', ['sorting' => [['id' => 'urea_level', 'desc' => true]], 'per_page' => 1]))
         ->assertOk()->assertInertia(fn (AssertableInertia $page) => $page
         ->has('ureaAndCreatinines.data', 1)
         ->where('ureaAndCreatinines.total', 2)
@@ -372,10 +371,10 @@ it('filters records by date without including other owners', function (string $f
     $record = UreaAndCreatinine::factory()->create([$field => '2026-08-10 12:00:00']);
     UreaAndCreatinine::factory()->for($record->medicalFile)->create([$field => '2026-08-09 12:00:00']);
     UreaAndCreatinine::factory()->create([$field => '2026-08-10 12:00:00']);
-    $date = CarbonImmutable::parse('2026-08-10')->getTimestampMs();
+    $date = '2026-08-10';
 
     $this->actingAs($record->medicalFile->user)->get(route('urea-and-creatinine.index', [
-        'filters' => [$field => [$date, $date]],
+        'filters' => [['id' => $field, 'operator' => 'inRange', 'value' => [$date, $date]]],
     ]))->assertOk()->assertInertia(fn (AssertableInertia $page) => $page
         ->has('ureaAndCreatinines.data', 1)
         ->where('ureaAndCreatinines.data.0.id', $record->id)

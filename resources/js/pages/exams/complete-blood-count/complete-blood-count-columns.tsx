@@ -1,3 +1,5 @@
+import { DateCell } from '@/components/table/cell-components';
+import { createAppColumnHelper } from '@/hooks/table';
 import ActionConfirmationDialog from '@/components/common/action-confirmation-dialog';
 import DropdownMenuCopyButton from '@/components/common/dropdown-menu-copy-button';
 import DataTableColumnHeader from '@/components/table/data-table-column-header';
@@ -15,7 +17,7 @@ import { destroy, edit } from '@/routes/complete-blood-count';
 import type { CompleteBloodCount } from '@/types/application/exams/complete-blood-count';
 import { lang } from '@erag/lang-sync-inertia/react';
 import { Link } from '@inertiajs/react';
-import type { Column, ColumnDef } from '@tanstack/react-table';
+import type { Column, ColumnDef } from '@/types/data-table';
 import { format } from 'date-fns';
 import { CalendarIcon, DeleteIcon, EditIcon, EllipsisIcon } from 'lucide-react';
 import { Fragment, useState } from 'react';
@@ -114,9 +116,10 @@ function ActionsCell({ completeBloodCount }: Readonly<{ completeBloodCount: Comp
 export function useCompleteBloodCountColumns(): ColumnDef<CompleteBloodCount>[] {
     const { __ } = lang();
 
-    return [
+    return createAppColumnHelper<CompleteBloodCount>().columns([
         {
             accessorKey: 'id',
+            meta: { label: __('complete_blood_count_pages.index.table.columns.id'), variant: 'number' },
             header: ({ column }) => (
                 <TableColumnHeader column={column} title={__('complete_blood_count_pages.index.table.columns.id')} />
             ),
@@ -132,10 +135,10 @@ export function useCompleteBloodCountColumns(): ColumnDef<CompleteBloodCount>[] 
                     title={__('complete_blood_count_pages.index.table.columns.report_date')}
                 />
             ),
-            cell: ({ row }) => format(row.original.report_date, 'PPP'),
+            cell: DateCell,
             meta: {
                 label: __('complete_blood_count_pages.index.table.columns.report_date'),
-                variant: 'dateRange',
+                variant: 'date',
                 icon: CalendarIcon,
             },
             enableSorting: true,
@@ -151,6 +154,7 @@ export function useCompleteBloodCountColumns(): ColumnDef<CompleteBloodCount>[] 
             cell: ({ row }) => `${row.original.hematocrit}%`,
             meta: {
                 label: __('complete_blood_count_pages.index.table.columns.hematocrit'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -165,6 +169,7 @@ export function useCompleteBloodCountColumns(): ColumnDef<CompleteBloodCount>[] 
             cell: ({ row }) => `${row.original.hemoglobin} g/dL`,
             meta: {
                 label: __('complete_blood_count_pages.index.table.columns.hemoglobin'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -179,6 +184,7 @@ export function useCompleteBloodCountColumns(): ColumnDef<CompleteBloodCount>[] 
             cell: ({ row }) => `${row.original.red_blood_cell_count} /mm`,
             meta: {
                 label: __('complete_blood_count_pages.index.table.columns.red_blood_cell_count'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -193,6 +199,7 @@ export function useCompleteBloodCountColumns(): ColumnDef<CompleteBloodCount>[] 
             cell: ({ row }) => `${row.original.mean_corpuscular_volume} fL`,
             meta: {
                 label: __('complete_blood_count_pages.index.table.columns.mean_corpuscular_volume'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -207,6 +214,7 @@ export function useCompleteBloodCountColumns(): ColumnDef<CompleteBloodCount>[] 
             cell: ({ row }) => `${row.original.mean_corpuscular_hemoglobin} pg`,
             meta: {
                 label: __('complete_blood_count_pages.index.table.columns.mean_corpuscular_hemoglobin'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -223,6 +231,7 @@ export function useCompleteBloodCountColumns(): ColumnDef<CompleteBloodCount>[] 
             cell: ({ row }) => `${row.original.mean_corpuscular_hemoglobin_concentration} g/dL`,
             meta: {
                 label: __('complete_blood_count_pages.index.table.columns.mean_corpuscular_hemoglobin_concentration'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -237,6 +246,7 @@ export function useCompleteBloodCountColumns(): ColumnDef<CompleteBloodCount>[] 
             cell: ({ row }) => `${row.original.red_blood_cell_distribution_width}%`,
             meta: {
                 label: __('complete_blood_count_pages.index.table.columns.red_blood_cell_distribution_width'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -250,6 +260,7 @@ export function useCompleteBloodCountColumns(): ColumnDef<CompleteBloodCount>[] 
             ),
             meta: {
                 label: __('complete_blood_count_pages.index.table.columns.leukocyte_count'),
+                variant: 'number',
             },
             cell: ({ row }) => `${row.original.leukocyte_count} /mm`,
             enableSorting: true,
@@ -265,6 +276,7 @@ export function useCompleteBloodCountColumns(): ColumnDef<CompleteBloodCount>[] 
             cell: ({ row }) => `${row.original.rod_neutrophil_count} /mm`,
             meta: {
                 label: __('complete_blood_count_pages.index.table.columns.rod_neutrophil_count'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -279,6 +291,7 @@ export function useCompleteBloodCountColumns(): ColumnDef<CompleteBloodCount>[] 
             cell: ({ row }) => `${row.original.segmented_neutrophil_count} /mm`,
             meta: {
                 label: __('complete_blood_count_pages.index.table.columns.segmented_neutrophil_count'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -293,6 +306,7 @@ export function useCompleteBloodCountColumns(): ColumnDef<CompleteBloodCount>[] 
             cell: ({ row }) => `${row.original.lymphocyte_count} /mm`,
             meta: {
                 label: __('complete_blood_count_pages.index.table.columns.lymphocyte_count'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -307,6 +321,7 @@ export function useCompleteBloodCountColumns(): ColumnDef<CompleteBloodCount>[] 
             cell: ({ row }) => `${row.original.monocyte_count} /mm`,
             meta: {
                 label: __('complete_blood_count_pages.index.table.columns.monocyte_count'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -321,6 +336,7 @@ export function useCompleteBloodCountColumns(): ColumnDef<CompleteBloodCount>[] 
             cell: ({ row }) => `${row.original.eosinophil_count} /mm`,
             meta: {
                 label: __('complete_blood_count_pages.index.table.columns.eosinophil_count'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -335,6 +351,7 @@ export function useCompleteBloodCountColumns(): ColumnDef<CompleteBloodCount>[] 
             cell: ({ row }) => `${row.original.basophil_count} /mm`,
             meta: {
                 label: __('complete_blood_count_pages.index.table.columns.basophil_count'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -349,6 +366,7 @@ export function useCompleteBloodCountColumns(): ColumnDef<CompleteBloodCount>[] 
             cell: ({ row }) => `${row.original.metamyelocyte_count} /mm`,
             meta: {
                 label: __('complete_blood_count_pages.index.table.columns.metamyelocyte_count'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -363,6 +381,7 @@ export function useCompleteBloodCountColumns(): ColumnDef<CompleteBloodCount>[] 
             cell: ({ row }) => `${row.original.promyelocyte_count} /mm`,
             meta: {
                 label: __('complete_blood_count_pages.index.table.columns.promyelocyte_count'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -377,6 +396,7 @@ export function useCompleteBloodCountColumns(): ColumnDef<CompleteBloodCount>[] 
             cell: ({ row }) => `${row.original.atypical_cell_count} /mm`,
             meta: {
                 label: __('complete_blood_count_pages.index.table.columns.atypical_cell_count'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -391,6 +411,7 @@ export function useCompleteBloodCountColumns(): ColumnDef<CompleteBloodCount>[] 
             cell: ({ row }) => `${row.original.platelet_count} /mm`,
             meta: {
                 label: __('complete_blood_count_pages.index.table.columns.platelet_count'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -405,7 +426,7 @@ export function useCompleteBloodCountColumns(): ColumnDef<CompleteBloodCount>[] 
             cell: ({ row }) => format(row.original.created_at, 'PPpp'),
             meta: {
                 label: __('complete_blood_count_pages.index.table.columns.created_at'),
-                variant: 'dateRange',
+                variant: 'date',
                 icon: CalendarIcon,
             },
             enableSorting: true,
@@ -416,5 +437,5 @@ export function useCompleteBloodCountColumns(): ColumnDef<CompleteBloodCount>[] 
             size: 40,
             enableHiding: false,
         },
-    ];
+    ]);
 }

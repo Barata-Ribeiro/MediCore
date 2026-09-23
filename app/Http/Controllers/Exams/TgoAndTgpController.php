@@ -14,8 +14,6 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Log;
 
-use function in_array;
-
 class TgoAndTgpController extends Controller
 {
     public function __construct(private TgoAndTgpServiceInterface $tgoAndTgpService) {}
@@ -134,20 +132,13 @@ class TgoAndTgpController extends Controller
         $validated = $request->validated();
 
         $perPage = $validated['per_page'] ?? 10;
-        $sortBy = $validated['sort_by'] ?? 'id';
-        $sortDir = $validated['sort_dir'] ?? 'asc';
+        $sorting = $validated['sorting'] ?? [];
         $search = trim($validated['search'] ?? '');
         $filters = $validated['filters'] ?? [];
 
-        $allowedSorts = ['id', 'tgo_level', 'tgp_level', 'report_date', 'created_at'];
-        if (! in_array($sortBy, $allowedSorts)) {
-            $sortBy = 'id';
-        }
-
         return $this->tgoAndTgpService->getTgoAndTgpsData(
             perPage: $perPage,
-            sortBy: $sortBy,
-            sortDir: $sortDir,
+            sorting: $sorting,
             search: $search,
             filters: $filters
         );

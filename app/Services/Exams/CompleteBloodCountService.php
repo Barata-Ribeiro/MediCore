@@ -2,7 +2,7 @@
 
 namespace App\Services\Exams;
 
-use App\Common\Helpers;
+use App\Common\DataTableQuery;
 use App\Interfaces\Exams\CompleteBloodCountServiceInterface;
 use App\Models\Exams\CompleteBloodCount;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -13,23 +13,16 @@ class CompleteBloodCountService implements CompleteBloodCountServiceInterface
     /**
      * Fetch paginated data and chart data for this exam type based on the provided parameters.
      *
-     * @param  array<string, mixed>|null  $filters
+     * @param  list<array{id: string, desc: bool}>  $sorting
+     * @param  list<array{id: string, operator: string, value?: mixed, joinOperator?: string, filterId?: string}>|null  $filters
      * @return array{0: LengthAwarePaginator<int, CompleteBloodCount>, 1: array<string, mixed>}
      */
-    public function getCompleteBloodCountData(?int $perPage, ?string $sortBy, ?string $sortDir, ?string $search, ?array $filters): array
+    public function getCompleteBloodCountData(?int $perPage, array $sorting, ?string $search, ?array $filters): array
     {
-        $filters ??= [];
-        $createdAtRange = $filters['created_at'] ?? [];
-        $reportDateRange = $filters['report_date'] ?? [];
-
-        [$createdAtStart, $createdAtEnd] = Helpers::getDateRange($createdAtRange);
-        [$reportDateStart, $reportDateEnd] = Helpers::getDateRange($reportDateRange);
 
         $completeBloodCounts = CompleteBloodCount::query()
             ->select('complete_blood_counts.*')
             ->where('medical_file_id', auth()->user()->medicalFile->id)
-            ->when($createdAtRange, fn ($q) => $q->whereBetween('complete_blood_counts.created_at', [$createdAtStart, $createdAtEnd]))
-            ->when($reportDateRange, fn ($q) => $q->whereBetween('complete_blood_counts.report_date', [substr($reportDateStart, 0, 10), substr($reportDateEnd, 0, 10)]))
             ->when($search, fn ($q) => $q->where(function ($q) use ($search) {
                 $q->whereLike('hematocrit', "%{$search}%")
                     ->orWhereLike('hemoglobin', "%{$search}%")
@@ -50,7 +43,29 @@ class CompleteBloodCountService implements CompleteBloodCountServiceInterface
                     ->orWhereLike('atypical_cell_count', "%{$search}%")
                     ->orWhereLike('platelet_count', "%{$search}%");
             }))
-            ->orderBy($sortBy ?? 'created_at', $sortDir === 'desc' ? 'desc' : 'asc')
+            ->tap(fn ($query) => DataTableQuery::apply($query, $filters ?? [], $sorting, [
+                'id' => 'number',
+                'hematocrit' => 'number',
+                'hemoglobin' => 'number',
+                'red_blood_cell_count' => 'number',
+                'mean_corpuscular_volume' => 'number',
+                'mean_corpuscular_hemoglobin' => 'number',
+                'mean_corpuscular_hemoglobin_concentration' => 'number',
+                'red_blood_cell_distribution_width' => 'number',
+                'leukocyte_count' => 'number',
+                'rod_neutrophil_count' => 'number',
+                'segmented_neutrophil_count' => 'number',
+                'lymphocyte_count' => 'number',
+                'monocyte_count' => 'number',
+                'eosinophil_count' => 'number',
+                'basophil_count' => 'number',
+                'metamyelocyte_count' => 'number',
+                'promyelocyte_count' => 'number',
+                'atypical_cell_count' => 'number',
+                'platelet_count' => 'number',
+                'report_date' => 'date',
+                'created_at' => 'date',
+            ]))
             ->paginate($perPage)
             ->withQueryString();
 

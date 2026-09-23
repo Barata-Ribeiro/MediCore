@@ -1,3 +1,5 @@
+import { DateCell } from '@/components/table/cell-components';
+import { createAppColumnHelper } from '@/hooks/table';
 import LipidProfileController from '@/actions/App/Http/Controllers/Exams/LipidProfileController';
 import ActionConfirmationDialog from '@/components/common/action-confirmation-dialog';
 import DropdownMenuCopyButton from '@/components/common/dropdown-menu-copy-button';
@@ -15,7 +17,7 @@ import {
 import type { LipidProfile } from '@/types/application/exams/lipid-profile';
 import { lang } from '@erag/lang-sync-inertia/react';
 import { Link } from '@inertiajs/react';
-import type { Column, ColumnDef } from '@tanstack/react-table';
+import type { Column, ColumnDef } from '@/types/data-table';
 import { format } from 'date-fns';
 import { CalendarIcon, DeleteIcon, EditIcon, EllipsisIcon } from 'lucide-react';
 import { Fragment, useState } from 'react';
@@ -103,9 +105,10 @@ function ActionsCell({ lipidProfile }: Readonly<{ lipidProfile: LipidProfile }>)
 export function useLipidProfileColumns(): ColumnDef<LipidProfile>[] {
     const { __ } = lang();
 
-    return [
+    return createAppColumnHelper<LipidProfile>().columns([
         {
             accessorKey: 'id',
+            meta: { label: __('lipid_profile_pages.index.table.columns.id'), variant: 'number' },
             header: ({ column }) => (
                 <TableColumnHeader column={column} title={__('lipid_profile_pages.index.table.columns.id')} />
             ),
@@ -118,10 +121,10 @@ export function useLipidProfileColumns(): ColumnDef<LipidProfile>[] {
             header: ({ column }) => (
                 <TableColumnHeader column={column} title={__('lipid_profile_pages.index.table.columns.report_date')} />
             ),
-            cell: ({ row }) => format(row.original.report_date, 'PPP'),
+            cell: DateCell,
             meta: {
                 label: __('lipid_profile_pages.index.table.columns.report_date'),
-                variant: 'dateRange',
+                variant: 'date',
                 icon: CalendarIcon,
             },
             enableSorting: true,
@@ -137,6 +140,7 @@ export function useLipidProfileColumns(): ColumnDef<LipidProfile>[] {
             cell: ({ row }) => <LipidValueCell value={row.original.total_cholesterol} />,
             meta: {
                 label: __('lipid_profile_pages.index.table.columns.total_cholesterol'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -151,6 +155,7 @@ export function useLipidProfileColumns(): ColumnDef<LipidProfile>[] {
             cell: ({ row }) => <LipidValueCell value={row.original.hdl_cholesterol} />,
             meta: {
                 label: __('lipid_profile_pages.index.table.columns.hdl_cholesterol'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -165,6 +170,7 @@ export function useLipidProfileColumns(): ColumnDef<LipidProfile>[] {
             cell: ({ row }) => <LipidValueCell value={row.original.ldl_cholesterol} />,
             meta: {
                 label: __('lipid_profile_pages.index.table.columns.ldl_cholesterol'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -179,6 +185,7 @@ export function useLipidProfileColumns(): ColumnDef<LipidProfile>[] {
             cell: ({ row }) => <LipidValueCell value={row.original.vldl_cholesterol} />,
             meta: {
                 label: __('lipid_profile_pages.index.table.columns.vldl_cholesterol'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -193,6 +200,7 @@ export function useLipidProfileColumns(): ColumnDef<LipidProfile>[] {
             cell: ({ row }) => <LipidValueCell value={row.original.triglycerides} />,
             meta: {
                 label: __('lipid_profile_pages.index.table.columns.triglycerides'),
+                variant: 'number',
             },
             enableSorting: true,
         },
@@ -204,7 +212,7 @@ export function useLipidProfileColumns(): ColumnDef<LipidProfile>[] {
             cell: ({ row }) => format(row.original.created_at, 'PPpp'),
             meta: {
                 label: __('lipid_profile_pages.index.table.columns.created_at'),
-                variant: 'dateRange',
+                variant: 'date',
                 icon: CalendarIcon,
             },
             enableSorting: true,
@@ -215,5 +223,5 @@ export function useLipidProfileColumns(): ColumnDef<LipidProfile>[] {
             size: 40,
             enableHiding: false,
         },
-    ];
+    ]);
 }

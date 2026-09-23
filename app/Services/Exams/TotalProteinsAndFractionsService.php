@@ -2,7 +2,7 @@
 
 namespace App\Services\Exams;
 
-use App\Common\Helpers;
+use App\Common\DataTableQuery;
 use App\Interfaces\Exams\TotalProteinsAndFractionsServiceInterface;
 use App\Models\Exams\TotalProteinsAndFractions;
 use Illuminate\Support\Collection;
@@ -12,23 +12,23 @@ class TotalProteinsAndFractionsService implements TotalProteinsAndFractionsServi
     /**
      * {@inheritDoc}
      */
-    public function getTotalProteinsAndFractionsData(?int $perPage, ?string $sortBy, ?string $sortDir, ?string $search, ?array $filters): array
+    public function getTotalProteinsAndFractionsData(?int $perPage, array $sorting, ?string $search, ?array $filters): array
     {
-        $filters ??= [];
-        $createdAtRange = $filters['created_at'] ?? [];
-        $reportDateRange = $filters['report_date'] ?? [];
-
-        [$createdAtStart, $createdAtEnd] = Helpers::getDateRange($createdAtRange);
-        [$reportDateStart, $reportDateEnd] = Helpers::getDateRange($reportDateRange);
 
         $tpfs = TotalProteinsAndFractions::query()
             ->where('medical_file_id', auth()->user()->medicalFile->id)
-            ->when($createdAtRange, fn ($q) => $q->whereBetween('created_at', [$createdAtStart, $createdAtEnd]))
-            ->when($reportDateRange, fn ($q) => $q->whereBetween('report_date', [substr($reportDateStart, 0, 10), substr($reportDateEnd, 0, 10)]))
             ->when($search !== '', fn ($q) => $q->where(fn ($query) => $query->whereLike('total_proteins', "%{$search}%")
                 ->orWhereLike('albumin', "%{$search}%")
                 ->orWhereLike('globulin', "%{$search}%")))
-            ->orderBy($sortBy ?? 'created_at', $sortDir === 'desc' ? 'desc' : 'asc')
+            ->tap(fn ($query) => DataTableQuery::apply($query, $filters ?? [], $sorting, [
+                'id' => 'number',
+                'total_proteins' => 'number',
+                'albumin' => 'number',
+                'globulin' => 'number',
+                'albumin_globulin_ratio' => 'number',
+                'report_date' => 'date',
+                'created_at' => 'date',
+            ]))
             ->paginate($perPage)
             ->withQueryString();
 
