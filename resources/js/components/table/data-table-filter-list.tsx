@@ -39,7 +39,10 @@ export default function DataTableFilterList() {
                     </Button>
                 }
             />
-            <PopoverContent align="start" className="max-h-[70vh] w-[min(48rem,calc(100vw-2rem))] overflow-y-auto">
+            <PopoverContent
+                align="start"
+                className="max-h-table-filter-popover-height w-table-filter-popover overflow-y-auto"
+            >
                 <PopoverTitle>{label('title')}</PopoverTitle>
                 {draft.length === 0 && <p className="text-muted-foreground">{label('empty')}</p>}
                 {draft.length > 1 && (

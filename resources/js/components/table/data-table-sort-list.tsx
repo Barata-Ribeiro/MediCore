@@ -31,7 +31,7 @@ export default function DataTableSortList() {
                     </Button>
                 }
             />
-            <PopoverContent align="start" className="w-[min(32rem,calc(100vw-2rem))]">
+            <PopoverContent align="start" className="w-table-sort-popover">
                 <PopoverTitle>{label('title')}</PopoverTitle>
                 {sorting.length === 0 && <p className="text-muted-foreground">{label('empty')}</p>}
                 {sorting.map((sort, index) => (
