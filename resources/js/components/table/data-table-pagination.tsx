@@ -7,60 +7,73 @@ import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon 
 export default function DataTablePagination() {
     const table = useTableContext();
     const { __, trans } = lang();
+
     const { pageIndex, pageSize } = table.state.pagination;
+
     const label = (key: string) => __(`main.data_table.pagination.${key}`);
+
     return (
         <div className="flex w-full flex-wrap items-center justify-between gap-4">
             <span>{trans('main.data_table.pagination.summary', { total: table.options.rowCount ?? 0 })}</span>
             <div className="flex flex-wrap items-center gap-2">
                 <span>{label('per_page')}</span>
+
                 <DataTableSelect
                     label={label('per_page')}
                     value={String(pageSize)}
                     options={[5, 10, 25, 75].map((size) => ({ value: String(size), label: String(size) }))}
                     onChange={(value) => table.setPageSize(Number(value))}
                 />
+
                 <span>
                     {trans('main.data_table.pagination.page', {
                         current: pageIndex + 1,
                         total: Math.max(1, table.getPageCount()),
                     })}
                 </span>
+
                 <Button
                     variant="outline"
                     size="icon"
                     disabled={!table.getCanPreviousPage()}
                     aria-label={label('first')}
+                    title={label('first')}
                     onClick={() => table.firstPage()}
                 >
-                    <ChevronsLeftIcon />
+                    <ChevronsLeftIcon aria-hidden />
                 </Button>
+
                 <Button
                     variant="outline"
                     size="icon"
                     disabled={!table.getCanPreviousPage()}
                     aria-label={label('previous')}
+                    title={label('previous')}
                     onClick={() => table.previousPage()}
                 >
-                    <ChevronLeftIcon />
+                    <ChevronLeftIcon aria-hidden />
                 </Button>
+
                 <Button
                     variant="outline"
                     size="icon"
                     disabled={!table.getCanNextPage()}
                     aria-label={label('next')}
+                    title={label('next')}
                     onClick={() => table.nextPage()}
                 >
-                    <ChevronRightIcon />
+                    <ChevronRightIcon aria-hidden />
                 </Button>
+
                 <Button
                     variant="outline"
                     size="icon"
                     disabled={!table.getCanNextPage()}
                     aria-label={label('last')}
+                    title={label('last')}
                     onClick={() => table.lastPage()}
                 >
-                    <ChevronsRightIcon />
+                    <ChevronsRightIcon aria-hidden />
                 </Button>
             </div>
         </div>
