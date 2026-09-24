@@ -77,5 +77,11 @@ export default defineConfig({
         ignorePatterns: ['.github/**', 'composer.json', 'resources/js/components/ui/*', 'resources/views/mail/*'],
         sortTailwindcss: { functions: ['clsx', 'cn', 'cva'], stylesheet: 'resources/css/app.css' },
     },
+    test: {
+        globals: true,
+        setupFiles: ['tests/setup.ts'],
+        include: ['tests/**/*.test.tsx'],
+        restoreMocks: true,
+    },
     assetsInclude: ['**/*.{woff,woff2,eot,ttf,otf,svg,png,jpg,jpeg,gif,webp,avif}'],
 });
