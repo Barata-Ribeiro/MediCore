@@ -13,7 +13,7 @@ export default defineConfig({
     plugins: lazyPlugins(() => [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.tsx'],
-            detectTls: true,
+            detectTls: !process.env.CI,
             refresh: true,
         }),
         inertia({ ssr: { cluster: true } }),

@@ -63,4 +63,6 @@ jobs:
         run: pnpm run build:ssr
 
       - name: Tests
+        env:
+          LARAVEL_BYPASS_ENV_CHECK: '1'
         run: ${{ matrix.test-runner }} test
