@@ -103,7 +103,7 @@ export default function Register() {
                             </Button>
                         </div>
 
-                        <div className="text-muted-foreground text-center text-sm">
+                        <div className="text-center text-sm text-muted-foreground">
                             {__('auth_pages.register_page.form.login_message_text')}{' '}
                             <TextLink href={login()} tabIndex={0}>
                                 {__('auth_pages.register_page.form.login_message_link')}

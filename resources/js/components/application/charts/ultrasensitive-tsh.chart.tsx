@@ -96,7 +96,7 @@ export default function UltrasensitiveTshChart({ chartData, total }: Readonly<Pr
                 </ChartContainer>
             </CardContent>
             <CardFooter className="border-t">
-                <p className="text-muted-foreground text-sm">
+                <p className="text-sm text-muted-foreground">
                     {__('ultrasensitive_tsh_pages.index.chart.footer_total_label')} <strong>{total}</strong>
                 </p>
             </CardFooter>

@@ -35,7 +35,7 @@ function ActionsCell({ exercise }: Readonly<{ exercise: CatalogExercise }>) {
                         <Button
                             aria-label={__('exercise_pages.index.table.menu.open_label')}
                             variant="ghost"
-                            className="aria-expanded:bg-muted flex size-8 p-0"
+                            className="flex size-8 p-0 aria-expanded:bg-muted"
                         >
                             <EllipsisIcon aria-hidden size={16} />
                         </Button>
@@ -100,7 +100,7 @@ export function useExerciseColumns(): ColumnDef<CatalogExercise>[] {
                 <div className="grid gap-1">
                     <div className="font-medium">{row.original.name}</div>
                     {row.original.description && (
-                        <p className="text-muted-foreground truncate text-xs">{row.original.description}</p>
+                        <p className="truncate text-xs text-muted-foreground">{row.original.description}</p>
                     )}
                 </div>
             ),
@@ -139,7 +139,7 @@ export function useExerciseColumns(): ColumnDef<CatalogExercise>[] {
                         {__('exercise_pages.index.table.open_video')} <ExternalLinkIcon aria-hidden size={14} />
                     </a>
                 ) : (
-                    <span className="text-muted-foreground text-sm">-</span>
+                    <span className="text-sm text-muted-foreground">-</span>
                 ),
             meta: { label: __('exercise_pages.index.table.columns.video'), variant: 'text' },
             enableSorting: false,

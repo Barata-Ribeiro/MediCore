@@ -282,7 +282,7 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
             <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex flex-col gap-1">
                     <h2 className="font-heading text-lg font-medium">{__('workout_pages.form.registry_title')}</h2>
-                    <p className="text-muted-foreground text-sm">{__('workout_pages.form.registry_description')}</p>
+                    <p className="text-sm text-muted-foreground">{__('workout_pages.form.registry_description')}</p>
                 </div>
 
                 <Button type="button" variant="outline" onClick={addSection}>
@@ -676,7 +676,7 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                     </CardFooter>
                 </Card>
             ))}
-            <p className="text-muted-foreground text-sm">
+            <p className="text-sm text-muted-foreground">
                 {__('workout_pages.form.catalog_hint')}
                 <Button
                     type="button"
@@ -689,7 +689,7 @@ export default function WorkoutRegistryForm({ workout, formOptions }: Readonly<P
                     }
                 />
             </p>
-            <div className="bg-background sticky bottom-3 flex flex-wrap items-center justify-between gap-3 rounded-xl border p-3 shadow-sm">
+            <div className="sticky bottom-3 flex flex-wrap items-center justify-between gap-3 rounded-xl border bg-background p-3 shadow-sm">
                 <Button
                     nativeButton={false}
                     variant="outline"

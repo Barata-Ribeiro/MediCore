@@ -49,7 +49,7 @@ export default function Edit({ tgoAndTgp }: Readonly<Props>) {
                     <TgoAndTgpForm tgoAndTgp={tgoAndTgp} />
                 </CardContent>
                 <CardFooter>
-                    <p className="text-muted-foreground text-sm">{__('tgo_and_tgp_pages.edit.footer')}</p>
+                    <p className="text-sm text-muted-foreground">{__('tgo_and_tgp_pages.edit.footer')}</p>
                 </CardFooter>
             </Card>
         </Fragment>

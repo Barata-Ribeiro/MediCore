@@ -96,7 +96,7 @@ export default function CbcCountChart({ chartData, total }: Readonly<Props>) {
                 </ChartContainer>
             </CardContent>
             <CardFooter className="border-t">
-                <p className="text-muted-foreground text-sm">
+                <p className="text-sm text-muted-foreground">
                     {__('complete_blood_count_pages.index.chart.footer_total_label')} <strong>{total}</strong>
                     <br />
                     {__('complete_blood_count_pages.index.chart.footer_note')}

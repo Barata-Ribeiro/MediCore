@@ -94,7 +94,7 @@ export default function GlucoseChart({ chartData, total }: Readonly<Props>) {
                 </ChartContainer>
             </CardContent>
             <CardFooter className="border-t">
-                <p className="text-muted-foreground text-sm">
+                <p className="text-sm text-muted-foreground">
                     {__('glucose_pages.index.chart.footer_total_label')} <strong>{total}</strong>
                 </p>
             </CardFooter>

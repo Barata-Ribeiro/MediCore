@@ -13,7 +13,7 @@ export function EmptyChartData({ createRoute }: Readonly<Props>) {
     const { __ } = lang();
 
     return (
-        <Empty className="bg-muted/30 mx-auto h-full max-w-3xl rounded-4xl border border-dashed">
+        <Empty className="mx-auto h-full max-w-3xl rounded-4xl border border-dashed bg-muted/30">
             <EmptyHeader>
                 <EmptyMedia variant="icon">
                     <ChartLineIcon aria-hidden />

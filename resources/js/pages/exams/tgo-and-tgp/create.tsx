@@ -44,7 +44,7 @@ export default function Create() {
                     <TgoAndTgpForm />
                 </CardContent>
                 <CardFooter>
-                    <p className="text-muted-foreground text-sm">{__('tgo_and_tgp_pages.create.footer')}</p>
+                    <p className="text-sm text-muted-foreground">{__('tgo_and_tgp_pages.create.footer')}</p>
                 </CardFooter>
             </Card>
         </Fragment>

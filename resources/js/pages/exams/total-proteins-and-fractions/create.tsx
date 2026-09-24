@@ -44,7 +44,7 @@ export default function Create() {
                     <TotalProteinsAndFractionsForm />
                 </CardContent>
                 <CardFooter>
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-sm text-muted-foreground">
                         {__('total_proteins_and_fractions_pages.create.footer')}
                     </p>
                 </CardFooter>

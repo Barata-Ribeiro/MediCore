@@ -22,10 +22,10 @@ export default function Welcome({ canRegister = true }: Readonly<{ canRegister?:
         <>
             <Head title={__('main.welcome.head_title')} />
 
-            <div className="bg-background text-foreground flex min-h-dvh flex-col">
+            <div className="flex min-h-dvh flex-col bg-background text-foreground">
                 <header className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-6 sm:px-10">
                     <div className="flex items-center gap-2.5">
-                        <span className="bg-primary text-primary-foreground flex size-10 items-center justify-center rounded-2xl [&>svg]:size-6">
+                        <span className="flex size-10 items-center justify-center rounded-2xl bg-primary text-primary-foreground [&>svg]:size-6">
                             <AppLogoIcon aria-hidden="true" />
                         </span>
                         <span className="font-heading text-xl font-semibold tracking-tight">{name}</span>
@@ -72,19 +72,19 @@ export default function Welcome({ canRegister = true }: Readonly<{ canRegister?:
                     </div>
 
                     <div className="relative isolate mx-auto w-full max-w-md px-4 py-8 sm:px-8 sm:py-12">
-                        <div aria-hidden="true" className="bg-muted/60 absolute inset-0 -z-10 rounded-[3rem]" />
+                        <div aria-hidden="true" className="absolute inset-0 -z-10 rounded-full bg-muted/60" />
                         <div
                             aria-hidden="true"
-                            className="border-primary/20 absolute inset-x-10 top-4 -z-10 aspect-square rounded-full border"
+                            className="absolute inset-x-10 top-4 -z-10 aspect-square rounded-full border border-primary/20"
                         />
                         <div
                             aria-hidden="true"
-                            className="border-primary/20 absolute inset-x-20 top-14 -z-10 aspect-square rounded-full border"
+                            className="absolute inset-x-20 top-14 -z-10 aspect-square rounded-full border border-primary/20"
                         />
 
                         <Card>
                             <CardHeader className="items-center justify-items-center gap-5 py-5">
-                                <span className="bg-primary text-primary-foreground flex size-20 items-center justify-center rounded-3xl [&>svg]:size-11">
+                                <span className="flex size-20 items-center justify-center rounded-3xl bg-primary text-primary-foreground [&>svg]:size-11">
                                     <AppLogoIcon aria-hidden="true" />
                                 </span>
                                 <CardTitle>
@@ -97,7 +97,7 @@ export default function Welcome({ canRegister = true }: Readonly<{ canRegister?:
                                         <li key={label}>
                                             {index > 0 && <Separator />}
                                             <div className="flex items-center gap-4 py-4">
-                                                <span className="bg-muted text-muted-foreground flex size-10 shrink-0 items-center justify-center rounded-2xl">
+                                                <span className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-muted text-muted-foreground">
                                                     <Icon aria-hidden="true" className="size-5" />
                                                 </span>
                                                 <span className="font-heading text-base font-medium">{__(label)}</span>
@@ -110,7 +110,7 @@ export default function Welcome({ canRegister = true }: Readonly<{ canRegister?:
                     </div>
                 </main>
 
-                <footer className="text-muted-foreground mx-auto flex w-full max-w-6xl items-center gap-3 px-6 py-6 text-xs sm:px-10">
+                <footer className="mx-auto flex w-full max-w-6xl items-center gap-3 px-6 py-6 text-xs text-muted-foreground sm:px-10">
                     <span>{name}</span>
                     <Separator orientation="vertical" className="h-3" />
                     <span>{__('main.welcome.footer')}</span>

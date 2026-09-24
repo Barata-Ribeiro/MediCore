@@ -51,7 +51,7 @@ function ActionsCell({ uricAcid }: Readonly<{ uricAcid: UricAcid }>) {
                         <Button
                             aria-label={__('uric_acid_pages.index.table.menu.open_label')}
                             variant="ghost"
-                            className="aria-expanded:bg-muted flex size-8 p-0"
+                            className="flex size-8 p-0 aria-expanded:bg-muted"
                         >
                             <EllipsisIcon aria-hidden size={16} />
                         </Button>

@@ -54,7 +54,7 @@ export default function Show({ workout }: Readonly<{ workout: WorkoutResource }>
                 <CardHeader>
                     <div className="flex flex-wrap items-start justify-between gap-4">
                         <div className="flex flex-col gap-2">
-                            <p className="text-muted-foreground flex items-center gap-2 text-sm">
+                            <p className="flex items-center gap-2 text-sm text-muted-foreground">
                                 <DumbbellIcon className="size-4" aria-hidden />
                                 {__('workout_pages.show.title')} #{workout.id}
                             </p>
@@ -82,7 +82,7 @@ export default function Show({ workout }: Readonly<{ workout: WorkoutResource }>
                             ] as const
                         ).map(([label, value]) => (
                             <div key={label} className="flex flex-col gap-1">
-                                <dt className="text-muted-foreground text-sm">{__('workout_pages.form.' + label)}</dt>
+                                <dt className="text-sm text-muted-foreground">{__('workout_pages.form.' + label)}</dt>
                                 <dd className="font-medium tabular-nums">{value}</dd>
                             </div>
                         ))}
@@ -160,7 +160,7 @@ export default function Show({ workout }: Readonly<{ workout: WorkoutResource }>
                                                     <TableCell>
                                                         <Badge variant="outline">{exercise.order}</Badge>
                                                         {exercise.code && (
-                                                            <p className="text-muted-foreground mt-1 text-xs">
+                                                            <p className="mt-1 text-xs text-muted-foreground">
                                                                 {exercise.code}
                                                             </p>
                                                         )}
@@ -172,12 +172,12 @@ export default function Show({ workout }: Readonly<{ workout: WorkoutResource }>
                                                                     __('workout_pages.shared.not_informed')}
                                                             </span>
                                                             {exercise.muscle_group && (
-                                                                <span className="text-muted-foreground text-xs">
+                                                                <span className="text-xs text-muted-foreground">
                                                                     {exercise.muscle_group.name}
                                                                 </span>
                                                             )}
                                                             {exercise.notes && (
-                                                                <p className="text-muted-foreground max-w-lg text-sm whitespace-pre-wrap">
+                                                                <p className="max-w-lg text-sm whitespace-pre-wrap text-muted-foreground">
                                                                     {exercise.notes}
                                                                 </p>
                                                             )}
@@ -227,7 +227,7 @@ export default function Show({ workout }: Readonly<{ workout: WorkoutResource }>
                                                         ] as const
                                                     ).map(([label, value]) => (
                                                         <div key={label}>
-                                                            <dt className="text-muted-foreground text-xs">
+                                                            <dt className="text-xs text-muted-foreground">
                                                                 {__('workout_pages.show.table.' + label)}
                                                             </dt>
                                                             <dd className="font-medium tabular-nums">{value}</dd>
@@ -237,7 +237,7 @@ export default function Show({ workout }: Readonly<{ workout: WorkoutResource }>
                                                 {exercise.notes && (
                                                     <>
                                                         <Separator />
-                                                        <p className="text-muted-foreground text-sm whitespace-pre-wrap">
+                                                        <p className="text-sm whitespace-pre-wrap text-muted-foreground">
                                                             {exercise.notes}
                                                         </p>
                                                     </>

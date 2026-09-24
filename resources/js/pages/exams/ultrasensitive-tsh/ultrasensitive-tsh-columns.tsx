@@ -51,7 +51,7 @@ function ActionsCell({ ultrasensitiveTsh }: Readonly<{ ultrasensitiveTsh: Ultras
                         <Button
                             aria-label={__('ultrasensitive_tsh_pages.index.table.menu.open_label')}
                             variant="ghost"
-                            className="aria-expanded:bg-muted flex size-8 p-0"
+                            className="flex size-8 p-0 aria-expanded:bg-muted"
                         >
                             <EllipsisIcon aria-hidden size={16} />
                         </Button>

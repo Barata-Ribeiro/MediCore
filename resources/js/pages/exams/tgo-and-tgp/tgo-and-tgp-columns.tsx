@@ -52,7 +52,7 @@ function ActionsCell({ tgoAndTgp }: Readonly<{ tgoAndTgp: TgoAndTgp }>) {
                         <Button
                             aria-label={__('tgo_and_tgp_pages.index.table.menu.open_label')}
                             variant="ghost"
-                            className="aria-expanded:bg-muted flex size-8 p-0"
+                            className="flex size-8 p-0 aria-expanded:bg-muted"
                         >
                             <EllipsisIcon aria-hidden data-icon="inline-start" />
                         </Button>
