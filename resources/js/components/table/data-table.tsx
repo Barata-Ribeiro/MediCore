@@ -132,7 +132,17 @@ export function DataTable<TData extends { id: string | number }>({
             <Card className="mx-auto w-full" aria-busy={busy}>
                 <CardHeader className="flex flex-wrap items-center justify-between gap-4">
                     <fieldset disabled={busy} className="contents">
-                        <DataTableToolbar />
+                        <DataTableToolbar
+                            onReset={() =>
+                                navigate({
+                                    ...state,
+                                    sorting: [],
+                                    columnFilters: [],
+                                    globalFilter: '',
+                                    pagination: { ...state.pagination, pageIndex: 0 },
+                                })
+                            }
+                        />
                     </fieldset>
                     <ButtonGroup>
                         {createRoute && (

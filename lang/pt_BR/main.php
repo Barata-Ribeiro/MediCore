@@ -166,7 +166,7 @@ return [
                 'placeholder' => 'Digite para pesquisar...',
                 'action' => 'Pesquisar',
             ],
-            'eraser_label' => 'Limpar filtros',
+            'eraser_label' => 'Limpar filtros, ordenação e busca',
         ],
         'create_record' => [
             'label' => 'Criar novo registro deste tipo',
