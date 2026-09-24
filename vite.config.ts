@@ -48,8 +48,11 @@ export default defineConfig({
         },
     },
     lint: {
-        jsPlugins: [{ name: 'vite-plus', specifier: 'vite-plus/oxlint-plugin' }],
-        rules: { 'vite-plus/prefer-vite-plus-imports': 'error' },
+        jsPlugins: [
+            { name: 'vite-plus', specifier: 'vite-plus/oxlint-plugin' },
+            { name: '@shadcn/lint', specifier: '@shadcn/lint' },
+        ],
+        rules: { 'vite-plus/prefer-vite-plus-imports': 'error', '@shadcn/lint/no-arbitrary-values': 'error' },
         ignorePatterns: [
             'vendor/**',
             'node_modules/**',
@@ -72,7 +75,7 @@ export default defineConfig({
         printWidth: 120,
         htmlWhitespaceSensitivity: 'css',
         ignorePatterns: ['.github/**', 'composer.json', 'resources/js/components/ui/*', 'resources/views/mail/*'],
-        sortTailwindcss: { functions: ['clsx', 'cn', 'cva'], entryPoint: 'resources/css/app.css' },
+        sortTailwindcss: { functions: ['clsx', 'cn', 'cva'], stylesheet: 'resources/css/app.css' },
     },
     assetsInclude: ['**/*.{woff,woff2,eot,ttf,otf,svg,png,jpg,jpeg,gif,webp,avif}'],
 });
