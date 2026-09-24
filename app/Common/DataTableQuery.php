@@ -10,6 +10,9 @@ use Illuminate\Database\Grammar;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
+use function in_array;
+use function is_array;
+
 class DataTableQuery
 {
     /** Operators accepted by both the request boundary and the table UI. */
