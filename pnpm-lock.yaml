@@ -181,6 +181,9 @@ importers:
       '@base-ui/react':
         specifier: ^1.8.0
         version: 1.8.0(@date-fns/tz@1.5.0)(@types/react@19.3.0)(date-fns@4.4.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      '@date-fns/tz':
+        specifier: ^1.5.0
+        version: 1.5.0
       '@erag/lang-sync-inertia':
         specifier: ^3.1.0
         version: 3.1.0(@inertiajs/core@3.7.1)(@inertiajs/react@3.7.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(@inertiajs/svelte@3.7.1(svelte@5.57.1))(@inertiajs/vue3@3.7.1(vue@3.5.43(typescript@7.0.2)))(react@19.3.0)(svelte@5.57.1)(vue@3.5.43(typescript@7.0.2))
@@ -2609,8 +2612,8 @@ packages:
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
 
-  electron-to-chromium@1.5.437:
-    resolution: {integrity: sha512-1z60R0Nb+kYPnGUrQ6PvMjTVINDGMfqQZ/mI5FJIHvTotlA6noI+YJWakbjaFM+qhLXg9WnK3RUeYSO5ixSHJA==}
+  electron-to-chromium@1.5.438:
+    resolution: {integrity: sha512-AN9xMU1hJiT65LkCUPL1DZm5TCbOPb2Qsm5pYwFLEXp6/qj9SdT4yMiqs7Qqstwvkn1zF7l36SRGt+s6XcJ0FA==}
 
   embla-carousel-react@8.6.0:
     resolution: {integrity: sha512-0/PjqU7geVmo6F734pmPqpyHqiM99olvyecY7zdweCw+6tKEXnrE90pBiBbMMU8s5tICemzpQ3hi5EpxzGW+JA==}
@@ -5814,7 +5817,7 @@ snapshots:
     dependencies:
       baseline-browser-mapping: 2.11.25
       caniuse-lite: 1.0.30001810
-      electron-to-chromium: 1.5.437
+      electron-to-chromium: 1.5.438
       node-releases: 2.0.57
       update-browserslist-db: 1.3.3(browserslist@4.29.0)
 
@@ -6062,7 +6065,7 @@ snapshots:
 
   ee-first@1.1.1: {}
 
-  electron-to-chromium@1.5.437: {}
+  electron-to-chromium@1.5.438: {}
 
   embla-carousel-react@8.6.0(react@19.3.0):
     dependencies:
