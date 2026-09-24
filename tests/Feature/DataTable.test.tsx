@@ -1,15 +1,15 @@
-import { DataTable } from '@/components/table/data-table';
-import * as tableHooks from '@/hooks/table';
-import type { ColumnDef } from '@/types/data-table';
 import { createInertiaApp, router } from '@inertiajs/react';
 import type { ComponentProps } from 'react';
 import { renderToString } from 'react-dom/server';
 import { afterEach, expect, it, vi } from 'vite-plus/test';
+import { DataTable } from '../../resources/js/components/table/data-table';
+import * as tableHooks from '../../resources/js/hooks/table';
+import type { ColumnDef } from '../../resources/js/types/data-table';
 
 const resetButton = vi.hoisted(() => ({ onClick: undefined as (() => void) | undefined }));
 
-vi.mock('@/components/ui/button', async (importOriginal) => {
-    const { Button } = await importOriginal<typeof import('@/components/ui/button')>();
+vi.mock('../../resources/js/components/ui/button', async (importOriginal) => {
+    const { Button } = await importOriginal<typeof import('../../resources/js/components/ui/button')>();
 
     return {
         Button: (props: ComponentProps<typeof Button>) => {
