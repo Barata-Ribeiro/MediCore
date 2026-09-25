@@ -166,7 +166,7 @@ return [
                 'placeholder' => 'Type to search...',
                 'action' => 'Search',
             ],
-            'eraser_label' => 'Clear filters',
+            'eraser_label' => 'Clear filters, sorting, and search',
         ],
         'create_record' => [
             'label' => 'Create new record of this type',

@@ -15,8 +15,12 @@ on:
       - workos
 
 jobs:
-  ci:
+  test:
     runs-on: ubuntu-latest
+
+    strategy:
+          matrix:
+            test-runner: [composer, pnpm]
 
     steps:
       - name: Checkout code
@@ -59,4 +63,6 @@ jobs:
         run: pnpm run build:ssr
 
       - name: Tests
-        run: composer test
+        env:
+          LARAVEL_BYPASS_ENV_CHECK: '1'
+        run: ${{ matrix.test-runner }} test

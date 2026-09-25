@@ -9,7 +9,7 @@ import { getFilterOperators, isActiveFilter } from '@/lib/data-table';
 import type { ExtendedColumnFilter, FilterOperator } from '@/types/data-table';
 import { lang } from '@erag/lang-sync-inertia/react';
 import { FilterIcon, PlusIcon, XIcon } from 'lucide-react';
-import { useState } from 'react';
+import { Activity, useState } from 'react';
 
 export default function DataTableFilterList() {
     const table = useTableContext();
@@ -34,15 +34,22 @@ export default function DataTableFilterList() {
             <PopoverTrigger
                 render={
                     <Button variant="outline">
-                        <FilterIcon data-icon="inline-start" />
+                        <FilterIcon aria-hidden data-icon="inline-start" />
                         {label('title')} ({table.state.columnFilters.length})
                     </Button>
                 }
             />
-            <PopoverContent align="start" className="max-h-[70vh] w-[min(48rem,calc(100vw-2rem))] overflow-y-auto">
+            <PopoverContent
+                align="start"
+                className="max-h-table-filter-popover-height w-table-filter-popover overflow-y-auto"
+            >
                 <PopoverTitle>{label('title')}</PopoverTitle>
-                {draft.length === 0 && <p className="text-muted-foreground">{label('empty')}</p>}
-                {draft.length > 1 && (
+
+                <Activity mode={draft.length === 0 ? 'visible' : 'hidden'}>
+                    <p className="text-muted-foreground">{label('empty')}</p>
+                </Activity>
+
+                <Activity mode={draft.length > 1 ? 'visible' : 'hidden'}>
                     <DataTableSelect
                         label={label('join')}
                         value={draft[0]?.joinOperator ?? 'and'}
@@ -56,7 +63,8 @@ export default function DataTableFilterList() {
                             )
                         }
                     />
-                )}
+                </Activity>
+
                 <FieldGroup>
                     {draft.map((filter, index) => {
                         const column = columns.find((item) => item.id === filter.id);
@@ -71,12 +79,11 @@ export default function DataTableFilterList() {
                                 : []);
                         const values = Array.isArray(filter.value) ? filter.value : [filter.value];
                         const noValue = filter.operator === 'isEmpty' || filter.operator === 'isNotEmpty';
+                        const defaultInputType =
+                            variant === 'number' || filter.operator === 'isRelativeToToday' ? 'number' : 'text';
                         const inputType =
-                            variant === 'date' && filter.operator !== 'isRelativeToToday'
-                                ? 'date'
-                                : variant === 'number' || filter.operator === 'isRelativeToToday'
-                                  ? 'number'
-                                  : 'text';
+                            variant === 'date' && filter.operator !== 'isRelativeToToday' ? 'date' : defaultInputType;
+
                         return (
                             <Field key={filter.filterId}>
                                 <div className="flex flex-wrap items-center gap-2">
@@ -111,69 +118,81 @@ export default function DataTableFilterList() {
                                             })
                                         }
                                     />
+                                    <Activity mode={!noValue ? 'visible' : 'hidden'}>
+                                        {options.length ? (
+                                            <div className="flex flex-wrap gap-3">
+                                                {options.map((option) => (
+                                                    <FieldLabel key={option.value}>
+                                                        <Checkbox
+                                                            checked={values.includes(option.value)}
+                                                            onCheckedChange={(checked) =>
+                                                                update(index, {
+                                                                    value: checked
+                                                                        ? [...values.filter(Boolean), option.value]
+                                                                        : values.filter(
+                                                                              (value) => value !== option.value,
+                                                                          ),
+                                                                })
+                                                            }
+                                                        />
+                                                        {option.label}
+                                                    </FieldLabel>
+                                                ))}
+                                            </div>
+                                        ) : (
+                                            <div className="flex gap-2">
+                                                <Input
+                                                    aria-label={
+                                                        filter.operator === 'inRange'
+                                                            ? label('minimum')
+                                                            : label('value')
+                                                    }
+                                                    type={inputType}
+                                                    step={inputType === 'number' ? 'any' : undefined}
+                                                    value={values[0] ?? ''}
+                                                    onChange={(event) =>
+                                                        update(index, {
+                                                            value:
+                                                                filter.operator === 'inRange'
+                                                                    ? [event.target.value, values[1] ?? '']
+                                                                    : event.target.value,
+                                                        })
+                                                    }
+                                                    className="flex-1"
+                                                />
+
+                                                <Activity mode={filter.operator === 'inRange' ? 'visible' : 'hidden'}>
+                                                    <Input
+                                                        aria-label={label('maximum')}
+                                                        type={inputType}
+                                                        step={inputType === 'number' ? 'any' : undefined}
+                                                        value={values[1] ?? ''}
+                                                        onChange={(event) =>
+                                                            update(index, {
+                                                                value: [values[0] ?? '', event.target.value],
+                                                            })
+                                                        }
+                                                        className="flex-1"
+                                                    />
+                                                </Activity>
+                                            </div>
+                                        )}
+                                    </Activity>
                                     <Button
                                         size="icon"
                                         variant="ghost"
                                         aria-label={label('remove')}
+                                        title={label('remove')}
                                         onClick={() => setDraft((current) => current.filter((_, i) => i !== index))}
                                     >
-                                        <XIcon />
+                                        <XIcon aria-hidden />
                                     </Button>
                                 </div>
-                                {!noValue &&
-                                    (options.length ? (
-                                        <div className="flex flex-wrap gap-3">
-                                            {options.map((option) => (
-                                                <FieldLabel key={option.value}>
-                                                    <Checkbox
-                                                        checked={values.includes(option.value)}
-                                                        onCheckedChange={(checked) =>
-                                                            update(index, {
-                                                                value: checked
-                                                                    ? [...values.filter(Boolean), option.value]
-                                                                    : values.filter((value) => value !== option.value),
-                                                            })
-                                                        }
-                                                    />
-                                                    {option.label}
-                                                </FieldLabel>
-                                            ))}
-                                        </div>
-                                    ) : (
-                                        <div className="flex gap-2">
-                                            <Input
-                                                aria-label={
-                                                    filter.operator === 'inRange' ? label('minimum') : label('value')
-                                                }
-                                                type={inputType}
-                                                step={inputType === 'number' ? 'any' : undefined}
-                                                value={values[0] ?? ''}
-                                                onChange={(event) =>
-                                                    update(index, {
-                                                        value:
-                                                            filter.operator === 'inRange'
-                                                                ? [event.target.value, values[1] ?? '']
-                                                                : event.target.value,
-                                                    })
-                                                }
-                                            />
-                                            {filter.operator === 'inRange' && (
-                                                <Input
-                                                    aria-label={label('maximum')}
-                                                    type={inputType}
-                                                    step={inputType === 'number' ? 'any' : undefined}
-                                                    value={values[1] ?? ''}
-                                                    onChange={(event) =>
-                                                        update(index, { value: [values[0] ?? '', event.target.value] })
-                                                    }
-                                                />
-                                            )}
-                                        </div>
-                                    ))}
                             </Field>
                         );
                     })}
                 </FieldGroup>
+
                 <div className="flex flex-wrap gap-2">
                     <Button
                         variant="outline"
@@ -181,6 +200,7 @@ export default function DataTableFilterList() {
                         onClick={() => {
                             const column = columns[0];
                             if (!column) return;
+
                             setDraft((current) => [
                                 ...current,
                                 {
@@ -195,12 +215,14 @@ export default function DataTableFilterList() {
                             ]);
                         }}
                     >
-                        <PlusIcon data-icon="inline-start" />
+                        <PlusIcon aria-hidden data-icon="inline-start" />
                         {label('add')}
                     </Button>
+
                     <Button variant="ghost" onClick={() => setDraft([])}>
                         {label('reset')}
                     </Button>
+
                     <Button
                         onClick={() => {
                             table.setColumnFilters(draft.filter(isActiveFilter));

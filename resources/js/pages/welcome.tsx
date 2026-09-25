@@ -56,7 +56,7 @@ export default function Welcome({ canRegister = true }: Readonly<{ canRegister?:
                     <div className="flex flex-col items-start gap-8">
                         <Badge variant="secondary">{__('main.welcome.eyebrow')}</Badge>
 
-                        <h1 className="max-w-lg text-5xl leading-[1.05] font-medium tracking-tight text-balance sm:text-6xl lg:text-7xl">
+                        <h1 className="max-w-lg text-5xl leading-welcome font-medium tracking-tight text-balance sm:text-6xl lg:text-7xl">
                             {__('main.welcome.title')}{' '}
                             <span className="text-muted-foreground">{__('main.welcome.title_end')}</span>
                         </h1>

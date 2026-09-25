@@ -6,8 +6,8 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useAppTable } from '@/hooks/table';
 import { parseTableState } from '@/lib/data-table';
-import type { Column, ColumnDef, ExtendedColumnFilter } from '@/types/data-table';
 import type { PaginationMeta } from '@/types/application/metadata';
+import type { Column, ColumnDef, ExtendedColumnFilter } from '@/types/data-table';
 import type { RouteDefinition } from '@/wayfinder';
 import { lang } from '@erag/lang-sync-inertia/react';
 import { Link, router, usePage } from '@inertiajs/react';
@@ -15,7 +15,7 @@ import { ModalLink } from '@inertiaui/modal-react';
 import type { ColumnFiltersState, PaginationState, RowData, SortingState, Updater } from '@tanstack/react-table';
 import { ClipboardPlusIcon } from 'lucide-react';
 import type { CSSProperties } from 'react';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
 interface DataTableProps<TData extends { id: string | number }> {
@@ -39,6 +39,10 @@ function pinningStyles<TData extends RowData>(column: Column<TData>): CSSPropert
     };
 }
 
+function update<T>(updater: Updater<T>, previous: T): T {
+    return typeof updater === 'function' ? (updater as (value: T) => T)(previous) : updater;
+}
+
 export function DataTable<TData extends { id: string | number }>({
     columns,
     data,
@@ -49,6 +53,7 @@ export function DataTable<TData extends { id: string | number }>({
 }: Readonly<DataTableProps<TData>>) {
     const { __ } = lang();
     const page = usePage();
+
     const params = new URL(page.url, 'http://localhost').searchParams;
     const serverState = {
         sorting: parseTableState<SortingState>(params.get('sorting'), []),
@@ -56,18 +61,22 @@ export function DataTable<TData extends { id: string | number }>({
         globalFilter: params.get('search') ?? '',
         pagination: { pageIndex: Math.max(0, pagination.current_page - 1), pageSize: pagination.per_page },
     };
+
     const [state, setState] = useState(serverState);
     const [sourceUrl, setSourceUrl] = useState(page.url);
     const [busy, setBusy] = useState(false);
     const navigationVersion = useRef(0);
+
     if (sourceUrl !== page.url) {
         setSourceUrl(page.url);
         setState(serverState);
     }
+
     function navigate(next: typeof state) {
         const version = ++navigationVersion.current;
         setState(next);
         setBusy(true);
+
         router.get(
             pagination.path,
             {
@@ -78,6 +87,7 @@ export function DataTable<TData extends { id: string | number }>({
                 page: next.pagination.pageIndex + 1,
             },
             {
+                prefetch: true,
                 preserveState: true,
                 preserveScroll: true,
                 onError: (errors) => {
@@ -91,9 +101,17 @@ export function DataTable<TData extends { id: string | number }>({
             },
         );
     }
-    function update<T>(updater: Updater<T>, previous: T): T {
-        return typeof updater === 'function' ? (updater as (value: T) => T)(previous) : updater;
-    }
+
+    const reset = useCallback(() => {
+        navigate({
+            ...state,
+            sorting: [],
+            columnFilters: [],
+            globalFilter: '',
+            pagination: { ...state.pagination, pageIndex: 0 },
+        });
+    }, [navigate, state]);
+
     const table = useAppTable({
         columns,
         data,
@@ -127,13 +145,15 @@ export function DataTable<TData extends { id: string | number }>({
             });
         },
     });
+
     return (
         <table.AppTable>
             <Card className="mx-auto w-full" aria-busy={busy}>
                 <CardHeader className="flex flex-wrap items-center justify-between gap-4">
                     <fieldset disabled={busy} className="contents">
-                        <DataTableToolbar />
+                        <DataTableToolbar onReset={reset} />
                     </fieldset>
+
                     <ButtonGroup>
                         {createRoute && (
                             <Button
@@ -145,12 +165,12 @@ export function DataTable<TData extends { id: string | number }>({
                                             as="button"
                                             prefetch
                                         >
-                                            <ClipboardPlusIcon data-icon="inline-start" />
+                                            <ClipboardPlusIcon aria-hidden data-icon="inline-start" />
                                             {__('main.data_table.create_record.action')}
                                         </ModalLink>
                                     ) : (
                                         <Link href={createRoute} as="button" prefetch>
-                                            <ClipboardPlusIcon data-icon="inline-start" />
+                                            <ClipboardPlusIcon aria-hidden data-icon="inline-start" />
                                             {__('main.data_table.create_record.action')}
                                         </Link>
                                     )
@@ -160,6 +180,7 @@ export function DataTable<TData extends { id: string | number }>({
                         {exportables && <DataTableExportData csv={exportables.csvRoute} pdf={exportables.pdfRoute} />}
                     </ButtonGroup>
                 </CardHeader>
+
                 <CardContent className="border-y py-4">
                     <Table>
                         <TableHeader>

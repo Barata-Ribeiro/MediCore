@@ -1,9 +1,26 @@
-import { DataTable } from '@/components/table/data-table';
-import * as tableHooks from '@/hooks/table';
-import type { ColumnDef } from '@/types/data-table';
 import { createInertiaApp, router } from '@inertiajs/react';
+import type { ComponentProps } from 'react';
 import { renderToString } from 'react-dom/server';
 import { afterEach, expect, it, vi } from 'vite-plus/test';
+import { DataTable } from '../../resources/js/components/table/data-table';
+import * as tableHooks from '../../resources/js/hooks/table';
+import type { ColumnDef } from '../../resources/js/types/data-table';
+
+const resetButton = vi.hoisted(() => ({ onClick: undefined as (() => void) | undefined }));
+
+vi.mock('../../resources/js/components/ui/button', async (importOriginal) => {
+    const { Button } = await importOriginal<typeof import('../../resources/js/components/ui/button')>();
+
+    return {
+        Button: (props: ComponentProps<typeof Button>) => {
+            if (props.size === 'icon' && props.variant === 'secondary') {
+                resetButton.onClick = props.onClick as () => void;
+            }
+
+            return <Button {...props} />;
+        },
+    };
+});
 
 const columns: ColumnDef<{ id: number; name: string }>[] = [
     { accessorKey: 'id', header: 'ID' },
@@ -107,4 +124,24 @@ it('resets to the first page when changing the page size', async () => {
     await renderTable();
     hook.mock.results.at(-1)?.value.setPageSize(25);
     expect(visit).toHaveBeenCalledWith('/records', { page: 1, per_page: 25 }, expect.any(Object));
+});
+
+it('clears search, filters and sorting in one visit when resetting the table', async () => {
+    resetButton.onClick = undefined;
+    const visit = vi.spyOn(router, 'get').mockImplementation(() => {});
+    const filters = [{ id: 'name', filterId: 'name', operator: 'includesString', value: 'Alpha', joinOperator: 'and' }];
+    const sorting = [{ id: 'name', desc: true }];
+    await renderTable(
+        `?${new URLSearchParams({ search: 'Alpha', filters: JSON.stringify(filters), sorting: JSON.stringify(sorting) })}`,
+    );
+
+    expect(resetButton.onClick).toBeTypeOf('function');
+    resetButton.onClick?.();
+
+    expect(visit).toHaveBeenCalledTimes(1);
+    expect(visit).toHaveBeenCalledWith(
+        '/records',
+        { page: 1, per_page: 5 },
+        expect.objectContaining({ preserveState: true }),
+    );
 });

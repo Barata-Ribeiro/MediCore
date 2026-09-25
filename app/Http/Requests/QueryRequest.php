@@ -7,6 +7,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+use function is_string;
+
 class QueryRequest extends FormRequest
 {
     /** Determine whether this query may be validated for the authenticated route. */

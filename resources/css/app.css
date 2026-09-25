@@ -156,6 +156,12 @@
 }
 
 @theme {
+    --text-error-status: clamp(10rem, 16vw, 16.625rem);
+    --leading-welcome: 1.05;
+    --spacing-table-sort-popover: min(32rem, calc(100vw - 2rem));
+    --spacing-table-filter-popover: min(48rem, calc(100vw - 2rem));
+    --spacing-table-filter-popover-height: 70vh;
+
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
     --radius-sm: calc(var(--radius) - 4px);
@@ -238,5 +244,11 @@
     code,
     pre {
         @apply font-mono;
+    }
+}
+
+@layer utilities {
+    .transition-size {
+        @apply transition-[width,height] duration-100;
     }
 }

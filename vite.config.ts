@@ -13,7 +13,7 @@ export default defineConfig({
     plugins: lazyPlugins(() => [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.tsx'],
-            detectTls: true,
+            detectTls: !process.env.CI,
             refresh: true,
         }),
         inertia({ ssr: { cluster: true } }),
@@ -76,6 +76,12 @@ export default defineConfig({
         htmlWhitespaceSensitivity: 'css',
         ignorePatterns: ['.github/**', 'composer.json', 'resources/js/components/ui/*', 'resources/views/mail/*'],
         sortTailwindcss: { functions: ['clsx', 'cn', 'cva'], stylesheet: 'resources/css/app.css' },
+    },
+    test: {
+        globals: true,
+        setupFiles: ['tests/setup.ts'],
+        include: ['tests/**/*.test.tsx'],
+        restoreMocks: true,
     },
     assetsInclude: ['**/*.{woff,woff2,eot,ttf,otf,svg,png,jpg,jpeg,gif,webp,avif}'],
 });

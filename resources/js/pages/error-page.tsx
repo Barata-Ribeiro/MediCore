@@ -38,7 +38,7 @@ export default function ErrorPage({ status }: Readonly<Props>) {
                 />
             </picture>
             <div className="flex min-h-screen flex-col items-center justify-center px-8 py-8 sm:py-16 lg:justify-between lg:py-24">
-                <span className="bg-linear-to-b from-white from-30% to-transparent bg-clip-text text-[clamp(10rem,16vw,16.625rem)] leading-none font-bold text-transparent">
+                <span className="bg-linear-to-b from-white from-30% to-transparent bg-clip-text text-error-status leading-none font-bold text-transparent">
                     {status}
                 </span>
                 <div className="text-center max-lg:mt-36">
