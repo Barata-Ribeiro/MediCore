@@ -9,6 +9,11 @@ import SettingsLayout from '@/layouts/settings/layout';
 import { cn } from '@/lib/utils';
 import { createInertiaApp } from '@inertiajs/react';
 import { ModalStackProvider, putConfig } from '@inertiaui/modal-react';
+import { configureEcho } from '@laravel/echo-react';
+
+configureEcho({
+    broadcaster: 'reverb',
+});
 
 const appName = import.meta.env['VITE_APP_NAME'] ?? 'Laravel';
 
