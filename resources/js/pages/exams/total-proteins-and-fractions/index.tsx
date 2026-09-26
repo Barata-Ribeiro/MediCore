@@ -1,3 +1,4 @@
+import { importMethod, exportMethod } from '@/actions/App/Http/Controllers/Exams/ExamCsvController';
 import TotalProteinsAndFractionsChart from '@/components/application/charts/total-proteins-and-fractions-chart';
 import { EmptyChartData } from '@/components/common/empty-chart-data';
 import { DataTable } from '@/components/table/data-table';
@@ -44,7 +45,14 @@ export default function Index({ totalProteinsAndFractions, chartData }: Readonly
                     <EmptyChartData createRoute={create()} />
                 )}
 
-                <DataTable columns={columns} data={data} pagination={pagination} createRoute={create()} />
+                <DataTable
+                    importRoute={importMethod('total-proteins-and-fractions')}
+                    exportables={{ csvRoute: exportMethod('total-proteins-and-fractions') }}
+                    columns={columns}
+                    data={data}
+                    pagination={pagination}
+                    createRoute={create()}
+                />
             </div>
         </Fragment>
     );

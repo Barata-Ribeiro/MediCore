@@ -1,3 +1,4 @@
+import { importMethod, exportMethod } from '@/actions/App/Http/Controllers/Exams/ExamCsvController';
 import CbcCountChart from '@/components/application/charts/cbc-count.chart';
 import { EmptyChartData } from '@/components/common/empty-chart-data';
 import { DataTable } from '@/components/table/data-table';
@@ -39,7 +40,14 @@ export default function Index({ completeBloodCounts, chartData }: Readonly<Props
                     <EmptyChartData createRoute={create()} />
                 )}
 
-                <DataTable columns={columns} data={data} pagination={pagination} createRoute={create()} />
+                <DataTable
+                    importRoute={importMethod('complete-blood-count')}
+                    exportables={{ csvRoute: exportMethod('complete-blood-count') }}
+                    columns={columns}
+                    data={data}
+                    pagination={pagination}
+                    createRoute={create()}
+                />
             </div>
         </Fragment>
     );

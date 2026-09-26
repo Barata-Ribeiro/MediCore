@@ -1,3 +1,4 @@
+import { importMethod, exportMethod } from '@/actions/App/Http/Controllers/Exams/ExamCsvController';
 import TgoAndTgpChart from '@/components/application/charts/tgo-and-tgp.chart';
 import { EmptyChartData } from '@/components/common/empty-chart-data';
 import { DataTable } from '@/components/table/data-table';
@@ -39,7 +40,14 @@ export default function Index({ tgoAndTgps, chartData }: Readonly<Props>) {
                     <EmptyChartData createRoute={create()} />
                 )}
 
-                <DataTable columns={columns} data={data} pagination={pagination} createRoute={create()} />
+                <DataTable
+                    importRoute={importMethod('tgo-and-tgp')}
+                    exportables={{ csvRoute: exportMethod('tgo-and-tgp') }}
+                    columns={columns}
+                    data={data}
+                    pagination={pagination}
+                    createRoute={create()}
+                />
             </div>
         </Fragment>
     );

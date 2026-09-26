@@ -1,3 +1,4 @@
+import { importMethod, exportMethod } from '@/actions/App/Http/Controllers/Exams/ExamCsvController';
 import LipidProfileChart from '@/components/application/charts/lipid-profile.chart';
 import { EmptyChartData } from '@/components/common/empty-chart-data';
 import { DataTable } from '@/components/table/data-table';
@@ -39,7 +40,14 @@ export default function Index({ lipidProfiles, chartData }: Readonly<Props>) {
                     <EmptyChartData createRoute={create()} />
                 )}
 
-                <DataTable columns={columns} data={data} pagination={pagination} createRoute={create()} />
+                <DataTable
+                    importRoute={importMethod('lipid-profile')}
+                    exportables={{ csvRoute: exportMethod('lipid-profile') }}
+                    columns={columns}
+                    data={data}
+                    pagination={pagination}
+                    createRoute={create()}
+                />
             </div>
         </Fragment>
     );

@@ -1,3 +1,4 @@
+import { importMethod, exportMethod } from '@/actions/App/Http/Controllers/Exams/ExamCsvController';
 import VitaminD3Chart from '@/components/application/charts/vitamin-d3.chart';
 import { EmptyChartData } from '@/components/common/empty-chart-data';
 import { DataTable } from '@/components/table/data-table';
@@ -39,7 +40,14 @@ export default function Index({ vitaminD3s, chartData }: Readonly<Props>) {
                     <EmptyChartData createRoute={create()} />
                 )}
 
-                <DataTable columns={columns} data={data} pagination={pagination} createRoute={create()} />
+                <DataTable
+                    importRoute={importMethod('vitamin-d3')}
+                    exportables={{ csvRoute: exportMethod('vitamin-d3') }}
+                    columns={columns}
+                    data={data}
+                    pagination={pagination}
+                    createRoute={create()}
+                />
             </div>
         </Fragment>
     );
