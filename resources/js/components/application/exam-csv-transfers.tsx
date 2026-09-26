@@ -29,8 +29,10 @@ function Transfers() {
     useEffect(() => {
         const refresh = () => router.reload({ only: ['examCsvTransfers'] });
         const subscription = channel();
+
         subscription?.listen('.pusher:subscription_succeeded', refresh);
         window.addEventListener('focus', refresh);
+
         return () => {
             subscription?.stopListening('.pusher:subscription_succeeded', refresh);
             window.removeEventListener('focus', refresh);
@@ -48,12 +50,16 @@ function Transfers() {
     useEffect(() => {
         for (const transfer of transfers) {
             if (!['completed', 'failed'].includes(transfer.status) || announced.current.has(transfer.id)) continue;
+
             announced.current.add(transfer.id);
-            const message = __(`exam_csv.${transfer.error_code ?? `${transfer.direction}_completed`}`, {
+
+            const transferCompletionStatus = `${transfer.direction}_completed`;
+            const message = __(`exam_csv.${transfer.error_code ?? transferCompletionStatus}`, {
                 exam: __(`exam_csv.exams.${transfer.exam_type}`),
                 count: transfer.processed,
                 line: transfer.error_line ?? '',
             });
+
             if (transfer.status === 'failed') {
                 toast.error(message, { id: transfer.id });
             } else {
@@ -96,11 +102,20 @@ function Transfers() {
                     {transfers.length === 0 && <DropdownMenuItem disabled>{__('exam_csv.empty')}</DropdownMenuItem>}
                     {transfers.map((transfer) => {
                         const ready = transfer.direction === 'export' && transfer.status === 'completed';
-                        const label = `${__(`exam_csv.exams.${transfer.exam_type}`)} — ${__(`exam_csv.${ready ? 'download' : transfer.status}`)}`;
+
+                        const examCsvExamTypeKey = `exam_csv.exams.${transfer.exam_type}`;
+                        const csvDownloadState = `exam_csv.${ready ? 'download' : transfer.status}`;
+                        const label = `${__(examCsvExamTypeKey)} — ${__(csvDownloadState)}`;
+
                         return ready ? (
-                            <DropdownMenuItem key={transfer.id} render={<a href={download.url(transfer.id)} />}>
-                                <DownloadIcon aria-hidden /> {label}
-                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                                key={transfer.id}
+                                render={
+                                    <a href={download.url(transfer.id)}>
+                                        <DownloadIcon aria-hidden /> {label}
+                                    </a>
+                                }
+                            />
                         ) : (
                             <DropdownMenuItem key={transfer.id} disabled>
                                 {label}
