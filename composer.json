@@ -15,6 +15,7 @@
         "inertiaui/modal": "^3.1",
         "laravel/fortify": "^1.40",
         "laravel/framework": "^13.33",
+        "laravel/reverb": "^1.0",
         "laravel/socialite": "^5.31",
         "laravel/tinker": "^3.0",
         "laravel/wayfinder": "^0.1",
