@@ -1,4 +1,5 @@
 import DataTableExportData from '@/components/table/data-table-export-data';
+import DataTableImportData from '@/components/table/data-table-import-data';
 import DataTableToolbar from '@/components/table/data-table-toolbar';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
@@ -24,7 +25,8 @@ interface DataTableProps<TData extends { id: string | number }> {
     pagination: Omit<PaginationMeta<TData[]>, 'data'>;
     createRoute?: RouteDefinition<'get'>;
     isModal?: boolean;
-    exportables?: Partial<Record<'csvRoute' | 'pdfRoute', RouteDefinition<'get'>>>;
+    importRoute?: RouteDefinition<'post'>;
+    exportables?: { csvRoute?: RouteDefinition<'get' | 'post'>; pdfRoute?: RouteDefinition<'get'> };
 }
 
 function pinningStyles<TData extends RowData>(column: Column<TData>): CSSProperties {
@@ -50,6 +52,7 @@ export function DataTable<TData extends { id: string | number }>({
     createRoute,
     isModal = false,
     exportables,
+    importRoute,
 }: Readonly<DataTableProps<TData>>) {
     const { __ } = lang();
     const page = usePage();
@@ -177,6 +180,7 @@ export function DataTable<TData extends { id: string | number }>({
                                 }
                             />
                         )}
+                        {importRoute && <DataTableImportData route={importRoute} />}
                         {exportables && <DataTableExportData csv={exportables.csvRoute} pdf={exportables.pdfRoute} />}
                     </ButtonGroup>
                 </CardHeader>
