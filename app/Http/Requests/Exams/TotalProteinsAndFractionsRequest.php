@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Exams;
 
+use App\Enums\ExamType;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -14,11 +15,6 @@ class TotalProteinsAndFractionsRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'report_date' => ['required', 'date'],
-            'total_proteins' => ['required', 'numeric', 'min:0'],
-            'albumin' => ['required', 'numeric', 'min:0'],
-            'globulin' => ['required', 'numeric', 'min:0'],
-        ];
+        return ExamType::TOTAL_PROTEINS_AND_FRACTIONS->rules();
     }
 }

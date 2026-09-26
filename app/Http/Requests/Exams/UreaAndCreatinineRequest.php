@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Exams;
 
+use App\Enums\ExamType;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -14,10 +15,6 @@ class UreaAndCreatinineRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'report_date' => ['required', 'date'],
-            'urea_level' => ['required', 'numeric', 'min:0'],
-            'creatinine_level' => ['required', 'numeric', 'min:0'],
-        ];
+        return ExamType::UREA_AND_CREATININE->rules();
     }
 }

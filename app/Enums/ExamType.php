@@ -2,16 +2,6 @@
 
 namespace App\Enums;
 
-use App\Http\Requests\Exams\CompleteBloodCountRequest;
-use App\Http\Requests\Exams\GlucoseRequest;
-use App\Http\Requests\Exams\LipidProfileRequest;
-use App\Http\Requests\Exams\TgoAndTgpRequest;
-use App\Http\Requests\Exams\TotalProteinsAndFractionsRequest;
-use App\Http\Requests\Exams\UltrasensitiveTshRequest;
-use App\Http\Requests\Exams\UreaAndCreatinineRequest;
-use App\Http\Requests\Exams\UricAcidRequest;
-use App\Http\Requests\Exams\VitaminB12Request;
-use App\Http\Requests\Exams\VitaminD3Request;
 use App\Models\Exams\CompleteBloodCount;
 use App\Models\Exams\Glucose;
 use App\Models\Exams\LipidProfile;
@@ -22,7 +12,6 @@ use App\Models\Exams\UreaAndCreatinine;
 use App\Models\Exams\UricAcid;
 use App\Models\Exams\VitaminB12;
 use App\Models\Exams\VitaminD3;
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Database\Eloquent\Model;
 
 enum ExamType: string
@@ -55,23 +44,26 @@ enum ExamType: string
         };
     }
 
-    /** @return array<string, ValidationRule|array<mixed>|string> */
+    /** @return array<string, list<string>> */
     public function rules(): array
     {
-        $request = match ($this) {
-            self::COMPLETE_BLOOD_COUNT => new CompleteBloodCountRequest,
-            self::GLUCOSE => new GlucoseRequest,
-            self::LIPID_PROFILE => new LipidProfileRequest,
-            self::TOTAL_PROTEINS_AND_FRACTIONS => new TotalProteinsAndFractionsRequest,
-            self::ULTRASENSITIVE_TSH => new UltrasensitiveTshRequest,
-            self::TGO_AND_TGP => new TgoAndTgpRequest,
-            self::UREA_AND_CREATININE => new UreaAndCreatinineRequest,
-            self::URIC_ACID => new UricAcidRequest,
-            self::VITAMIN_B12 => new VitaminB12Request,
-            self::VITAMIN_D3 => new VitaminD3Request,
+        $measurements = match ($this) {
+            self::COMPLETE_BLOOD_COUNT => ['hematocrit', 'hemoglobin', 'red_blood_cell_count', 'mean_corpuscular_volume', 'mean_corpuscular_hemoglobin', 'mean_corpuscular_hemoglobin_concentration', 'red_blood_cell_distribution_width', 'leukocyte_count', 'rod_neutrophil_count', 'segmented_neutrophil_count', 'lymphocyte_count', 'monocyte_count', 'eosinophil_count', 'basophil_count', 'metamyelocyte_count', 'promyelocyte_count', 'atypical_cell_count', 'platelet_count'],
+            self::GLUCOSE => ['glucose_level', 'glycated_hemoglobin', 'estimated_average_glucose'],
+            self::LIPID_PROFILE => ['total_cholesterol', 'hdl_cholesterol', 'ldl_cholesterol', 'vldl_cholesterol', 'triglycerides'],
+            self::TOTAL_PROTEINS_AND_FRACTIONS => ['total_proteins', 'albumin', 'globulin'],
+            self::ULTRASENSITIVE_TSH => ['tsh_level'],
+            self::TGO_AND_TGP => ['tgo_level', 'tgp_level'],
+            self::UREA_AND_CREATININE => ['urea_level', 'creatinine_level'],
+            self::URIC_ACID => ['uric_acid_level'],
+            self::VITAMIN_B12 => ['vitamin_b12_level'],
+            self::VITAMIN_D3 => ['twenty_five_hydroxyvitamin_d3'],
         };
 
-        return $request->rules();
+        return [
+            'report_date' => ['required', 'date'],
+            ...array_fill_keys($measurements, ['required', 'numeric', 'min:0']),
+        ];
     }
 
     /** @return list<string> */

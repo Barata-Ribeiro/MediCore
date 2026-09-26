@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Exams;
 
+use App\Enums\ExamType;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -14,9 +15,6 @@ class VitaminD3Request extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'report_date' => ['required', 'date'],
-            'twenty_five_hydroxyvitamin_d3' => ['required', 'numeric', 'min:0'],
-        ];
+        return ExamType::VITAMIN_D3->rules();
     }
 }
