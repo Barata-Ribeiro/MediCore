@@ -18,7 +18,17 @@ export default function DataTableColumnHeader<TData extends RowData, TValue>({
     title,
 }: Readonly<{ column: Column<TData, TValue>; title: string }>) {
     const { __ } = lang();
-    if (!column.getCanSort() && !column.getCanHide()) return <span>{title}</span>;
+
+    const isSortableOrHideable = !column.getCanSort() && !column.getCanHide();
+
+    if (isSortableOrHideable) {
+        if (new RegExp(/actions/i).exec(title)) {
+            return <span className="sr-only">{title}</span>;
+        } else {
+            return <span className="capitalize">{title}</span>;
+        }
+    }
+
     return (
         <Subscribe source={column.table.atoms.sorting}>
             {(sorting) => {
