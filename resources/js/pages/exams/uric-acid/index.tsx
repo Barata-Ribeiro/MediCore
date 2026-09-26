@@ -1,4 +1,4 @@
-import { importMethod, exportMethod } from '@/actions/App/Http/Controllers/Exams/ExamCsvController';
+import { importMethod, exportMethod } from '@/routes/exams/csv';
 import UricAcidChart from '@/components/application/charts/uric-acid.chart';
 import { EmptyChartData } from '@/components/common/empty-chart-data';
 import { DataTable } from '@/components/table/data-table';

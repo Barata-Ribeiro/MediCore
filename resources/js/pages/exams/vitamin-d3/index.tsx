@@ -1,4 +1,4 @@
-import { importMethod, exportMethod } from '@/actions/App/Http/Controllers/Exams/ExamCsvController';
+import { importMethod, exportMethod } from '@/routes/exams/csv';
 import VitaminD3Chart from '@/components/application/charts/vitamin-d3.chart';
 import { EmptyChartData } from '@/components/common/empty-chart-data';
 import { DataTable } from '@/components/table/data-table';

@@ -2,7 +2,7 @@ import { createInertiaApp, router } from '@inertiajs/react';
 import type { ComponentProps } from 'react';
 import { renderToString } from 'react-dom/server';
 import { afterEach, expect, it, vi } from 'vite-plus/test';
-import { exportMethod, importMethod } from '../../resources/js/actions/App/Http/Controllers/Exams/ExamCsvController';
+import { exportMethod, importMethod } from '../../resources/js/routes/exams/csv';
 import ExamCsvTransfers from '../../resources/js/components/application/exam-csv-transfers';
 import DataTableExportData from '../../resources/js/components/table/data-table-export-data';
 import DataTableImportData from '../../resources/js/components/table/data-table-import-data';

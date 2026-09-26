@@ -1,4 +1,4 @@
-import { download } from '@/actions/App/Http/Controllers/Exams/ExamCsvController';
+import { download } from '@/routes/exams/csv';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
