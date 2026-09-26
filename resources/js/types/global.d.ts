@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import type { Auth } from '@/types/auth';
+import type { ExamCsvTransfer } from '@/types/exam-csv';
 import '@inertiajs/core';
 
 declare module 'react' {
@@ -13,6 +14,7 @@ declare module '@inertiajs/core' {
     export interface InertiaConfig {
         sharedPageProps: {
             name: string;
+            examCsvTransfers?: ExamCsvTransfer[];
             auth: Auth;
             sidebarOpen: boolean;
             date: {

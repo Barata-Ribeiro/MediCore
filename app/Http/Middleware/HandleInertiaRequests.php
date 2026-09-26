@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Exams\ExamCsvTransfer;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -53,7 +54,7 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        syncLangFiles('main');
+        syncLangFiles(['main', 'exam_csv']);
 
         if (in_array($request->route()?->getName(), $this->authRoutes)) {
             syncLangFiles('auth_pages');
@@ -68,6 +69,13 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'name' => config('app.name'),
+            'examCsvTransfers' => fn () => $request->user() === null ? [] : ExamCsvTransfer::query()
+                ->where('user_id', $request->user()->id)
+                ->where('expires_at', '>', now())
+                ->latest()
+                ->limit(20)
+                ->get()
+                ->map(fn (ExamCsvTransfer $transfer): array => $transfer->summary()),
             'auth' => [
                 'user' => $request->user()?->load('roles:id,name'),
                 'permissions' => fn () => $request->user()?->getAllPermissions()->pluck('name'),
