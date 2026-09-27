@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\Exams\CompleteBloodCountController;
+use App\Http\Controllers\Exams\DownloadExamCsvController;
+use App\Http\Controllers\Exams\ExportExamCsvController;
 use App\Http\Controllers\Exams\GlucoseController;
+use App\Http\Controllers\Exams\ImportExamCsvController;
 use App\Http\Controllers\Exams\LipidProfileController;
 use App\Http\Controllers\Exams\TgoAndTgpController;
 use App\Http\Controllers\Exams\TotalProteinsAndFractionsController;
@@ -13,6 +16,10 @@ use App\Http\Controllers\Exams\VitaminD3Controller;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified'])->prefix('exams')->group(function () {
+    Route::post('{examType}/csv/import', ImportExamCsvController::class)->middleware('throttle:10,1')->name('exams.csv.import');
+    Route::post('{examType}/csv/export', ExportExamCsvController::class)->middleware('throttle:10,1')->name('exams.csv.export');
+    Route::get('csv/{transfer}/download', DownloadExamCsvController::class)->name('exams.csv.download');
+
     Route::resource('complete-blood-count', CompleteBloodCountController::class);
     Route::resource('glucose', GlucoseController::class);
     Route::resource('lipid-profile', LipidProfileController::class);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Exams;
 
+use App\Enums\ExamType;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -14,9 +15,6 @@ class UricAcidRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'report_date' => ['required', 'date'],
-            'uric_acid_level' => ['required', 'numeric', 'min:0'],
-        ];
+        return ExamType::URIC_ACID->rules();
     }
 }

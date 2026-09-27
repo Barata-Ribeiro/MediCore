@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Exams;
 
+use App\Enums\ExamType;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -14,13 +15,6 @@ class LipidProfileRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'report_date' => ['required', 'date'],
-            'total_cholesterol' => ['required', 'numeric', 'min:0'],
-            'hdl_cholesterol' => ['required', 'numeric', 'min:0'],
-            'ldl_cholesterol' => ['required', 'numeric', 'min:0'],
-            'vldl_cholesterol' => ['required', 'numeric', 'min:0'],
-            'triglycerides' => ['required', 'numeric', 'min:0'],
-        ];
+        return ExamType::LIPID_PROFILE->rules();
     }
 }

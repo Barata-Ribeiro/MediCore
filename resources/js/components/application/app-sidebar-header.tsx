@@ -1,4 +1,5 @@
 import AppearanceMenu from '@/components/helpers/appearance-menu';
+import ExamCsvTransfers from '@/components/application/exam-csv-transfers';
 import { Breadcrumbs } from '@/components/helpers/breadcrumbs';
 import NavCommandBar from '@/components/navigation/nav-command-bar';
 import { Separator } from '@/components/ui/separator';
@@ -16,6 +17,7 @@ export function AppSidebarHeader({ breadcrumbs = [] }: Readonly<{ breadcrumbs?: 
 
             <div className="ml-auto inline-flex items-center gap-x-2">
                 <NavCommandBar />
+                <ExamCsvTransfers />
                 <AppearanceMenu />
             </div>
         </header>
