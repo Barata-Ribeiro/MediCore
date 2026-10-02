@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use RuntimeException;
 
+use function count;
+
 class ExamCsvService
 {
     private const int CHUNK_SIZE = 250;
@@ -201,7 +203,7 @@ class ExamCsvService
 
     /**
      * @param  resource  $stream
-     * @param  list<string>  $values
+     * @param  array<array-key, mixed>  $values
      */
     private function writeRow($stream, array $values): void
     {

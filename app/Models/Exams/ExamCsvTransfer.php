@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 
+use function in_array;
+
 /**
  * @property string $id
  * @property int $user_id
@@ -114,7 +116,7 @@ class ExamCsvTransfer extends Model
     /** @return Builder<static> */
     public function prunable(): Builder
     {
-        return static::query()->where('expires_at', '<=', now());
+        return $this->newQueryWithoutRelationships()->where('expires_at', '<=', now());
     }
 
     protected function pruning(): void
