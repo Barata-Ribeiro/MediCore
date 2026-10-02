@@ -11,11 +11,11 @@
     "require": {
         "php": "^8.5",
         "erag/laravel-lang-sync-inertia": "^2.4",
-        "inertiajs/inertia-laravel": "^3.3",
+        "inertiajs/inertia-laravel": "^3.5",
         "inertiaui/modal": "^3.1",
         "laravel/fortify": "^1.40",
-        "laravel/framework": "^13.33",
-        "laravel/reverb": "^1.0",
+        "laravel/framework": "^13.34",
+        "laravel/reverb": "^1.12",
         "laravel/socialite": "^5.31",
         "laravel/tinker": "^3.0",
         "laravel/wayfinder": "^0.1",
@@ -34,7 +34,7 @@
         "lucascudo/laravel-pt-br-localization": "^3.0",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.9",
-        "pestphp/pest": "^5.2",
+        "pestphp/pest": "^5.3",
         "pestphp/pest-plugin-laravel": "^5.0"
     },
     "autoload": {
@@ -55,8 +55,8 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "@php artisan key:generate",
             "@php artisan migrate --force",
-            "npm install",
-            "npm run build"
+            "pnpm install",
+            "pnpm run build:ssr"
         ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
@@ -71,6 +71,7 @@
         "ci:check": [
             "Composer\\Config::disableProcessTimeout",
             "pnpm run check",
+            "pnpm run format:check",
             "pnpm run types:check",
             "@test"
         ],
@@ -81,7 +82,8 @@
             "@php artisan config:clear --ansi",
             "@lint:check",
             "@types:check",
-            "@php artisan test --parallel --processes=4 --recreate-databases"
+            "@php artisan test --parallel --processes=4 --recreate-databases",
+            "pnpm run test"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
