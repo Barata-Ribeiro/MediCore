@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Storage;
  * @property string $direction
  * @property string $status
  * @property string $path
- * @property list<string> $headers
+ * @property array<array-key, mixed> $headers
  * @property string $delimiter
  * @property int $offset
  * @property int $cursor
@@ -35,9 +35,37 @@ use Illuminate\Support\Facades\Storage;
  * @property string|null $error_code
  * @property int|null $error_line
  * @property CarbonImmutable $expires_at
- * @property CarbonImmutable $created_at
- * @property-read User $user
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
  * @property-read MedicalFile $medicalFile
+ * @property-read User $user
+ *
+ * @method static \Database\Factories\Exams\ExamCsvTransferFactory factory($count = null, $state = [])
+ * @method static Builder<static>|ExamCsvTransfer newModelQuery()
+ * @method static Builder<static>|ExamCsvTransfer newQuery()
+ * @method static Builder<static>|ExamCsvTransfer query()
+ * @method static Builder<static>|ExamCsvTransfer whereCreatedAt($value)
+ * @method static Builder<static>|ExamCsvTransfer whereCursor($value)
+ * @method static Builder<static>|ExamCsvTransfer whereDelimiter($value)
+ * @method static Builder<static>|ExamCsvTransfer whereDirection($value)
+ * @method static Builder<static>|ExamCsvTransfer whereErrorCode($value)
+ * @method static Builder<static>|ExamCsvTransfer whereErrorLine($value)
+ * @method static Builder<static>|ExamCsvTransfer whereExamType($value)
+ * @method static Builder<static>|ExamCsvTransfer whereExpiresAt($value)
+ * @method static Builder<static>|ExamCsvTransfer whereHeaders($value)
+ * @method static Builder<static>|ExamCsvTransfer whereId($value)
+ * @method static Builder<static>|ExamCsvTransfer whereMaxId($value)
+ * @method static Builder<static>|ExamCsvTransfer whereMedicalFileId($value)
+ * @method static Builder<static>|ExamCsvTransfer whereOffset($value)
+ * @method static Builder<static>|ExamCsvTransfer wherePath($value)
+ * @method static Builder<static>|ExamCsvTransfer whereProcessed($value)
+ * @method static Builder<static>|ExamCsvTransfer whereRevision($value)
+ * @method static Builder<static>|ExamCsvTransfer whereStatus($value)
+ * @method static Builder<static>|ExamCsvTransfer whereUpdatedAt($value)
+ * @method static Builder<static>|ExamCsvTransfer whereUserId($value)
+ * @method static Builder<static>|ExamCsvTransfer whereValidatedRows($value)
+ *
+ * @mixin \Eloquent
  */
 #[Fillable(['user_id', 'medical_file_id', 'exam_type', 'direction', 'status', 'path', 'headers', 'delimiter', 'offset', 'cursor', 'max_id', 'revision', 'processed', 'validated_rows', 'error_code', 'error_line', 'expires_at'])]
 class ExamCsvTransfer extends Model
