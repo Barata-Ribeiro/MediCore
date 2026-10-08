@@ -23,6 +23,10 @@ class ProcessExamCsv implements ShouldBeUnique, ShouldQueue
 
     public int $uniqueFor = 3600;
 
+    public int $maxExceptions = 3;
+
+    public bool $countCrashesAsExceptions = true;
+
     /** @var list<int> */
     public array $backoff = [10, 30, 60];
 
