@@ -32,11 +32,11 @@ namespace App\Models\Exams{
  * @property float $promyelocyte_count Promyelocyte Count
  * @property float $atypical_cell_count Atypical Cell Count
  * @property float $platelet_count Platelet Count
- * @property CarbonImmutable $report_date Date of the complete blood count report
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property \Carbon\CarbonImmutable $report_date Date of the complete blood count report
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property int $medical_file_id
- * @property-read MedicalFile $medicalFile
+ * @property-read \App\Models\MedicalFile $medicalFile
  * @method static \Database\Factories\Exams\CompleteBloodCountFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CompleteBloodCount newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CompleteBloodCount newQuery()
@@ -66,7 +66,8 @@ namespace App\Models\Exams{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CompleteBloodCount whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-	class CompleteBloodCount extends \Eloquent {}
+	#[\AllowDynamicProperties]
+	class IdeHelperCompleteBloodCount {}
 }
 
 namespace App\Models\Exams{
@@ -74,7 +75,7 @@ namespace App\Models\Exams{
  * @property string $id
  * @property int $user_id
  * @property int $medical_file_id
- * @property ExamType $exam_type
+ * @property \App\Enums\ExamType $exam_type
  * @property string $direction
  * @property string $status
  * @property string $path
@@ -88,38 +89,39 @@ namespace App\Models\Exams{
  * @property int $validated_rows
  * @property string|null $error_code
  * @property int|null $error_line
- * @property CarbonImmutable $expires_at
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
- * @property-read MedicalFile $medicalFile
- * @property-read User $user
+ * @property \Carbon\CarbonImmutable $expires_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property-read \App\Models\MedicalFile $medicalFile
+ * @property-read \App\Models\User $user
  * @method static \Database\Factories\Exams\ExamCsvTransferFactory factory($count = null, $state = [])
- * @method static Builder<static>|ExamCsvTransfer newModelQuery()
- * @method static Builder<static>|ExamCsvTransfer newQuery()
- * @method static Builder<static>|ExamCsvTransfer query()
- * @method static Builder<static>|ExamCsvTransfer whereCreatedAt($value)
- * @method static Builder<static>|ExamCsvTransfer whereCursor($value)
- * @method static Builder<static>|ExamCsvTransfer whereDelimiter($value)
- * @method static Builder<static>|ExamCsvTransfer whereDirection($value)
- * @method static Builder<static>|ExamCsvTransfer whereErrorCode($value)
- * @method static Builder<static>|ExamCsvTransfer whereErrorLine($value)
- * @method static Builder<static>|ExamCsvTransfer whereExamType($value)
- * @method static Builder<static>|ExamCsvTransfer whereExpiresAt($value)
- * @method static Builder<static>|ExamCsvTransfer whereHeaders($value)
- * @method static Builder<static>|ExamCsvTransfer whereId($value)
- * @method static Builder<static>|ExamCsvTransfer whereMaxId($value)
- * @method static Builder<static>|ExamCsvTransfer whereMedicalFileId($value)
- * @method static Builder<static>|ExamCsvTransfer whereOffset($value)
- * @method static Builder<static>|ExamCsvTransfer wherePath($value)
- * @method static Builder<static>|ExamCsvTransfer whereProcessed($value)
- * @method static Builder<static>|ExamCsvTransfer whereRevision($value)
- * @method static Builder<static>|ExamCsvTransfer whereStatus($value)
- * @method static Builder<static>|ExamCsvTransfer whereUpdatedAt($value)
- * @method static Builder<static>|ExamCsvTransfer whereUserId($value)
- * @method static Builder<static>|ExamCsvTransfer whereValidatedRows($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer whereCursor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer whereDelimiter($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer whereDirection($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer whereErrorCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer whereErrorLine($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer whereExamType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer whereExpiresAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer whereHeaders($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer whereMaxId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer whereMedicalFileId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer whereOffset($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer wherePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer whereProcessed($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer whereRevision($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExamCsvTransfer whereValidatedRows($value)
  * @mixin \Eloquent
  */
-	class ExamCsvTransfer extends \Eloquent {}
+	#[\AllowDynamicProperties]
+	class IdeHelperExamCsvTransfer {}
 }
 
 namespace App\Models\Exams{
@@ -128,11 +130,11 @@ namespace App\Models\Exams{
  * @property float $glucose_level
  * @property float $glycated_hemoglobin Glycated Hemoglobin (HbA1c)
  * @property float $estimated_average_glucose Estimated Average Glucose (eAG)
- * @property CarbonImmutable $report_date Date of the glucose report
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property \Carbon\CarbonImmutable $report_date Date of the glucose report
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property int $medical_file_id
- * @property-read MedicalFile $medicalFile
+ * @property-read \App\Models\MedicalFile $medicalFile
  * @method static \Database\Factories\Exams\GlucoseFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Glucose newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Glucose newQuery()
@@ -147,7 +149,8 @@ namespace App\Models\Exams{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Glucose whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-	class Glucose extends \Eloquent {}
+	#[\AllowDynamicProperties]
+	class IdeHelperGlucose {}
 }
 
 namespace App\Models\Exams{
@@ -158,11 +161,11 @@ namespace App\Models\Exams{
  * @property float $ldl_cholesterol Low-Density Lipoprotein Cholesterol
  * @property float $vldl_cholesterol Very Low-Density Lipoprotein Cholesterol
  * @property float $triglycerides Triglycerides
- * @property CarbonImmutable $report_date Date of the lipid profile report
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property \Carbon\CarbonImmutable $report_date Date of the lipid profile report
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property int $medical_file_id
- * @property-read MedicalFile $medicalFile
+ * @property-read \App\Models\MedicalFile $medicalFile
  * @method static \Database\Factories\Exams\LipidProfileFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LipidProfile newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LipidProfile newQuery()
@@ -179,7 +182,8 @@ namespace App\Models\Exams{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LipidProfile whereVldlCholesterol($value)
  * @mixin \Eloquent
  */
-	class LipidProfile extends \Eloquent {}
+	#[\AllowDynamicProperties]
+	class IdeHelperLipidProfile {}
 }
 
 namespace App\Models\Exams{
@@ -187,11 +191,11 @@ namespace App\Models\Exams{
  * @property int $id
  * @property float $tgo_level Aspartate aminotransferase (TGO/AST) in U/L
  * @property float $tgp_level Alanine aminotransferase (TGP/ALT) in U/L
- * @property CarbonImmutable $report_date Date of the TGO and TGP report
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property \Carbon\CarbonImmutable $report_date Date of the TGO and TGP report
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property int $medical_file_id
- * @property-read MedicalFile $medicalFile
+ * @property-read \App\Models\MedicalFile $medicalFile
  * @method static \Database\Factories\Exams\TgoAndTgpFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TgoAndTgp newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TgoAndTgp newQuery()
@@ -205,7 +209,8 @@ namespace App\Models\Exams{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TgoAndTgp whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-	class TgoAndTgp extends \Eloquent {}
+	#[\AllowDynamicProperties]
+	class IdeHelperTgoAndTgp {}
 }
 
 namespace App\Models\Exams{
@@ -214,12 +219,12 @@ namespace App\Models\Exams{
  * @property float $total_proteins Total Proteins level
  * @property float $albumin Albumin level
  * @property float $globulin Globulin level
- * @property CarbonImmutable $report_date Date of the Vitamin B12 report
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property \Carbon\CarbonImmutable $report_date Date of the Vitamin B12 report
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property int $medical_file_id
  * @property-read float|null $albumin_globulin_ratio
- * @property-read MedicalFile $medicalFile
+ * @property-read \App\Models\MedicalFile $medicalFile
  * @method static \Database\Factories\Exams\TotalProteinsAndFractionsFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions newQuery()
@@ -234,18 +239,19 @@ namespace App\Models\Exams{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-	class TotalProteinsAndFractions extends \Eloquent {}
+	#[\AllowDynamicProperties]
+	class IdeHelperTotalProteinsAndFractions {}
 }
 
 namespace App\Models\Exams{
 /**
  * @property int $id
  * @property float $tsh_level Ultrasensitive TSH level
- * @property CarbonImmutable $report_date Date of the Urea and Creatinine report
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property \Carbon\CarbonImmutable $report_date Date of the Urea and Creatinine report
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property int $medical_file_id
- * @property-read MedicalFile $medicalFile
+ * @property-read \App\Models\MedicalFile $medicalFile
  * @method static \Database\Factories\Exams\UltrasensitiveTshFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh newQuery()
@@ -258,7 +264,8 @@ namespace App\Models\Exams{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-	class UltrasensitiveTsh extends \Eloquent {}
+	#[\AllowDynamicProperties]
+	class IdeHelperUltrasensitiveTsh {}
 }
 
 namespace App\Models\Exams{
@@ -266,12 +273,12 @@ namespace App\Models\Exams{
  * @property int $id
  * @property float $urea_level Urea level
  * @property float $creatinine_level Creatinine level
- * @property CarbonImmutable $report_date Date of the Urea and Creatinine report
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property \Carbon\CarbonImmutable $report_date Date of the Urea and Creatinine report
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property int $medical_file_id
  * @property-read float|null $urea_creatinine_ratio
- * @property-read MedicalFile $medicalFile
+ * @property-read \App\Models\MedicalFile $medicalFile
  * @method static \Database\Factories\Exams\UreaAndCreatinineFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UreaAndCreatinine newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UreaAndCreatinine newQuery()
@@ -285,18 +292,19 @@ namespace App\Models\Exams{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UreaAndCreatinine whereUreaLevel($value)
  * @mixin \Eloquent
  */
-	class UreaAndCreatinine extends \Eloquent {}
+	#[\AllowDynamicProperties]
+	class IdeHelperUreaAndCreatinine {}
 }
 
 namespace App\Models\Exams{
 /**
  * @property int $id
  * @property float $uric_acid_level Uric Acid level
- * @property CarbonImmutable $report_date Date of the Urea and Creatinine report
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property \Carbon\CarbonImmutable $report_date Date of the Urea and Creatinine report
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property int $medical_file_id
- * @property-read MedicalFile $medicalFile
+ * @property-read \App\Models\MedicalFile $medicalFile
  * @method static \Database\Factories\Exams\UricAcidFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid newQuery()
@@ -309,18 +317,19 @@ namespace App\Models\Exams{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UricAcid whereUricAcidLevel($value)
  * @mixin \Eloquent
  */
-	class UricAcid extends \Eloquent {}
+	#[\AllowDynamicProperties]
+	class IdeHelperUricAcid {}
 }
 
 namespace App\Models\Exams{
 /**
  * @property int $id
  * @property float $vitamin_b12_level Vitamin B12 level
- * @property CarbonImmutable $report_date Date of the Vitamin B12 report
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property \Carbon\CarbonImmutable $report_date Date of the Vitamin B12 report
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property int $medical_file_id
- * @property-read MedicalFile $medicalFile
+ * @property-read \App\Models\MedicalFile $medicalFile
  * @method static \Database\Factories\Exams\VitaminB12Factory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminB12 newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminB12 newQuery()
@@ -333,18 +342,19 @@ namespace App\Models\Exams{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminB12 whereVitaminB12Level($value)
  * @mixin \Eloquent
  */
-	class VitaminB12 extends \Eloquent {}
+	#[\AllowDynamicProperties]
+	class IdeHelperVitaminB12 {}
 }
 
 namespace App\Models\Exams{
 /**
  * @property int $id
  * @property float $twenty_five_hydroxyvitamin_d3 25-Hydroxyvitamin D3 (25(OH)D3) level
- * @property CarbonImmutable $report_date Date of the Vitamin D3 report
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property \Carbon\CarbonImmutable $report_date Date of the Vitamin D3 report
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property int $medical_file_id
- * @property-read MedicalFile $medicalFile
+ * @property-read \App\Models\MedicalFile $medicalFile
  * @method static \Database\Factories\Exams\VitaminD3Factory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 newQuery()
@@ -357,7 +367,8 @@ namespace App\Models\Exams{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-	class VitaminD3 extends \Eloquent {}
+	#[\AllowDynamicProperties]
+	class IdeHelperVitaminD3 {}
 }
 
 namespace App\Models\Fitness{
@@ -366,14 +377,14 @@ namespace App\Models\Fitness{
  * @property string $name The name of the exercise, e.g. "Bench Press", "Squat", etc.
  * @property string|null $description A detailed description of how to perform the exercise, including proper form and technique.
  * @property string|null $video_url A URL to a video demonstrating the exercise, if available.
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property int|null $user_id
- * @property-read Collection<int, \App\Models\Fitness\MuscleGroup> $muscleGroups
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Fitness\MuscleGroup> $muscleGroups
  * @property-read int|null $muscle_groups_count
  * @property-read bool|null $muscle_groups_exists
- * @property-read User|null $user
- * @property-read Collection<int, \App\Models\Fitness\WorkoutExercise> $workoutExercises
+ * @property-read \App\Models\User|null $user
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Fitness\WorkoutExercise> $workoutExercises
  * @property-read int|null $workout_exercises_count
  * @property-read bool|null $workout_exercises_exists
  * @method static \Database\Factories\Fitness\ExerciseFactory factory($count = null, $state = [])
@@ -389,21 +400,22 @@ namespace App\Models\Fitness{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise whereVideoUrl($value)
  * @mixin \Eloquent
  */
-	class Exercise extends \Eloquent {}
+	#[\AllowDynamicProperties]
+	class IdeHelperExercise {}
 }
 
 namespace App\Models\Fitness{
 /**
  * @property int $id
  * @property string $name The name of the muscle group, e.g. "Pectorals", "Quadriceps", etc.
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property int|null $user_id
- * @property-read Collection<int, \App\Models\Fitness\Exercise> $exercises
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Fitness\Exercise> $exercises
  * @property-read int|null $exercises_count
  * @property-read bool|null $exercises_exists
- * @property-read User|null $user
- * @property-read Collection<int, \App\Models\Fitness\WorkoutExercise> $workoutExercises
+ * @property-read \App\Models\User|null $user
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Fitness\WorkoutExercise> $workoutExercises
  * @property-read int|null $workout_exercises_count
  * @property-read bool|null $workout_exercises_exists
  * @method static \Database\Factories\Fitness\MuscleGroupFactory factory($count = null, $state = [])
@@ -417,26 +429,27 @@ namespace App\Models\Fitness{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|MuscleGroup whereUserId($value)
  * @mixin \Eloquent
  */
-	class MuscleGroup extends \Eloquent {}
+	#[\AllowDynamicProperties]
+	class IdeHelperMuscleGroup {}
 }
 
 namespace App\Models\Fitness{
 /**
  * @property int $id
- * @property CarbonImmutable|null $filled_at The date when the workout was filled out
- * @property CarbonImmutable|null $next_change_at The date when the workout should be changed next
+ * @property \Carbon\CarbonImmutable|null $filled_at The date when the workout was filled out
+ * @property \Carbon\CarbonImmutable|null $next_change_at The date when the workout should be changed next
  * @property string|null $goal The goal of the workout, e.g. "lose weight", "build muscle", etc.
  * @property string|null $method The method of the workout, e.g. "A/B split", "full body", etc.
  * @property int|null $rest_between_sets The rest time between sets in seconds
  * @property int|null $rest_between_exercises The rest time between exercises in seconds
  * @property bool $is_active Whether the workout is active or not
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property int $user_id
- * @property-read Collection<int, \App\Models\Fitness\WorkoutSection> $sections
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Fitness\WorkoutSection> $sections
  * @property-read int|null $sections_count
  * @property-read bool|null $sections_exists
- * @property-read User $user
+ * @property-read \App\Models\User $user
  * @method static \Database\Factories\Fitness\WorkoutFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Workout newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Workout newQuery()
@@ -454,7 +467,8 @@ namespace App\Models\Fitness{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Workout whereUserId($value)
  * @mixin \Eloquent
  */
-	class Workout extends \Eloquent {}
+	#[\AllowDynamicProperties]
+	class IdeHelperWorkout {}
 }
 
 namespace App\Models\Fitness{
@@ -471,8 +485,8 @@ namespace App\Models\Fitness{
  * @property string $load_unit Unit of the load, e.g., "kg", "lbs", "bodyweight", etc.
  * @property int|null $rest_seconds Rest time in seconds between sets
  * @property string|null $notes Additional notes for the exercise, e.g., "Use a spotter", "Focus on form", etc.
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property-read \App\Models\Fitness\Exercise $exercise
  * @property-read \App\Models\Fitness\MuscleGroup|null $muscleGroup
  * @property-read \App\Models\Fitness\WorkoutSection $section
@@ -496,7 +510,8 @@ namespace App\Models\Fitness{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutExercise whereWorkoutSectionId($value)
  * @mixin \Eloquent
  */
-	class WorkoutExercise extends \Eloquent {}
+	#[\AllowDynamicProperties]
+	class IdeHelperWorkoutExercise {}
 }
 
 namespace App\Models\Fitness{
@@ -504,10 +519,10 @@ namespace App\Models\Fitness{
  * @property int $id
  * @property string $name The name of the workout section, e.g. "Superior", "Inferior", "Day A", etc.
  * @property int $order The order of the workout section in the workout
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property int $workout_id
- * @property-read Collection<int, \App\Models\Fitness\WorkoutExercise> $exercises
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Fitness\WorkoutExercise> $exercises
  * @property-read int|null $exercises_count
  * @property-read bool|null $exercises_exists
  * @property-read \App\Models\Fitness\Workout $workout
@@ -523,13 +538,14 @@ namespace App\Models\Fitness{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutSection whereWorkoutId($value)
  * @mixin \Eloquent
  */
-	class WorkoutSection extends \Eloquent {}
+	#[\AllowDynamicProperties]
+	class IdeHelperWorkoutSection {}
 }
 
 namespace App\Models{
 /**
  * @property int $id
- * @property BloodType|null $blood_type
+ * @property \App\Enums\BloodType|null $blood_type
  * @property string|null $allergies
  * @property string|null $diseases
  * @property string|null $medications
@@ -538,61 +554,62 @@ namespace App\Models{
  * @property string|null $emergency_contact_name
  * @property string|null $emergency_contact_phone_number
  * @property string|null $emergency_contact_relationship
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property int $user_id
- * @property-read Collection<int, CompleteBloodCount> $completeBloodCounts
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Exams\CompleteBloodCount> $completeBloodCounts
  * @property-read int|null $complete_blood_counts_count
  * @property-read bool|null $complete_blood_counts_exists
  * @property-read float|null $bmi
- * @property-read Collection<int, Glucose> $glucoses
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Exams\Glucose> $glucoses
  * @property-read int|null $glucoses_count
  * @property-read bool|null $glucoses_exists
- * @property-read Collection<int, LipidProfile> $lipidProfiles
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Exams\LipidProfile> $lipidProfiles
  * @property-read int|null $lipid_profiles_count
  * @property-read bool|null $lipid_profiles_exists
- * @property-read Collection<int, TgoAndTgp> $tgoAndTgps
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Exams\TgoAndTgp> $tgoAndTgps
  * @property-read int|null $tgo_and_tgps_count
  * @property-read bool|null $tgo_and_tgps_exists
- * @property-read Collection<int, TotalProteinsAndFractions> $totalProteinsAndFractions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Exams\TotalProteinsAndFractions> $totalProteinsAndFractions
  * @property-read int|null $total_proteins_and_fractions_count
  * @property-read bool|null $total_proteins_and_fractions_exists
- * @property-read Collection<int, UltrasensitiveTsh> $ultrasensitiveTshs
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Exams\UltrasensitiveTsh> $ultrasensitiveTshs
  * @property-read int|null $ultrasensitive_tshs_count
  * @property-read bool|null $ultrasensitive_tshs_exists
- * @property-read Collection<int, UreaAndCreatinine> $ureaAndCreatinines
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Exams\UreaAndCreatinine> $ureaAndCreatinines
  * @property-read int|null $urea_and_creatinines_count
  * @property-read bool|null $urea_and_creatinines_exists
- * @property-read Collection<int, UricAcid> $uricAcids
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Exams\UricAcid> $uricAcids
  * @property-read int|null $uric_acids_count
  * @property-read bool|null $uric_acids_exists
  * @property-read \App\Models\User $user
- * @property-read Collection<int, VitaminB12> $vitaminB12s
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Exams\VitaminB12> $vitaminB12s
  * @property-read int|null $vitamin_b12s_count
  * @property-read bool|null $vitamin_b12s_exists
- * @property-read Collection<int, VitaminD3> $vitaminD3s
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Exams\VitaminD3> $vitaminD3s
  * @property-read int|null $vitamin_d3s_count
  * @property-read bool|null $vitamin_d3s_exists
- * @method static Builder<static>|MedicalFile bloodType(\App\Enums\BloodType $bloodType)
- * @method static Builder<static>|MedicalFile newModelQuery()
- * @method static Builder<static>|MedicalFile newQuery()
- * @method static Builder<static>|MedicalFile query()
- * @method static Builder<static>|MedicalFile whereAllergies($value)
- * @method static Builder<static>|MedicalFile whereBloodType($value)
- * @method static Builder<static>|MedicalFile whereCreatedAt($value)
- * @method static Builder<static>|MedicalFile whereDiseases($value)
- * @method static Builder<static>|MedicalFile whereEmergencyContactName($value)
- * @method static Builder<static>|MedicalFile whereEmergencyContactPhoneNumber($value)
- * @method static Builder<static>|MedicalFile whereEmergencyContactRelationship($value)
- * @method static Builder<static>|MedicalFile whereHeight($value)
- * @method static Builder<static>|MedicalFile whereId($value)
- * @method static Builder<static>|MedicalFile whereMedications($value)
- * @method static Builder<static>|MedicalFile whereUpdatedAt($value)
- * @method static Builder<static>|MedicalFile whereUserId($value)
- * @method static Builder<static>|MedicalFile whereWeight($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MedicalFile bloodType(\App\Enums\BloodType $bloodType)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MedicalFile newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MedicalFile newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MedicalFile query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MedicalFile whereAllergies($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MedicalFile whereBloodType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MedicalFile whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MedicalFile whereDiseases($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MedicalFile whereEmergencyContactName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MedicalFile whereEmergencyContactPhoneNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MedicalFile whereEmergencyContactRelationship($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MedicalFile whereHeight($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MedicalFile whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MedicalFile whereMedications($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MedicalFile whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MedicalFile whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MedicalFile whereWeight($value)
  * @mixin \Eloquent
  */
-	class MedicalFile extends \Eloquent {}
+	#[\AllowDynamicProperties]
+	class IdeHelperMedicalFile {}
 }
 
 namespace App\Models{
@@ -601,13 +618,13 @@ namespace App\Models{
  * @property string $first_name
  * @property string $last_name
  * @property string|null $bio
- * @property CarbonImmutable|null $birth_date
+ * @property \Carbon\CarbonImmutable|null $birth_date
  * @property string|null $phone_number
  * @property string|null $address
  * @property string|null $sex
  * @property string|null $gender_identity
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property int $user_id
  * @property-read int|null $age
  * @property-read string $full_name
@@ -629,7 +646,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Profile whereUserId($value)
  * @mixin \Eloquent
  */
-	class Profile extends \Eloquent {}
+	#[\AllowDynamicProperties]
+	class IdeHelperProfile {}
 }
 
 namespace App\Models{
@@ -637,14 +655,14 @@ namespace App\Models{
  * @property int $id
  * @property string $name
  * @property string $email
- * @property CarbonImmutable|null $email_verified_at
+ * @property \Carbon\CarbonImmutable|null $email_verified_at
  * @property string|null $password
  * @property string|null $remember_token
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property string|null $two_factor_secret
  * @property string|null $two_factor_recovery_codes
- * @property CarbonImmutable|null $two_factor_confirmed_at
+ * @property \Carbon\CarbonImmutable|null $two_factor_confirmed_at
  * @property string|null $provider_id
  * @property string|null $provider_name
  * @property string|null $registration_domain
@@ -652,63 +670,64 @@ namespace App\Models{
  * @property string|null $provider_refresh_token
  * @property string|null $avatar
  * @property string $locale
- * @property-read Collection<int, Exercise> $exercises
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Fitness\Exercise> $exercises
  * @property-read int|null $exercises_count
  * @property-read bool|null $exercises_exists
  * @property-read \App\Models\MedicalFile|null $medicalFile
- * @property-read Collection<int, MuscleGroup> $muscleGroups
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Fitness\MuscleGroup> $muscleGroups
  * @property-read int|null $muscle_groups_count
  * @property-read bool|null $muscle_groups_exists
- * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read bool|null $notifications_exists
- * @property-read Collection<int, Passkey> $passkeys
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Passkeys\Passkey> $passkeys
  * @property-read int|null $passkeys_count
  * @property-read bool|null $passkeys_exists
- * @property-read Collection<int, Permission> $permissions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
  * @property-read int|null $permissions_count
  * @property-read bool|null $permissions_exists
  * @property-read \App\Models\Profile|null $profile
- * @property-read Collection<int, Role> $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
  * @property-read int|null $roles_count
  * @property-read bool|null $roles_exists
- * @property-read Collection<int, Permission> $teams
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $teams
  * @property-read int|null $teams_count
  * @property-read bool|null $teams_exists
- * @property-read Collection<int, Workout> $workouts
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Fitness\Workout> $workouts
  * @property-read int|null $workouts_count
  * @property-read bool|null $workouts_exists
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
- * @method static Builder<static>|User isSuperAdmin()
- * @method static Builder<static>|User newModelQuery()
- * @method static Builder<static>|User newQuery()
- * @method static Builder<static>|User permission($permissions, bool $without = false)
- * @method static Builder<static>|User query()
- * @method static Builder<static>|User role($roles, ?string $guard = null, bool $without = false)
- * @method static Builder<static>|User team($teams, bool $without = false)
- * @method static Builder<static>|User whereAvatar($value)
- * @method static Builder<static>|User whereCreatedAt($value)
- * @method static Builder<static>|User whereEmail($value)
- * @method static Builder<static>|User whereEmailVerifiedAt($value)
- * @method static Builder<static>|User whereId($value)
- * @method static Builder<static>|User whereLocale($value)
- * @method static Builder<static>|User whereName($value)
- * @method static Builder<static>|User wherePassword($value)
- * @method static Builder<static>|User whereProviderId($value)
- * @method static Builder<static>|User whereProviderName($value)
- * @method static Builder<static>|User whereProviderRefreshToken($value)
- * @method static Builder<static>|User whereProviderToken($value)
- * @method static Builder<static>|User whereRegistrationDomain($value)
- * @method static Builder<static>|User whereRememberToken($value)
- * @method static Builder<static>|User whereTwoFactorConfirmedAt($value)
- * @method static Builder<static>|User whereTwoFactorRecoveryCodes($value)
- * @method static Builder<static>|User whereTwoFactorSecret($value)
- * @method static Builder<static>|User whereUpdatedAt($value)
- * @method static Builder<static>|User withoutPermission($permissions)
- * @method static Builder<static>|User withoutRole($roles, ?string $guard = null)
- * @method static Builder<static>|User withoutTeam($teams)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User isSuperAdmin()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User permission($permissions, bool $without = false)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User role($roles, ?string $guard = null, bool $without = false)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User team($teams, bool $without = false)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereAvatar($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereLocale($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereProviderId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereProviderName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereProviderRefreshToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereProviderToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRegistrationDomain($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereTwoFactorConfirmedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereTwoFactorRecoveryCodes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereTwoFactorSecret($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutPermission($permissions)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutRole($roles, ?string $guard = null)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutTeam($teams)
  * @mixin \Eloquent
  */
-	class User extends \Eloquent implements \Laravel\Fortify\Contracts\PasskeyUser, \Laravel\Passkeys\Contracts\PasskeyUser {}
+	#[\AllowDynamicProperties]
+	class IdeHelperUser {}
 }
 
