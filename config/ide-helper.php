@@ -1,9 +1,7 @@
 <?php
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\PendingRequest;
-use Illuminate\Session\Store;
 
 return [
 
@@ -50,7 +48,7 @@ return [
     |
     */
 
-    'include_fluent' => false,
+    'include_fluent' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -111,7 +109,7 @@ return [
     |
     */
 
-    'write_eloquent_model_mixins' => false,
+    'write_eloquent_model_mixins' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -185,8 +183,8 @@ return [
     */
 
     'extra' => [
-        'Eloquent' => [Builder::class, Illuminate\Database\Query\Builder::class],
-        'Session' => [Store::class],
+        'Eloquent' => ['Illuminate\Database\Eloquent\Builder', 'Illuminate\Database\Query\Builder'],
+        'Session' => ['Illuminate\Session\Store'],
     ],
 
     'magic' => [],
