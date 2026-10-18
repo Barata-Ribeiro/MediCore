@@ -13,26 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @property int $id
- * @property float $twenty_five_hydroxyvitamin_d3 25-Hydroxyvitamin D3 (25(OH)D3) level
- * @property CarbonImmutable $report_date Date of the Vitamin D3 report
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
- * @property int $medical_file_id
- * @property-read MedicalFile $medicalFile
- *
- * @method static \Database\Factories\Exams\VitaminD3Factory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 whereMedicalFileId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 whereReportDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 whereTwentyFiveHydroxyvitaminD3($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|VitaminD3 whereUpdatedAt($value)
- *
- * @mixin \Eloquent
+ * @mixin IdeHelperVitaminD3
  */
 #[Table('vitamin_d3_s')]
 #[Touches(['medicalFile'])]

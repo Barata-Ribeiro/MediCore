@@ -14,31 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @property int $id
- * @property float $total_proteins Total Proteins level
- * @property float $albumin Albumin level
- * @property float $globulin Globulin level
- * @property CarbonImmutable $report_date Date of the Vitamin B12 report
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
- * @property int $medical_file_id
- * @property-read float|null $albumin_globulin_ratio
- * @property-read MedicalFile $medicalFile
- *
- * @method static \Database\Factories\Exams\TotalProteinsAndFractionsFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions whereAlbumin($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions whereGlobulin($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions whereMedicalFileId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions whereReportDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions whereTotalProteins($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|TotalProteinsAndFractions whereUpdatedAt($value)
- *
- * @mixin \Eloquent
+ * @mixin IdeHelperTotalProteinsAndFractions
  */
 #[Table('total_proteins_and_fractions')]
 #[Touches(['medicalFile'])]

@@ -14,29 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @property int $id
- * @property float $urea_level Urea level
- * @property float $creatinine_level Creatinine level
- * @property CarbonImmutable $report_date Date of the Urea and Creatinine report
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
- * @property int $medical_file_id
- * @property-read float|null $urea_creatinine_ratio
- * @property-read MedicalFile $medicalFile
- *
- * @method static \Database\Factories\Exams\UreaAndCreatinineFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UreaAndCreatinine newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UreaAndCreatinine newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UreaAndCreatinine query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UreaAndCreatinine whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UreaAndCreatinine whereCreatinineLevel($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UreaAndCreatinine whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UreaAndCreatinine whereMedicalFileId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UreaAndCreatinine whereReportDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UreaAndCreatinine whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UreaAndCreatinine whereUreaLevel($value)
- *
- * @mixin \Eloquent
+ * @mixin IdeHelperUreaAndCreatinine
  */
 #[Table('urea_and_creatinines')]
 #[Touches(['medicalFile'])]

@@ -3,11 +3,9 @@
 namespace App\Models\Fitness;
 
 use App\Models\User;
-use Carbon\CarbonImmutable;
 use Database\Factories\Fitness\ExerciseFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,34 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property int $id
- * @property string $name The name of the exercise, e.g. "Bench Press", "Squat", etc.
- * @property string|null $description A detailed description of how to perform the exercise, including proper form and technique.
- * @property string|null $video_url A URL to a video demonstrating the exercise, if available.
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
- * @property int|null $user_id
- * @property-read Collection<int, MuscleGroup> $muscleGroups
- * @property-read int|null $muscle_groups_count
- * @property-read bool|null $muscle_groups_exists
- * @property-read User|null $user
- * @property-read Collection<int, WorkoutExercise> $workoutExercises
- * @property-read int|null $workout_exercises_count
- * @property-read bool|null $workout_exercises_exists
- *
- * @method static \Database\Factories\Fitness\ExerciseFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Exercise whereVideoUrl($value)
- *
- * @mixin \Eloquent
+ * @mixin IdeHelperExercise
  */
 #[Table('exercises')]
 #[Fillable(['name', 'description', 'video_url', 'user_id'])]

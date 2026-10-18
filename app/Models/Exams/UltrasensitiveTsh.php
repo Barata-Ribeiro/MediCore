@@ -13,26 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @property int $id
- * @property float $tsh_level Ultrasensitive TSH level
- * @property CarbonImmutable $report_date Date of the Urea and Creatinine report
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
- * @property int $medical_file_id
- * @property-read MedicalFile $medicalFile
- *
- * @method static \Database\Factories\Exams\UltrasensitiveTshFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh whereMedicalFileId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh whereReportDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh whereTshLevel($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UltrasensitiveTsh whereUpdatedAt($value)
- *
- * @mixin \Eloquent
+ * @mixin IdeHelperUltrasensitiveTsh
  */
 #[Table('ultrasensitive_tshs')]
 #[Touches(['medicalFile'])]

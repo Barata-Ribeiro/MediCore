@@ -13,30 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @property int $id
- * @property float $glucose_level
- * @property float $glycated_hemoglobin Glycated Hemoglobin (HbA1c)
- * @property float $estimated_average_glucose Estimated Average Glucose (eAG)
- * @property CarbonImmutable $report_date Date of the glucose report
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
- * @property int $medical_file_id
- * @property-read MedicalFile $medicalFile
- *
- * @method static \Database\Factories\Exams\GlucoseFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Glucose newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Glucose newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Glucose query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Glucose whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Glucose whereEstimatedAverageGlucose($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Glucose whereGlucoseLevel($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Glucose whereGlycatedHemoglobin($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Glucose whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Glucose whereMedicalFileId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Glucose whereReportDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Glucose whereUpdatedAt($value)
- *
- * @mixin \Eloquent
+ * @mixin IdeHelperGlucose
  */
 #[Table('glucoses')]
 #[Touches(['medicalFile'])]
