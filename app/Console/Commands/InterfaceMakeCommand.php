@@ -5,6 +5,8 @@ namespace App\Console\Commands;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 
+use function is_string;
+
 class InterfaceMakeCommand extends GeneratorCommand
 {
     /**
@@ -37,7 +39,7 @@ class InterfaceMakeCommand extends GeneratorCommand
         $class = parent::buildClass($name);
         $service = $this->option('service');
 
-        if (! $service) {
+        if (! is_string($service) || $service === '') {
             return str_replace('{{ serviceBinding }}', '', $class);
         }
 
