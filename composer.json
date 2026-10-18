@@ -14,7 +14,7 @@
         "inertiajs/inertia-laravel": "^3.5",
         "inertiaui/modal": "^3.1",
         "laravel/fortify": "^1.41",
-        "laravel/framework": "^13.35",
+        "laravel/framework": "^13.37",
         "laravel/reverb": "^1.12",
         "laravel/socialite": "^5.31",
         "laravel/tinker": "^3.0",
@@ -30,7 +30,7 @@
         "laravel/pail": "^1.2",
         "laravel/pao": "^1.1",
         "laravel/pint": "^1.32",
-        "laravel/sail": "^1.68",
+        "laravel/sail": "^1.69",
         "lucascudo/laravel-pt-br-localization": "^3.0",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.9",
@@ -72,11 +72,11 @@
             "Composer\\Config::disableProcessTimeout",
             "pnpm run check",
             "pnpm run format:check",
-            "pnpm run types:check",
             "@test"
         ],
         "types:check": [
-            "phpstan analyse --memory-limit=2G"
+            "phpstan analyse --memory-limit=2G",
+            "pnpm run types:check"
         ],
         "test": [
             "@php artisan config:clear --ansi",
@@ -91,7 +91,11 @@
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
-            "@php artisan boost:update --ansi"
+            "@php artisan boost:update --ansi",
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:models -RWM",
+            "@php artisan ide-helper:meta",
+            "@lint"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
