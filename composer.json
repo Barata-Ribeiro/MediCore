@@ -11,7 +11,7 @@
     "require": {
         "php": "^8.5",
         "erag/laravel-lang-sync-inertia": "^2.4",
-        "inertiajs/inertia-laravel": "^3.5",
+        "inertiajs/inertia-laravel": "^3.6",
         "inertiaui/modal": "^3.1",
         "laravel/fortify": "^1.41",
         "laravel/framework": "^13.39",
