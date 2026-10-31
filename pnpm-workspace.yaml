@@ -18,7 +18,6 @@ minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
     - '@vitejs/plugin-react@6.1.2'
     - '@shadcn/react@0.3.1'
-    - '@types/node@26.6.5'
     - cn@0.4.0
     - '@laravel/multiplex@0.4.5'
     - '@inertiajs/core@3.9.1'
