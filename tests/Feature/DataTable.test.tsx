@@ -3,13 +3,14 @@ import type { ComponentProps } from 'react';
 import { renderToString } from 'react-dom/server';
 import { afterEach, expect, it, vi } from 'vite-plus/test';
 import { DataTable } from '../../resources/js/components/table/data-table';
+import type * as ButtonModule from '../../resources/js/components/ui/button';
 import * as tableHooks from '../../resources/js/hooks/table';
 import type { ColumnDef } from '../../resources/js/types/data-table';
 
 const resetButton = vi.hoisted(() => ({ onClick: undefined as (() => void) | undefined }));
 
 vi.mock('../../resources/js/components/ui/button', async (importOriginal) => {
-    const { Button } = await importOriginal<typeof import('../../resources/js/components/ui/button')>();
+    const { Button } = await importOriginal<typeof ButtonModule>();
 
     return {
         Button: (props: ComponentProps<typeof Button>) => {

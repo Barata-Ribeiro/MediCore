@@ -2,15 +2,16 @@ import { createInertiaApp, router } from '@inertiajs/react';
 import type { ComponentProps } from 'react';
 import { renderToString } from 'react-dom/server';
 import { afterEach, expect, it, vi } from 'vite-plus/test';
-import { exportMethod, importMethod } from '../../resources/js/routes/exams/csv';
 import ExamCsvTransfers from '../../resources/js/components/application/exam-csv-transfers';
 import DataTableExportData from '../../resources/js/components/table/data-table-export-data';
 import DataTableImportData from '../../resources/js/components/table/data-table-import-data';
+import type * as DropdownMenuModule from '../../resources/js/components/ui/dropdown-menu';
+import { exportMethod, importMethod } from '../../resources/js/routes/exams/csv';
 
 const exportAction = vi.hoisted(() => ({ click: undefined as (() => void) | undefined }));
 
 vi.mock('../../resources/js/components/ui/dropdown-menu', async (importOriginal) => {
-    const original = await importOriginal<typeof import('../../resources/js/components/ui/dropdown-menu')>();
+    const original = await importOriginal<typeof DropdownMenuModule>();
     return {
         ...original,
         DropdownMenuContent: ({ children }: ComponentProps<typeof original.DropdownMenuContent>) => (

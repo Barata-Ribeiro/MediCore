@@ -52,7 +52,18 @@ export default defineConfig({
             { name: 'vite-plus', specifier: 'vite-plus/oxlint-plugin' },
             { name: '@shadcn/lint', specifier: '@shadcn/lint' },
         ],
-        rules: { 'vite-plus/prefer-vite-plus-imports': 'error', '@shadcn/lint/no-arbitrary-values': 'error' },
+        rules: {
+            'vite-plus/prefer-vite-plus-imports': 'error',
+            '@shadcn/lint/no-arbitrary-values': 'error',
+            'typescript/consistent-type-imports': [
+                'error',
+                {
+                    disallowTypeAnnotations: true,
+                    fixStyle: 'separate-type-imports',
+                    prefer: 'type-imports',
+                },
+            ],
+        },
         ignorePatterns: [
             'vendor/**',
             'node_modules/**',
