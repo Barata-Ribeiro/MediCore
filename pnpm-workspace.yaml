@@ -20,9 +20,9 @@ minimumReleaseAgeExclude:
     - '@shadcn/react@0.3.1'
     - cn@0.4.0
     - '@laravel/multiplex@0.4.5'
-    - '@inertiajs/core@3.9.1'
-    - '@inertiajs/react@3.9.1'
-    - '@inertiajs/vite@3.9.1'
+    - '@inertiajs/core@3.11.0'
+    - '@inertiajs/react@3.11.0'
+    - '@inertiajs/vite@3.11.0'
 minimumReleaseAgeExcludePrune: true
 
 catalog:
