@@ -8,17 +8,17 @@ import FitnessLayout from '@/layouts/fitness/layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import { cn } from '@/lib/utils';
 import { createInertiaApp } from '@inertiajs/react';
+import { echo } from '@inertiajs/react/echo';
 import { ModalStackProvider, putConfig } from '@inertiaui/modal-react';
 import { configureEcho } from '@laravel/echo-react';
 
-configureEcho({
-    broadcaster: 'reverb',
-});
+configureEcho({ broadcaster: 'reverb' });
 
 const appName = import.meta.env['VITE_APP_NAME'] ?? 'Laravel';
 
 void createInertiaApp({
     strictMode: true,
+    live: echo(),
     title: (title) => `${title} - ${appName}`,
     layout: (name) => {
         switch (true) {
