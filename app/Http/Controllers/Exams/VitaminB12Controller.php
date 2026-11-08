@@ -126,7 +126,7 @@ class VitaminB12Controller extends Controller
      *
      * @return array{
      *     0: LengthAwarePaginator<int, VitaminB12>,
-     *     1: array<string, mixed>
+     *     1: array<int, array{x_axis_label: string, datasets: array<string, array{label: string, data: float|int|null}>}>
      * }
      */
     private function vitaminB12PageAndChartData(QueryRequest $request): array

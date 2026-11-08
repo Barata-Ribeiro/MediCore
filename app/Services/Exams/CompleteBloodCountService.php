@@ -15,7 +15,10 @@ class CompleteBloodCountService implements CompleteBloodCountServiceInterface
      *
      * @param  list<array{id: string, desc: bool}>  $sorting
      * @param  list<array{id: string, operator: string, value?: mixed, joinOperator?: string, filterId?: string}>|null  $filters
-     * @return array{0: LengthAwarePaginator<int, CompleteBloodCount>, 1: array<string, mixed>}
+     * @return array{
+     *     0: LengthAwarePaginator<int, CompleteBloodCount>,
+     *     1: array<int, array{x_axis_label: string, datasets: array<string, array{label: string, data: float|int|null}>}>
+     * }
      */
     public function getCompleteBloodCountData(?int $perPage, array $sorting, ?string $search, ?array $filters): array
     {
@@ -96,7 +99,7 @@ class CompleteBloodCountService implements CompleteBloodCountServiceInterface
                 'leukocyte_count' => ['label' => 'White Blood Cell Count', 'data' => $row->leukocyte_count],
                 'platelet_count' => ['label' => 'Platelet Count', 'data' => $row->platelet_count],
             ],
-        ])->toArray();
+        ])->all();
 
         return [$completeBloodCounts, $chartData];
     }

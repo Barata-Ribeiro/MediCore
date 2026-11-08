@@ -15,14 +15,17 @@ class UricAcidService implements UricAcidServiceInterface
      *
      * @param  list<array{id: string, desc: bool}>  $sorting
      * @param  list<array{id: string, operator: string, value?: mixed, joinOperator?: string, filterId?: string}>|null  $filters
-     * @return array{0: LengthAwarePaginator<int, UricAcid>, 1: array<string, mixed>}
+     * @return array{
+     *     0: LengthAwarePaginator<int, UricAcid>,
+     *     1: array<int, array{x_axis_label: string, datasets: array<string, array{label: string, data: float|int|null}>}>
+     * }
      */
     public function getUricAcidsData(?int $perPage, array $sorting, ?string $search, ?array $filters): array
     {
 
         $uricAcids = UricAcid::query()
             ->where('medical_file_id', auth()->user()->medicalFile->id)
-            ->when($search !== '', fn ($q) => $q->whereLike('uric_acid_level', "%{$search}%"))
+            ->when($search, fn ($q) => $q->whereLike('uric_acid_level', "%{$search}%"))
             ->tap(fn ($query) => DataTableQuery::apply($query, $filters ?? [], $sorting, [
                 'id' => 'number',
                 'uric_acid_level' => 'number',
@@ -54,7 +57,7 @@ class UricAcidService implements UricAcidServiceInterface
                     'data' => $row->uric_acid_level,
                 ],
             ],
-        ])->toArray();
+        ])->all();
 
         return [$uricAcids, $chartData];
     }

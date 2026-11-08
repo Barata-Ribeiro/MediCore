@@ -15,14 +15,17 @@ class UreaAndCreatinineService implements UreaAndCreatinineServiceInterface
      *
      * @param  list<array{id: string, desc: bool}>  $sorting
      * @param  list<array{id: string, operator: string, value?: mixed, joinOperator?: string, filterId?: string}>|null  $filters
-     * @return array{0: LengthAwarePaginator<int, UreaAndCreatinine>, 1: array<string, mixed>}
+     * @return array{
+     *     0: LengthAwarePaginator<int, UreaAndCreatinine>,
+     *     1: array<int, array{x_axis_label: string, datasets: array<string, array{label: string, data: float|int|null}>}>
+     * }
      */
     public function getUreaAndCreatininesData(?int $perPage, array $sorting, ?string $search, ?array $filters): array
     {
 
         $uacs = UreaAndCreatinine::query()
             ->where('medical_file_id', auth()->user()->medicalFile->id)
-            ->when($search !== '', fn ($q) => $q->where(fn ($query) => $query
+            ->when($search, fn ($q) => $q->where(fn ($query) => $query
                 ->whereLike('urea_level', "%{$search}%")
                 ->orWhereLike('creatinine_level', "%{$search}%")))
             ->tap(fn ($query) => DataTableQuery::apply($query, $filters ?? [], $sorting, [
@@ -67,7 +70,7 @@ class UreaAndCreatinineService implements UreaAndCreatinineServiceInterface
                     'data' => $row->urea_to_creatinine_ratio,
                 ],
             ],
-        ])->toArray();
+        ])->all();
 
         return [$uacs, $chartData];
     }

@@ -15,7 +15,10 @@ class GlucoseService implements GlucoseServiceInterface
      *
      * @param  list<array{id: string, desc: bool}>  $sorting
      * @param  list<array{id: string, operator: string, value?: mixed, joinOperator?: string, filterId?: string}>|null  $filters
-     * @return array{0: LengthAwarePaginator<int, Glucose>, 1: array<string, mixed>}
+     * @return array{
+     *     0: LengthAwarePaginator<int, Glucose>,
+     *     1: array<int, array{x_axis_label: string, datasets: array<string, array{label: string, data: float|int|null}>}>
+     * }
      */
     public function getGlucosePageAndChartData(?int $perPage, array $sorting, ?string $search, ?array $filters): array
     {
@@ -61,7 +64,7 @@ class GlucoseService implements GlucoseServiceInterface
                 'glycated_hemoglobin' => ['label' => __('glucose_pages.index.table.columns.glycated_hemoglobin'), 'data' => $row->glycated_hemoglobin],
                 'estimated_average_glucose' => ['label' => __('glucose_pages.index.table.columns.estimated_average_glucose'), 'data' => $row->estimated_average_glucose],
             ],
-        ])->toArray();
+        ])->all();
 
         return [$glucoses, $chartData];
     }

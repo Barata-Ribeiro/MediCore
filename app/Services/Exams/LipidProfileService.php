@@ -15,7 +15,10 @@ class LipidProfileService implements LipidProfileServiceInterface
      *
      * @param  list<array{id: string, desc: bool}>  $sorting
      * @param  list<array{id: string, operator: string, value?: mixed, joinOperator?: string, filterId?: string}>|null  $filters
-     * @return array{0: LengthAwarePaginator<int, LipidProfile>, 1: array<string, mixed>}
+     * @return array{
+     *     0: LengthAwarePaginator<int, LipidProfile>,
+     *     1: array<int, array{x_axis_label: string, datasets: array<string, array{label: string, data: float|int|null}>}>
+     * }
      */
     public function getLipidProfileData(?int $perPage, array $sorting, ?string $search, ?array $filters): array
     {
@@ -70,7 +73,7 @@ class LipidProfileService implements LipidProfileServiceInterface
                 'vldl_cholesterol' => ['label' => __('lipid_profile_pages.index.table.columns.vldl_cholesterol'), 'data' => $row->vldl_cholesterol],
                 'triglycerides' => ['label' => __('lipid_profile_pages.index.table.columns.triglycerides'), 'data' => $row->triglycerides],
             ],
-        ])->toArray();
+        ])->all();
 
         return [$lipidProfiles, $chartData];
     }

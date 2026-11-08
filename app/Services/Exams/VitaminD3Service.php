@@ -15,7 +15,10 @@ class VitaminD3Service implements VitaminD3ServiceInterface
      *
      * @param  list<array{id: string, desc: bool}>  $sorting
      * @param  list<array{id: string, operator: string, value?: mixed, joinOperator?: string, filterId?: string}>|null  $filters
-     * @return array{0: LengthAwarePaginator<int, VitaminD3>, 1: array<string, mixed>}
+     * @return array{
+     *     0: LengthAwarePaginator<int, VitaminD3>,
+     *     1: array<int, array{x_axis_label: string, datasets: array<string, array{label: string, data: float|int|null}>}>
+     * }
      */
     public function getVitaminD3sData(?int $perPage, array $sorting, ?string $search, ?array $filters): array
     {
@@ -51,7 +54,7 @@ class VitaminD3Service implements VitaminD3ServiceInterface
             'datasets' => [
                 'twenty_five_hydroxyvitamin_d3' => ['label' => '25-Hydroxyvitamin D3', 'data' => $row->twenty_five_hydroxyvitamin_d3],
             ],
-        ])->toArray();
+        ])->all();
 
         return [$vitaminD3s, $chartData];
 

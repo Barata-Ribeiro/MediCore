@@ -15,7 +15,10 @@ class TgoAndTgpService implements TgoAndTgpServiceInterface
      *
      * @param  list<array{id: string, desc: bool}>  $sorting
      * @param  list<array{id: string, operator: string, value?: mixed, joinOperator?: string, filterId?: string}>|null  $filters
-     * @return array{0: LengthAwarePaginator<int, TgoAndTgp>, 1: array<string, mixed>}
+     * @return array{
+     *     0: LengthAwarePaginator<int, TgoAndTgp>,
+     *     1: array<int, array{x_axis_label: string, datasets: array<string, array{label: string, data: float|int|null}>}>
+     * }
      */
     public function getTgoAndTgpsData(?int $perPage, array $sorting, ?string $search, ?array $filters): array
     {
@@ -64,7 +67,7 @@ class TgoAndTgpService implements TgoAndTgpServiceInterface
                     'data' => $row->tgp_level,
                 ],
             ],
-        ])->toArray();
+        ])->all();
 
         return [$records, $chartData];
     }

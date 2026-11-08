@@ -57,7 +57,7 @@ class TotalProteinsAndFractionsService implements TotalProteinsAndFractionsServi
                 'globulin' => ['label' => __('total_proteins_and_fractions_pages.index.table.columns.globulin'), 'data' => $row->globulin],
                 'albumin_globulin_ratio' => ['label' => __('total_proteins_and_fractions_pages.index.table.columns.albumin_globulin_ratio'), 'data' => $row->albumin_globulin_ratio],
             ],
-        ])->toArray();
+        ])->all();
 
         return [$tpfs, $chartData];
     }
