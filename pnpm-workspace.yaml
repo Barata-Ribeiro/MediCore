@@ -14,13 +14,10 @@ supportedArchitectures:
         - x64
         - arm64
 
-minimumReleaseAge: 1440
-minimumReleaseAgeExcludePrune: true
-
 catalog:
-    vite: npm:@voidzero-dev/vite-plus-core@1.5.0
+    vite: npm:@voidzero-dev/vite-plus-core@1.6.0
     vitest: 5.1.0
-    vite-plus: 1.5.0
+    vite-plus: 1.6.0
 overrides:
     vite@*: 'catalog:'
 peerDependencyRules:
@@ -28,9 +25,9 @@ peerDependencyRules:
         - vite
     allowedVersions:
         vite: '*'
+
+minimumReleaseAgeExcludePrune: true
 minimumReleaseAgeExclude:
-    - '@rollup/rollup-linux-x64-gnu@4.68.0'
-    - '@rollup/rollup-win32-x64-msvc@4.68.0'
     - '@tailwindcss/node@4.3.5'
     - '@tailwindcss/oxide-android-arm64@4.3.5'
     - '@tailwindcss/oxide-darwin-arm64@4.3.5'
@@ -46,5 +43,12 @@ minimumReleaseAgeExclude:
     - '@tailwindcss/oxide-win32-x64-msvc@4.3.5'
     - '@tailwindcss/oxide@4.3.5'
     - '@tailwindcss/vite@4.3.5'
-    - react-resizable-panels@4.19.1
     - tailwindcss@4.3.5
+    - '@babel/core@8.1.2'
+    - '@babel/generator@8.1.2'
+    - '@babel/helper-string-parser@8.1.2'
+    - '@babel/helpers@8.1.2'
+    - '@babel/parser@8.1.2'
+    - '@babel/template@8.1.2'
+    - '@babel/traverse@8.1.2'
+    - '@babel/types@8.1.2'
