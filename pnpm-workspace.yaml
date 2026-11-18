@@ -52,3 +52,7 @@ minimumReleaseAgeExclude:
     - '@babel/template@8.1.2'
     - '@babel/traverse@8.1.2'
     - '@babel/types@8.1.2'
+    - '@rollup/rollup-linux-x64-gnu@4.68.6'
+    - '@rollup/rollup-win32-x64-msvc@4.68.6'
+    - lucide-react@1.75.0
+    - recharts@3.11.0
