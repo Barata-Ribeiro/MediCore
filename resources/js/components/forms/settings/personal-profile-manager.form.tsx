@@ -22,6 +22,10 @@ type ProfilePayload = {
 export default function PersonalProfileManagerForm() {
     const { __ } = lang();
     const { profile } = usePage<ProfilePayload>().props;
+    const sexOptions = [
+        { value: 'male', label: __('settings_pages.profile_page.personal_profile_manager.form.sex_male') },
+        { value: 'female', label: __('settings_pages.profile_page.personal_profile_manager.form.sex_female') },
+    ];
 
     return (
         <Form
@@ -149,6 +153,7 @@ export default function PersonalProfileManagerForm() {
                             <Select
                                 name="sex"
                                 defaultValue={profile?.sex ?? undefined}
+                                items={sexOptions}
                                 aria-describedby={errors['sex'] ? 'sex-error' : undefined}
                             >
                                 <SelectTrigger aria-invalid={!!errors['sex']}>
@@ -160,12 +165,11 @@ export default function PersonalProfileManagerForm() {
                                 </SelectTrigger>
                                 <SelectContent alignItemWithTrigger>
                                     <SelectGroup>
-                                        <SelectItem value="male">
-                                            {__('settings_pages.profile_page.personal_profile_manager.form.sex_male')}
-                                        </SelectItem>
-                                        <SelectItem value="female">
-                                            {__('settings_pages.profile_page.personal_profile_manager.form.sex_female')}
-                                        </SelectItem>
+                                        {sexOptions.map(({ value, label }) => (
+                                            <SelectItem key={value} value={value}>
+                                                {label}
+                                            </SelectItem>
+                                        ))}
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>
