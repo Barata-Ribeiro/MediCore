@@ -19,6 +19,8 @@ type MedicalFilePayload = {
     file: MedicalFile;
 };
 
+const bloodTypeOptions = Object.values(BloodType).map((value) => ({ value, label: bloodTypeLabel(value) }));
+
 export default function MedicalFileManagerForm() {
     const { __ } = lang();
 
@@ -40,6 +42,7 @@ export default function MedicalFileManagerForm() {
                         <Select
                             name="blood_type"
                             defaultValue={file?.blood_type ?? undefined}
+                            items={bloodTypeOptions}
                             aria-describedby={errors['blood_type'] ? 'error-blood_type' : undefined}
                         >
                             <SelectTrigger aria-invalid={!!errors['blood_type']}>
@@ -49,9 +52,9 @@ export default function MedicalFileManagerForm() {
                             </SelectTrigger>
                             <SelectContent alignItemWithTrigger>
                                 <SelectGroup>
-                                    {Object.values(BloodType).map((type) => (
-                                        <SelectItem key={type} value={type}>
-                                            {bloodTypeLabel(type)}
+                                    {bloodTypeOptions.map(({ value, label }) => (
+                                        <SelectItem key={value} value={value}>
+                                            {label}
                                         </SelectItem>
                                     ))}
                                 </SelectGroup>
