@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 13.42.0.
+ * Generated for Laravel 13.43.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -8057,6 +8057,21 @@ namespace Illuminate\Support\Facades {
             //Method inherited from \Illuminate\Database\Connection 
             /** @var \Illuminate\Database\PostgresConnection $instance */
             $instance->forgetRecordModificationState();
+        }
+
+        /**
+         * Execute the given callback without affecting the connection's read / write stickiness.
+         *
+         * @template TReturn
+         * @param (\Closure($this): TReturn) $callback
+         * @return TReturn
+         * @static
+         */
+        public static function withoutAffectingStickiness($callback)
+        {
+            //Method inherited from \Illuminate\Database\Connection 
+            /** @var \Illuminate\Database\PostgresConnection $instance */
+            return $instance->withoutAffectingStickiness($callback);
         }
 
         /**
