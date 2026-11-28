@@ -118,10 +118,11 @@ class DataTableQuery
         $operator = $filter['operator'];
 
         if ($operator === 'inRange') {
-            if (($value[0] ?? '') !== '' && $value[0] !== null) {
+            if (($value[0] ?? '') !== '') {
                 self::compare($query, $column, '>=', $value[0], $type);
             }
-            if (($value[1] ?? '') !== '' && $value[1] !== null) {
+
+            if (($value[1] ?? '') !== '') {
                 self::compare($query, $column, '<=', $value[1], $type);
             }
 
