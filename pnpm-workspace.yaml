@@ -15,9 +15,9 @@ supportedArchitectures:
         - arm64
 
 catalog:
-    vite: npm:@voidzero-dev/vite-plus-core@1.6.0
-    vitest: 5.1.0
-    vite-plus: 1.6.0
+    vite: npm:@voidzero-dev/vite-plus-core@8.3.8001
+    vitest: 5.1.2
+    vite-plus: 1.7.0
 overrides:
     vite@*: 'catalog:'
 peerDependencyRules:
@@ -28,31 +28,16 @@ peerDependencyRules:
 
 minimumReleaseAgeExcludePrune: true
 minimumReleaseAgeExclude:
-    - '@tailwindcss/node@4.3.5'
-    - '@tailwindcss/oxide-android-arm64@4.3.5'
-    - '@tailwindcss/oxide-darwin-arm64@4.3.5'
-    - '@tailwindcss/oxide-darwin-x64@4.3.5'
-    - '@tailwindcss/oxide-freebsd-x64@4.3.5'
-    - '@tailwindcss/oxide-linux-arm-gnueabihf@4.3.5'
-    - '@tailwindcss/oxide-linux-arm64-gnu@4.3.5'
-    - '@tailwindcss/oxide-linux-arm64-musl@4.3.5'
-    - '@tailwindcss/oxide-linux-x64-gnu@4.3.5'
-    - '@tailwindcss/oxide-linux-x64-musl@4.3.5'
-    - '@tailwindcss/oxide-wasm32-wasi@4.3.5'
-    - '@tailwindcss/oxide-win32-arm64-msvc@4.3.5'
-    - '@tailwindcss/oxide-win32-x64-msvc@4.3.5'
-    - '@tailwindcss/oxide@4.3.5'
-    - '@tailwindcss/vite@4.3.5'
-    - tailwindcss@4.3.5
-    - '@babel/core@8.1.2'
-    - '@babel/generator@8.1.2'
-    - '@babel/helper-string-parser@8.1.2'
-    - '@babel/helpers@8.1.2'
-    - '@babel/parser@8.1.2'
-    - '@babel/template@8.1.2'
-    - '@babel/traverse@8.1.2'
-    - '@babel/types@8.1.2'
-    - '@rollup/rollup-linux-x64-gnu@4.68.6'
-    - '@rollup/rollup-win32-x64-msvc@4.68.6'
-    - lucide-react@1.75.0
-    - recharts@3.11.0
+    - '@babel/core@8.1.4'
+    - '@babel/generator@8.1.4'
+    - '@babel/helpers@8.1.4'
+    - '@babel/traverse@8.1.4'
+    - '@rolldown/plugin-babel@0.3.2'
+    - '@rollup/rollup-linux-x64-gnu@4.68.9'
+    - '@rollup/rollup-win32-x64-msvc@4.68.9'
+    - '@tanstack/hotkeys@0.38.0'
+    - '@tanstack/react-hotkeys@0.29.0'
+    - '@types/lodash@4.17.28'
+    - lucide-react@1.83.0
+    - react-resizable-panels@4.26.0
+    - recharts@3.11.2
