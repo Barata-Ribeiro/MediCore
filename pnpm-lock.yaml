@@ -184,14 +184,14 @@ settings:
 catalogs:
   default:
     vite:
-      specifier: npm:@voidzero-dev/vite-plus-core@8.3.8001
-      version: 8.3.8001
+      specifier: npm:@voidzero-dev/vite-plus-core@8.3.8000
+      version: 8.3.8000
     vite-plus:
       specifier: 1.7.0
       version: 1.7.0
 
 overrides:
-  vite@*: npm:@voidzero-dev/vite-plus-core@8.3.8001
+  vite@*: npm:@voidzero-dev/vite-plus-core@8.3.8000
 
 importers:
 
@@ -220,7 +220,7 @@ importers:
         version: 3.11.0(@laravel/echo-react@2.6.3(pusher-js@8.6.0)(react@19.3.1))(@types/react-dom@19.3.0(@types/react@19.3.3))(@types/react@19.3.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@inertiajs/vite':
         specifier: ^3.11.0
-        version: 3.11.0(@voidzero-dev/vite-plus-core@8.3.8001(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))
+        version: 3.11.0(@voidzero-dev/vite-plus-core@8.3.8000(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))
       '@inertiaui/modal-react':
         specifier: ^3.2.0
         version: 3.2.0(@inertiajs/react@3.11.0(@laravel/echo-react@2.6.3(pusher-js@8.6.0)(react@19.3.1))(@types/react-dom@19.3.0(@types/react@19.3.3))(@types/react@19.3.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -232,7 +232,7 @@ importers:
         version: 0.3.1(@types/react@19.3.3)(react@19.3.1)
       '@tailwindcss/vite':
         specifier: ^4.3.5
-        version: 4.3.5(@voidzero-dev/vite-plus-core@8.3.8001(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))
+        version: 4.3.5(@voidzero-dev/vite-plus-core@8.3.8000(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))
       '@tanstack/react-hotkeys':
         specifier: ^0.29.0
         version: 0.29.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -241,7 +241,7 @@ importers:
         version: 9.3.1(@types/react@19.3.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@vitejs/plugin-react':
         specifier: ^6.3.0
-        version: 6.3.0(@rolldown/plugin-babel@0.3.2(@babel/core@8.1.4)(@babel/runtime@8.1.3)(@voidzero-dev/vite-plus-core@8.3.8001(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))(rolldown@1.3.4))(@voidzero-dev/vite-plus-core@8.3.8001(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))(babel-plugin-react-compiler@1.0.0)
+        version: 6.3.0(@rolldown/plugin-babel@0.3.2(@babel/core@8.1.4)(@babel/runtime@8.1.3)(@voidzero-dev/vite-plus-core@8.3.8000(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))(rolldown@1.3.4))(@voidzero-dev/vite-plus-core@8.3.8000(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))(babel-plugin-react-compiler@1.0.0)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -268,7 +268,7 @@ importers:
         version: 1.5.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       laravel-vite-plugin:
         specifier: ^3.2.1
-        version: 3.2.1(@voidzero-dev/vite-plus-core@8.3.8001(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))
+        version: 3.2.1(@voidzero-dev/vite-plus-core@8.3.8000(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))
       lodash:
         specifier: ^4.18.1
         version: 4.18.1
@@ -310,7 +310,7 @@ importers:
         version: 1.4.0
       vite:
         specifier: 'catalog:'
-        version: '@voidzero-dev/vite-plus-core@8.3.8001(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2)'
+        version: '@voidzero-dev/vite-plus-core@8.3.8000(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2)'
     devDependencies:
       '@babel/core':
         specifier: ^8.1.4
@@ -323,7 +323,7 @@ importers:
         version: 0.1.11
       '@rolldown/plugin-babel':
         specifier: ^0.3.2
-        version: 0.3.2(@babel/core@8.1.4)(@babel/runtime@8.1.3)(@voidzero-dev/vite-plus-core@8.3.8001(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))(rolldown@1.3.4)
+        version: 0.3.2(@babel/core@8.1.4)(@babel/runtime@8.1.3)(@voidzero-dev/vite-plus-core@8.3.8000(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))(rolldown@1.3.4)
       '@shadcn/lint':
         specifier: ^0.2.5
         version: 0.2.5
@@ -2103,83 +2103,8 @@ packages:
       yaml:
         optional: true
 
-  '@voidzero-dev/vite-plus-core@8.3.8001':
-    resolution: {integrity: sha512-7ODeiZLaa9LhVysGNAkf7qLQU//g7d6QpNY9Ljriy6B2wv7g6iUT8DYh3F6w6DmF0DyPA+MFiYgfVXV++W3OAw==}
-    engines: {node: ^20.19.0 || ^22.18.0 || >=24.11.0}
-    peerDependencies:
-      '@arethetypeswrong/core': ^0.18.1
-      '@types/node': ^20.19.0 || >=22.12.0
-      '@typescript/native-preview': '*'
-      '@vitejs/devtools': ^0.7.1 || ^0.8.0
-      '@volar/typescript': ~2.4.0
-      '@vue/language-core': ~3.2.0 || ~3.3.0
-      esbuild: ^0.27.0 || ^0.28.0
-      jiti: '>=1.21.0'
-      less: ^4.0.0
-      publint: ^0.3.8
-      sass: ^1.70.0
-      sass-embedded: ^1.70.0
-      stylus: '>=0.54.8'
-      sugarss: ^5.0.0
-      terser: ^5.16.0
-      tsx: ^4.8.1
-      typescript: ^5.0.0 || ^6.0.0 || ^7.0.0
-      unplugin-unused: '>=0.5.0'
-      unrun: '*'
-      vue-tsc: ~3.2.0 || ~3.3.0
-      yaml: ^2.4.2
-    peerDependenciesMeta:
-      '@arethetypeswrong/core':
-        optional: true
-      '@types/node':
-        optional: true
-      '@typescript/native-preview':
-        optional: true
-      '@vitejs/devtools':
-        optional: true
-      '@volar/typescript':
-        optional: true
-      '@vue/language-core':
-        optional: true
-      esbuild:
-        optional: true
-      jiti:
-        optional: true
-      less:
-        optional: true
-      publint:
-        optional: true
-      sass:
-        optional: true
-      sass-embedded:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-      tsx:
-        optional: true
-      typescript:
-        optional: true
-      unplugin-unused:
-        optional: true
-      unrun:
-        optional: true
-      vue-tsc:
-        optional: true
-      yaml:
-        optional: true
-
   '@voidzero-dev/vite-plus-darwin-arm64@1.7.0':
     resolution: {integrity: sha512-ozIv7lPzEEfGmNOvHiHublwsLHMUkZBTuSq05FuOvS9yw/4TZYiItESFC0Y2NchaotcSn4MeatxegatjgeRevA==}
-    engines: {node: '>=20.0.0'}
-    cpu: [arm64]
-    os: [darwin]
-
-  '@voidzero-dev/vite-plus-darwin-arm64@1.8.0':
-    resolution: {integrity: sha512-j2QR6zkjDpHh9oOIgVaqljY2wbJcdgqF53Mbdhr8zPnB4bDOVf9fnxpV9MqJdRAfPAqwgU+qMpVeA3hSUddBpQ==}
     engines: {node: '>=20.0.0'}
     cpu: [arm64]
     os: [darwin]
@@ -2190,21 +2115,8 @@ packages:
     cpu: [x64]
     os: [darwin]
 
-  '@voidzero-dev/vite-plus-darwin-x64@1.8.0':
-    resolution: {integrity: sha512-j73bmtymB6oeOWkaLNqLUg82FBX/yEudRvtyxZp55UZCcAYVF2wN3TteB4LISNt46urE0H2xajrprnGNwRLpdA==}
-    engines: {node: '>=20.0.0'}
-    cpu: [x64]
-    os: [darwin]
-
   '@voidzero-dev/vite-plus-linux-arm64-gnu@1.7.0':
     resolution: {integrity: sha512-127UdNRXMZ/tQiNVYX+Hsy/RsodAwIJRdSG2reDdraAbxMWBCcdTJ5fyRTHCqjUl1aEuI/TUyuK35D1+0x7mGQ==}
-    engines: {node: '>=20.0.0'}
-    cpu: [arm64]
-    os: [linux]
-    libc: [glibc]
-
-  '@voidzero-dev/vite-plus-linux-arm64-gnu@1.8.0':
-    resolution: {integrity: sha512-QPsbpuY3OplXhwYcJr+g1ks5e9X2fJhO6eY9iLoMouENMUTTmTpc00vwNPACO/HWO6YX/bQjY+86s7qGSSDqZw==}
     engines: {node: '>=20.0.0'}
     cpu: [arm64]
     os: [linux]
@@ -2217,22 +2129,8 @@ packages:
     os: [linux]
     libc: [musl]
 
-  '@voidzero-dev/vite-plus-linux-arm64-musl@1.8.0':
-    resolution: {integrity: sha512-kSLxtRsOCRHGAbq3uWKPQj2elmJwZbS6jw5qUUWpkpK255aFNsA8e1FKQtWVvYgvEBeLpLoHHxt9CyRc7vEztg==}
-    engines: {node: '>=20.0.0'}
-    cpu: [arm64]
-    os: [linux]
-    libc: [musl]
-
   '@voidzero-dev/vite-plus-linux-x64-gnu@1.7.0':
     resolution: {integrity: sha512-OWee6VlSZbc0SemrqXzs5b2ukGTFNHg29tEAirqqmEYIBf/yOVSamXUL2L4I3fOMTJuT2dsXGc/Q30Z0xdsNjg==}
-    engines: {node: '>=20.0.0'}
-    cpu: [x64]
-    os: [linux]
-    libc: [glibc]
-
-  '@voidzero-dev/vite-plus-linux-x64-gnu@1.8.0':
-    resolution: {integrity: sha512-bqL6QDjez58vyM7ZZm8pZNJCFnBEJOEAD/kkIryhNC+drfXf6VKV5IFJRykwf+Rd2pGN5FYCg803B2KovIoICw==}
     engines: {node: '>=20.0.0'}
     cpu: [x64]
     os: [linux]
@@ -2245,33 +2143,14 @@ packages:
     os: [linux]
     libc: [musl]
 
-  '@voidzero-dev/vite-plus-linux-x64-musl@1.8.0':
-    resolution: {integrity: sha512-abU1t1ExqRkhT5A6u+Vpi/kHcsqwFahEDAm4uzBYTHBQ1/6xqatfZf4UtlrL0C68xrXfttPrGRZcfitv2TZqZA==}
-    engines: {node: '>=20.0.0'}
-    cpu: [x64]
-    os: [linux]
-    libc: [musl]
-
   '@voidzero-dev/vite-plus-win32-arm64-msvc@1.7.0':
     resolution: {integrity: sha512-CO3txOUEnzlncFFRUIKxqBxoEH1F34sOuGhpfBhZLpwLe/Bvuypcrcky2mlpT5g98H+hw/hQHMZukyIArYm7Cg==}
     engines: {node: '>=20.0.0'}
     cpu: [arm64]
     os: [win32]
 
-  '@voidzero-dev/vite-plus-win32-arm64-msvc@1.8.0':
-    resolution: {integrity: sha512-bDg0/4orrkNOsGK60a60CX78t2UYPH1ohMd5GIr8RP7CJ139TQaUtFYqlhWKCn8mDKMNa+OL/WaujIC1nOGIBQ==}
-    engines: {node: '>=20.0.0'}
-    cpu: [arm64]
-    os: [win32]
-
   '@voidzero-dev/vite-plus-win32-x64-msvc@1.7.0':
     resolution: {integrity: sha512-eA/Lg7eQTLwTiNhGBav9Lik6qiTSv8IPAETIziGgjNjEiTviCcFHNFlUyDOIFTY7uIWraGgMl8THY3zPnikoRg==}
-    engines: {node: '>=20.0.0'}
-    cpu: [x64]
-    os: [win32]
-
-  '@voidzero-dev/vite-plus-win32-x64-msvc@1.8.0':
-    resolution: {integrity: sha512-HvQDw3gU8mXQHxZtXrElcFLPE9EGWBudPefsj5RruBM3UWRybfr4ejMLmHbv83/rDGAGvyflA/EdugO4uZl29g==}
     engines: {node: '>=20.0.0'}
     cpu: [x64]
     os: [win32]
@@ -4427,13 +4306,13 @@ snapshots:
     transitivePeerDependencies:
       - axios
 
-  '@inertiajs/vite@3.11.0(@voidzero-dev/vite-plus-core@8.3.8001(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))':
+  '@inertiajs/vite@3.11.0(@voidzero-dev/vite-plus-core@8.3.8000(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))':
     dependencies:
       '@inertiajs/core': 3.11.0
       '@jridgewell/remapping': 2.3.5
       magic-string: 0.30.21
       tinyglobby: 0.2.17
-      vite: '@voidzero-dev/vite-plus-core@8.3.8001(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2)'
+      vite: '@voidzero-dev/vite-plus-core@8.3.8000(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2)'
     transitivePeerDependencies:
       - axios
 
@@ -4949,7 +4828,7 @@ snapshots:
   '@rolldown/binding-win32-x64-msvc@1.3.4':
     optional: true
 
-  '@rolldown/plugin-babel@0.3.2(@babel/core@8.1.4)(@babel/runtime@8.1.3)(@voidzero-dev/vite-plus-core@8.3.8001(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))(rolldown@1.3.4)':
+  '@rolldown/plugin-babel@0.3.2(@babel/core@8.1.4)(@babel/runtime@8.1.3)(@voidzero-dev/vite-plus-core@8.3.8000(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))(rolldown@1.3.4)':
     dependencies:
       '@babel/core': 8.1.4
       artichokie: 0.4.5
@@ -4957,7 +4836,7 @@ snapshots:
       rolldown: 1.3.4
     optionalDependencies:
       '@babel/runtime': 8.1.3
-      vite: '@voidzero-dev/vite-plus-core@8.3.8001(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2)'
+      vite: '@voidzero-dev/vite-plus-core@8.3.8000(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2)'
 
   '@rolldown/pluginutils@1.1.1': {}
 
@@ -5084,12 +4963,12 @@ snapshots:
       '@tailwindcss/oxide-win32-arm64-msvc': 4.3.5
       '@tailwindcss/oxide-win32-x64-msvc': 4.3.5
 
-  '@tailwindcss/vite@4.3.5(@voidzero-dev/vite-plus-core@8.3.8001(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))':
+  '@tailwindcss/vite@4.3.5(@voidzero-dev/vite-plus-core@8.3.8000(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))':
     dependencies:
       '@tailwindcss/node': 4.3.5
       '@tailwindcss/oxide': 4.3.5
       tailwindcss: 4.3.5
-      vite: '@voidzero-dev/vite-plus-core@8.3.8001(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2)'
+      vite: '@voidzero-dev/vite-plus-core@8.3.8000(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2)'
 
   '@tanstack/hotkeys@0.38.0': {}
 
@@ -5318,12 +5197,12 @@ snapshots:
   '@typescript/typescript-win32-x64@7.0.2':
     optional: true
 
-  '@vitejs/plugin-react@6.3.0(@rolldown/plugin-babel@0.3.2(@babel/core@8.1.4)(@babel/runtime@8.1.3)(@voidzero-dev/vite-plus-core@8.3.8001(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))(rolldown@1.3.4))(@voidzero-dev/vite-plus-core@8.3.8001(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))(babel-plugin-react-compiler@1.0.0)':
+  '@vitejs/plugin-react@6.3.0(@rolldown/plugin-babel@0.3.2(@babel/core@8.1.4)(@babel/runtime@8.1.3)(@voidzero-dev/vite-plus-core@8.3.8000(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))(rolldown@1.3.4))(@voidzero-dev/vite-plus-core@8.3.8000(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))(babel-plugin-react-compiler@1.0.0)':
     dependencies:
       '@rolldown/pluginutils': 1.1.1
-      vite: '@voidzero-dev/vite-plus-core@8.3.8001(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2)'
+      vite: '@voidzero-dev/vite-plus-core@8.3.8000(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2)'
     optionalDependencies:
-      '@rolldown/plugin-babel': 0.3.2(@babel/core@8.1.4)(@babel/runtime@8.1.3)(@voidzero-dev/vite-plus-core@8.3.8001(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))(rolldown@1.3.4)
+      '@rolldown/plugin-babel': 0.3.2(@babel/core@8.1.4)(@babel/runtime@8.1.3)(@voidzero-dev/vite-plus-core@8.3.8000(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))(rolldown@1.3.4)
       babel-plugin-react-compiler: 1.0.0
 
   '@vitest/browser-preview@5.1.0(@voidzero-dev/vite-plus-core@8.3.8000(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2))(vitest@5.1.0)':
@@ -5415,73 +5294,28 @@ snapshots:
       jiti: 2.7.0
       typescript: 7.0.2
 
-  '@voidzero-dev/vite-plus-core@8.3.8001(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2)':
-    dependencies:
-      '@oxc-project/runtime': 0.159.0
-      '@oxc-project/types': 0.159.0
-      lightningcss: 1.33.0
-      postcss: 8.5.34
-      yuku-parser: 0.19.0
-    optionalDependencies:
-      '@types/node': 26.6.11
-      '@voidzero-dev/vite-plus-darwin-arm64': 1.8.0
-      '@voidzero-dev/vite-plus-darwin-x64': 1.8.0
-      '@voidzero-dev/vite-plus-linux-arm64-gnu': 1.8.0
-      '@voidzero-dev/vite-plus-linux-arm64-musl': 1.8.0
-      '@voidzero-dev/vite-plus-linux-x64-gnu': 1.8.0
-      '@voidzero-dev/vite-plus-linux-x64-musl': 1.8.0
-      '@voidzero-dev/vite-plus-win32-arm64-msvc': 1.8.0
-      '@voidzero-dev/vite-plus-win32-x64-msvc': 1.8.0
-      fsevents: 2.3.3
-      jiti: 2.7.0
-      typescript: 7.0.2
-
   '@voidzero-dev/vite-plus-darwin-arm64@1.7.0':
-    optional: true
-
-  '@voidzero-dev/vite-plus-darwin-arm64@1.8.0':
     optional: true
 
   '@voidzero-dev/vite-plus-darwin-x64@1.7.0':
     optional: true
 
-  '@voidzero-dev/vite-plus-darwin-x64@1.8.0':
-    optional: true
-
   '@voidzero-dev/vite-plus-linux-arm64-gnu@1.7.0':
-    optional: true
-
-  '@voidzero-dev/vite-plus-linux-arm64-gnu@1.8.0':
     optional: true
 
   '@voidzero-dev/vite-plus-linux-arm64-musl@1.7.0':
     optional: true
 
-  '@voidzero-dev/vite-plus-linux-arm64-musl@1.8.0':
-    optional: true
-
   '@voidzero-dev/vite-plus-linux-x64-gnu@1.7.0':
-    optional: true
-
-  '@voidzero-dev/vite-plus-linux-x64-gnu@1.8.0':
     optional: true
 
   '@voidzero-dev/vite-plus-linux-x64-musl@1.7.0':
     optional: true
 
-  '@voidzero-dev/vite-plus-linux-x64-musl@1.8.0':
-    optional: true
-
   '@voidzero-dev/vite-plus-win32-arm64-msvc@1.7.0':
     optional: true
 
-  '@voidzero-dev/vite-plus-win32-arm64-msvc@1.8.0':
-    optional: true
-
   '@voidzero-dev/vite-plus-win32-x64-msvc@1.7.0':
-    optional: true
-
-  '@voidzero-dev/vite-plus-win32-x64-msvc@1.8.0':
     optional: true
 
   '@vue/compiler-core@3.5.46':
@@ -6162,11 +5996,11 @@ snapshots:
     dependencies:
       es-toolkit: 1.53.2
 
-  laravel-vite-plugin@3.2.1(@voidzero-dev/vite-plus-core@8.3.8001(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2)):
+  laravel-vite-plugin@3.2.1(@voidzero-dev/vite-plus-core@8.3.8000(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2)):
     dependencies:
       picocolors: 1.1.1
       tinyglobby: 0.2.17
-      vite: '@voidzero-dev/vite-plus-core@8.3.8001(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2)'
+      vite: '@voidzero-dev/vite-plus-core@8.3.8000(@types/node@26.6.11)(jiti@2.7.0)(typescript@7.0.2)'
       vite-plugin-full-reload: 1.2.0
 
   lightningcss-android-arm64@1.33.0:
